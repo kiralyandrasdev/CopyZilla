@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using CopyZillaGenerator.Function.Exceptions;
 using CopyZillaGenerator.Function.Models;
 using System.Linq;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CopyZillaGenerator.Function.Services
 {
@@ -31,10 +32,10 @@ namespace CopyZillaGenerator.Function.Services
 
             if(options.Language == "hungarian")
             {
-                prompt = $"Írj egy {options.Category} szöveget egy {options.Subject}-hez. Magyarul válaszolj!";
+                prompt = $"{GetCopyType(options.Category, options.Style)} a következő témával kapcsolatban: {options.Subject}.";
             } else
             {
-                prompt = $"Write text for a {options.Category} with a subject of {options.Subject} in {options.Style}.";
+                prompt = $"Write a {options.Style} {options.Category} for the following subject: '{options.Subject}'";
             }
 
             var payload = new
@@ -59,6 +60,98 @@ namespace CopyZillaGenerator.Function.Services
             var responseMap = JsonConvert.DeserializeObject<OpenAITextCompletionResponse>(responseData);
 
             return responseMap.choices.First().text;
+        }
+
+        private string GetCopyStyle(string style)
+        {
+            if (style == "casual")
+            {
+                return "közvetlen";
+            }
+            if (style == "formal")
+            {
+                return "hivatalos";
+            }
+            if (style == "funny")
+            {
+                return "vicces";
+            }
+            if (style == "exacting")
+            {
+                return "igényes";
+            }
+            if (style == "stimulating")
+            {
+                return "ösztönző";
+            }
+            if (style == "romantic")
+            {
+                return "romantikus";
+            }
+            if (style == "melancholic")
+            {
+                return "melankolikus";
+            }
+            if (style == "outraged")
+            {
+                return "dühös";
+            }
+            if (style == "mysterious")
+            {
+                return "titokzatos";
+            }
+            if (style == "neutral")
+            {
+                return "általános";
+            }
+            return "általános";
+        }
+
+        private string GetCopyType(string type, string style)
+        {
+            string begin = $"Írj egy {GetCopyStyle(style)} ";
+            string val = string.Empty;
+            if (type == "socialMediaPost")
+            {
+                val = "közösségi média posztot";
+            }
+            if (type == "socialMediaBio")
+            {
+                val = "közösségi média bio-t";
+            }
+            if (type == "socialMediaAd")
+            {
+                val = "közösségi média reklámot";
+            }
+            if (type == "blogPost")
+            {
+                val = "blog posztot";
+            }
+            if (type == "article")
+            {
+                val = "cikket";
+            }
+            if (type == "essay")
+            {
+                val = "esszét";
+            }
+            if (type == "emailBody")
+            {
+                val = "email szöveget";
+            }
+            if (type == "emailTitle")
+            {
+                val = "email tárgyat";
+            }
+            if (type == "message")
+            {
+                val = "üzenetet";
+            }
+            if (type == "introduction")
+            {
+                val = "bemutatkozást";
+            }
+            return begin + val;
         }
     }
 }

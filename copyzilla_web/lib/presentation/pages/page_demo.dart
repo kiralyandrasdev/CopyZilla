@@ -8,6 +8,19 @@ import 'package:copyzilla_web/presentation/widgets/widget_static_dropdown_button
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+enum CopyCategory {
+  socialMediaPost,
+  socialMediaBio,
+  socialMediaAd,
+  blogPost,
+  article,
+  essay,
+  emailBody,
+  emailTitle,
+  message,
+  introduction,
+}
+
 enum CopyLanguage {
   english,
   hungarian,
@@ -26,19 +39,6 @@ enum CopyStyle {
   exacting,
 }
 
-enum CopyCategory {
-  socialMediaPost,
-  socialMediaBio,
-  socialMediaAd,
-  blogPost,
-  article,
-  essay,
-  emailBody,
-  emailTitle,
-  message,
-  introduction,
-}
-
 class DemoPage extends StatefulWidget {
   const DemoPage({super.key});
 
@@ -55,7 +55,7 @@ class _DemoPageState extends State<DemoPage> {
 
   CopyCategory? _copyCategory;
   CopyStyle? _copyStyle;
-  final CopyLanguage _copyLanguage = CopyLanguage.hungarian;
+  CopyLanguage _copyLanguage = CopyLanguage.hungarian;
 
   bool get _validInput => !_hintError && !_copyTypeEmpty && !_copyStyleEmpty;
 
@@ -117,8 +117,8 @@ class _DemoPageState extends State<DemoPage> {
                     _copyCategory = type;
                   });
                 },
-                itemName: (CopyCategory val) {
-                  return val.name;
+                itemName: (CopyCategory category) {
+                  return copyCategoryText(category);
                 },
                 value: _copyCategory,
               ),
@@ -141,7 +141,11 @@ class _DemoPageState extends State<DemoPage> {
               StaticDropdownButton<CopyLanguage>(
                 counterText: "Nyelv",
                 items: CopyLanguage.values,
-                onValueChanged: (language) {},
+                onValueChanged: (language) {
+                  setState(() {
+                    _copyLanguage = language;
+                  });
+                },
                 itemName: (CopyLanguage language) {
                   return copyLanguageText(language);
                 },
@@ -237,6 +241,40 @@ class _DemoPageState extends State<DemoPage> {
       });
     }
     return _validInput;
+  }
+
+  String copyCategoryText(CopyCategory category) {
+    if (category == CopyCategory.socialMediaPost) {
+      return "Közösségi média poszt";
+    }
+    if (category == CopyCategory.socialMediaBio) {
+      return "Közösségi média bio";
+    }
+    if (category == CopyCategory.socialMediaAd) {
+      return "Közösségi média reklám";
+    }
+    if (category == CopyCategory.blogPost) {
+      return "Blog poszt";
+    }
+    if (category == CopyCategory.article) {
+      return "Cikk";
+    }
+    if (category == CopyCategory.essay) {
+      return "Esszé";
+    }
+    if (category == CopyCategory.emailBody) {
+      return "Email szöveg";
+    }
+    if (category == CopyCategory.emailTitle) {
+      return "Email tárgy";
+    }
+    if (category == CopyCategory.message) {
+      return "Üzenet";
+    }
+    if (category == CopyCategory.introduction) {
+      return "Bemutatkozás";
+    }
+    return "Ismeretlen";
   }
 
   String copyLanguageText(CopyLanguage language) {

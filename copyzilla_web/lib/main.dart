@@ -29,6 +29,7 @@ class AppWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GRecaptchaV3.hideBadge();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Allbert Business',
