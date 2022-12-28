@@ -15,6 +15,7 @@ variables:
   containerRegistry: 'copyzillaliveregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/copyzilla_web/Dockerfile'
   tag: '$(Build.BuildId)'
+  textEngineUrlArg: $(TEXT_ENGINE_URL_ARG)
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -31,6 +32,7 @@ stages:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
+        arguments: TEXT_ENGINE_URL_ARG=$(textEngineUrlArg)
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
