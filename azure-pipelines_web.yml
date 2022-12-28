@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - copyzilla_web
+    exclude:
+    - functions
+
+variables:
+  macImage: 'macOS-latest'
+  windowsImage: 'windows-2019'
+  textEngineUrl: $(TEXT_GENERATOR_URL)
+  # supabaseAnonKey: $(SUPABASE_ANON_KEY)
+  # supabaseProjectUrl: $(SUPABASE_PROJECT_URL)
+
+stages:
+- stage: Deploy
+  displayName: Build and deploy
+
+  jobs:
+  - job: Build
+    displayName: Build docker image
+    pool:
+      vmImage: $(macImage)
+    steps:
+      - task: FlutterInstall@0
