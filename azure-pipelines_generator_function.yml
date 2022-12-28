@@ -9,7 +9,7 @@ trigger:
       - main
   paths:
     include:
-      - azure-pilelines_generator_function.yml
+      - 'azure-pipelines_generator_function.yml'
       - functions
     exclude:
       - copyzilla_web
