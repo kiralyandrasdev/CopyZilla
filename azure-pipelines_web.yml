@@ -30,4 +30,9 @@ stages:
         pool:
           vmImage: $(macImage)
         steps:
-          - task: FlutterInstall@0
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'copyzillaliveregistry.azurecr.io'
+              repository: 'copyzillaliveweb'
+              command: 'buildAndPush'
+              Dockerfile: 'copyzilla_web/Dockerfile'
