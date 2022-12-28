@@ -32,7 +32,7 @@ class AppWrapper extends StatelessWidget {
     GRecaptchaV3.hideBadge();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Allbert Business',
+      title: 'CopyZilla',
       theme: Styles.themeData(false, context),
       routes: {
         "/": (context) => const DemoPage(),
