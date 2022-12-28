@@ -30,12 +30,17 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build
       inputs:
-        arguments: '--build-arg TEXT_ENGINE_URL_ARG=$(textEngineUrlArg)'
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
+        command: build
         containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+        repository: $(imageRepository)
+        tags: $(tag)
+        arguments: --label buildtype=nightly
+    - task: Docker@2
+      displayName: Push
+      inputs:
+        command: push
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        tags: $(tag)
