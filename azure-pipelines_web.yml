@@ -6,28 +6,28 @@
 trigger:
   branches:
     include:
-    - main
+      - main
   paths:
     include:
-    - copyzilla_web
+      - copyzilla_web
     exclude:
-    - functions
+      - functions
 
 variables:
-  macImage: 'macOS-latest'
-  windowsImage: 'windows-2019'
+  macImage: "macOS-latest"
+  windowsImage: "windows-2019"
   textEngineUrl: $(TEXT_GENERATOR_URL)
   # supabaseAnonKey: $(SUPABASE_ANON_KEY)
   # supabaseProjectUrl: $(SUPABASE_PROJECT_URL)
 
 stages:
-- stage: Deploy
-  displayName: Build and deploy
+  - stage: Deploy
+    displayName: Build and deploy
 
-  jobs:
-  - job: Build
-    displayName: Build docker image
-    pool:
-      vmImage: $(macImage)
-    steps:
-      - task: FlutterInstall@0
+    jobs:
+      - job: Build
+        displayName: Build docker image
+        pool:
+          vmImage: $(macImage)
+        steps:
+          - task: FlutterInstall@0
