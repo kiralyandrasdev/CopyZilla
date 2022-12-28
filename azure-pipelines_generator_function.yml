@@ -16,7 +16,7 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "548c03d2-3218-4efc-abca-8469e3fc31bc"
+  azureSubscription: 'Azure subscription 1(548c03d2-3218-4efc-abca-8469e3fc31bc)'
 
   # Function app name
   functionAppName: "copyzilla-text-generator"
