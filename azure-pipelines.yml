@@ -36,7 +36,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         tags: $(tag)
-        arguments: --label buildtype=nightly
+        arguments: --build-arg TEXT_ENGINE_URL_ARG=$(textEngineUrlArg)
     - task: Docker@2
       displayName: Push
       inputs:
