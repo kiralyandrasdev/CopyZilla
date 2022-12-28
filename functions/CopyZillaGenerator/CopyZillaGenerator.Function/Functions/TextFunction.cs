@@ -33,8 +33,8 @@ namespace CopyZillaGenerator.Function.Functions
         {
             log.LogInformation($"[Function::Generate::{DateTime.Now.ToString()}] Invoked");
 
-            if (!_authService.Validate(req))
-                return new UnauthorizedResult();
+            //if (!_authService.Validate(req))
+            //    return new UnauthorizedResult();
 
             //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
