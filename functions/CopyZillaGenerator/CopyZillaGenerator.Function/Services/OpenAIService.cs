@@ -35,14 +35,14 @@ namespace CopyZillaGenerator.Function.Services
                 prompt = $"{GetCopyType(options.Category, options.Style)} a következő témával kapcsolatban: {options.Subject}.";
             } else
             {
-                prompt = $"Write a {options.Style} {options.Category} for the following subject: '{options.Subject}'";
+                prompt = $"Write a {options.Style} {options.Category} for the following subject: '{options.Subject}'. Answer in English.";
             }
 
             var payload = new
             {
                 model = "text-davinci-003",
                 prompt = prompt,
-                temperature = 0,
+                temperature = 0.4,
                 max_tokens = 1000,
             };
 
