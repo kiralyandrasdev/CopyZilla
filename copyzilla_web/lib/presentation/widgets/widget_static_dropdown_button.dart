@@ -1,4 +1,5 @@
 import 'package:copyzilla_web/presentation/theme/theme_generated.dart';
+import 'package:copyzilla_web/presentation/theme/theme_sizing.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class StaticDropdownButton<T> extends StatefulWidget {
     this.error = false,
     this.counterText,
     this.counterIcon,
-    this.hintText = "Kérjük válasszon...",
+    this.hintText = "Kérlek válassz...",
     this.descriptionText,
     this.enabled = true,
     required this.items,
@@ -82,7 +83,7 @@ class _StaticDropdownButtonState<T> extends State<StaticDropdownButton<T>> {
             width: widget.width,
             height: widget.height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: ThemeSizing.boxBorderRadius,
               border: Border.all(
                 color: widget.error
                     ? FigmaColors.accentsRed
@@ -153,7 +154,9 @@ class _StaticDropdownButtonState<T> extends State<StaticDropdownButton<T>> {
                         hintText: widget.hintText,
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 15),
-                        hintStyle: const FigmaTextStyles().text,
+                        hintStyle: const FigmaTextStyles().text.copyWith(
+                              color: FigmaColors.greymid,
+                            ),
                       ),
                     ),
                     validator: (T? item) {

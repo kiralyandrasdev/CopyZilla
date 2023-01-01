@@ -1,4 +1,5 @@
 import 'package:copyzilla_web/presentation/theme/theme_generated.dart';
+import 'package:copyzilla_web/presentation/theme/theme_sizing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,7 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             widget.counterText == null
                 ? const SizedBox()
                 : Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       widget.counterText!,
                       style: const FigmaTextStyles().textSM,
@@ -73,16 +74,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
             widget.descriptionText == null
                 ? const SizedBox()
                 : Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       widget.descriptionText!,
-                      style: const FigmaTextStyles().description,
+                      style: const FigmaTextStyles().description.copyWith(
+                            color: Theme.of(context).hintColor,
+                          ),
                     ),
                   ),
             Container(
               height: widget.height,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: ThemeSizing.boxBorderRadius,
                 border: Border.all(
                   color: widget.error
                       ? FigmaColors.accentsRed

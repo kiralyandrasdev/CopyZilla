@@ -12,10 +12,12 @@ class Styles {
               color: Colors.white,
             ),
       ),
+      hintColor: FigmaColors.greymid,
       brightness: Brightness.dark,
       primaryColor: FigmaColors.brandgreen,
       backgroundColor: FigmaColors.brandpurple,
-      scaffoldBackgroundColor: FigmaColors.brandpurple,
+      scaffoldBackgroundColor: Colors.black,
+      dividerColor: FigmaColors.greydark,
       /* hintColor: darkMode
           ? FigmaColors.neutralNeutral500night
           : FigmaColors.neutralNeutral500day,

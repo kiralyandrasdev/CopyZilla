@@ -1,3 +1,4 @@
+import 'package:copyzilla_web/presentation/theme/theme_sizing.dart';
 import 'package:flutter/material.dart';
 
 class ContentCard extends StatelessWidget {
@@ -24,7 +25,7 @@ class ContentCard extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: ThemeSizing.boxBorderRadius,
         border: Border.all(color: Theme.of(context).dividerColor),
         color: Theme.of(context).cardColor,
       ),

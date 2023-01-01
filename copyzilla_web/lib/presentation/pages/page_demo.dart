@@ -62,7 +62,7 @@ class _DemoPageState extends State<DemoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FigmaColors.brandpurple,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -73,13 +73,13 @@ class _DemoPageState extends State<DemoPage> {
               ThemeSizing.verticalSpacerLarge,
               RichText(
                 text: TextSpan(
-                  text: "Copy",
+                  text: "copy",
                   style: const FigmaTextStyles().h1.copyWith(
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.bodyText2!.color!,
                       ),
                   children: [
                     TextSpan(
-                      text: "Zilla",
+                      text: "zilla",
                       style: const FigmaTextStyles().h1.copyWith(
                             color: FigmaColors.brandgreen,
                           ),
@@ -90,7 +90,7 @@ class _DemoPageState extends State<DemoPage> {
               ThemeSizing.verticalSpacerSmall,
               Text(
                 "Marketing célú demó",
-                style: const FigmaTextStyles().h7,
+                style: const FigmaTextStyles().h5,
               ),
               ThemeSizing.verticalSpacerLarge,
               const SizedBox(
@@ -104,7 +104,9 @@ class _DemoPageState extends State<DemoPage> {
               CustomTextField(
                 error: _hintError,
                 controller: _subjectController!,
-                hintText: "Pl. kávézó, esküvői fotózás, ..",
+                hintText: "Kérlek írd be a témádat",
+                descriptionText:
+                    "Kérlek, fejtsd ki a témádat amennyire csak lehet.\nPl. 'arckrém' helyett 'növényi, környezetbarát arckrém a ráncok ellen'",
                 counterText: "Téma",
               ),
               ThemeSizing.verticalSpacer,
@@ -125,7 +127,7 @@ class _DemoPageState extends State<DemoPage> {
               ThemeSizing.verticalSpacer,
               StaticDropdownButton<CopyStyle>(
                 error: _copyStyleEmpty,
-                counterText: "Hangulat",
+                counterText: "Stílus",
                 items: CopyStyle.values,
                 onValueChanged: (style) {
                   setState(() {
@@ -200,7 +202,7 @@ class _DemoPageState extends State<DemoPage> {
               ThemeSizing.verticalSpacerLarge,
               Center(
                 child: Text(
-                  "Copyright 2022 CopyZilla. Minden jog fenntartva. Kizárólag marketing célú demó. A honlap tartalmát, beleértve a statikus és a szoftver által előállított szöveget, grafikákat, képeket és egyéb anyagokat, a szerzői jogi törvények védik, és nem reprodukálhatók, publikálhatók, terjeszthetők, megjeleníthetők vagy továbbíthatók a CopyZilla előzetes írásbeli engedélye nélkül. A CopyZilla nevei és logói a CopyZilla védjegyei, és engedély nélkül nem használhatók. A honlap vagy annak tartalmának jogosulatlan használata szigorúan tilos.",
+                  "© 2023 CopyZilla. Minden jog fenntartva. Kizárólag marketing célú demó. A honlap tartalmát, beleértve a statikus és a szoftver által előállított szöveget, grafikákat, képeket és egyéb anyagokat, a szerzői jogi törvények védik, és nem reprodukálhatók, publikálhatók, terjeszthetők, megjeleníthetők vagy továbbíthatók a CopyZilla előzetes írásbeli engedélye nélkül. A CopyZilla nevei és logói a CopyZilla védjegyei, és engedély nélkül nem használhatók. A honlap vagy annak tartalmának jogosulatlan használata szigorúan tilos.",
                   style: const FigmaTextStyles().description,
                   textAlign: TextAlign.center,
                 ),

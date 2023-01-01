@@ -28,7 +28,9 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double iconSize = 14;
-    final contentColor = enabled ? color : Theme.of(context).dividerColor;
+    final contentColor = enabled
+        ? Theme.of(context).textTheme.bodyText2!.color!
+        : Theme.of(context).dividerColor;
     return GestureDetector(
       onTap: enabled ? onClick : () {},
       child: Container(

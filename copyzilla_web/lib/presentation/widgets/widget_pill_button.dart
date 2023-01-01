@@ -72,7 +72,7 @@ class _AsyncButtonWidgetState extends State<AsyncPillButton> {
           color: widget.enabled
               ? (_complete == true ? FigmaColors.brandgreen : widget.color)
               : Theme.of(context).hintColor,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(0),
         ),
         child: AnimatedSwitcher(
           duration: _fastSwitch == true
@@ -146,7 +146,7 @@ class _AsyncButtonWidgetState extends State<AsyncPillButton> {
           ? widget.loadingIndicator
           : Text(
               widget.text,
-              style: const FigmaTextStyles().textSM.copyWith(
+              style: const FigmaTextStyles().textPillButton.copyWith(
                     color: widget.textColor,
                   ),
             ),
