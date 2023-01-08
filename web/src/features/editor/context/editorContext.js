@@ -4,7 +4,7 @@ export const EditorContext = createContext(null);
 
 export const EditorContextProvider = ({ children }) => {
     const [editorState, setEditorState] = useState("initial");
-    const [editorResult, setEditorResult] = useState("ASD");
+    const [editorResult, setEditorResult] = useState("");
 
     const updateEditorState = (value) => {
         setEditorState(value);

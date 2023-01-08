@@ -1,5 +1,5 @@
 export default class QuickPrompt {
-    constructur(subject, category, style, language) {
+    constructor(subject, category, style, language) {
         this.subject = subject;
         this.category = category;
         this.style = style;

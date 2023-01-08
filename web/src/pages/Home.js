@@ -1,26 +1,28 @@
 import React, { useContext } from "react";
+import { TextButton } from "../components";
 import { EditorContext, EditorForm, EditorLoading, EditorResult } from "../features";
 import "./Home.css";
 
 function Home() {
-    const { editorState } = useContext(EditorContext);
+    const { editorState, updateEditorState } = useContext(EditorContext);
 
-    return <EditorResult />
+    console.log(editorState);
 
     if (editorState == "loading") {
         return <EditorLoading />
     }
 
     if (editorState == "error") {
-        return <h2>Error</h2>
+        return (
+            <div>
+                <p style={{ 'margin-bottom': '20px' }}>Váratlan hiba történt.</p>
+                <TextButton title="Vissza" onClick={() => updateEditorState("initial")}></TextButton>
+            </div>
+        );
     }
 
     if (editorState == "result") {
         return <EditorResult />
-    }
-
-    if (editorState == "default") {
-        return <h2>Default</h2>
     }
 
     return (

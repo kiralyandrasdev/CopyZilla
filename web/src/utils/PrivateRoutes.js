@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../features";
 
 const PrivateRoutes = (props) => {
-  let isLoggedIn = false;
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     isLoggedIn ? <Outlet /> : <Navigate to="/auth/login" />

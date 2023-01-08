@@ -5,7 +5,7 @@ import Header from "./Header";
 
 function Layout(props) {
   return (
-    <div className="layout" id={props.id}>
+    <div className="layout" id="fixed-layout">
       <Header id={props.headerId}></Header>
       <div id="layout-content">
         <Outlet />

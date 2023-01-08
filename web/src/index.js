@@ -1,22 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  BrowserRouter,
-  RouterProvider,
-  createBrowserRouter
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import { AuthContextProvider } from './features';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-// import Root from './routes/Root';
 
-/* const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root></Root>,
-  },
-]); */
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

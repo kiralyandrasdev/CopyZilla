@@ -6,7 +6,7 @@ function Header(props) {
 
     if (isLoggedIn) {
         return (
-            <div className="header" id={props.id}>
+            <div className="header" id="home-header">
                 <a href="/">
                     <h5 id="landing-logo">copyzilla</h5>
                 </a>

@@ -19,6 +19,8 @@
     box-sizing: border-box;
     border: 1px solid #EFEFEF;
     background-color: #F9F9F9;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 @keyframes slidein {

@@ -7,11 +7,11 @@ import { processAdvancedPrompt, processQuickPrompt } from "../services/editorSer
 import './EditorForm.css';
 
 function EditorForm(props) {
-    const [editorMode, setEditorFormMode] = useState("advancedMode");
+    const [editorMode, setEditorMode] = useState("advancedMode");
     const { updateEditorState, updateEditorResult } = useContext(EditorContext);
 
-    const changeEditorFormMode = (mode) => {
-        setEditorFormMode(mode);
+    const changeEditorMode = (mode) => {
+        setEditorMode(mode);
     }
 
     const categories = [
@@ -47,7 +47,7 @@ function EditorForm(props) {
         }
     ]
 
-    const [advancedPrompt, setCustomPrompt] = useState();
+    const [advancedPrompt, setCustomPrompt] = useState("");
     const [advancedPromptError, setAdvancedPromptError] = useState(false);
 
     const onUpdateAdvancedPrompt = (event) => {
@@ -58,7 +58,7 @@ function EditorForm(props) {
         setAdvancedPromptError(value);
     }
 
-    const [subject, setSubject] = useState();
+    const [subject, setSubject] = useState("");
     const [subjectError, setSubjectError] = useState(false);
 
     const onUpdateSubject = (event) => {
@@ -73,7 +73,7 @@ function EditorForm(props) {
     const [categoryError, setCategoryError] = useState(false);
 
     const onUpdateCategory = (value) => {
-        setCategory(prevValue => ({ ...prevValue, "name": value["name"] }));
+        setCategory({ value: value.value, name: value.name });
     }
 
     const onUpdateCategoryError = (value) => {
@@ -84,7 +84,7 @@ function EditorForm(props) {
     const [styleError, setStyleError] = useState(false);
 
     const onUpdateStyle = (value) => {
-        setStyle(prevValue => ({ ...prevValue, "name": value["name"] }));
+        setStyle({ value: value.value, name: value.name });
     }
 
     const onUpdateStyleError = (value) => {
@@ -95,7 +95,7 @@ function EditorForm(props) {
     const [languageError, setLanguageError] = useState(false);
 
     const onUpdateLanguage = (value) => {
-        setLanguage(prevValue => ({ ...prevValue, "name": value["name"] }));
+        setLanguage({ value: value.value, name: value.name });
     }
 
     const onUpdateLanguageError = (value) => {
@@ -146,37 +146,48 @@ function EditorForm(props) {
     async function processPrompt() {
         if (!canProcessPrompt()) return;
 
+        console.log('Processing prompt: ${editorMode}');
+
         updateEditorState("loading");
 
+        let success = true;
+
         if (editorMode == "quickMode") {
-            const promptObject = new QuickPrompt(
+            const quickPromptObject = new QuickPrompt(
                 subject,
                 category.value,
                 style.value,
                 language.value
             );
 
-            await processQuickPrompt(promptObject)
+            await processQuickPrompt(quickPromptObject)
                 .then((result) => {
                     const data = result.data;
                     console.log(data);
                     updateEditorResult(data.value);
                 }).catch((error) => {
                     console.log(error);
-                    throw new Error(error);
+                    success = false;
                 });
         } else {
-            const promptObject = new AdvancedPrompt(advancedPrompt, language.value);
+            const advancedPromptObject = new AdvancedPrompt(
+                advancedPrompt,
+                language.value,
+            );
 
-            await processAdvancedPrompt(promptObject)
+            await processAdvancedPrompt(advancedPromptObject)
                 .then((result) => {
                     const data = result.data;
-                    console.log(data);
                     updateEditorResult(data.value);
                 }).catch((error) => {
                     console.log(error);
-                    throw new Error(error);
+                    success = false;
                 });
+        }
+
+        if (!success) {
+            updateEditorState("error");
+            return;
         }
 
         updateEditorState("result");
@@ -192,8 +203,8 @@ function EditorForm(props) {
         <div id="home">
             <h2>Szerkesztő</h2>
             <div id="editor-mode-toggle">
-                <button className={editorMode === "quickMode" ? "active" : ""} onClick={() => changeEditorFormMode("quickMode")}>Gyors mód</button>
-                <button className={editorMode === "advancedMode" ? "active" : ""} onClick={() => changeEditorFormMode("advancedMode")}>Haladó mód</button>
+                <button className={editorMode === "quickMode" ? "active" : ""} onClick={() => changeEditorMode("quickMode")}>Gyors mód</button>
+                <button className={editorMode === "advancedMode" ? "active" : ""} onClick={() => changeEditorMode("advancedMode")}>Haladó mód</button>
             </div>
             <div id="editor-area">
                 {
