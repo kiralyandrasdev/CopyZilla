@@ -6,7 +6,7 @@ class CustomTextButton extends StatelessWidget {
 
   final VoidCallback onClick;
   final double size;
-  final Color color;
+  final Color? color;
   final bool enabled;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -16,7 +16,7 @@ class CustomTextButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onClick,
-    this.color = Colors.white,
+    this.color,
     this.size = 14,
     this.enabled = true,
     this.showBorder = false,
@@ -28,9 +28,8 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double iconSize = 14;
-    final contentColor = enabled
-        ? Theme.of(context).textTheme.bodyText2!.color!
-        : Theme.of(context).dividerColor;
+    Color buttonColor = color ?? Theme.of(context).textTheme.bodyText2!.color!;
+    final contentColor = enabled ? buttonColor : Theme.of(context).dividerColor;
     return GestureDetector(
       onTap: enabled ? onClick : () {},
       child: Container(
@@ -62,7 +61,7 @@ class CustomTextButton extends StatelessWidget {
                     const Spacer(),
                     Text(
                       text,
-                      style: const FigmaTextStyles().textSM.copyWith(
+                      style: const FigmaTextStyles().text.copyWith(
                             color: contentColor,
                             fontSize: size,
                           ),

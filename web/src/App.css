@@ -1,0 +1,136 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+@import url(https://fonts.googleapis.com/css?family=Source+Serif+Pro);
+
+.layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout #layout-content {
+    margin: auto;
+    padding: 20px;
+}
+
+#fixed-layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    background-color: #EFEFEF;
+    height: 60px;
+    min-height: 60px;
+    width: auto;
+}
+
+.header a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    z-index: 50;
+}
+
+#landing-header a {
+    color: white;
+}
+
+#home-header {
+    background-color: black
+}
+
+#home-header a {
+    color: white
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    width: auto;
+    justify-content: center;
+    height: 60px;
+    min-width: 60px;
+}
+
+.footer a,
+p,
+body,
+input,
+li,
+ul,
+button,
+label {
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+#landing-footer p {
+    color: white;
+}
+
+h1 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 48px;
+    font-weight: 600;
+}
+
+h2 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+h3 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+h4 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+h5 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+h6 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+h7 {
+    font-family: 'Poppins', serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+p {
+    margin: 5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7,
+p {
+    margin: 5px;
+    padding: 0;
+}

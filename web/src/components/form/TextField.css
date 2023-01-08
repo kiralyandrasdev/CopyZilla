@@ -1,0 +1,48 @@
+.text-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-field-container input {
+    border: none;
+    background-color: #F9F9F9;
+    outline: none;
+    flex: 1;
+}
+
+.text-field-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px;
+    padding: 12px 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #EFEFEF;
+    background-color: #F9F9F9;
+    height: 48px;
+    font-size: 14px;
+}
+
+#text-field-container-error {
+    border: 1px solid #DD3B3B;
+}
+
+.text-field-input {
+    font-size: 14px;
+}
+
+.text-field-icon {
+    color: grey;
+}
+
+.text-field-label {
+    font-weight: 600;
+}
+
+.text-field-description {
+    font-size: 12px;
+    color: grey;
+    margin: 5px 0px 0px 0px;
+}

@@ -5,7 +5,7 @@ class Styles {
   static ThemeData themeData(bool darkMode, BuildContext context) {
     return ThemeData(
       fontFamily: "Poppins",
-      cardColor: FigmaColors.greydark,
+      cardColor: darkMode ? FigmaColors.greydark : FigmaColors.greylight,
       textTheme: TextTheme(
         bodyText2: const FigmaTextStyles().text,
         caption: const FigmaTextStyles().description.copyWith(
@@ -13,11 +13,12 @@ class Styles {
             ),
       ),
       hintColor: FigmaColors.greymid,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       primaryColor: FigmaColors.brandgreen,
       backgroundColor: FigmaColors.brandpurple,
-      scaffoldBackgroundColor: Colors.black,
-      dividerColor: FigmaColors.greydark,
+      scaffoldBackgroundColor: darkMode ? Colors.black : Colors.white,
+      dividerColor:
+          darkMode ? FigmaColors.greylight : FigmaColors.greyborderlight,
       /* hintColor: darkMode
           ? FigmaColors.neutralNeutral500night
           : FigmaColors.neutralNeutral500day,

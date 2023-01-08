@@ -1,4 +1,7 @@
 import 'package:copyzilla_web/data/dto/dto_create_text.dart';
+import 'package:copyzilla_web/domain/enums/enum_copy_category.dart';
+import 'package:copyzilla_web/domain/enums/enum_copy_language.dart';
+import 'package:copyzilla_web/domain/enums/enum_copy_style.dart';
 import 'package:copyzilla_web/presentation/pages/page_loading.dart';
 import 'package:copyzilla_web/presentation/theme/theme_generated.dart';
 import 'package:copyzilla_web/presentation/theme/theme_sizing.dart';
@@ -7,37 +10,6 @@ import 'package:copyzilla_web/presentation/widgets/widget_pill_button.dart';
 import 'package:copyzilla_web/presentation/widgets/widget_static_dropdown_button.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
-enum CopyCategory {
-  socialMediaPost,
-  socialMediaBio,
-  socialMediaAd,
-  blogPost,
-  article,
-  essay,
-  emailBody,
-  emailTitle,
-  message,
-  introduction,
-}
-
-enum CopyLanguage {
-  english,
-  hungarian,
-}
-
-enum CopyStyle {
-  casual,
-  formal,
-  funny,
-  stimulating,
-  romantic,
-  melancholic,
-  outraged,
-  mysterious,
-  neutral,
-  exacting,
-}
 
 class DemoPage extends StatefulWidget {
   const DemoPage({super.key});

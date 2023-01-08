@@ -60,8 +60,8 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   Future<void> _generateTextAsync() async {
-    final service = TextGeneratorService();
-    final result = await service.generateText(options: widget.options);
+    final service = PromptService();
+    final result = await service.sendPrompt(options: widget.options);
     Navigator.of(context).pushReplacement(
       PageTransition(
         child: ResultPage(

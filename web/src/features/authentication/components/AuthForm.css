@@ -1,0 +1,17 @@
+.auth-form {
+    margin: auto;
+    max-width: 350px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-field {
+    margin-top: 20px;
+}
+
+.password-field {
+    margin-bottom: 20px;
+}

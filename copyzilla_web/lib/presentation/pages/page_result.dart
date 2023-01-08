@@ -1,4 +1,3 @@
-import 'package:copyzilla_web/presentation/theme/theme_sizing.dart';
 import 'package:copyzilla_web/presentation/widgets/widget_content_card.dart';
 import 'package:copyzilla_web/presentation/widgets/widget_text_button.dart';
 import 'package:flutter/material.dart';
