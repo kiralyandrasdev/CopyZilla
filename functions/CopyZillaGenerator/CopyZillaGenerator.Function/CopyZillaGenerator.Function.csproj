@@ -19,6 +19,10 @@
     <None Remove="JWT" />
     <None Remove="Microsoft.Azure.Functions.Extensions" />
     <None Remove="Models\" />
+    <None Remove="Events\ProcessAdvancedPromptEvent\" />
+    <None Remove="Events\ProcessQuickPromptEvent\DTO\" />
+    <None Remove="Events\ProcessAdvancedPromptEvent\DTO\" />
+    <None Remove="Events\ProcessAdvancedPromptEvent\DTO\AdvancedPromptDTO" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -32,5 +36,7 @@
   <ItemGroup>
     <Folder Include="Functions\" />
     <Folder Include="Models\" />
+    <Folder Include="Events\ProcessQuickPromptEvent\DTO\" />
+    <Folder Include="Events\ProcessAdvancedPromptEvent\DTO\" />
   </ItemGroup>
 </Project>

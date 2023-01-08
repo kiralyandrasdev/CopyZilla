@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CopyZillaGenerator.Function.Events.CreateTextEvent;
+using CopyZillaGenerator.Function.Events.ProcessQuickPromptEvent;
 
 namespace CopyZillaGenerator.Function.Services
 {
 	public interface IOpenAIService
 	{
-		Task<string> GenerateText(CreateTextEventOptions options);
+		Task<string> ProcessPrompt(string prompt);
 	}
 }
 

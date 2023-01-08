@@ -1,11 +1,11 @@
 ﻿using System;
 using FluentValidation;
 
-namespace CopyZillaGenerator.Function.Events.CreateTextEvent
+namespace CopyZillaGenerator.Function.Events.ProcessQuickPromptEvent
 {
-    public class CreateTextEventValidator : AbstractValidator<CreateTextEvent>
+    public class ProcessQuickPromptEventValidator : AbstractValidator<ProcessQuickPromptEvent>
     {
-        public CreateTextEventValidator()
+        public ProcessQuickPromptEventValidator()
         {
             RuleFor(e => e)
                 .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Subject))

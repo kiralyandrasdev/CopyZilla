@@ -1,7 +1,7 @@
 ﻿using System;
-namespace CopyZillaGenerator.Function.Events.CreateTextEvent
+namespace CopyZillaGenerator.Function.Events.ProcessQuickPromptEvent
 {
-	public class CreateTextEventOptions
+	public class QuickPromptOptions
 	{
 		public string Subject { get; set; }
 		public string Category { get; set; }

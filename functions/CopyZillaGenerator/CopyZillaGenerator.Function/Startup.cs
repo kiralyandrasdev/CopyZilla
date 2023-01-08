@@ -15,6 +15,7 @@ namespace CopyZillaGenerator.Function
             builder.Services.AddSingleton<IOpenAIService, OpenAIService>();
             builder.Services.AddSingleton<IEventService, EventService>();
             builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
+            builder.Services.AddSingleton<IPromptBuilder, PromptBuilder>();
 
             //string localhostCorsPolicy = "localhost";
 
