@@ -243,7 +243,7 @@ function EditorForm(props) {
                             <p className="prompt-cost-description-text">Nincs több kredited!</p>
                             <div style={{ 'display': 'flex', 'flex-direction': 'row', 'align-items': 'center' }}>
                                 <TextButton color="#6b4eff" title="Vásárolj kreditet"></TextButton>
-                                <p style={{ 'margin': '0px' }} className="prompt-cost-description-text">vagy</p>
+                                <p style={{ 'margin': '0px 5px' }} className="prompt-cost-description-text">vagy</p>
                                 <TextButton color="#6b4eff" title="válts nagyobb csomagra."></TextButton>
                             </div>
                         </>
