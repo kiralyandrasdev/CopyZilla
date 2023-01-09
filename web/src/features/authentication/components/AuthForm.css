@@ -8,10 +8,19 @@
     flex-direction: column;
 }
 
-.email-field {
+.auth-form-input {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.password-field {
-    margin-bottom: 20px;
+.auth-type-switch-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-type-switch-container p {
+    margin: 0px;
+    color: grey;
 }

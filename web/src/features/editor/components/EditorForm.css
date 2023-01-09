@@ -42,5 +42,12 @@
 
 #prompt-cost-description {
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-cost-description-text {
     color: grey;
 }
