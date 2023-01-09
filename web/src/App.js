@@ -2,8 +2,9 @@ import React from 'react';
 import { Route, Router, Routes } from 'react-router-dom';
 import './App.css';
 import { EditorContext, EditorContextProvider } from './features';
+import AuthLayout from './layout/AuthLayout';
+import LandingLayout from './layout/LandingLayout';
 import Layout from './layout/Layout';
-import LandingLayout from './layout/LandingLayout'
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -28,7 +29,7 @@ function App() {
             </ErrorBoundary>
           } />
       </Route>
-      <Route element={<Layout />} path="/auth">
+      <Route element={<AuthLayout />} path="/auth">
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
       </Route>

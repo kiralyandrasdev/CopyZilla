@@ -6,15 +6,15 @@
     flex-direction: column;
 }
 
-.layout #layout-content {
-    margin: auto;
-    padding: 20px;
+#auth-layout,
+#signed-in-layout {
+    height: 100vh;
 }
 
-#fixed-layout {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+#auth-layout-content,
+#signed-in-layout-content {
+    margin: auto;
+    padding: 20px;
 }
 
 .header {
@@ -35,6 +35,10 @@
     color: black;
     font-weight: 600;
     z-index: 50;
+}
+
+.header-nav-menu a+a {
+    margin-left: 20px;
 }
 
 #landing-header a {
