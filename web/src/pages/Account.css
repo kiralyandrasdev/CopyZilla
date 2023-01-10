@@ -1,0 +1,29 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    margin: auto;
+    min-width: 300px;
+    align-items: flex-start;
+}
+
+#delete-account-button {
+    margin-top: 20px
+}
+
+#delete-account-button p {
+    color: #DD3B3B
+}
+
+#renews-at-text {
+    margin-bottom: 20px;
+}
+
+#change-password-button {
+    margin-bottom: 10px;
+}
+
+.account-section-header {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

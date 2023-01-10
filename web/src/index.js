@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
+import { CreditContextProvider } from './context/creditContext';
 import { AuthContextProvider } from './features';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider value={null}>
-        <App></App>
+        <CreditContextProvider>
+          <App></App>
+        </CreditContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>

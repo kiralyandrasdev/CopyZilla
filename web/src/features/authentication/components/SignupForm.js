@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { AsyncButton, TextButton, TextField } from "../../../components";
 import "./AuthForm.css";
-import { AsyncButton, TextField } from "../../../components";
 
 export default function SignupForm() {
     const [email, setEmail] = useState('');
@@ -22,21 +22,32 @@ export default function SignupForm() {
         setConfirmationPassword(event.target.value);
     };
 
+    let navigate = useNavigate();
+    const routeChange = (path) => {
+        navigate(path);
+    }
+
     return (
         <div className="auth-form">
             <h4>Új fiók létrehozása</h4>
             <p>Hozz létre új fiókot</p>
-            <div className="email-field">
-                <TextField title="E-mail cím" value={email} onChange={handleEmailChange} suffixIcon={<HiOutlineMail />}></TextField>
+            <div className="auth-form-input">
+                <div className="auth-field">
+                    <TextField title="E-mail cím" hint="Fiókhoz tartozó e-mail cím" value={email} onChange={handleEmailChange} suffixIcon={<HiOutlineMail />}></TextField>
+                </div>
+                <div className="auth-field">
+                    <TextField title="Jelszó" hint="Erős jelszó" value={password} onChange={handlePasswordChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
+                </div>
+                <div className="auth-field">
+                    <TextField title="Jelszó megerősítése" hint="Erős jelszó mégegyszer" value={passwordConfirmation} onChange={handlePasswordConfirmationChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
+                </div>
             </div>
-            <div className="password-field">
-                <TextField title="Jelszó" value={password} onChange={handlePasswordChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
+            <div id="auth-button">
+                <AsyncButton title="Regisztráció" onClick={() => routeChange("/user/editor")}></AsyncButton>
             </div>
-            <div className="password-field">
-                <TextField title="Jelszó megerősítése" value={passwordConfirmation} onChange={handlePasswordConfirmationChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
-            </div>
-            <div id="signup-button">
-                <AsyncButton title="Regisztráció"></AsyncButton>
+            <div className="auth-type-switch-container">
+                <p>Már van fiókod? </p>
+                <TextButton title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />
             </div>
         </div>
     );

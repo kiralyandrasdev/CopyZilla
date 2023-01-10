@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import { AsyncButton, DropdownButton, TextArea, TextField } from "../../../components";
+import { AsyncButton, DropdownButton, TextArea, TextButton, TextField } from "../../../components";
+import { CreditContext } from "../../../context/creditContext";
 import { EditorContext } from "../context/editorContext";
 import AdvancedPrompt from "../models/advancedPrompt";
 import QuickPrompt from "../models/quickPrompt";
@@ -9,10 +10,13 @@ import './EditorForm.css';
 function EditorForm(props) {
     const [editorMode, setEditorMode] = useState("advancedMode");
     const { updateEditorState, updateEditorResult } = useContext(EditorContext);
+    const { creditCount, decreaseCreditCount, increaseCreditCount } = useContext(CreditContext);
 
     const changeEditorMode = (mode) => {
         setEditorMode(mode);
     }
+
+    const outOfCredits = creditCount < 1;
 
     const categories = [
         {
@@ -152,6 +156,8 @@ function EditorForm(props) {
 
         let success = true;
 
+        decreaseCreditCount();
+
         if (editorMode == "quickMode") {
             const quickPromptObject = new QuickPrompt(
                 subject,
@@ -168,6 +174,7 @@ function EditorForm(props) {
                 }).catch((error) => {
                     console.log(error);
                     success = false;
+                    increaseCreditCount();
                 });
         } else {
             const advancedPromptObject = new AdvancedPrompt(
@@ -182,6 +189,7 @@ function EditorForm(props) {
                 }).catch((error) => {
                     console.log(error);
                     success = false;
+                    increaseCreditCount();
                 });
         }
 
@@ -225,11 +233,26 @@ function EditorForm(props) {
                 }
                 <DropdownButton error={languageError} value={language} onSelect={onUpdateLanguage} title="Nyelv" items={languages}></DropdownButton>
                 <div className="process-prompt-button">
-                    <AsyncButton title="Rajt!" onClick={processPrompt}></AsyncButton>
+                    <AsyncButton enabled={!outOfCredits} title="Rajt!" onClick={processPrompt}></AsyncButton>
                 </div>
             </div>
-            <p id="prompt-cost-description">A szöveg létrehozása 1 kreditet vesz igénybe.</p>
-        </div>
+            <div id="prompt-cost-description">
+                {
+                    outOfCredits ?
+                        <>
+                            <p className="prompt-cost-description-text">Nincs több kredited!</p>
+                            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'align-items': 'center' }}>
+                                <TextButton color="#6b4eff" title="Vásárolj kreditet"></TextButton>
+                                <p style={{ 'margin': '0px 5px' }} className="prompt-cost-description-text">vagy</p>
+                                <TextButton color="#6b4eff" title="válts nagyobb csomagra."></TextButton>
+                            </div>
+                        </>
+
+                        :
+                        <p className="prompt-cost-description-text">A szöveg létrehozása 1 kreditet vesz igénybe.</p>
+                }
+            </div>
+        </div >
     );
 };
 
