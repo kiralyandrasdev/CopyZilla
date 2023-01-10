@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4D0EA975-C4D7-4757-8364-BC07AB1B201D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C183C62A-7A56-4C5A-B5BB-30B28B59EE19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{6DB898D9-DC29-477F-A419-C9A309E6B17B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.API", "CopyZillaBackend.API\CopyZillaBackend.API.csproj", "{8D1A219E-17CA-4C30-9D14-2E1B09A172DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D1A219E-17CA-4C30-9D14-2E1B09A172DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1A219E-17CA-4C30-9D14-2E1B09A172DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D1A219E-17CA-4C30-9D14-2E1B09A172DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1A219E-17CA-4C30-9D14-2E1B09A172DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6DB898D9-DC29-477F-A419-C9A309E6B17B} = {4D0EA975-C4D7-4757-8364-BC07AB1B201D}
+		{8D1A219E-17CA-4C30-9D14-2E1B09A172DD} = {6DB898D9-DC29-477F-A419-C9A309E6B17B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6380D143-60FA-4DF8-A578-5E6971EFC2B5}
+	EndGlobalSection
+EndGlobal
