@@ -30,7 +30,7 @@ export default function SignupForm() {
     return (
         <div className="auth-form">
             <h4>Új fiók létrehozása</h4>
-            <p>Hozz létre új fiókot</p>
+            <p className="description-text">Hozz létre új fiókot</p>
             <div className="auth-form-input">
                 <div className="auth-field">
                     <TextField title="E-mail cím" hint="Fiókhoz tartozó e-mail cím" value={email} onChange={handleEmailChange} suffixIcon={<HiOutlineMail />}></TextField>

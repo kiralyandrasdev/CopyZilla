@@ -111,6 +111,12 @@ h5 {
     font-weight: 600;
 }
 
+.header h5 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
 h6 {
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
@@ -124,7 +130,7 @@ h7 {
 }
 
 p {
-    margin: 0px 5px;
+    margin: 2px 0px;
 }
 
 .description-text {
@@ -138,6 +144,6 @@ h4,
 h5,
 h6,
 h7 {
-    margin: 5px;
+    margin: 0px 0px;
     padding: 0;
 }

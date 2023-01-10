@@ -5,12 +5,13 @@ import { EditorContext, EditorContextProvider } from './features';
 import AuthLayout from './layout/AuthLayout';
 import LandingLayout from './layout/LandingLayout';
 import Layout from './layout/Layout';
+import Account from './pages/Account';
+import AccountRecovery from './pages/AccountRecovery';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ErrorBoundary from './utils/ErrorBoundary';
-import Account from './pages/Account';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
       <Route element={<AuthLayout />} path="/auth">
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
+        <Route path="/auth/accountRecovery" element={<AccountRecovery />} />
       </Route>
       <Route element={<LandingLayout />}>
         <Route path="/" element={<Landing />} />
