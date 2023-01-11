@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
+    <ProjectReference Include="..\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
+    <ProjectReference Include="..\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
