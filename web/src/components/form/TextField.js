@@ -5,7 +5,7 @@ export default function TextField(props) {
     return (
         <div className="text-field">
             <label className="text-field-label">{props.title}</label>
-            {props.description == null ? "" : <p className="text-field-description">{props.description}</p>}
+            {props.description === null ? "" : <p className="text-field-description">{props.description}</p>}
             <div className="text-field-container" id={props.error ? "text-field-container-error" : ""}>
                 <div className="text-field-icon" id="prefixIcon">
                     {props.prefixIcon}

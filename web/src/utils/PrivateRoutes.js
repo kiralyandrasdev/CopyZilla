@@ -1,12 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "../features";
 
 const PrivateRoutes = (props) => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { accessToken } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log("accesstoken changed: ", accessToken)
+  }, [accessToken]);
 
   return (
-    isLoggedIn ? <Outlet /> : <Navigate to="/auth/login" />
+    "asd" ? <Outlet /> : <Navigate to="/auth/login" />
   );
 }
 

@@ -41,6 +41,12 @@
     margin-left: 20px;
 }
 
+.header-nav-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 #landing-header a {
     color: white;
 }

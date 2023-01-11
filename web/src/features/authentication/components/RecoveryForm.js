@@ -26,7 +26,7 @@ export default function RecoveryForm() {
                 </div>
             </div>
             <div id="auth-button">
-                <AsyncButton onClick={() => routeChange("/auth/login")} title="Ellenőrző kód küldése"></AsyncButton>
+                <AsyncButton loading={false} onClick={() => routeChange("/auth/login")} title="Ellenőrző kód küldése"></AsyncButton>
             </div>
             <div className="auth-type-switch-container">
                 <TextButton title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />

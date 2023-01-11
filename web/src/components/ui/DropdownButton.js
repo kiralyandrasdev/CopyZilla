@@ -12,7 +12,7 @@ function DropdownButton(props) {
     return (
         <div className="dropdown">
             <label className="dropdown-label">{props.title}</label>
-            {props.description == null ? "" : <p className="dropdown-description">{props.description}</p>}
+            {props.description === null ? "" : <p className="dropdown-description">{props.description}</p>}
             <div className="dropdown-container" id={props.error ? "dropdown-container-error" : ""} onClick={handleToggle}>
                 <p className="dropdown-value">{props.value ? props.value["name"] : "Kérlek válassz..."}</p>
                 <div className="dropdown-icon" id="suffixIcon">
