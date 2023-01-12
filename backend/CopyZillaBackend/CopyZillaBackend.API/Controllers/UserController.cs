@@ -1,4 +1,7 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
+using CopyZillaBackend.Application.Contracts.Helpers;
+using CopyZillaBackend.Application.Features.User.Commands;
+using CopyZillaBackend.Application.Features.User.Queries;
 using CopyZillaBackend.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,36 +15,40 @@ namespace CopyZillaBackend.API.Controllers
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IAuthorizationService _authService;
+        private readonly IResponseManager _responseManager;
         private readonly ILogger<PromptController> _log;
 
         public UserController(IMediator mediator,
            IConfiguration configuration,
            IAuthorizationService authService,
-           ILogger<PromptController> log)
+           ILogger<PromptController> log,
+           IResponseManager responseManager)
         {
             _mediator = mediator;
             _configuration = configuration;
             _authService = authService;
             _log = log;
+            _responseManager = responseManager;
         }
 
-        //[HttpPost]
-        //[Route("{firebaseUid}")]
-        //public async Task<ActionResult<CreateUserCommandResponse>> CreateCustomerAsync(string firebaseUid,
-        //    [FromBody] User info)
-        //{
-        //    var result = await _mediator.Send(new CreateUserCommand(firebaseUid, info));
+        [HttpPost]
+        [Route("{firebaseUid}")]
+        public async Task<ActionResult<CreateUserCommandResponse>> CreateUserAsync(string firebaseUid,
+            [FromBody] User user)
+        {
+            var result = await _mediator.Send(new CreateUserCommand(firebaseUid, user));
 
-        //    return _responseManager.MapActionResult(result);
-        //}
+            return _responseManager.MapActionResult(result);
+        }
 
-        //[HttpGet]
-        //[Route("{firebaseUid}")]
-        //public async Task<ActionResult<GetUserQueryResponse>> GetUserAsync(string firebaseUid)
-        //{
-        //    var result = await _mediator.Send(new GetUserQuery(firebaseUid));
+        // TODO: implement
+        [HttpGet]
+        [Route("{firebaseUid}")]
+        public async Task<ActionResult<GetUserQueryResponse>> GetUserAsync(string firebaseUid)
+        {
+            var result = await _mediator.Send(new GetUserQuery(firebaseUid));
 
-        //    return _responseManager.MapActionResult(result);
-        //}
+            return _responseManager.MapActionResult(result);
+        }
     }
 }

@@ -1,12 +1,10 @@
-﻿namespace CopyZillaBackend.Domain.Entities
+﻿namespace CopyZillaBackend.Application.ViewModels
 {
-    public class User : BaseEntity
+    public class UserVm
     {
         public Guid Id { get; set; }
 
         public string FirebaseUId { get; set; }
-
-        public string? StripeCustomerId { get; set; } //only backend
 
         public string FirstName { get; set; }
 

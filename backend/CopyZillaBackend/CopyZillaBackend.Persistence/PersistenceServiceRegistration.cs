@@ -10,7 +10,6 @@ namespace CopyZillaBackend.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // TODO: add sql connection string
             Console.WriteLine(configuration.GetConnectionString("SqlConnection"));
             services.AddDbContext<CopyZillaBackendDBContext>(options => options.UseNpgsql(configuration.GetConnectionString("SqlConnection")));
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));

@@ -1,4 +1,6 @@
+using CopyZillaBackend.API.Helpers;
 using CopyZillaBackend.Application;
+using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Service registration
+builder.Services.AddSingleton<IResponseManager, ResponseManager>();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddPersistenceServices(builder.Configuration);

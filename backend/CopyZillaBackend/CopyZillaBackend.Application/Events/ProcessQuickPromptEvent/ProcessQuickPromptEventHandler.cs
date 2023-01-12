@@ -1,4 +1,5 @@
-﻿using CopyZillaBackend.Application.Contracts.OpenAI;
+﻿using CopyZillaBackend.Application.Common;
+using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent
             var validator = new ProcessQuickPromptEventValidator();
             var validationResult = validator.Validate(request);
 
-            validationResult.Resolve(result);
+            validationResult.ResolveEventResult(result);
 
             // If validation error occurs stop event and return response
             if (!result.Success) return result;

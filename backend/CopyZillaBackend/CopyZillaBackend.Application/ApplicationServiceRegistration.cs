@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CopyZillaBackend.Application.Profiles;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -9,6 +10,7 @@ namespace CopyZillaBackend.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
             return services;
         }
     }

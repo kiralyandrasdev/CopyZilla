@@ -14,12 +14,50 @@ namespace CopyZillaBackend.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasKey(u => u.Id);
+            //modelBuilder.Entity<User>().HasKey(u => u.Id);
 
-            // TODO: add test data 
-            modelBuilder.Entity<User>().HasData(new User
+            // Test user data 
+            modelBuilder.Entity<User>().HasData(new User()
             {
-                // fill properties here
+                Id = Guid.NewGuid(),
+                FirebaseUId = "000",
+                StripeCustomerId = "000",
+                FirstName = "Test",
+                LastName = "User",
+                Email = "testemail@test.com",
+                AccountEnabled = true,
+                AccountDisabled = false,
+                CreditCount = 20,
+                SubscriptionPlanName = "Basic",
+                SubscriptionValidUntil = DateTime.MaxValue
+            });
+            modelBuilder.Entity<User>().HasData(new User()
+            {
+                Id = Guid.NewGuid(),
+                FirebaseUId = "111",
+                StripeCustomerId = "111",
+                FirstName = "Test",
+                LastName = "User",
+                Email = "testemail@test.com",
+                AccountEnabled = false,
+                AccountDisabled = true,
+                CreditCount = 100,
+                SubscriptionPlanName = "Pro",
+                SubscriptionValidUntil = DateTime.MaxValue
+            });
+            modelBuilder.Entity<User>().HasData(new User()
+            {
+                Id = Guid.NewGuid(),
+                FirebaseUId = "222",
+                StripeCustomerId = "222",
+                FirstName = "Test",
+                LastName = "User",
+                Email = "testemail@test.com",
+                AccountEnabled = true,
+                AccountDisabled = false,
+                CreditCount = 1000,
+                SubscriptionPlanName = "Ultra-Pro",
+                SubscriptionValidUntil = DateTime.MaxValue
             });
         }
     }

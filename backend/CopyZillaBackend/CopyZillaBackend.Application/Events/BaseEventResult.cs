@@ -2,7 +2,7 @@
 
 namespace CopyZillaBackend.Application.Events
 {
-    public class BaseEventResult
+    public class BaseEventResult 
     {
         [JsonIgnore]
         public bool Success { get => string.IsNullOrEmpty(ErrorMessage); }
