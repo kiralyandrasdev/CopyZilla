@@ -1,0 +1,6 @@
+export const ACTION_TYPES = { 
+    AUTH_LOG_IN,
+    AUTH_CREATE_USER,
+    AUTH_SIGN_OUT,
+    API_FETCH_USER,
+}

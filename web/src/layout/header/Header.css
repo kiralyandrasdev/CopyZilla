@@ -1,0 +1,43 @@
+.header-nav-burger-icon {
+    color: white;
+    font-size: 18px
+}
+
+.header a {
+    cursor: pointer;
+}
+
+.header-nav-burger-icon:hover {
+    cursor: pointer;
+}
+
+#header-nav-burger-popup {
+    display: none;
+}
+
+#header-nav-burger-popup.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 150px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    right: 20px
+}
+
+.header-nav-burger-menu-item {
+    list-style: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 20px 0px 20px 0px;
+    color: black;
+}
+
+.header-nav-burger-menu-item a {
+    color: black;
+}
+
+.header-nav-burger-menu-item ul li a p {
+    color: #DD3B3B;
+}

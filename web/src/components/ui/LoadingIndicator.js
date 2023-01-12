@@ -1,10 +1,15 @@
 import React from "react";
+import { ClipLoader } from "react-spinners";
 import "./LoadingIndicator.css";
 
-export default function LoadingIndicator() {
+export default function LoadingIndicator(props) {
   return (
-    <div className="spinner-container">
-      <div className="loading-spinner"></div>
-    </div>
+    <ClipLoader
+      loading={true}
+      color="black"
+      cssOverride={props.cssOverride || {}}
+      speedMultiplier={1}
+      size="20px"
+    />
   );
 }

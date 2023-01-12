@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AsyncButton, DropdownButton, TextArea, TextButton, TextField } from "../../../components";
-import { CreditContext } from "../../../context/creditContext";
+import { UserContext } from "../../user/context/userContext";
 import { EditorContext } from "../context/editorContext";
 import AdvancedPrompt from "../models/advancedPrompt";
 import QuickPrompt from "../models/quickPrompt";
@@ -10,13 +10,13 @@ import './EditorForm.css';
 function EditorForm(props) {
     const [editorMode, setEditorMode] = useState("advancedMode");
     const { updateEditorState, updateEditorResult } = useContext(EditorContext);
-    const { creditCount, decreaseCreditCount, increaseCreditCount } = useContext(CreditContext);
+    const { user, decreaseCreditCount, increaseCreditCount } = useContext(UserContext);
 
     const changeEditorMode = (mode) => {
         setEditorMode(mode);
     }
 
-    const outOfCredits = creditCount < 1;
+    const outOfCredits = user.creditCount < 1;
 
     const categories = [
         {
@@ -108,28 +108,28 @@ function EditorForm(props) {
 
     function canProcessPrompt() {
         if (editorMode === "quickMode") {
-            if (subject == null || subject == "") {
+            if (subject === null || subject === "") {
                 onUpdateSubjectError(true);
                 return false;
             } else {
                 onUpdateSubjectError(false);
             }
 
-            if (category == null) {
+            if (category === null) {
                 onUpdateCategoryError(true);
                 return false;
             } else {
                 onUpdateCategoryError(false);
             }
 
-            if (style == null) {
+            if (style === null) {
                 onUpdateStyleError(true);
                 return false;
             } else {
                 onUpdateStyleError(false);
             }
         } else {
-            if (advancedPrompt == null || advancedPrompt == "") {
+            if (advancedPrompt === null || advancedPrompt === "") {
                 onUpdateAdvancedPromptError(true);
                 return false;
             } else {
@@ -137,7 +137,7 @@ function EditorForm(props) {
             }
         }
 
-        if (language == null) {
+        if (language === null) {
             onUpdateLanguageError(true);
             return false;
         } else {
@@ -150,15 +150,11 @@ function EditorForm(props) {
     async function processPrompt() {
         if (!canProcessPrompt()) return;
 
-        console.log('Processing prompt: ${editorMode}');
-
-        updateEditorState("loading");
-
         let success = true;
 
         decreaseCreditCount();
 
-        if (editorMode == "quickMode") {
+        if (editorMode === "quickMode") {
             const quickPromptObject = new QuickPrompt(
                 subject,
                 category.value,
@@ -213,7 +209,7 @@ function EditorForm(props) {
             <div id="editor-mode-toggle">
                 <button className={editorMode === "quickMode" ? "active" : ""} onClick={() => changeEditorMode("quickMode")}>Gyors mód</button>
                 <button className={editorMode === "advancedMode" ? "active" : ""} onClick={() => changeEditorMode("advancedMode")}>Haladó mód</button>
-            </div>
+            </div >
             <div id="editor-area">
                 {
                     editorMode === "quickMode" ?

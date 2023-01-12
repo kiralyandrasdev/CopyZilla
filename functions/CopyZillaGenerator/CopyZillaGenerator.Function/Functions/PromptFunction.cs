@@ -47,8 +47,8 @@ namespace CopyZillaGenerator.Function.Functions
 
         [FunctionName("advancedPrompt")]
         public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPrompt(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)][FromBody] AdvancedPromptOptions options, HttpRequest req,
-    ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)][FromBody] AdvancedPromptOptions options, HttpRequest req,
+            ILogger log)
         {
             log.LogInformation($"[Function::quickPrompt::{DateTime.Now.ToString()}] Invoked");
 

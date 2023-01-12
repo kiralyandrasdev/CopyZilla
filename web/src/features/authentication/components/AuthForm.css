@@ -11,6 +11,9 @@
 .auth-form-input {
     margin-top: 20px;
     margin-bottom: 20px;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
 }
 
 .auth-type-switch-container {

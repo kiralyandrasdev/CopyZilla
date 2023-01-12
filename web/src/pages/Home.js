@@ -8,11 +8,11 @@ function Home() {
 
     console.log(editorState);
 
-    if (editorState == "loading") {
+    if (editorState === "loading") {
         return <EditorLoading />
     }
 
-    if (editorState == "error") {
+    if (editorState === "error") {
         return (
             <div>
                 <p style={{ 'margin-bottom': '20px' }}>Váratlan hiba történt.</p>
@@ -21,7 +21,7 @@ function Home() {
         );
     }
 
-    if (editorState == "result") {
+    if (editorState === "result") {
         return <EditorResult />
     }
 

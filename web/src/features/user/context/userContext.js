@@ -1,20 +1,32 @@
 import React, { createContext, useState } from 'react';
+import usePersistState from '../../../hooks/usePersistState';
 
 export const UserContext = createContext(null);
 
 export const UserContextProvider = ({ children }) => {
-    const [userCredit, setUserCredit] = useState(50);
+    const [user, setUser] = usePersistState("user", {});
 
     const decreaseUserCredit = () => {
-        setUserCredit(prevCredits => prevCredits - -1);
+        setUser({
+            ...values,
+            creditCount: user.creditCount - 1,
+        });
     }
 
-    const increaseUserCredit = (value) => {
-        setUserCredit(prevCredits => prevCredits + value);
+    const increaseUserCredit = () => {
+        setUser({
+            ...values,
+            creditCount: user.creditCount + 1,
+        });
+    }
+
+    const updateUser = (value) => {
+        setUser(value);
     }
 
     const values = {
-        userCredit,
+        user,
+        updateUser,
         decreaseUserCredit,
         increaseUserCredit
     };
