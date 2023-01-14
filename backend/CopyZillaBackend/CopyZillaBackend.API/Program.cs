@@ -20,6 +20,18 @@ builder.Services.AddSingleton<IResponseManager, ResponseManager>();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddTransient<IResponseManager, ResponseManager>();
+
+builder.Services.AddCors(options => options
+        .AddPolicy(name: "localhost", (policy) =>
+        {
+            policy
+                .WithOrigins("http://localhost", "https://localhost")
+                .SetIsOriginAllowed(host => true)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        })
+    );
 
 var app = builder.Build();
 
@@ -33,6 +45,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors("localhost");
 
 //app.UseAuthorization();
 

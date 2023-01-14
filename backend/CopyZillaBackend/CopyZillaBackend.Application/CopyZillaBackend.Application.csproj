@@ -21,4 +21,21 @@
     <ProjectReference Include="..\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\User\Commands\" />
+    <Folder Include="Features\User\Queries\" />
+    <Folder Include="Features\User\Commands\CreateUserCommand\" />
+    <Folder Include="Features\Prompt\" />
+    <Folder Include="Features\Prompt\ProcessAdvancedPromptEvent\" />
+    <Folder Include="Features\Prompt\ProcessQuickPromptEvent\" />
+    <Folder Include="Features\User\Queries\GetUserQuery\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Features\User\Commands\CreateUserCommand\" />
+    <None Remove="Features\Prompt\" />
+    <None Remove="Features\Prompt\ProcessAdvancedPromptEvent\" />
+    <None Remove="Features\Prompt\ProcessQuickPromptEvent\" />
+    <None Remove="Features\User\Queries\GetUserQuery\" />
+  </ItemGroup>
 </Project>

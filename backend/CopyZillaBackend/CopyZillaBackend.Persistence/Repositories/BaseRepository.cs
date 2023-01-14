@@ -1,11 +1,13 @@
 ﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CopyZillaBackend.Persistence.Repositories
 {
     public class BaseRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
-        private readonly CopyZillaBackendDBContext _context;
+        protected readonly CopyZillaBackendDBContext _context;
 
         public BaseRepository(CopyZillaBackendDBContext context)
         {
@@ -16,32 +18,56 @@ namespace CopyZillaBackend.Persistence.Repositories
         {
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
+
             return entity;
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<T?> GetByIdAsync(Guid id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>()
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            var result = await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == entity.Id);
+
+            if(result == null)
+                return;
+
+            _context.Entry(result).State = EntityState.Detached;
+
+            result = entity;
+
+            _context.Set<T>().Update(result);
+
+            await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+
+            if (result == null)
+                return;
+
+            _context.Set<T>().Remove(result);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IReadOnlyList<T>> GetPagedReponseAsync(int page, int size)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return (await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id)) != null;
         }
     }
 }

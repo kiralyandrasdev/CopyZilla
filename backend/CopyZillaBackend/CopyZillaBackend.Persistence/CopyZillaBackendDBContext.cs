@@ -14,51 +14,21 @@ namespace CopyZillaBackend.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().HasKey(u => u.Id);
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
 
-            // Test user data 
-            modelBuilder.Entity<User>().HasData(new User()
-            {
-                Id = Guid.NewGuid(),
-                FirebaseUId = "000",
-                StripeCustomerId = "000",
-                FirstName = "Test",
-                LastName = "User",
-                Email = "testemail@test.com",
-                AccountEnabled = true,
-                AccountDisabled = false,
-                CreditCount = 20,
-                SubscriptionPlanName = "Basic",
-                SubscriptionValidUntil = DateTime.MaxValue
-            });
-            modelBuilder.Entity<User>().HasData(new User()
-            {
-                Id = Guid.NewGuid(),
-                FirebaseUId = "111",
-                StripeCustomerId = "111",
-                FirstName = "Test",
-                LastName = "User",
-                Email = "testemail@test.com",
-                AccountEnabled = false,
-                AccountDisabled = true,
-                CreditCount = 100,
-                SubscriptionPlanName = "Pro",
-                SubscriptionValidUntil = DateTime.MaxValue
-            });
-            modelBuilder.Entity<User>().HasData(new User()
-            {
-                Id = Guid.NewGuid(),
-                FirebaseUId = "222",
-                StripeCustomerId = "222",
-                FirstName = "Test",
-                LastName = "User",
-                Email = "testemail@test.com",
-                AccountEnabled = true,
-                AccountDisabled = false,
-                CreditCount = 1000,
-                SubscriptionPlanName = "Ultra-Pro",
-                SubscriptionValidUntil = DateTime.MaxValue
-            });
+            modelBuilder.Entity<User>()
+                .Property(e => e.AccountEnabled)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.AccountDeleted)
+                .HasDefaultValue(false);
+
+            /// To add new migration run this command from /src folder:
+            /// dotnet-ef migrations add {migration name} --project CopyZillaBackend.Persistence/CopyZillaBackend.Persistence.csproj --startup-project CopyZillaBackend.API/CopyZillaBackend.API.csproj
+            ///
+            /// To update the database to the latest migration this command from the /src folder:
+            /// dotnet-ef database update --project CopyZillaBackend.Persistence/CopyZillaBackend.Persistence.csproj --startup-project CopyZillaBackend.API/CopyZillaBackend.API.csproj
         }
     }
 }
