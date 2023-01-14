@@ -1,5 +1,5 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
-using CopyZillaBackend.Application.Contracts.Common;
+using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent;
 using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent.DTO;
 using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent;
@@ -42,7 +42,7 @@ namespace CopyZillaBackend.API.Controllers
         {
             var result = await _mediator.Send(new CreateUserCommand(options));
 
-            return _responseManager.MapActionResult(result, HttpContext);
+            return _responseManager.MapActionResult(result);
         }
 
         [HttpGet]
@@ -51,7 +51,7 @@ namespace CopyZillaBackend.API.Controllers
         {
             var result = await _mediator.Send(new GetUserQuery(firebaseUid));
 
-            return _responseManager.MapActionResult(result, HttpContext);
+            return _responseManager.MapActionResult(result);
         }
 
         [HttpPost]
