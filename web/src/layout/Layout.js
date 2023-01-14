@@ -12,13 +12,20 @@ export default function Layout() {
 
   // const { data, error, isLoading, isFetching, isSuccess } = useGetUserQuery({ firebaseUid: firebaseUid });
 
-  const { user, isLoading, error } = useSelector(state => state.user);
+  // const { user, isLoading, error } = useSelector(state => state.user);
+  const {
+    data: user,
+    error,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = useGetUserQuery({ firebaseUid });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("dispatch  getUser...");
-    dispatch(getUser(firebaseUid));
+    // console.log("dispatch  getUser...");
+    // dispatch(getUser(firebaseUid));
   }, []);
 
   const layoutContent = useCallback(() => {

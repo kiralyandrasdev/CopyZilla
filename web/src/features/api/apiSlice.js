@@ -15,6 +15,9 @@ export const apiSlice = createApi({
                 method: 'GET',
             }),
             providesTags: ['User'],
+            transformResponse: (response) => {
+                return response.value;
+            }
         }),
         createUser: builder.mutation({
             query: (user) => ({

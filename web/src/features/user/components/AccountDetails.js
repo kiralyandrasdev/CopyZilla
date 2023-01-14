@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiKey, FiMail } from "react-icons/fi";
-import { useSelector } from "react-redux";
-import { TextButton } from "../../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadingIndicator, TextButton } from "../../../components";
 import { useGetUserQuery } from "../../api/apiSlice";
+import { getUser } from "../actions/userActions";
 import './AccountDetails.css';
 
 export default function AccountDetails() {
     const { firebaseUid } = useSelector((state) => state.auth);
     const {
-        email,
-        lastName,
-        firstName,
-        subscriptionPlanName,
-        subscriptionValidUntil,
-    } = useGetUserQuery({ firebaseUid: firebaseUid }).data || {};
+        data: user,
+        error,
+        isLoading,
+        isFetching,
+        isSuccess,
+    } = useGetUserQuery({ firebaseUid });
+
+    if (isLoading || isFetching) {
+        return <LoadingIndicator></LoadingIndicator>
+    }
 
     return (
         <div id="account-details-container">
             <h2>Fiók</h2>
-            <p className="description-text">{email}</p>
+            <p className="description-text">{user.email}</p>
             <h5 className="account-section-header">Előfizetés</h5>
-            <p>{subscriptionPlanName}</p>
-            <p className="description-text" id="renews-at-text">Megújul ekkor: {subscriptionValidUntil}</p>
+            <p>{user.subscriptionPlanName}</p>
+            <p className="description-text" id="renews-at-text">Megújul ekkor: {user.subscriptionValidUntil}</p>
             <TextButton color="#6b4eff" title="Előfizetés és fizetési adatok kezelése"></TextButton>
             <TextButton color="#6b4eff" title="Kredit vásárlás"></TextButton>
             <h5 className="account-section-header">Fiók</h5>

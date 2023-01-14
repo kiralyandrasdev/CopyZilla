@@ -9,11 +9,11 @@ import AdvancedPrompt from "../models/advancedPrompt";
 import QuickPrompt from "../models/quickPrompt";
 import './EditorForm.css';
 
-function EditorForm(props) {
+function EditorForm() {
     const { isLoading, result, error, editorMode } = useSelector(state => state.editor);
 
     const { firebaseUid } = useSelector(state => state.auth);
-    const { data: user } = useGetUserQuery(firebaseUid)
+    // const { data: user } = useGetUserQuery(firebaseUid)
 
     const dispatch = useDispatch();
 

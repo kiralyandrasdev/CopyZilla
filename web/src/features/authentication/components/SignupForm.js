@@ -107,8 +107,9 @@ export default function SignupForm() {
         }
         dispatch(createFirebaseUser({ email, password }))
             .then((res) => {
+                console.log("Firebase create result: ", res);
                 if (res.type == "auth/createUser/fulfilled") {
-                    dispatch(createUser({ email: email, firebaseUid: firebaseUid }))
+                    dispatch(createUser({ email: email, firebaseUid: res.payload.firebaseUid }))
                         .then((apiRes) => {
                             if (apiRes.type == "user/createUser/fulfilled") {
                                 routeChange("/user/editor");
