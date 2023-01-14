@@ -19,5 +19,35 @@ namespace CopyZillaBackend.Persistence.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(e => e.FirebaseUId == firebaseUid);
         }
+
+        public async Task IncreaseCreditCount(string firebaseUid, int amount)
+        {
+            var user = await GetByFirebaseUidAsync(firebaseUid);
+
+            if (user == null)
+                return;
+
+            user.CreditCount += amount;
+
+            _context.Users.Update(user);
+            _context.Entry(user).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DecreseCreditCount(string firebaseUid, int amount)
+        {
+            var user = await GetByFirebaseUidAsync(firebaseUid);
+
+            if (user == null)
+                return;
+
+            user.CreditCount -= amount;
+
+            _context.Users.Update(user);
+            _context.Entry(user).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

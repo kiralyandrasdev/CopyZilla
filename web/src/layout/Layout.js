@@ -1,32 +1,30 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback, useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { LoadingIndicator } from "../components";
+import { UserContext } from "../features";
 import { useGetUserQuery } from "../features/api/apiSlice";
-import { getUser } from "../features/user/actions/userActions";
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
 
 export default function Layout() {
   const { firebaseUid } = useSelector((state) => state.auth);
+  const { user, updateUser } = useContext(UserContext);
 
-  // const { data, error, isLoading, isFetching, isSuccess } = useGetUserQuery({ firebaseUid: firebaseUid });
-
-  // const { user, isLoading, error } = useSelector(state => state.user);
   const {
-    data: user,
+    data,
     error,
     isLoading,
     isFetching,
     isSuccess,
   } = useGetUserQuery({ firebaseUid });
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    // console.log("dispatch  getUser...");
-    // dispatch(getUser(firebaseUid));
-  }, []);
+    if (data) {
+      console.log("updating user...", data);
+      updateUser(data);
+    }
+  }, [data]);
 
   const layoutContent = useCallback(() => {
     if (error) {

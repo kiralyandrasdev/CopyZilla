@@ -1,5 +1,6 @@
 ﻿using CopyZillaBackend.Application.Common;
 using CopyZillaBackend.Application.Contracts.OpenAI;
+using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -8,12 +9,14 @@ namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent
 {
     public class ProcessQuickPromptEventHandler : IRequestHandler<ProcessQuickPromptEvent, ProcessQuickPromptEventResult>
     {
+        private readonly IUserRepository _repository;
         private readonly IConfiguration _configuration;
         private readonly IOpenAIService _openAIService;
         private readonly IPromptBuilder _promptBuilder;
 
-        public ProcessQuickPromptEventHandler(IConfiguration configuration, IOpenAIService openAIService, IPromptBuilder promptBuilder)
+        public ProcessQuickPromptEventHandler(IUserRepository repository, IConfiguration configuration, IOpenAIService openAIService, IPromptBuilder promptBuilder)
         {
+            _repository = repository;
             _configuration = configuration;
             _openAIService = openAIService;
             _promptBuilder = promptBuilder;
@@ -34,6 +37,8 @@ namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent
 
             string prompt = _promptBuilder.Build(request.Options);
             result.Value = await _openAIService.ProcessPrompt(prompt);
+
+            await _repository.DecreseCreditCount(request.FirebaseUid, 1);
 
             return result;
         }

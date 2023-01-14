@@ -55,8 +55,8 @@ namespace CopyZillaBackend.API.Controllers
         }
 
         [HttpPost]
-        [Route("{userId}/quickPrompt")]
-        public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync(string userId, [FromBody] QuickPromptOptions options)
+        [Route("{firebaseUid}/quickPrompt")]
+        public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync(string firebaseUid, [FromBody] QuickPromptOptions options)
         {
             _log.LogInformation($"[PromptController::SendQuickPromptAsync::{DateTime.Now.ToString()}] Invoked");
 
@@ -66,12 +66,12 @@ namespace CopyZillaBackend.API.Controllers
             //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
 
-            return await _mediator.Send(new ProcessQuickPromptEvent(options));
+            return await _mediator.Send(new ProcessQuickPromptEvent(firebaseUid, options));
         }
 
         [HttpPost]
-        [Route("{userId}/advancedPrompt")]
-        public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync(string userId, [FromBody] AdvancedPromptOptions options)
+        [Route("{firebaseUid}/advancedPrompt")]
+        public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync(string firebaseUid, [FromBody] AdvancedPromptOptions options)
         {
             _log.LogInformation($"[PromptController::SendAdvancedPromptAsync::{DateTime.Now.ToString()}] Invoked");
 
@@ -81,7 +81,7 @@ namespace CopyZillaBackend.API.Controllers
             //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
 
-            return await _mediator.Send(new ProcessAdvancedPromptEvent(options));
+            return await _mediator.Send(new ProcessAdvancedPromptEvent(firebaseUid, options));
         }
     }
 }

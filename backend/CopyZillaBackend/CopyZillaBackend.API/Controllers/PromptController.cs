@@ -28,34 +28,34 @@ namespace CopyZillaBackend.API.Controllers
             _log = log;
         }
 
-        [HttpPost]
-        [Route("quickPrompt")]
-        public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync([FromBody] QuickPromptOptions options)
-        {
-            _log.LogInformation($"[PromptController::SendQuickPromptAsync::{DateTime.Now.ToString()}] Invoked");
+        //[HttpPost]
+        //[Route("quickPrompt")]
+        //public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync([FromBody] QuickPromptOptions options)
+        //{
+        //    _log.LogInformation($"[PromptController::SendQuickPromptAsync::{DateTime.Now.ToString()}] Invoked");
 
-            //if (!_authService.Validate(req))
-            //    return new UnauthorizedResult();
+        //    //if (!_authService.Validate(req))
+        //    //    return new UnauthorizedResult();
 
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
+        //    //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        //    //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
 
-            return await _mediator.Send(new ProcessQuickPromptEvent(options));
-        }
+        //    return await _mediator.Send(new ProcessQuickPromptEvent(options));
+        //}
 
-        [HttpPost]
-        [Route("advancedPrompt")]
-        public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync([FromBody] AdvancedPromptOptions options)
-        {
-            _log.LogInformation($"[PromptController::SendAdvancedPromptAsync::{DateTime.Now.ToString()}] Invoked");
+        //[HttpPost]
+        //[Route("advancedPrompt")]
+        //public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync([FromBody] AdvancedPromptOptions options)
+        //{
+        //    _log.LogInformation($"[PromptController::SendAdvancedPromptAsync::{DateTime.Now.ToString()}] Invoked");
 
-            //if (!_authService.Validate(req))
-            //    return new UnauthorizedResult();
+        //    //if (!_authService.Validate(req))
+        //    //    return new UnauthorizedResult();
 
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
+        //    //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        //    //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
 
-            return await _mediator.Send(new ProcessAdvancedPromptEvent(options));
-        }
+        //    return await _mediator.Send(new ProcessAdvancedPromptEvent(options));
+        //}
     }
 }

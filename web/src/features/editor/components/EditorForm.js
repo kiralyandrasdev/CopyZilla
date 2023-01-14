@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FiChevronLeft } from 'react-icons/fi';
 import { useDispatch, useSelector } from "react-redux";
 import { AsyncButton, DropdownButton, TextArea, TextButton, TextField } from "../../../components";
 import { useGetUserQuery } from "../../api/apiSlice";
+import { UserContext } from "../../user/context/userContext";
 import { processAdvancedPrompt, processQuickPrompt } from "../actions/editorActions";
 import { resetEditor, setEditorMode } from "../editorSlice";
 import AdvancedPrompt from "../models/advancedPrompt";
@@ -13,7 +14,7 @@ function EditorForm() {
     const { isLoading, result, error, editorMode } = useSelector(state => state.editor);
 
     const { firebaseUid } = useSelector(state => state.auth);
-    // const { data: user } = useGetUserQuery(firebaseUid)
+    const { decreaseCreditCount } = useContext(UserContext);
 
     const dispatch = useDispatch();
 
@@ -150,6 +151,8 @@ function EditorForm() {
 
     async function processPrompt() {
         if (!canProcessPrompt()) return;
+
+        decreaseCreditCount();
 
         if (editorMode === "quickMode") {
             const quickPromptObject = new QuickPrompt(
