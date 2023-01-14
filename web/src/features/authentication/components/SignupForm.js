@@ -4,7 +4,9 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
-import { createUser } from "../actions/authActions";
+// import { useCreateUserMutation } from "../../api/apiSlice";
+import { createUser } from "../../user/actions/userActions";
+import { createFirebaseUser } from "../actions/authActions";
 import "./AuthForm.css";
 
 export default function SignupForm() {
@@ -16,15 +18,36 @@ export default function SignupForm() {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
     const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState('');
 
-    const { accessToken, loading, error } = useSelector(
-        (state) => state.auth
-    )
+    const {
+        accessToken,
+        firebaseUid,
+        loading: firebaseCreateLoading,
+        error: firebaseCreateError
+    } = useSelector((state) => state.auth)
+
+    /*     const [
+            createUser,
+            {
+                isLoading: userCreateLoading,
+                error: userCreateError,
+                isSuccess: userCreateSuccess,
+            }
+        ] = useCreateUserMutation(); */
+
+    const {
+        isLoading: userCreateLoading,
+        error: userCreateError,
+        user: userCreateUser
+    } = useSelector(state => state.user);
+
+    const error = firebaseCreateError || userCreateError;
+    const loading = firebaseCreateLoading || userCreateLoading;
 
     useEffect(() => {
-        if (accessToken) {
+        if (accessToken && userCreateUser) {
             routeChange("/user/editor");
         }
-    }, [accessToken]);
+    }, [accessToken, userCreateUser]);
 
     const dispatch = useDispatch();
 
@@ -82,7 +105,20 @@ export default function SignupForm() {
         } else {
             updatePasswordConfirmationErrorMessage('');
         }
-        dispatch(createUser({ email, password }));
+        dispatch(createFirebaseUser({ email, password }))
+            .then((res) => {
+                if (res.type == "auth/createUser/fulfilled") {
+                    dispatch(createUser({ email: email, firebaseUid: firebaseUid }))
+                        .then((apiRes) => {
+                            if (apiRes.type == "user/createUser/fulfilled") {
+                                routeChange("/user/editor");
+                            }
+                        })
+                }
+            })
+            .catch((err) => {
+                console.log("User create error: ", err);
+            });
     }
 
     const authErrorMessage = useCallback(() => {

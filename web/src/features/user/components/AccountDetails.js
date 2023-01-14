@@ -1,19 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import { FiKey, FiMail } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import { TextButton } from "../../../components";
-import { UserContext } from "../context/userContext";
+import { useGetUserQuery } from "../../api/apiSlice";
 import './AccountDetails.css';
 
 export default function AccountDetails() {
-    const { user } = useContext(UserContext);
+    const { firebaseUid } = useSelector((state) => state.auth);
+    const {
+        email,
+        lastName,
+        firstName,
+        subscriptionPlanName,
+        subscriptionValidUntil,
+    } = useGetUserQuery({ firebaseUid: firebaseUid }).data || {};
 
     return (
         <div id="account-details-container">
             <h2>Fiók</h2>
-            <p className="description-text">{user.email}</p>
+            <p className="description-text">{email}</p>
             <h5 className="account-section-header">Előfizetés</h5>
-            <p>{user.subscriptionPlanName}</p>
-            <p className="description-text" id="renews-at-text">Megújul ekkor: {user.subscriptionValidUntil}</p>
+            <p>{subscriptionPlanName}</p>
+            <p className="description-text" id="renews-at-text">Megújul ekkor: {subscriptionValidUntil}</p>
             <TextButton color="#6b4eff" title="Előfizetés és fizetési adatok kezelése"></TextButton>
             <TextButton color="#6b4eff" title="Kredit vásárlás"></TextButton>
             <h5 className="account-section-header">Fiók</h5>

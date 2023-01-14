@@ -5,8 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import { AuthContextProvider, UserContextProvider } from './features';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 import store from './redux/store/store';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -14,11 +14,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AuthContextProvider value={null}>
-          <UserContextProvider>
-            <App></App>
-          </UserContextProvider>
-        </AuthContextProvider>
+        <App></App>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

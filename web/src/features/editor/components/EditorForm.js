@@ -1,22 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { FiChevronLeft } from 'react-icons/fi';
+import { useDispatch, useSelector } from "react-redux";
 import { AsyncButton, DropdownButton, TextArea, TextButton, TextField } from "../../../components";
-import { UserContext } from "../../user/context/userContext";
-import { EditorContext } from "../context/editorContext";
+import { useGetUserQuery } from "../../api/apiSlice";
+import { processAdvancedPrompt, processQuickPrompt } from "../actions/editorActions";
+import { resetEditor, setEditorMode } from "../editorSlice";
 import AdvancedPrompt from "../models/advancedPrompt";
 import QuickPrompt from "../models/quickPrompt";
-import { processAdvancedPrompt, processQuickPrompt } from "../services/editorService";
 import './EditorForm.css';
 
 function EditorForm(props) {
-    const [editorMode, setEditorMode] = useState("advancedMode");
-    const { updateEditorState, updateEditorResult } = useContext(EditorContext);
-    const { user, decreaseCreditCount, increaseCreditCount } = useContext(UserContext);
+    const { isLoading, result, error, editorMode } = useSelector(state => state.editor);
 
-    const changeEditorMode = (mode) => {
-        setEditorMode(mode);
-    }
+    const { firebaseUid } = useSelector(state => state.auth);
+    const { data: user } = useGetUserQuery(firebaseUid)
 
-    const outOfCredits = user.creditCount < 1;
+    const dispatch = useDispatch();
+
+    const outOfCredits = false;
 
     const categories = [
         {
@@ -150,10 +151,6 @@ function EditorForm(props) {
     async function processPrompt() {
         if (!canProcessPrompt()) return;
 
-        let success = true;
-
-        decreaseCreditCount();
-
         if (editorMode === "quickMode") {
             const quickPromptObject = new QuickPrompt(
                 subject,
@@ -162,53 +159,51 @@ function EditorForm(props) {
                 language.value
             );
 
-            await processQuickPrompt(quickPromptObject)
-                .then((result) => {
-                    const data = result.data;
-                    console.log(data);
-                    updateEditorResult(data.value);
-                }).catch((error) => {
-                    console.log(error);
-                    success = false;
-                    increaseCreditCount();
-                });
+            dispatch(processQuickPrompt({ firebaseUid, prompt: quickPromptObject }));
         } else {
             const advancedPromptObject = new AdvancedPrompt(
                 advancedPrompt,
                 language.value,
             );
 
-            await processAdvancedPrompt(advancedPromptObject)
-                .then((result) => {
-                    const data = result.data;
-                    updateEditorResult(data.value);
-                }).catch((error) => {
-                    console.log(error);
-                    success = false;
-                    increaseCreditCount();
-                });
+            dispatch(processAdvancedPrompt({ firebaseUid, prompt: advancedPromptObject }));
         }
-
-        if (!success) {
-            updateEditorState("error");
-            return;
-        }
-
-        updateEditorState("result");
     }
 
-    function delay(time) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(), time);
-        });
+    if (result) {
+        return (
+            <div className="text-result-page">
+                <h2>Result</h2>
+                <div className="prompt-result-container">
+                    <p>{result}</p>
+                </div>
+                <TextButton prefixIcon={<FiChevronLeft />} title="Vissza" onClick={() => dispatch(resetEditor())}></TextButton>
+            </div>
+        );
+    }
+
+    if (isLoading) {
+        return (
+            <div className="text-loading-page">
+                <h2>Loading...</h2>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="text-loading-page">
+                <h2>Error: {error}</h2>
+            </div>
+        );
     }
 
     return (
         <div id="home">
             <h2>Szerkesztő</h2>
             <div id="editor-mode-toggle">
-                <button className={editorMode === "quickMode" ? "active" : ""} onClick={() => changeEditorMode("quickMode")}>Gyors mód</button>
-                <button className={editorMode === "advancedMode" ? "active" : ""} onClick={() => changeEditorMode("advancedMode")}>Haladó mód</button>
+                <button className={editorMode === "quickMode" ? "active" : ""} onClick={() => dispatch(setEditorMode("quickMode"))}>Gyors mód</button>
+                <button className={editorMode === "advancedMode" ? "active" : ""} onClick={() => dispatch(setEditorMode("advancedMode"))}>Haladó mód</button>
             </div >
             <div id="editor-area">
                 {

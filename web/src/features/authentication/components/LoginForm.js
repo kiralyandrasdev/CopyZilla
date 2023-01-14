@@ -3,7 +3,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
-import { loginUser } from "../actions/authActions";
+import { loginFirebaseUser, loginUser } from "../actions/authActions";
 import "./AuthForm.css";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +15,11 @@ export default function LoginForm() {
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-    const { accessToken, loading, error } = useSelector(
+    const { loading, error } = useSelector(
         (state) => state.auth
     )
+
+    const { accessToken } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (accessToken) {
@@ -61,7 +63,7 @@ export default function LoginForm() {
         } else {
             updatePasswordErrorMessage('');
         }
-        dispatch(loginUser({ email, password }));
+        dispatch(loginFirebaseUser({ email, password }));
     }
 
     const authErrorMessage = useCallback(() => {

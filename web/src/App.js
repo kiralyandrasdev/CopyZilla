@@ -25,18 +25,14 @@ function App() {
           <Route path="/user/editor" element=
             {
               <ErrorBoundary>
-                <EditorContextProvider>
-                  <Home />
-                </EditorContextProvider>
+                <Home />
               </ErrorBoundary>
             }
           />
           <Route path="/user/account" element=
             {
               <ErrorBoundary>
-                <EditorContextProvider>
-                  <Account />
-                </EditorContextProvider>
+                <Account />
               </ErrorBoundary>
             }
           />

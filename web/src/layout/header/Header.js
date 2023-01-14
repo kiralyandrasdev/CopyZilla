@@ -1,43 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext, UserContext } from '../../features';
-import { signOut } from '../../features/authentication/actions/authActions';
+import { useGetUserQuery } from '../../features/api/apiSlice';
+import { signOut, signOutFirebaseUser } from '../../features/authentication/actions/authActions';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import './Header.css';
 
 function Header(props) {
     const { width, height } = useWindowDimensions();
-
-    const { accessToken } = useSelector((state) => state.auth);
-
-    const dispatch = useDispatch();
-
     const portrait = height / width >= 16 / 10;
 
     const [navOpen, setNavOpen] = useState(false);
-
     const toggleNavMenu = () => {
         setNavOpen(!navOpen);
     }
 
-    let navigate = useNavigate();
-    const routeChange = (path) => {
-        navigate(path);
-    }
-
+    const dispatch = useDispatch();
     const handleLogout = () => {
-        dispatch(signOut());
+        dispatch(signOutFirebaseUser());
     }
 
-    useEffect(() => {
-         if (!accessToken) {
-             routeChange("/auth/login");
-         }
-    }, [accessToken]);
+    const { accessToken, firebaseUid } = useSelector((state) => state.auth);
 
     if (accessToken && props.id === "signed-in-header") {
+        const { creditCount } = useGetUserQuery({ firebaseUid: firebaseUid }).data || {};
         return (
             <div className="header" id="home-header">
                 <a href="/">
@@ -59,6 +46,7 @@ function Header(props) {
                         </div>
                         :
                         <div className="header-nav-menu">
+                            {creditCount && <a className="header-credit-count" style={{ 'color': '#6b4eff' }}>{creditCount} kredit</a>}
                             <a href="/user/editor">Szerkesztő</a>
                             <a href="/user/account">Fiók</a>
                             <a onClick={handleLogout}>Kijelentkezés</a>

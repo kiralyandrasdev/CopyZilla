@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export const loginUser = createAsyncThunk(
+export const loginFirebaseUser = createAsyncThunk(
     'auth/loginUser',
     async ({ email, password }, thunkApi) => {
         const auth = getAuth();
@@ -14,7 +14,7 @@ export const loginUser = createAsyncThunk(
     }
 )
 
-export const createUser = createAsyncThunk(
+export const createFirebaseUser = createAsyncThunk(
     'auth/createUser',
     async ({ email, password }, thunkApi) => {
         const auth = getAuth();
@@ -27,7 +27,7 @@ export const createUser = createAsyncThunk(
     }
 )
 
-export const signOut = createAsyncThunk(
+export const signOutFirebaseUser = createAsyncThunk(
     'auth/signOut',
     async (thunkApi) => {
         const auth = getAuth();

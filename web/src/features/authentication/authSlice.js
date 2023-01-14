@@ -1,27 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUser, loginUser, signOut } from "./actions/authActions";
+import { createFirebaseUser, loginFirebaseUser, signOutFirebaseUser } from "./actions/authActions";
 
-const localAccessToken = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-        return accessToken;
+const getValue = (key) => {
+    const value = localStorage.getItem(key);
+    if (value) {
+        return value;
     } else {
         return null;
     }
 }
 
-const saveAccessToken = (accessToken) => {
-    localStorage.setItem("accessToken", accessToken);
+const saveValue = (key, value) => {
+    localStorage.setItem(key, value);
 }
 
-const removeAccessToken = () => {
-    localStorage.removeItem("accessToken");
+const purgeKey = (key) => {
+    localStorage.removeItem(key);
 }
 
 const initialState = {
     loading: false,
-    firebaseUid: null,
-    accessToken: localAccessToken(),
+    firebaseUid: getValue("firebase_uid"),
+    accessToken: getValue("access_token"),
     error: null,
     success: false,
 }
@@ -30,61 +30,66 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        saveUser: (state, action) => {
-            state.value = action.payload;
+        setCredentials: (state, { payload }) => {
+            state.accessToken = payload.accessToken;
+            state.firebaseUid = payload.firebaseUid;
         },
+        logOut: (state) => {
+            state.accessToken = null;
+            state.firebaseUid = null;
+        }
     },
     extraReducers: {
-        [loginUser.pending]: (state) => {
+        [loginFirebaseUser.pending]: (state) => {
             state.loading = true;
             state.error = null;
         },
-        [loginUser.rejected]: (state, { payload }) => {
+        [loginFirebaseUser.rejected]: (state, { payload }) => {
             state.loading = false;
             state.error = payload;
         },
-        [loginUser.fulfilled]: (state, { payload }) => {
+        [loginFirebaseUser.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.error = null;
             state.accessToken = payload.accessToken;
             state.firebaseUid = payload.firebaseUid;
-            saveAccessToken(payload.accessToken);
+            saveValue("access_token", payload.accessToken);
+            saveValue("firebase_uid", payload.firebaseUid);
         },
-        [createUser.pending]: (state) => {
+        [createFirebaseUser.pending]: (state) => {
             state.loading = true;
             state.error = null;
         },
-        [createUser.rejected]: (state, { payload }) => {
+        [createFirebaseUser.rejected]: (state, { payload }) => {
             state.loading = false;
             state.error = payload;
         },
-        [createUser.fulfilled]: (state, { payload }) => {
+        [createFirebaseUser.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.error = null;
             state.accessToken = payload.accessToken;
             state.firebaseUid = payload.firebaseUid;
-            saveAccessToken(payload.accessToken);
+            saveValue("access_token", payload.accessToken);
+            saveValue("firebase_uid", payload.firebaseUid);
         },
-        [signOut.pending]: (state) => {
+        [signOutFirebaseUser.pending]: (state) => {
             console.log("Signing out");
             state.loading = true;
+
         },
-        [signOut.rejected]: (state, { payload }) => {
-            console.log("Signing out rejected: ", payload);
+        [signOutFirebaseUser.rejected]: (state, { payload }) => {
             state.loading = false;
             state.error = payload;
         },
-        [signOut.fulfilled]: (state) => {
-            removeAccessToken();
+        [signOutFirebaseUser.fulfilled]: (state) => {
+            purgeKey("access_token");
+            purgeKey("firebase_uid");
             state.loading = false;
             state.error = null;
             state.accessToken = null;
             state.firebaseUid = null;
-            console.log("signed out, new state: ", state)
         }
     }
 });
 
-export const { saveUser } = authSlice.actions;
-
-export default authSlice.reducer;
+export const { setCredentials, logOut } = authSlice.actions;

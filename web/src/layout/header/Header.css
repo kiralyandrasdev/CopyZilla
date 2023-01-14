@@ -7,8 +7,25 @@
     cursor: pointer;
 }
 
+.header p {
+    color: white
+}
+
 .header-nav-burger-icon:hover {
     cursor: pointer;
+}
+
+.header-nav-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.header-credit-count {
+    color: #6b4eff;
 }
 
 #header-nav-burger-popup {
