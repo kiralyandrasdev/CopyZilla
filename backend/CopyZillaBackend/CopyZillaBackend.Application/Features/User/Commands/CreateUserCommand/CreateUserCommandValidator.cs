@@ -21,6 +21,11 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
                 .MustAsync(UniqueFirebaseUid)
                 .WithMessage("FirebaseUID is already present in the database.")
                 .WithErrorCode("400");
+
+            RuleFor(e => e)
+                .Must(e => e.Options.Email != null)
+                .WithMessage("Email must not be null.")
+                .WithErrorCode("400");
         }
 
         private async Task<bool> UniqueFirebaseUid(CreateUserCommand e, CancellationToken token)

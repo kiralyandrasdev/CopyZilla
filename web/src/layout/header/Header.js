@@ -47,7 +47,7 @@ function Header(props) {
                         </div>
                         :
                         <div className="header-nav-menu">
-                            {user.creditCount && <a className="header-credit-count" style={{ 'color': '#6b4eff' }}>{user.creditCount} kredit</a>}
+                            {user.creditCount != null && <a className="header-credit-count" style={{ 'color': '#6b4eff' }}>{user.creditCount} kredit</a>}
                             <a href="/user/editor">Szerkesztő</a>
                             <a href="/user/account">Fiók</a>
                             <a onClick={handleLogout}>Kijelentkezés</a>

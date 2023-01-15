@@ -4,6 +4,7 @@ using CopyZillaBackend.Application.Features.Webhook.ProcessStripeWebhook;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 
 namespace CopyZillaBackend.API.Controllers
 {
@@ -31,12 +32,12 @@ namespace CopyZillaBackend.API.Controllers
         /// </summary>
         /// <param name="payload"></param>
         /// <returns></returns>
-        [Route("payment/webhook")]
+        [Route("payment")]
         [HttpPost]
-        public IActionResult ProcessStripeWebhook([FromBody] StripeWebhookPayload payload)
+        public IActionResult ProcessStripeWebhook([FromBody] dynamic payload)
         {
-            // We should not wait for the event
-            Task.Run(() => _mediator.Send(new ProcessStripeWebhookCommand(payload)));
+            // We should not wait for the event to finish processing before returning with a response
+            // Task.Run(() => _mediator.Send(new ProcessStripeWebhookCommand(payload)));
 
             return new NoContentResult();
         }

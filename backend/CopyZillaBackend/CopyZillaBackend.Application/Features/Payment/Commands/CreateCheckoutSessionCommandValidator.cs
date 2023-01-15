@@ -19,6 +19,10 @@ namespace CopyZillaBackend.Application.Features.Payment.Commands
             RuleFor(e => e)
               .Must(e => e.Options.PriceId != null)
               .WithMessage("PriceId must not be null.");
+
+            RuleFor(e => e)
+                .MustAsync(ExistsAsync)
+                .WithMessage("User with given FirebaseUID does not exist.");
         }
 
         private async Task<bool> ExistsAsync(CreateCheckoutSessionCommand e, CancellationToken token)

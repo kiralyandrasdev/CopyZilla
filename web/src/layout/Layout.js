@@ -21,7 +21,6 @@ export default function Layout() {
 
   useEffect(() => {
     if (data) {
-      console.log("updating user...", data);
       updateUser(data);
     }
   }, [data]);

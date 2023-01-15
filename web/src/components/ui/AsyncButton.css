@@ -18,7 +18,8 @@
     align-items: center;
     background-color: #38FFC3;
     height: 48px;
-    width: 350px;
+    width: 100%;
+    min-width: 200px;
 }
 
 #async-button-disabled {

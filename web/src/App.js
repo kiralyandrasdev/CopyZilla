@@ -3,16 +3,17 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { firebaseConfig } from './config/firebaseConfig';
-import { EditorContextProvider } from './features';
 import AuthLayout from './layout/AuthLayout';
 import LandingLayout from './layout/LandingLayout';
 import Layout from './layout/Layout';
 import Account from './pages/Account';
 import AccountRecovery from './pages/AccountRecovery';
+import CreditRefill from './pages/CreditRefill';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
 import ErrorBoundary from './utils/ErrorBoundary';
 import PrivateRoutes from './utils/PrivateRoutes';
 
@@ -33,6 +34,20 @@ function App() {
             {
               <ErrorBoundary>
                 <Account />
+              </ErrorBoundary>
+            }
+          />
+          <Route path="/user/creditRefill" element=
+            {
+              <ErrorBoundary>
+                <CreditRefill />
+              </ErrorBoundary>
+            }
+          />
+          <Route path="/user/checkout/completed" element=
+            {
+              <ErrorBoundary>
+                <CheckoutCompleted />
               </ErrorBoundary>
             }
           />

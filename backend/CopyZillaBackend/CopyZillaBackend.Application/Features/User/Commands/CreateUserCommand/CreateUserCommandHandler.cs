@@ -1,4 +1,5 @@
 ﻿using System;
+using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
 using MediatR;
@@ -8,10 +9,12 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserCommandResult>
     {
         private readonly IUserRepository _repository;
+        private readonly IStripeService _stripeService;
 
-        public CreateUserCommandHandler(IUserRepository repository)
+        public CreateUserCommandHandler(IUserRepository repository, IStripeService stripeService)
         {
             _repository = repository;
+            _stripeService = stripeService;
         }
 
         public async Task<CreateUserCommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -26,8 +29,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
             if (!result.Success)
                 return result;
 
-            /// Create customer in Stripe through Stripe API and return customerId
-            string stripeCustomerId = $"stripeCustomerId{DateTime.Now.ToShortDateString()}";
+            var customer = await _stripeService.CreateCustomerAsync(request.Options.Email);
 
             /// Attach the required subscription to the newly created customer and return the product plan name
             string subscriptionPlanName = $"subscriptionPlanName{DateTime.Now.ToShortDateString()}";
@@ -38,7 +40,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
             var user = new Domain.Entities.User()
             {
                 FirebaseUId = request.Options.FirebaseUid,
-                StripeCustomerId = stripeCustomerId,
+                StripeCustomerId = customer.Id,
                 Email = request.Options.Email,
                 FirstName = request.Options.FirstName,
                 LastName = request.Options.LastName,

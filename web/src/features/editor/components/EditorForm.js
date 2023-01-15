@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { FiChevronLeft } from 'react-icons/fi';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AsyncButton, DropdownButton, TextArea, TextButton, TextField } from "../../../components";
 import { useGetUserQuery } from "../../api/apiSlice";
 import { UserContext } from "../../user/context/userContext";
@@ -14,11 +15,13 @@ function EditorForm() {
     const { isLoading, result, error, editorMode } = useSelector(state => state.editor);
 
     const { firebaseUid } = useSelector(state => state.auth);
-    const { decreaseCreditCount } = useContext(UserContext);
+    const { user, decreaseCreditCount } = useContext(UserContext);
 
     const dispatch = useDispatch();
 
-    const outOfCredits = false;
+    const outOfCredits = user.creditCount < 1;
+
+    const navigate = useNavigate();
 
     const categories = [
         {
@@ -213,7 +216,14 @@ function EditorForm() {
                     editorMode === "quickMode" ?
                         (
                             <div>
-                                <TextField onChange={onUpdateSubject} value={subject} error={subjectError} hint="Kérlek, adj meg egy tárgyat" title="Tárgy" description="Lorem ipsum"></TextField>
+                                <TextField
+                                    onChange={onUpdateSubject}
+                                    value={subject}
+                                    error={subjectError}
+                                    hint="Kérlek, adj meg egy tárgyat"
+                                    title="Tárgy"
+                                    description="Lorem ipsum"
+                                />
                                 <DropdownButton error={categoryError} value={category} onSelect={onUpdateCategory} title="Kategória" items={categories}></DropdownButton>
                                 <DropdownButton error={styleError} value={style} onSelect={onUpdateStyle} title="Stílus" items={styles}></DropdownButton>
 
@@ -236,7 +246,7 @@ function EditorForm() {
                         <>
                             <p className="prompt-cost-description-text">Nincs több kredited!</p>
                             <div style={{ 'display': 'flex', 'flex-direction': 'row', 'align-items': 'center' }}>
-                                <TextButton color="#6b4eff" title="Vásárolj kreditet"></TextButton>
+                                <TextButton onClick={() => navigate("/user/creditRefill")} color="#6b4eff" title="Vásárolj kreditet"></TextButton>
                                 <p style={{ 'margin': '0px 5px' }} className="prompt-cost-description-text">vagy</p>
                                 <TextButton color="#6b4eff" title="válts nagyobb csomagra."></TextButton>
                             </div>
