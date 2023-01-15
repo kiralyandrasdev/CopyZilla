@@ -29,6 +29,8 @@ namespace CopyZillaBackend.API.Controllers
         /// Stripe documentation suggests: https://stripe.com/docs/webhooks.
         ///
         /// To test the webhook in development environemnt follow the Stripe guide: https://stripe.com/docs/webhooks/test
+        ///
+        /// Setup local testing environment: https://dashboard.stripe.com/test/webhooks
         /// </summary>
         /// <param name="payload"></param>
         /// <returns></returns>
