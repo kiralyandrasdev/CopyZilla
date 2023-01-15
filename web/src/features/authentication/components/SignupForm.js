@@ -129,7 +129,7 @@ export default function SignupForm() {
         if (!error) return error;
         if (error == "auth/invalid-email") {
             return "Helytelen e-mail cím";
-        }
+        } 
         if (error == "auth/user-not-found") {
             return "Nem található felhasználó";
         }
@@ -141,6 +141,9 @@ export default function SignupForm() {
         }
         if (error == "auth/weak-password") {
             return "A jelszó minimum 8 karakter hosszú kell legyen."
+        }
+        if (error == "auth/network-request-failed") {
+            return "Hálózati hiba";
         }
         return error;
     });

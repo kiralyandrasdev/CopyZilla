@@ -15,11 +15,7 @@ export default function LoginForm() {
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-    const { loading, error } = useSelector(
-        (state) => state.auth
-    )
-
-    const { accessToken } = useSelector((state) => state.auth);
+    const { accessToken, loading, error } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (accessToken) {
@@ -78,6 +74,9 @@ export default function LoginForm() {
         }
         if (error == "auth/wrong-password") {
             return "Helytelen jelszó";
+        }
+        if(error == "auth/network-request-failed") {
+            return "Hálózati hiba";
         }
         return error;
     });

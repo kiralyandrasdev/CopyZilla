@@ -29,6 +29,12 @@
     <Folder Include="Features\Prompt\ProcessAdvancedPromptEvent\" />
     <Folder Include="Features\Prompt\ProcessQuickPromptEvent\" />
     <Folder Include="Features\User\Queries\GetUserQuery\" />
+    <Folder Include="Contracts\Payment\" />
+    <Folder Include="Features\Payment\" />
+    <Folder Include="Features\Payment\Commands\" />
+    <Folder Include="Features\Payment\Queries\" />
+    <Folder Include="Features\Webhook\" />
+    <Folder Include="Features\Webhook\ProcessStripeWebhook\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,5 +43,11 @@
     <None Remove="Features\Prompt\ProcessAdvancedPromptEvent\" />
     <None Remove="Features\Prompt\ProcessQuickPromptEvent\" />
     <None Remove="Features\User\Queries\GetUserQuery\" />
+    <None Remove="Contracts\Payment\" />
+    <None Remove="Features\Payment\" />
+    <None Remove="Features\Payment\Commands\" />
+    <None Remove="Features\Payment\Queries\" />
+    <None Remove="Features\Webhook\" />
+    <None Remove="Features\Webhook\ProcessStripeWebhook\" />
   </ItemGroup>
 </Project>
