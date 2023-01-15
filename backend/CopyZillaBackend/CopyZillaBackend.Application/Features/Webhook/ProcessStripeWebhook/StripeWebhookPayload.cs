@@ -3,9 +3,7 @@ namespace CopyZillaBackend.Application.Features.Webhook.ProcessStripeWebhook
 {
 	public class StripeWebhookPayload
 	{
-		public StripeWebhookPayload()
-		{
-		}
+		public string Event { get; set; }
 	}
 }
 

@@ -1,8 +1,10 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
 using CopyZillaBackend.Application.Contracts.OpenAI;
+using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using CopyZillaBackend.Infrastructure.Authorization;
 using CopyZillaBackend.Infrastructure.OpenAI;
+using CopyZillaBackend.Infrastructure.Payment;
 using CopyZillaBackend.Infrastructure.Prompt;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +17,7 @@ namespace CopyZillaBackend.Infrastructure
             services.AddSingleton<IAuthorizationService, AuthorizationService>();
             services.AddSingleton<IOpenAIService, OpenAIService>();
             services.AddSingleton<IPromptBuilder, PromptBuilder>();
+            services.AddSingleton<IStripeService, StripeService>();
 
             return services;
         }
