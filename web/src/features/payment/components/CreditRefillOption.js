@@ -18,7 +18,10 @@ export default function CreditRefillOptions(props) {
 
     return (
         <div className="credit-refill-option-container">
-            <h6>50 kredit</h6>
+            <div className="credit-refill-option-header">
+                <h6>{props.data.name || "Kredit feltöltés"}</h6>
+                <p>{props.data.cost || "0$"}</p>
+            </div>
             <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Kiválaszt"></AsyncButton>
         </div>
     );

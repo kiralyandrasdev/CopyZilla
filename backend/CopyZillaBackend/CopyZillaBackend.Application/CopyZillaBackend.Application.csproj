@@ -38,6 +38,7 @@
     <Folder Include="Features\Webhook\Attributes\" />
     <Folder Include="Features\Webhook\Enum\" />
     <Folder Include="Contracts\Webhook\" />
+    <Folder Include="Features\Payment\Queries\GetProductListQuery\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,5 +56,6 @@
     <None Remove="Features\Webhook\Attributes\" />
     <None Remove="Features\Webhook\Enum\" />
     <None Remove="Contracts\Webhook\" />
+    <None Remove="Features\Payment\Queries\GetProductListQuery\" />
   </ItemGroup>
 </Project>

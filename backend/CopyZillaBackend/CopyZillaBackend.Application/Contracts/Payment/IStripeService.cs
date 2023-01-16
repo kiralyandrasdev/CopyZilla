@@ -31,16 +31,10 @@ namespace CopyZillaBackend.Application.Contracts.Payment
         Task<Subscription> CreateSubscriptionAsync(string customerId, string priceId);
 
         /// <summary>
-        /// Returns available subscription plans.
+        /// Returns available products. Type can be either 'goods' or 'subscription', non case sensitive.
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Product>> GetAvailableSubscriptionsAsync();
-
-        /// <summary>
-        /// Returns available one-time purchase products.
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<Product>> GetAvailableProductsAsync();
+        Task<List<Product>> GetAvailableProductsAsync(string type);
 
         /// <summary>
         /// Creates checkout session url to follow for client to complete purchase.

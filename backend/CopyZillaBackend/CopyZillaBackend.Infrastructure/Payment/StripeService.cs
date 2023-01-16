@@ -72,34 +72,29 @@ namespace CopyZillaBackend.Infrastructure.Payment
             return await subscriptionService.CreateAsync(options);
         }
 
-        public async Task<IEnumerable<Product>> GetAvailableProductsAsync()
+        public async Task<List<Product>> GetAvailableProductsAsync(string type)
         {
             var productService = new ProductService();
 
             var productListOptions = new ProductListOptions
             {
-                Active = true,
+                Active = true
             };
 
             var products = await productService.ListAsync(
               productListOptions);
 
-            return products.Data.Where(e => e.Metadata?["type"] == "goods");
-        }
+            var filteredProducts = products.Data.Where(e => e.Metadata?["type"] == type.ToLower()).ToList();
 
-        public async Task<IEnumerable<Product>> GetAvailableSubscriptionsAsync()
-        {
-            var productService = new ProductService();
+            var priceService = new PriceService();
+            var priceGetOptions = new PriceGetOptions() { Expand = new List<string>() { "currency_options" } };
 
-            var productListOptions = new ProductListOptions
+            foreach(var product in filteredProducts)
             {
-                Active = true,
-            };
+                product.DefaultPrice = await priceService.GetAsync(product.DefaultPriceId, priceGetOptions);
+            }
 
-            var products = await productService.ListAsync(
-              productListOptions);
-
-            return products.Data.Where(e => e.Metadata?["type"] == "subscription");
+            return filteredProducts;
         }
 
         public async Task<Customer> GetCustomerByEmailAsync(string email)

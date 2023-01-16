@@ -22,13 +22,13 @@ namespace CopyZillaBackend.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly IAuthorizationService _authService;
         private readonly IResponseManager _responseManager;
-        private readonly ILogger<PromptController> _log;
+        private readonly ILogger<UserController> _log;
 
         public UserController(IMediator mediator,
            IConfiguration configuration,
            IAuthorizationService authService,
            IResponseManager responseManager,
-           ILogger<PromptController> log)
+           ILogger<UserController> log)
         {
             _mediator = mediator;
             _configuration = configuration;
