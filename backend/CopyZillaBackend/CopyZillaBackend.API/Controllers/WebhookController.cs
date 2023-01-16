@@ -1,9 +1,12 @@
 ﻿using System;
 using CopyZillaBackend.Application.Contracts.Helpers;
-using CopyZillaBackend.Application.Features.Webhook.ProcessStripeWebhook;
+using CopyZillaBackend.Application.Contracts.Payment;
+using CopyZillaBackend.Application.Features.Webhook.Command;
+using CopyZillaBackend.Application.Webhook.Enum;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Stripe;
 
 namespace CopyZillaBackend.API.Controllers
@@ -12,15 +15,9 @@ namespace CopyZillaBackend.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class WebhookController : ControllerBase
-	{
-        private readonly IMediator _mediator;
-		private readonly IResponseManager _responseManager;
-
-        public WebhookController(IMediator mediator, IResponseManager responseManager)
-        {
-            _mediator = mediator;
-            _responseManager = responseManager;
-        }
+    {
+        private static readonly Dictionary<string, WebhookEventType> _supportedPaymentEventTypes
+            = new Dictionary<string, WebhookEventType>() { { "checkout.session.completed", WebhookEventType.CheckoutSessionCompleted } };
 
         /// <summary>
         /// TODO: Verify Stripe signature to secure endpoint: https://stripe.com/docs/webhooks/signatures.
@@ -36,10 +33,29 @@ namespace CopyZillaBackend.API.Controllers
         /// <returns></returns>
         [Route("payment")]
         [HttpPost]
-        public IActionResult ProcessStripeWebhook([FromBody] dynamic payload)
+        public async Task<IActionResult> ProcessStripeWebhook([FromServices] IServiceScopeFactory serviceScopeFactory)
         {
-            // We should not wait for the event to finish processing before returning with a response
-            // Task.Run(() => _mediator.Send(new ProcessStripeWebhookCommand(payload)));
+            var body = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+            var @event = JsonConvert.DeserializeObject<Event>(body);
+
+            if (_supportedPaymentEventTypes.ContainsKey(@event?.Type!))
+            {
+                // We should not wait for the event to finish processing before returning with a response
+                // Later we should rather que events in a background service since this forces
+                // the framework to do something that it's not designed to
+                //
+                // https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/background-tasks-with-ihostedservice
+                Task.Run(async () =>
+                {
+                    // New scope is needed otherwise returning from the controller
+                    // will kill the process before finishing the task
+                    using (var scope = serviceScopeFactory.CreateScope())
+                    {
+                        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                        await mediator.Send(new ProcessWebhookCommand(@event!, _supportedPaymentEventTypes[@event!.Type]));
+                    }
+                });
+            }
 
             return new NoContentResult();
         }

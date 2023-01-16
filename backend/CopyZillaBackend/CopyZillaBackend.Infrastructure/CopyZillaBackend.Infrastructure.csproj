@@ -20,8 +20,12 @@
   <ItemGroup>
     <None Remove="Payment\" />
     <None Remove="Stripe.net" />
+    <None Remove="Webhook\" />
+    <None Remove="Webhook\Events\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Payment\" />
+    <Folder Include="Webhook\" />
+    <Folder Include="Webhook\EventHandlers\" />
   </ItemGroup>
 </Project>

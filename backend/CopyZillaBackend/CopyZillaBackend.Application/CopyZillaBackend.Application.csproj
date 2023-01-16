@@ -35,7 +35,9 @@
     <Folder Include="Features\Payment\Commands\" />
     <Folder Include="Features\Payment\Queries\" />
     <Folder Include="Features\Webhook\" />
-    <Folder Include="Features\Webhook\ProcessStripeWebhook\" />
+    <Folder Include="Features\Webhook\Attributes\" />
+    <Folder Include="Features\Webhook\Enum\" />
+    <Folder Include="Contracts\Webhook\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,7 +51,9 @@
     <None Remove="Features\Payment\Commands\" />
     <None Remove="Features\Payment\Queries\" />
     <None Remove="Features\Webhook\" />
-    <None Remove="Features\Webhook\ProcessStripeWebhook\" />
     <None Remove="Stripe.net" />
+    <None Remove="Features\Webhook\Attributes\" />
+    <None Remove="Features\Webhook\Enum\" />
+    <None Remove="Contracts\Webhook\" />
   </ItemGroup>
 </Project>
