@@ -49,5 +49,10 @@ namespace CopyZillaBackend.Persistence.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<User?> GetByCustomerIdAsync(string customerId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(e => e.StripeCustomerId == customerId);
+        }
     }
 }

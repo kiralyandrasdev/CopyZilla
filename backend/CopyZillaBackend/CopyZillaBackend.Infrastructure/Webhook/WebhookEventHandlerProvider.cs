@@ -10,11 +10,11 @@ namespace CopyZillaBackend.Infrastructure.Webhook
 {
     public class WebhookEventHandlerProvider : IWebhookEventHandlerProvider
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public WebhookEventHandlerProvider(IServiceProvider serviceProvider)
+        public WebhookEventHandlerProvider(IServiceScopeFactory scopeFactory)
         {
-            _serviceProvider = serviceProvider;
+            _scopeFactory = scopeFactory;
         }
 
         public IWebhookEventHandler? FindHandler(Event @event, WebhookEventType eventType)
@@ -34,7 +34,9 @@ namespace CopyZillaBackend.Infrastructure.Webhook
             if (handlerType == null)
                 return null;
 
-            return (IWebhookEventHandler)ActivatorUtilities.CreateInstance(_serviceProvider, handlerType);
+            var sp = _scopeFactory.CreateScope().ServiceProvider;
+
+            return (IWebhookEventHandler)ActivatorUtilities.CreateInstance(sp, handlerType, @event);
         }
     }
 }
