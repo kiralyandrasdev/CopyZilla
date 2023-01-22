@@ -1,155 +1,86 @@
-@import url(https://fonts.googleapis.com/css?family=Poppins);
-@import url(https://fonts.googleapis.com/css?family=Source+Serif+Pro);
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 
-.layout {
-    display: flex;
-    flex-direction: column;
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-#auth-layout,
-#signed-in-layout {
-    height: 100vh;
+.animation__fadeInUp {
+    animation-name: fadeInUp;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
 }
 
-#auth-layout-content,
-#signed-in-layout-content {
-    margin: auto;
-    padding: 20px;
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    justify-content: space-between;
-    padding: 0 30px;
-    background-color: #EFEFEF;
-    height: 60px;
-    min-height: 60px;
-    width: auto;
+.animation__fadeInDown {
+    animation-name: fadeInDown;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
 }
 
-.header a {
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-    z-index: 50;
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
-.header-nav-menu a+a {
-    margin-left: 20px;
+.animation__fadeIn {
+    animation-name: fadeIn;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
 }
 
-.header-nav-menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+@keyframes fadeOutDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 }
 
-#landing-header a {
-    color: white;
+/* Transitions */
+
+.transition__parent {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
 }
 
-#home-header {
-    background-color: black
+.transition__fadeInDown {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(20px);
 }
 
-#home-header a {
-    color: white
-}
-
-.footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    width: auto;
-    justify-content: center;
-    height: 60px;
-    min-width: 60px;
-}
-
-.footer a,
-p,
-body,
-input,
-li,
-ul,
-button,
-label {
-    color: black;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-}
-
-#landing-footer p {
-    color: white;
-}
-
-h1 {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 48px;
-    font-weight: 600;
-}
-
-h2 {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 40px;
-    font-weight: 600;
-}
-
-h3 {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 32px;
-    font-weight: 600;
-}
-
-h4 {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 28px;
-    font-weight: 600;
-}
-
-h5 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-}
-
-.header h5 {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 22px;
-    font-weight: 600;
-}
-
-h6 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-}
-
-h7 {
-    font-family: 'Poppins', serif;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-p {
-    margin: 2px 0px;
-}
-
-.description-text {
-    color: grey
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-h7 {
-    margin: 0px 0px;
-    padding: 0;
+.transition__fadeInUp {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-20px);
 }

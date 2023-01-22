@@ -1,4 +1,3 @@
-export { default as TextArea } from './form/TextArea';
 export { default as TextField } from './form/TextField';
 export { default as AsyncButton } from './ui/AsyncButton';
 export { default as DropdownButton } from './ui/DropdownButton';

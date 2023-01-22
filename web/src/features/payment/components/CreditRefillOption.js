@@ -16,11 +16,21 @@ export default function CreditRefillOptions(props) {
         }
     }
 
+    let className = "creditRefill__optionContainer dropshadow animation__fadeInUp";
+
+    if (props.hasOwnProperty("order")) {
+        className += ` creditRefill__optionContainer__${props.order}`;
+        console.log(className)
+    }
+
     return (
-        <div className="credit-refill-option-container">
-            <div className="credit-refill-option-header">
-                <h6>{props.data.name || "Kredit feltöltés"}</h6>
-                <p>{props.data.cost || "0$"}</p>
+        <div className={className}>
+            <div className="creditRefill__optionContainer__header">
+                <div className="creditRefill__optionContainer__creditCount">
+                    <h5>{props.data.creditCount}</h5>
+                    <p> kredit</p>
+                </div>
+                <p>{props.data.cost || "0 Forint"}</p>
             </div>
             <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Kiválaszt"></AsyncButton>
         </div>

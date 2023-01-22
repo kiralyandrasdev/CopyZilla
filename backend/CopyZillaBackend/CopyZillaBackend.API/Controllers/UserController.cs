@@ -5,6 +5,9 @@ using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent.DTO;
 using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent;
 using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
+using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
+using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
+using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
 using CopyZillaBackend.Application.Features.User.Queries.GetUserQuery;
 using CopyZillaBackend.Domain.Entities;
 using MediatR;
@@ -37,14 +40,6 @@ namespace CopyZillaBackend.API.Controllers
             _log = log;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<CreateUserCommandResult>> CreateCustomerAsync([FromBody] CreateUserCommandOptions options)
-        {
-            var result = await _mediator.Send(new CreateUserCommand(options));
-
-            return _responseManager.MapActionResult(result);
-        }
-
         [HttpGet]
         [Route("{firebaseUid}")]
         public async Task<ActionResult<GetUserQueryResult>> GetUserAsync(string firebaseUid)
@@ -55,16 +50,51 @@ namespace CopyZillaBackend.API.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult<CreateUserCommandResult>> CreateCustomerAsync([FromBody] CreateUserCommandOptions options)
+        {
+            var result = await _mediator.Send(new CreateUserCommand(options));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        /// <summary>
+        /// TODO: Implement user update endpoint: email address (stripe, db)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        
+        [HttpGet]
+        [Route("{userId}/promptResults")]
+        public async Task<ActionResult<GetSavedPromptResultListQueryResult>> GetSavedPromptResultListAsync(Guid userId)
+        {
+            var result = await _mediator.Send(new GetSavedPromptResultListQuery(userId));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpPost]
+        [Route("{userId}/promptResults")]
+        public async Task<ActionResult<SavePromptResultCommandResult>> SavePromptResultAsync(Guid userId, [FromBody] SavePromptResultCommandOptions options)
+        {
+            var result = await _mediator.Send(new SavePromptResultCommand(userId, options));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpDelete]
+        [Route("{userId}/promptResults/{promptResultId}")]
+        public async Task<ActionResult<DeletePromptResultCommandResult>> DeletePromptResultAsync(Guid userId, Guid promptResultId)
+        {
+            var result = await _mediator.Send(new DeletePromptResultCommand(userId, promptResultId));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpPost]
         [Route("{firebaseUid}/quickPrompt")]
         public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync(string firebaseUid, [FromBody] QuickPromptOptions options)
         {
             _log.LogInformation($"[PromptController::SendQuickPromptAsync::{DateTime.Now.ToString()}] Invoked");
-
-            //if (!_authService.Validate(req))
-            //    return new UnauthorizedResult();
-
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
 
             return await _mediator.Send(new ProcessQuickPromptEvent(firebaseUid, options));
         }
@@ -74,12 +104,6 @@ namespace CopyZillaBackend.API.Controllers
         public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync(string firebaseUid, [FromBody] AdvancedPromptOptions options)
         {
             _log.LogInformation($"[PromptController::SendAdvancedPromptAsync::{DateTime.Now.ToString()}] Invoked");
-
-            //if (!_authService.Validate(req))
-            //    return new UnauthorizedResult();
-
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            //CreateTextEventOptions dto = JsonConvert.DeserializeObject<CreateTextEventOptions>(requestBody);
 
             return await _mediator.Send(new ProcessAdvancedPromptEvent(firebaseUid, options));
         }

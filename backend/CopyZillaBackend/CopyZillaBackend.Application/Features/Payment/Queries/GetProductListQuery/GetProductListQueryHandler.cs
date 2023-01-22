@@ -18,6 +18,7 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQu
             var result = new GetProductListQueryResult();
 
             result.Value = await _stripeService.GetAvailableProductsAsync(request.ProductType);
+            result.Value = result.Value.OrderBy(e => int.Parse(e.Metadata["credit_count"])).ToList();
 
             return result;
         }

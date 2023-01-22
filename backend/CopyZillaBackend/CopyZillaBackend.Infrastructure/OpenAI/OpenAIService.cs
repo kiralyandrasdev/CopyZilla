@@ -1,10 +1,10 @@
-﻿using CopyZillaBackend.Application.Contracts.OpenAI;
+﻿using System.Net.Http.Headers;
+using System.Text;
+using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Exceptions;
 using CopyZillaBackend.Application.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace CopyZillaBackend.Infrastructure.OpenAI
 {
@@ -44,7 +44,9 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
 
             var responseMap = JsonConvert.DeserializeObject<OpenAITextCompletionResponse>(responseData);
 
-            return responseMap.choices.First().text;
+            var text = responseMap.choices.First().text;
+
+            return text.Substring(2, text.Length - 2);
         }
     }
 }

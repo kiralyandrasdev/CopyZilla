@@ -39,6 +39,9 @@
     <Folder Include="Features\Webhook\Enum\" />
     <Folder Include="Contracts\Webhook\" />
     <Folder Include="Features\Payment\Queries\GetProductListQuery\" />
+    <Folder Include="Features\User\Commands\SavePromptResultCommand\" />
+    <Folder Include="Features\User\Queries\GetSavedPromptResultListQuery\" />
+    <Folder Include="Features\User\Commands\DeletePromptResultCommand\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,5 +60,8 @@
     <None Remove="Features\Webhook\Enum\" />
     <None Remove="Contracts\Webhook\" />
     <None Remove="Features\Payment\Queries\GetProductListQuery\" />
+    <None Remove="Features\User\Commands\SavePromptResultCommand\" />
+    <None Remove="Features\User\Queries\GetSavedPromptResultListQuery\" />
+    <None Remove="Features\User\Commands\DeletePromptResultCommand\" />
   </ItemGroup>
 </Project>

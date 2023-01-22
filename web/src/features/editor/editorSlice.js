@@ -12,6 +12,9 @@ export const editorSlice = createSlice({
     name: 'editor',
     initialState,
     reducers: {
+        clearResult: (state) => {
+            state.result = null;
+        },
         resetEditor: (state) => {
             state.result = null;
             state.error = null;

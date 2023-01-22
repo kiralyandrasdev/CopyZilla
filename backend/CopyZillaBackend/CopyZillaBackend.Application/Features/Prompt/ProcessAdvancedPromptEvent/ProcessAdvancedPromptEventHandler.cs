@@ -38,7 +38,7 @@ namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
             string prompt = _promptBuilder.Build(request.Options);
             result.Value = await _openAIService.ProcessPrompt(prompt);
 
-            await _repository.DecreseCreditCount(request.FirebaseUid, 1);
+            await _repository.DecreaseCreditCount(request.FirebaseUid, 1);
 
             return result;
         }

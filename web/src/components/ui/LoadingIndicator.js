@@ -6,7 +6,7 @@ export default function LoadingIndicator(props) {
   return (
     <ClipLoader
       loading={true}
-      color="black"
+      color={props.color}
       cssOverride={props.cssOverride || {}}
       speedMultiplier={1}
       size="20px"

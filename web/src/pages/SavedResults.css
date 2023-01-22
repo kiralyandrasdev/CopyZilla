@@ -1,0 +1,17 @@
+.page__savedResultsPage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    row-gap: 20px;
+    width: 100%;
+}
+
+.page__savedResultsPage__list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    row-gap: 20px;
+    width: 100%;
+}

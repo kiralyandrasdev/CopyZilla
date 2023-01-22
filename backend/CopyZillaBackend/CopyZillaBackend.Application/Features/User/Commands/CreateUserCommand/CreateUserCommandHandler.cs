@@ -3,6 +3,7 @@ using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
 using MediatR;
+using System.Linq;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 {
@@ -31,7 +32,11 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 
             var customer = await _stripeService.CreateCustomerAsync(request.Options.Email);
 
-            /// Attach the required subscription to the newly created customer and return the product plan name
+            /// Get default subscription from Stripe (based on metadata key value)
+            /// Attach the subscription to the customer
+            var subscriptions = await _stripeService.GetAvailableProductsAsync("subscription");
+            await _stripeService.CreateSubscriptionAsync(customer.Id, subscriptions.FirstOrDefault(e => e.Name.ToLower().Contains("personal")).DefaultPriceId);
+            
             string subscriptionPlanName = $"subscriptionPlanName{DateTime.Now.ToShortDateString()}";
 
             /// Get the current billing cycle end date

@@ -1,0 +1,68 @@
+.creditCount {
+    color: var(--green)
+}
+
+.header__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding-right: 30px;
+    padding-left: 30px;
+    border-bottom: 1px solid var(--grey3);
+    background-color: var(--grey4);
+}
+
+.header__main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.header__portrait {
+    display: none;
+}
+
+.header__nav__menu {
+    list-style: none;
+    right: 30px;
+    top: 30px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    column-gap: 30px;
+    background-color: var(--grey3);
+    padding: 20px;
+    row-gap: 20px;
+    width: 200px;
+    border-radius: 8px;
+    z-index: 200;
+}
+
+/* 
+.header__nav__menu--active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(20px);
+} */
+
+.header__nav__menu li:hover {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 840px) {
+    .header__fullwidth {
+        display: none;
+    }
+
+    .header__portrait {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

@@ -7,12 +7,12 @@ export default function TextButton(props) {
             return {};
         }
 
-        return { 'color': props.color || 'black' };
+        return { 'color': props.color || 'white' };
     }
 
     return (
-        <div className="text-button" onClick={props.onClick} id={props.id}>
-            {props.prefixIcon && <span className="text-button-prefix-icon" style={style()}>{props.prefixIcon}</span>}
+        <div className="textButton" onClick={props.onClick} id={props.id}>
+            {props.prefixIcon && <span className="textButton__prefixIcon" style={style()}>{props.prefixIcon}</span>}
             <p style={style()}>{props.title || "Button"}</p>
         </div>
     );

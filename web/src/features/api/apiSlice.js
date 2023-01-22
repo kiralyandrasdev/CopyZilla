@@ -7,7 +7,7 @@ export const apiSlice = createApi({
             'Content-Type': 'application/json',
         }
     }),
-    tagTypes: ['User'],
+    tagTypes: ['User', "PromptResults"],
     endpoints: (builder) => ({
         getUser: builder.query({
             query: ({ firebaseUid }) => ({
@@ -28,20 +28,45 @@ export const apiSlice = createApi({
             invalidatesTags: ['User'],
         }),
         processQuickPrompt: builder.mutation({
-            query: (quickPrompt) => ({
-                url: '/api/quickPrompt',
+            query: (firebaseUid, prompt) => ({
+                url: `/user/${firebaseUid}/quickPrompt`,
                 method: 'POST',
-                body: quickPrompt,
+                body: prompt,
             }),
             invalidatesTags: ['User'],
         }),
         processAdvancedPrompt: builder.mutation({
-            query: (advancedPrompt) => ({
-                url: '/api/advancedPrompt',
+            query: ({ firebaseUid, prompt }) => ({
+                url: `/user/${firebaseUid}/advancedPrompt`,
                 method: 'POST',
-                body: advancedPrompt,
+                body: prompt,
             }),
             invalidatesTags: ['User'],
+        }),
+        savePromptResult: builder.mutation({
+            query: ({ userId, promptResult }) => ({
+                url: `/user/${userId}/promptResults`,
+                method: 'POST',
+                body: promptResult,
+            }),
+            invalidatesTags: ['PromptResults'],
+        }),
+        getPromptResults: builder.query({
+            query: ({ userId }) => ({
+                url: `/user/${userId}/promptResults`,
+                method: 'GET',
+            }),
+            providesTags: ['PromptResults'],
+            transformResponse: (response) => {
+                return response.value;
+            }
+        }),
+        deletePromptResult: builder.mutation({
+            query: ({ userId, promptResultId }) => ({
+                url: `/user/${userId}/promptResults/${promptResultId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['PromptResults'],
         }),
     }),
 })
@@ -51,6 +76,9 @@ export const {
     useCreateUserMutation,
     useProcessQuickPromptMutation,
     useProcessAdvancedPromptMutation,
+    useGetPromptResultsQuery,
+    useSavePromptResultMutation,
+    useDeletePromptResultMutation,
 } = apiSlice;
 
 export default apiSlice;

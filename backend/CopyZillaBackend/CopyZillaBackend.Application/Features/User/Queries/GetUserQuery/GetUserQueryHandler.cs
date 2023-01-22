@@ -27,6 +27,7 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
                 return result;
 
             result.Value = await _repository.GetByFirebaseUidAsync(request.FirebaseUid);
+            result.Value.SubscriptionPlanName = "CopyZilla Personal";
 
             return result;
         }

@@ -1,8 +1,130 @@
-body {
+:root {
+  --grey2: #87889E;
+  --grey3: #40414F;
+  --grey4: #343541;
+  --grey5: #202123;
+  --grey6: #f0f0f0;
+  --white: #ffffff;
+  --black: #000000;
+  --red: #FF3737;
+  --green: #38FFC3;
+}
+
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+}
+
+.illustration__100 {
+  width: 100px;
+  height: 100px;
+}
+
+.illustration__150 {
+  width: 150px;
+  height: 150px;
+}
+
+.illustration,
+.illustration__200 {
+  width: 200px;
+  height: 200px;
+}
+
+.illustration__300 {
+  width: 300px;
+  height: 300px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800);
+
+a {
+  text-decoration: none;
+}
+
+.semi-bold {
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 800;
+}
+
+.description {
+  color: var(--grey2);
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.dropshadow {
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+p,
+a,
+body,
+input,
+li,
+ul,
+label {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+header {
+  z-index: 100;
+}
+
+header .nav__icon {
+  font-size: 22px;
+}
+
+body {
+  min-width: 500px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

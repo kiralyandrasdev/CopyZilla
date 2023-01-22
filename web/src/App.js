@@ -3,18 +3,18 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { firebaseConfig } from './config/firebaseConfig';
-import AuthLayout from './layout/AuthLayout';
-import LandingLayout from './layout/LandingLayout';
-import Layout from './layout/Layout';
+import PrivateLayout from './layout/PrivateLayout';
+import PublicLayout from './layout/PublicLayout';
 import Account from './pages/Account';
 import AccountRecovery from './pages/AccountRecovery';
+import CreatePage from './pages/Create';
 import CreditRefill from './pages/CreditRefill';
-import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
+import SavedResultsPage from './pages/SavedResults';
 import Signup from './pages/Signup';
+import CheckoutCanceled from './pages/checkout/CheckoutCancelled';
 import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
-import ErrorBoundary from './utils/ErrorBoundary';
 import PrivateRoutes from './utils/PrivateRoutes';
 
 function App() {
@@ -22,43 +22,45 @@ function App() {
   return (
     <Routes>
       <Route element={<PrivateRoutes />}>
-        <Route element={<Layout />} path="/user">
+        <Route element={<PrivateLayout />} path="/user">
           <Route path="/user/editor" element=
             {
-              <ErrorBoundary>
-                <Home />
-              </ErrorBoundary>
+              <CreatePage />
+            }
+          />
+          <Route path="/user/savedResults" element=
+            {
+              <SavedResultsPage />
             }
           />
           <Route path="/user/account" element=
             {
-              <ErrorBoundary>
-                <Account />
-              </ErrorBoundary>
+              <Account />
             }
           />
           <Route path="/user/creditRefill" element=
             {
-              <ErrorBoundary>
-                <CreditRefill />
-              </ErrorBoundary>
+              <CreditRefill />
             }
           />
           <Route path="/user/checkout/completed" element=
             {
-              <ErrorBoundary>
-                <CheckoutCompleted />
-              </ErrorBoundary>
+              <CheckoutCompleted />
+            }
+          />
+          <Route path="/user/checkout/canceled" element=
+            {
+              <CheckoutCanceled />
             }
           />
         </Route>
       </Route>
-      <Route element={<AuthLayout />} path="/auth">
+      <Route element={<PublicLayout />} path="/auth">
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
         <Route path="/auth/accountRecovery" element={<AccountRecovery />} />
       </Route>
-      <Route element={<LandingLayout />}>
+      <Route element={<PublicLayout />}>
         <Route path="/" element={<Landing />} />
       </Route>
     </Routes>

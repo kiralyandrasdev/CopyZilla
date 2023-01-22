@@ -1,0 +1,31 @@
+.sidebar__main__nav__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: [color];
+    padding: 0px 20px;
+    height: 45px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.sidebar__main__nav__item p {
+    color: white;
+    font-weight: 500;
+}
+
+.sidebar__main__nav__item--active {
+    background-color: var(--grey3);
+}
+
+.sidebar__main__nav__item--active p {
+    color: white
+}
+
+.sidebar__main__nav__item__icon {
+    margin-right: 10px;
+    margin-top: 3px;
+    color: var(--grey4);
+}

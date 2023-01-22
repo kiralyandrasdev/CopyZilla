@@ -1,0 +1,53 @@
+.privateLayout {
+    display: flex;
+    flex-direction: row;
+    justify-items: stretch;
+    width: calc(100vw - 15px);
+    background-color: var(--grey4);
+    min-height: 100vh;
+}
+
+.page__centerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 120px);
+    row-gap: 20px;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    padding: 30px;
+    height: 100%;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7 {
+    color: white;
+}
+
+.privateLayout__main__area {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: var(--grey4);
+}

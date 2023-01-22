@@ -1,15 +1,14 @@
-.text-button {
+.textButton {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    justify-content: start;
 }
 
-.text-button-prefix-icon {
+.textButton__prefixIcon {
     margin-right: 5px;
     width: 20px;
 }
 
-.text-button:hover {
+.textButton:hover {
     cursor: pointer;
 }

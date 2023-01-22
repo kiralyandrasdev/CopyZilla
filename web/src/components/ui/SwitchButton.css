@@ -1,0 +1,26 @@
+.switchButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    color: var(--grey2);
+    cursor: pointer;
+    width: 100%;
+    transition: border-bottom 0.2s ease-in-out;
+}
+
+.switchButton:after {
+    content: "";
+    background: var(--grey3);
+    position: relative;
+    top: 10px;
+    width: 0%;
+    height: 1px;
+    transition: all 0.2s ease-in-out;
+}
+
+.switchButton--active:after {
+    width: 100%;
+    background: white;
+}

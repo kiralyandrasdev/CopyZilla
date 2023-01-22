@@ -1,28 +1,37 @@
-.async-button {
+@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800);
+
+.asyncButton {
     border: none;
-    color: black;
+    color: var(--grey5);
     background-color: #38FFC3;
-    padding: 15px 32px;
-    width: 100%;
+    padding: 12px 16px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 14px;
+    border-radius: 8px;
+    height: 45px;
+}
+
+.asyncButton button {
+    background-color: transparent;
+    border: none;
     cursor: pointer;
-}
-
-.async-button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #38FFC3;
-    height: 48px;
+    color: var(--grey5);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
     width: 100%;
-    min-width: 200px;
+    height: 100%;
 }
 
-#async-button-disabled {
-    background-color: #D9D9D9;
-    color: grey
+.asyncButton__disabled button {
+    color: var(--grey2);
+}
+
+.asyncButton__shrinked {
+    width: auto;
+}
+
+.asyncButton__disabled {
+    background-color: var(--grey3)
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Footer(props) {
+function Footer() {
     return (
-        <div className="footer" id={props.id}>
+        <div>
             <p>2023 CopyZilla. Minden jog fenntartva.</p>
         </div>
     )

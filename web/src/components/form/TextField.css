@@ -1,13 +1,19 @@
 .text-field {
     display: flex;
     flex-direction: column;
+    margin: 10px 0px;
 }
 
 .text-field-container input {
     border: none;
-    background-color: #F9F9F9;
+    background-color: transparent;
     outline: none;
     flex: 1;
+    overflow: auto;
+}
+
+.text-field-container input::placeholder {
+    color: var(--grey2);
 }
 
 .text-field-container {
@@ -15,18 +21,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 350px;
-    padding: 12px 10px;
-    margin: 10px 0;
+    width: 100%;
+    padding: 12px 16px;
     box-sizing: border-box;
-    border: 1px solid #EFEFEF;
-    background-color: #F9F9F9;
-    height: 48px;
+    border-radius: 8px;
+    background-color: var(--grey3);
     font-size: 14px;
 }
 
 #text-field-container-error {
-    border: 1px solid #DD3B3B;
+    border: 1px solid var(--red);
 }
 
 .text-field-input {
@@ -38,11 +42,11 @@
 }
 
 .text-field-label {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .text-field-description {
     font-size: 12px;
-    color: grey;
+    color: var(--grey2);
     margin: 5px 0px 0px 0px;
 }

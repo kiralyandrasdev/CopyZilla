@@ -3,10 +3,14 @@ import { ClipLoader } from 'react-spinners';
 import './AsyncButton.css';
 
 function AsyncButton(props) {
-    let id;
+    let className = "asyncButton";
 
     if (props.hasOwnProperty("enabled") && !props.enabled) {
-        id = "async-button-disabled";
+        className += "  asyncButton__disabled";
+    }
+
+    if (props.hasOwnProperty("shrinked") && props.shrinked) {
+        className += "  asyncButton__shrinked";
     }
 
     const loading = props.hasOwnProperty("loading") && props.loading;
@@ -23,7 +27,7 @@ function AsyncButton(props) {
     }
 
     return (
-        <div className="async-button-container">
+        <div className={className}>
             {
                 loading === true ?
                     <ClipLoader
@@ -33,7 +37,7 @@ function AsyncButton(props) {
                         speedMultiplier={1}
                         size="20px"
                     /> :
-                    <button className="async-button" id={id} onClick={onClick}>{props.title || "Button"}</button>
+                    <button className="semi-bold" onClick={onClick}>{props.title || "Button"}</button>
             }
         </div>
     );

@@ -1,0 +1,80 @@
+.savedPromptResult {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    background-color: var(--grey3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.savedPromptResult__content {
+    transition: all 0.2s ease-in-out;
+}
+
+.savedPromptResult__content--collapsed {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.savedPromptResult__content--expanded {
+    -webkit-line-clamp: 4;
+}
+
+.savedPromptResult__action {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--grey2);
+    column-gap: 10px;
+}
+
+.savedPromptResult__action p {
+    color: var(--grey2);
+}
+
+.savedPromptResult__action--active:hover {
+    color: white
+}
+
+.savedPromptResult__action--active:hover p {
+    color: white;
+}
+
+.savedPromptResult__action__icon {
+    margin-bottom: 2px;
+}
+
+.savedPromptResult__action__row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.savedPromptResult--deleting {
+    animation-name: deleteAnimation;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes deleteAnimation {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-2%);
+    }
+
+    100% {
+        transform: translateX(200%)
+    }
+}
