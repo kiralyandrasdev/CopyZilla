@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiPlus, FiPlusSquare } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AsyncButton } from "../../components";
@@ -13,9 +13,12 @@ export default function PrivateHeader() {
     const { user, updateUser } = useContext(UserContext);
 
     const [menuActive, setMenuActive] = useState(false);
+    const handleMenuActive = (value) => {
+        setMenuActive(value);
+    }
 
     const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef, (() => setMenuActive(false)));
+    useOutsideAlerter(wrapperRef, (() => handleMenuActive(false)));
 
     const navigate = useNavigate();
     const nandleNavigate = (path) => {
@@ -81,11 +84,19 @@ export default function PrivateHeader() {
                 <a className="header__nav__item semi-bold" href="/user/account">Fiók</a>
             </div>
             <div className="header__content header__portrait">
+                <FiPlus onClick={() => nandleNavigate("/user/editor")} className="header__nav__item nav__icon"></FiPlus>
                 <div className="header__main">
                     <h4>copyzilla</h4>
                 </div>
-                <FiMenu onClick={() => setMenuActive(!menuActive)} className="header__nav__item nav__icon"></FiMenu>
+                <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__item nav__icon"></FiMenu>
                 <ul ref={wrapperRef} className={menuClass}>
+                    <li onClick={() => nandleNavigate("/user/account")} className="semi-bold">
+                        <div>
+                            <h6>{creditCount()}</h6>
+                            <p className="description">{user.email}</p>
+                        </div>
+                    </li>
+                    <span className="header__nav__item__divider" />
                     <li onClick={() => nandleNavigate("/user/editor")} className="header__nav__item semi-bold green">Létrehozás</li>
                     <li onClick={() => nandleNavigate("/user/savedResults")} className="header__nav__item semi-bold">Mentések</li>
                     <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Kredit feltöltés</li>
