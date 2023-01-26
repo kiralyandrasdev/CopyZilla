@@ -67,28 +67,28 @@ export default function PrivateHeader() {
         return userFetchResult.subscriptionPlanName;
     }
 
-    let menuClass = "header__nav__menu dropshadow transition__parent";
+    let menuClass = "header__nav__menu header__nav__menu__private dropshadow transition__parent";
 
     if (menuActive) {
         menuClass += " transition__fadeInDown";
     }
 
     return (
-        <header className="animation__fadeInDown">
-            <div className="header__content header__fullwidth">
-                <div className="header__main">
+        <>
+            <header className="header header__private header__fullwidth animation__fadeInDown">
+                <div className="header__private__control">
                     <p className="semi-bold">{planName()}</p>
                     <p className="creditCount semi-bold">{creditCount()}</p>
                     <AsyncButton onClick={() => navigate("/user/creditRefill")} shrinked={true} title="Kredit feltöltés"></AsyncButton>
                 </div>
                 <a className="header__nav__item semi-bold" href="/user/account">Fiók</a>
-            </div>
-            <div className="header__content header__portrait">
-                <FiPlus onClick={() => nandleNavigate("/user/editor")} className="header__nav__item nav__icon"></FiPlus>
+            </header>
+            <header className="header header__private header__portrait animation__fadeInDown">
+                <FiPlus onClick={() => nandleNavigate("/user/editor")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
                 <div className="header__main">
-                    <h4>copyzilla</h4>
+                    <h5>copyzilla</h5>
                 </div>
-                <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__item nav__icon"></FiMenu>
+                <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon header__nav__icon--light"></FiMenu>
                 <ul ref={wrapperRef} className={menuClass}>
                     <li onClick={() => nandleNavigate("/user/account")} className="semi-bold">
                         <div>
@@ -103,7 +103,7 @@ export default function PrivateHeader() {
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Fiók</li>
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Kijelentkezés</li>
                 </ul>
-            </div>
-        </header>
+            </header>
+        </>
     )
 }

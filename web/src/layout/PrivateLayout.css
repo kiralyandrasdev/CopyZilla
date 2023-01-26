@@ -18,19 +18,16 @@
     text-align: center;
 }
 
-main {
+.privateLayout__main__area {
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
-    padding: 30px;
     height: 100%;
+    width: 100%;
+    background-color: var(--grey4);
 }
 
-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.header__nav__icon--light {
+    color: white;
 }
 
 a,
@@ -44,10 +41,13 @@ h7 {
     color: white;
 }
 
-.privateLayout__main__area {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    background-color: var(--grey4);
+p,
+a,
+body,
+input,
+li,
+ul,
+label,
+body {
+    color: white;
 }

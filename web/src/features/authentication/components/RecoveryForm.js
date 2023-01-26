@@ -17,19 +17,21 @@ export default function RecoveryForm() {
     }
 
     return (
-        <div className="auth-form">
-            <h4>Fiók helyreállítása</h4>
-            <p className="description-text">Amennyiben emlékszel a fiókodhoz tartozó e-mail címre, ellenőrző kódot küldünk a folytatáshoz</p>
-            <div className="auth-form-input">
-                <div className="auth-field">
-                    <TextField hint="E-mail cím" title="E-mail cím" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
+        <div className="authForm recoveryForm">
+            <div className="authForm__header">
+                <h4>Fiók helyreállítása</h4>
+                <p className="description-text">A folytatáshoz ellenőrző kódot küldünk a fiókhoz tartozó e-mail címre</p>
+            </div>
+            <div className="authForm__field__container">
+                <div className="authForm__field__email">
+                    <TextField light={true} hint="E-mail cím" title="E-mail cím" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
                 </div>
             </div>
-            <div id="auth-button">
+            <div className="authForm__primaryActions">
                 <AsyncButton loading={false} onClick={() => routeChange("/auth/login")} title="Ellenőrző kód küldése"></AsyncButton>
             </div>
-            <div className="auth-type-switch-container">
-                <TextButton title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />
+            <div className="authForm__secondaryActions">
+                <TextButton color="var(--grey3)" title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />
             </div>
         </div>
     );

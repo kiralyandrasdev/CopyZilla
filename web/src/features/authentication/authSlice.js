@@ -37,6 +37,9 @@ export const authSlice = createSlice({
         logOut: (state) => {
             state.accessToken = null;
             state.firebaseUid = null;
+        },
+        resetAuthError: (state) => {
+            state.error = null;
         }
     },
     extraReducers: {
@@ -92,4 +95,4 @@ export const authSlice = createSlice({
     }
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, logOut, resetAuthError } = authSlice.actions;

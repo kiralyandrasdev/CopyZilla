@@ -2,18 +2,33 @@ import React from 'react';
 import './TextField.css';
 
 export default function TextField(props) {
+    let containerClass = "textField__container";
+
+    if (props.error) {
+        containerClass += " textField__container--error";
+    }
+    if (props.light) {
+        containerClass += " textField__container--light";
+    }
+
     return (
-        <div className="text-field">
-            <label className="text-field-label">{props.title}</label>
-            {props.description === null ? "" : <p className="text-field-description">{props.description}</p>}
-            <div className="text-field-container" id={props.error ? "text-field-container-error" : ""}>
-                <div className="text-field-icon" id="prefixIcon">
-                    {props.prefixIcon}
-                </div>
-                <input placeholder={props.hint} className="text-field-input" type={props.password === true ? "password" : "text"} value={props.value} onChange={props.onChange} />
-                <div className="text-field-icon" id="suffixIcon">
-                    {props.suffixIcon}
-                </div>
+        <div className="textField">
+            <label>{props.title}</label>
+            {props.description && <p>{props.description}</p>}
+            <div className={containerClass}>
+                {
+                    props.prefixIcon &&
+                    <div className="textField__icon textField__icon__prefix">
+                        {props.prefixIcon}
+                    </div>
+                }
+                <input placeholder={props.hint} type={props.password === true ? "password" : "text"} value={props.value} onChange={props.onChange} />
+                {
+                    props.suffixIcon &&
+                    <div className="textField__icon textField__icon__suffix">
+                        {props.suffixIcon}
+                    </div>
+                }
             </div>
         </div>
     )

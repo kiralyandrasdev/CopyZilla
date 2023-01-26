@@ -4,9 +4,9 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
-// import { useCreateUserMutation } from "../../api/apiSlice";
 import { createUser } from "../../user/actions/userActions";
 import { createFirebaseUser } from "../actions/authActions";
+import { resetAuthError } from "../authSlice";
 import "./AuthForm.css";
 
 export default function SignupForm() {
@@ -81,6 +81,7 @@ export default function SignupForm() {
     }
 
     const handleSignup = () => {
+        dispatch(resetAuthError());
         if (email === '') {
             updateEmailErrorMessage('E-mail cím megadása kötelező');
             return;
@@ -129,7 +130,7 @@ export default function SignupForm() {
         if (!error) return error;
         if (error == "auth/invalid-email") {
             return "Helytelen e-mail cím";
-        } 
+        }
         if (error == "auth/user-not-found") {
             return "Nem található felhasználó";
         }
@@ -140,36 +141,38 @@ export default function SignupForm() {
             return "Ez az e-mail cím már használatban van";
         }
         if (error == "auth/weak-password") {
-            return "A jelszó minimum 8 karakter hosszú kell legyen."
+            return "A jelszónak minimum 8 karaktert kell tartalmaznia"
         }
         if (error == "auth/network-request-failed") {
             return "Hálózati hiba";
         }
         return error;
-    });
+    }, [emailErrorMessage, passwordErrorMessage, passwordConfirmationErrorMessage, error]);
 
     return (
-        <div className="auth-form">
-            <h4>Új fiók létrehozása</h4>
-            <p className="description-text">Hozz létre új fiókot</p>
-            <div className="auth-form-input">
-                <div className="auth-field">
-                    <TextField error={emailErrorMessage} title="E-mail cím" hint="Fiókhoz tartozó e-mail cím" value={email} onChange={handleEmailChange} suffixIcon={<HiOutlineMail />}></TextField>
+        <div className="authForm signUpForm">
+            <div className="authForm__header">
+                <h4>Fiók létrehozása</h4>
+                <p className="description-text">Hozz létre új fiókot</p>
+            </div>
+            <div className="authForm__field__container">
+                <div className="authForm__field__email">
+                    <TextField light={true} error={emailErrorMessage} title="E-mail cím" hint="Fiókhoz tartozó e-mail cím" value={email} onChange={handleEmailChange} suffixIcon={<HiOutlineMail />}></TextField>
                 </div>
-                <div className="auth-field">
-                    <TextField error={passwordErrorMessage} title="Jelszó" hint="Erős jelszó" value={password} onChange={handlePasswordChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
+                <div className="authForm__field__email">
+                    <TextField light={true} error={passwordErrorMessage} title="Jelszó" hint="Erős jelszó" value={password} onChange={handlePasswordChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
                 </div>
-                <div className="auth-field">
-                    <TextField error={passwordConfirmationErrorMessage} title="Jelszó megerősítése" hint="Erős jelszó mégegyszer" value={passwordConfirmation} onChange={handlePasswordConfirmationChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
+                <div className="authForm__field__password">
+                    <TextField light={true} error={passwordConfirmationErrorMessage} title="Jelszó megerősítése" hint="Erős jelszó mégegyszer" value={passwordConfirmation} onChange={handlePasswordConfirmationChange} suffixIcon={<RiLockPasswordLine />} password={true}></TextField>
                 </div>
             </div>
-            <div id="auth-button">
+            <div className="authForm__primaryActions">
                 <AsyncButton loading={loading} title="Regisztráció" onClick={() => handleSignup()}></AsyncButton>
             </div>
-            {authErrorMessage() ? <p style={{ 'color': 'red', 'margin': '20px 0px 0px 0px' }}>{authErrorMessage()}</p> : null}
-            <div className="auth-type-switch-container">
+            {authErrorMessage() ? <p style={{ "color": "var(--red)", "textAlign": "center" }}>{authErrorMessage()}</p> : null}
+            <div className="authForm__secondaryActions">
                 <p>Már van fiókod? </p>
-                <TextButton title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />
+                <TextButton color="var(--grey3)" title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />
             </div>
         </div>
     );

@@ -9,7 +9,7 @@ export default function Sidebar() {
         <div className="sidebar">
             <div className="header__top">
                 <div className="sidebar__header">
-                    <h4>copyzilla</h4>
+                    <h5>copyzilla</h5>
                 </div>
                 <div className="sidebar__main__nav">
                     <SidebarNavItem textColor="var(--grey4)" color="var(--green)" path="/user/editor" active={true} text="Létrehozás"></SidebarNavItem>

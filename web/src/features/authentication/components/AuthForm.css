@@ -1,29 +1,45 @@
-.auth-form {
-    margin: auto;
-    max-width: 350px;
-    align-items: center;
+.authForm {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 250px;
     justify-content: center;
-    align-content: center;
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    row-gap: 20px;
 }
 
-.auth-form-input {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    align-items: flex-end;
+.authForm__header {
     display: flex;
     flex-direction: column;
+    row-gap: 5px;
+    text-align: start;
 }
 
-.auth-type-switch-container {
-    margin-top: 20px;
+.authForm__field__container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+}
+
+.authForm__secondaryActions {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-.auth-type-switch-container p {
-    margin: 0px;
-    color: grey;
+.authForm__field__container a {
+    text-align: end;
+    color: var(--grey3);
+    font-size: 14px;
+    text-decoration: underline;
 }
+
+/* @media (max-width: 768px) {
+    .authForm__header {
+        text-align: center;
+    }
+} */

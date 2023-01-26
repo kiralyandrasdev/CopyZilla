@@ -1,5 +1,4 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Helpers;
+﻿using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -11,9 +10,9 @@ namespace CopyZillaBackend.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController
-	{
-		private readonly IMediator _mediator;
-		private readonly IResponseManager _responseManager;
+    {
+        private readonly IMediator _mediator;
+        private readonly IResponseManager _responseManager;
 
         public ProductController(IMediator mediator, IResponseManager responseManager)
         {

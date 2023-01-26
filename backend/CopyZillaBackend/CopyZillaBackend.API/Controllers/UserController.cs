@@ -9,7 +9,6 @@ using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultComm
 using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
 using CopyZillaBackend.Application.Features.User.Queries.GetUserQuery;
-using CopyZillaBackend.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -62,7 +61,7 @@ namespace CopyZillaBackend.API.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        
+
         [HttpGet]
         [Route("{userId}/promptResults")]
         public async Task<ActionResult<GetSavedPromptResultListQueryResult>> GetSavedPromptResultListAsync(Guid userId)

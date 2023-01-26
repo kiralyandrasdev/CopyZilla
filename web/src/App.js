@@ -6,15 +6,20 @@ import { firebaseConfig } from './config/firebaseConfig';
 import PrivateLayout from './layout/PrivateLayout';
 import PublicLayout from './layout/PublicLayout';
 import Account from './pages/Account';
-import AccountRecovery from './pages/AccountRecovery';
 import CreatePage from './pages/Create';
 import CreditRefill from './pages/CreditRefill';
-import Landing from './pages/Landing';
-import Login from './pages/Login';
 import SavedResultsPage from './pages/SavedResults';
-import Signup from './pages/Signup';
+import AccountRecovery from './pages/auth/AccountRecovery';
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
 import CheckoutCanceled from './pages/checkout/CheckoutCancelled';
 import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
+import AboutUsPage from './pages/website/AboutUs';
+import ContactPage from './pages/website/Contact';
+import LandingPage from './pages/website/Landing';
+import PricingPage from './pages/website/Pricing';
+import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
+import TermsOfServicePage from './pages/website/TermsOfService';
 import PrivateRoutes from './utils/PrivateRoutes';
 
 function App() {
@@ -57,11 +62,16 @@ function App() {
       </Route>
       <Route element={<PublicLayout />} path="/auth">
         <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/signup" element={<Signup />} />
+        <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/auth/accountRecovery" element={<AccountRecovery />} />
       </Route>
       <Route element={<PublicLayout />}>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/aboutUs" element={<AboutUsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/termsOfService" element={<TermsOfServicePage />} />
+        <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
       </Route>
     </Routes>
   );

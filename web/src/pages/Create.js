@@ -55,6 +55,14 @@ export default function CreatePage() {
         {
             "name": "Közösségi média reklám",
             "value": "socialMediaAd"
+        },
+        {
+            "name": "Blog poszt",
+            "value": "blogPost"
+        },
+        {
+            "name": "Esszé",
+            "value": "essay"
         }
     ]
 
