@@ -20,10 +20,18 @@ namespace CopyZillaBackend.API.Controllers
             _responseManager = responseManager;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<CreateCheckoutSessionCommandResult>> CreateCheckoutSessionAsync([FromBody] CreateCheckoutSessionOptions options)
+        [HttpPost("subscription")]
+        public async Task<ActionResult<CreateCheckoutSessionCommandResult>> CreateSubscriptionCheckoutSessionAsync([FromBody] CreateCheckoutSessionOptions options)
         {
-            var result = await _mediator.Send(new CreateCheckoutSessionCommand(options));
+            var result = await _mediator.Send(new CreateCheckoutSessionCommand("subscription", options));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpPost("payment")]
+        public async Task<ActionResult<CreateCheckoutSessionCommandResult>> CreatePaymentCheckoutSessionAsync([FromBody] CreateCheckoutSessionOptions options)
+        {
+            var result = await _mediator.Send(new CreateCheckoutSessionCommand("subscription", options));
 
             return _responseManager.MapActionResult(result);
         }

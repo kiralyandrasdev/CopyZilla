@@ -1,10 +1,13 @@
 import axios from "axios";
 
-export const createRefillCheckoutSession = async (data) => {
+export const CHECKOUT_MODE = {
+    PAYMENT: "PAYMENT",
+    SUBSCRIPTION: "SUBSCRIPTION",
+}
+
+export const createCheckoutSessionAsync = async (mode, data) => {
     try {
-        const response = await axios.post("https://localhost:7107/api/checkout", data);
-        console.log("data: ", data);
-        console.log("response: ", response);
+        const response = await axios.post(`https://localhost:7107/api/checkout/${mode.toLowerCase()}`, data);
         return response.data.value.checkoutRedirectUrl;
     } catch (e) {
         console.log(e);

@@ -20,7 +20,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     padding-bottom: 30px;
+}
+
+.sidebar__bottom_nav a {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 840px) {

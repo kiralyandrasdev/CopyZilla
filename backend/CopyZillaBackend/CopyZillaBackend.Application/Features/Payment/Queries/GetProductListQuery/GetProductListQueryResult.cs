@@ -6,7 +6,7 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQu
 {
 	public class GetProductListQueryResult : BaseEventResult
 	{
-		public List<Product>? Value { get; set; }
+		public List<GetProductListQueryDTO>? Value { get; set; }
 	}
 }
 

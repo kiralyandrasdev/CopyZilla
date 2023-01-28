@@ -1,4 +1,4 @@
-.privateLayout {
+.layout__private {
     display: flex;
     flex-direction: row;
     justify-items: stretch;
@@ -18,7 +18,7 @@
     text-align: center;
 }
 
-.privateLayout__main__area {
+.layout__private__main__area {
     display: flex;
     flex-direction: column;
     height: 100%;

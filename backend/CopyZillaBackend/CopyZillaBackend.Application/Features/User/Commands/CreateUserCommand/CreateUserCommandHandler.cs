@@ -35,8 +35,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
             /// Get default subscription from Stripe (based on metadata key value)
             /// Attach the subscription to the customer
             var subscriptions = await _stripeService.GetAvailableProductsAsync("subscription");
-            await _stripeService.CreateSubscriptionAsync(customer.Id, subscriptions.FirstOrDefault(e => e.Name.ToLower().Contains("personal")).DefaultPriceId);
-            
+            subscriptions = subscriptions.OrderBy(e => int.Parse(e.Metadata["credit_count"])).ToList();
+            await _stripeService.CreateSubscriptionAsync(customer.Id, subscriptions.First().DefaultPriceId);
+
             string subscriptionPlanName = $"subscriptionPlanName{DateTime.Now.ToShortDateString()}";
 
             /// Get the current billing cycle end date

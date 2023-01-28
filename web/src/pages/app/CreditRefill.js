@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import PurchaseSvg from "../assets/purchase.svg";
-import { LoadingIndicator } from "../components";
-import { getGoodsList } from "../features/payment/actions/creditActions";
-import CreditRefillOptions from "../features/payment/components/CreditRefillOption";
+import PurchaseSvg from "../../assets/purchase.svg";
+import { LoadingIndicator } from "../../components";
+import { getGoodsList } from "../../features/payment/actions/paymentActions";
+import CreditRefillOptions from "../../features/payment/components/CreditRefillOption";
 import './CreditRefill.css';
 
-export default function CreditRefill(props) {
+export default function CreditRefill() {
     const { firebaseUid } = useSelector(state => state.auth);
 
     const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +29,6 @@ export default function CreditRefill(props) {
                 name: item.metadata["credit_count"] + " kredit",
                 firebaseUid: firebaseUid,
                 priceId: item.defaultPriceId,
-                mode: "payment",
                 cost: item.defaultPrice.unitAmount / 100 + " Forint",
                 creditCount: item.metadata["credit_count"]
             }} />

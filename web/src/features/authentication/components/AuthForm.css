@@ -38,6 +38,10 @@
     text-decoration: underline;
 }
 
+.authForm__message {
+    text-align: center;
+}
+
 /* @media (max-width: 768px) {
     .authForm__header {
         text-align: center;

@@ -50,3 +50,26 @@
 .page__landing__section__2__heading {
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .page__landing__section {
+        padding: 60px 0px;
+    }
+
+    .page__landing__section__hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        row-gap: 60px;
+    }
+
+    .page__landing__section__hero__left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        row-gap: 20px;
+        text-align: center;
+    }
+}

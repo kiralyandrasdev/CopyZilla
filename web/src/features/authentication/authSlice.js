@@ -22,6 +22,8 @@ const initialState = {
     loading: false,
     firebaseUid: getValue("firebase_uid"),
     accessToken: getValue("access_token"),
+    emailVerified: getValue("email_verified"),
+    email: getValue("email"),
     error: null,
     success: false,
 }
@@ -56,8 +58,13 @@ export const authSlice = createSlice({
             state.error = null;
             state.accessToken = payload.accessToken;
             state.firebaseUid = payload.firebaseUid;
+            state.emailVerified = payload.emailVerified;
+            state.email = payload.email;
+
             saveValue("access_token", payload.accessToken);
             saveValue("firebase_uid", payload.firebaseUid);
+            saveValue("email_verified", payload.emailVerified);
+            saveValue("email", payload.email);
         },
         [createFirebaseUser.pending]: (state) => {
             state.loading = true;
@@ -72,11 +79,15 @@ export const authSlice = createSlice({
             state.error = null;
             state.accessToken = payload.accessToken;
             state.firebaseUid = payload.firebaseUid;
+            state.emailVerified = payload.emailVerified;
+            state.email = payload.email;
+
             saveValue("access_token", payload.accessToken);
             saveValue("firebase_uid", payload.firebaseUid);
+            saveValue("email_verified", payload.emailVerified);
+            saveValue("email", payload.email);
         },
         [signOutFirebaseUser.pending]: (state) => {
-            console.log("Signing out");
             state.loading = true;
 
         },
@@ -87,10 +98,15 @@ export const authSlice = createSlice({
         [signOutFirebaseUser.fulfilled]: (state) => {
             purgeKey("access_token");
             purgeKey("firebase_uid");
+            purgeKey("email_verified");
+            purgeKey("email");
+
             state.loading = false;
             state.error = null;
             state.accessToken = null;
             state.firebaseUid = null;
+            state.emailVerified = null;
+            state.email = null;
         }
     }
 });

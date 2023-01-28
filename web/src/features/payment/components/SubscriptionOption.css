@@ -1,0 +1,37 @@
+.subscription__option {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--grey3);
+    width: 250px;
+    height: 100%;
+    row-gap: 10px;
+}
+
+.subscription__option ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.subscription__option li {
+    text-align: start;
+}
+
+.subscription__option__price__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 5px;
+}
+
+.subscription__option__divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--grey4);
+}

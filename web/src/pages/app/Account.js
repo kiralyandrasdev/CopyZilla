@@ -2,8 +2,8 @@ import React from "react";
 import { FiKey, FiMail } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LoadingIndicator, TextButton } from "../components";
-import { useGetUserQuery } from "../features/api/apiSlice";
+import { LoadingIndicator, TextButton } from "../../components";
+import { useGetUserQuery } from "../../features/api/apiSlice";
 import './Account.css';
 
 export default function Profile() {

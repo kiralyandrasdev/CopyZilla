@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import ContentLoader from 'react-content-loader';
 import { useDispatch, useSelector } from 'react-redux';
-import EmptySavedSvg from '../assets/empty_saved.svg';
-import { deletePromptResult, getPromptResults } from '../features/saved_results/actions/savedResultsActions';
-import SavedPromptResult from '../features/saved_results/components/SavedPromptResult';
-import { removePromptResult } from '../features/saved_results/promptResultsSlice';
-import { UserContext } from '../features/user/context/userContext';
+import EmptySavedSvg from '../../assets/empty_saved.svg';
+import { deletePromptResult, getPromptResults } from '../../features/saved_results/actions/savedResultsActions';
+import SavedPromptResult from '../../features/saved_results/components/SavedPromptResult';
+import { removePromptResult } from '../../features/saved_results/promptResultsSlice';
+import { UserContext } from '../../features/user/context/userContext';
 import './SavedResults.css';
 
 function LoadingPlaceholder() {

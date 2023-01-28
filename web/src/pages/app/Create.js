@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AsyncButton, DropdownButton, TextButton, TextField } from "../components";
-import SwitchButton from "../components/ui/SwitchButton";
-import { useSavePromptResultMutation } from "../features/api/apiSlice";
-import { processAdvancedPrompt, processQuickPrompt } from "../features/editor/actions/editorActions";
-import PromptResultView from "../features/editor/components/PromptResultView";
-import AdvancedPrompt from "../features/editor/models/advancedPrompt";
-import QuickPrompt from "../features/editor/models/quickPrompt";
-import { UserContext } from "../features/user/context/userContext";
+import { AsyncButton, DropdownButton, TextButton, TextField } from "../../components";
+import SwitchButton from "../../components/ui/SwitchButton";
+import { processAdvancedPrompt, processQuickPrompt } from "../../features/editor/actions/editorActions";
+import PromptResultView from "../../features/editor/components/PromptResultView";
+import AdvancedPrompt from "../../features/editor/models/advancedPrompt";
+import QuickPrompt from "../../features/editor/models/quickPrompt";
+import { UserContext } from "../../features/user/context/userContext";
 import "./Create.css";
 
 const testresult = "A 20. századi magyarországi kommunizmus egy olyan politikai rendszer volt, amely a szovjet típusú szocializmus alapelveit követte. A kommunizmus Magyarországon 1945-ben kezdődött, amikor a Szovjetunió megszállta az országot. A kommunizmus alatt a magyarokat egy állami kontrollált gazdasági és politikai rendszer alá helyezték. A kormányzat a szocialista pártokon keresztül irányította az országot, és korlátozta a polgárok szabadságát. A kommunizmus alatt a magyaroknak számos korlátozással kellett szembenézniük. A kormányzat korlátozta a szabad véleménynyilvánítást, a média szabályozását, a szakszervezeteket és a vallási szervezeteket. A kommunizmus alatt a magyaroknak csak korlátozott szabadságuk volt, és a kormányzat szigorúan ellenőrizte a polgárok mindennapi életét. A kommunizmus alatt a magyarok számára számos problémával kellett szembenézniük. A kormányzat korlátozta a gazdasági fejlődést, ami a magyarok számára komoly anyagi nehézségeket okozott. A kommunizmus alatt a magyaroknak számos szociális problémával kellett szembenézniük, beleértve a munkanélküliséget, a magas létminimumot és a magas inflációt. A 20. századi magyarországi kommunizmus 1989-ben ért véget, amikor a szovjet típusú szocializmus bukott. Azóta Magyarország egy demokratikus országgá vált, és a polgárok számos szabadságot élveznek. Azóta Magyarország sikeresen fejlődik, és a magyarok életminősége jelentősen javult.";

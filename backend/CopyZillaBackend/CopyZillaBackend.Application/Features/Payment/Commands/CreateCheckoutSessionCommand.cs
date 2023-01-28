@@ -3,12 +3,14 @@ using MediatR;
 
 namespace CopyZillaBackend.Application.Features.Payment.Commands
 {
-	public class CreateCheckoutSessionCommand : IRequest<CreateCheckoutSessionCommandResult>
-	{
-		public CreateCheckoutSessionOptions Options { get; }
+    public class CreateCheckoutSessionCommand : IRequest<CreateCheckoutSessionCommandResult>
+    {
+        public string Mode { get; }
+        public CreateCheckoutSessionOptions Options { get; }
 
-        public CreateCheckoutSessionCommand(CreateCheckoutSessionOptions options)
+        public CreateCheckoutSessionCommand(string mode, CreateCheckoutSessionOptions options)
         {
+            Mode = mode;
             Options = options;
         }
     }

@@ -1,27 +1,27 @@
-.publicLayout a,
-.publicLayout input,
-.publicLayout li,
-.publicLayout ul,
-.publicLayout label,
-.publicLayout footer,
-.publicLayout body {
+.layout__public a,
+.layout__public input,
+.layout__public li,
+.layout__public ul,
+.layout__public label,
+.layout__public footer,
+.layout__public body {
     color: var(--grey5);
 }
 
-.publicLayout h1,
-.publicLayout h2,
-.publicLayout h3,
-.publicLayout h4,
-.publicLayout h5,
-.publicLayout h6 {
+.layout__public h1,
+.layout__public h2,
+.layout__public h3,
+.layout__public h4,
+.layout__public h5,
+.layout__public h6 {
     color: var(--grey4);
 }
 
-.publicLayout p {
+.layout__public p {
     color: var(--grey2);
 }
 
-.publicLayout {
+.layout__public {
     display: grid;
     grid-template-areas:
         " . header ."
@@ -103,7 +103,7 @@
 }
 
 /* @media (max-width: 1200px) {
-    .publicLayout {
+    .layout__public {
         grid-template-areas:
             "header"
             "main"
@@ -120,7 +120,7 @@
         flex-direction: row;
     }
 
-    .publicLayout {
+    .layout__public {
         grid-template-areas:
             "header"
             "main"
@@ -136,7 +136,7 @@
 }
 
 @media (max-width: 768px) {
-    .publicLayout {
+    .layout__public {
         grid-template-areas:
             "header"
             "main"

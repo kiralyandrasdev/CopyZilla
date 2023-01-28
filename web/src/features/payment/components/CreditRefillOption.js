@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AsyncButton } from "../../../components";
-import { createRefillCheckoutSession } from "../actions/creditActions";
+import { CHECKOUT_MODE, createCheckoutSessionAsync } from "../actions/paymentActions";
 import "./CreditRefillOption.css";
 
 export default function CreditRefillOptions(props) {
@@ -8,7 +8,7 @@ export default function CreditRefillOptions(props) {
 
     const handleCreateCheckoutSession = async () => {
         setIsLoading(true);
-        const redirectUrl = await createRefillCheckoutSession(props.data);
+        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.PAYMENT, { firebaseUid: props.data.firebaseUid, priceId: props.data.priceId });
         setIsLoading(false);
 
         if (redirectUrl) {

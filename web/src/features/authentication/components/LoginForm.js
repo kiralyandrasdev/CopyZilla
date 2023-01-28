@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
 import { loginFirebaseUser } from "../actions/authActions";
-import "./AuthForm.css";
-
-import { useDispatch, useSelector } from 'react-redux';
 import { resetAuthError } from "../authSlice";
+import "./AuthForm.css";
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -16,13 +15,7 @@ export default function LoginForm() {
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-    const { accessToken, loading, error } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-        if (accessToken) {
-            routeChange("/user/editor");
-        }
-    }, [accessToken]);
+    const { loading, error } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
 

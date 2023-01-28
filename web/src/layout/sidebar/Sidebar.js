@@ -1,10 +1,12 @@
 import React from "react";
-import { FiPlus, FiPlusSquare } from "react-icons/fi";
-import { HiOutlineClock } from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { signOutFirebaseUser } from "../../features/authentication/actions/authActions";
 import './Sidebar.css';
 import SidebarNavItem from "./nav/SidebarNavItem";
 
 export default function Sidebar() {
+    const dispatch = useDispatch();
+
     return (
         <div className="sidebar">
             <div className="header__top">
@@ -17,7 +19,7 @@ export default function Sidebar() {
                 </div>
             </div>
             <div className="sidebar__bottom_nav">
-                <a>Kijelentkezés</a>
+                <a onClick={() => dispatch(signOutFirebaseUser())}>Kijelentkezés</a>
             </div>
         </div>
     );

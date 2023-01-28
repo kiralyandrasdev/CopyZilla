@@ -30,7 +30,7 @@ namespace CopyZillaBackend.Application.Features.Payment.Commands
                 return result;
 
             var user = await _repository.GetByFirebaseUidAsync(request.Options.FirebaseUid);
-            result.Value = await _stripeService.CreateCheckoutSessionAsync(user.StripeCustomerId, request.Options.PriceId, request.Options.Mode);
+            result.Value = await _stripeService.CreateCheckoutSessionAsync(user.StripeCustomerId, request.Options.PriceId, request.Mode);
 
             return result;
         }

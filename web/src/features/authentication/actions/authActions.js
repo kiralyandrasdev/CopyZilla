@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 
 export const loginFirebaseUser = createAsyncThunk(
     'auth/loginUser',
@@ -7,7 +7,13 @@ export const loginFirebaseUser = createAsyncThunk(
         const auth = getAuth();
         try {
             const result = await signInWithEmailAndPassword(auth, email, password)
-            return thunkApi.fulfillWithValue({ accessToken: result.user.accessToken, firebaseUid: result.user.uid });
+            const payload = {
+                accessToken: result.user.accessToken,
+                firebaseUid: result.user.uid,
+                emailVerified: result.user.emailVerified,
+                email: result.user.email
+            };
+            return thunkApi.fulfillWithValue(payload);
         } catch (e) {
             return thunkApi.rejectWithValue(e.code);
         }
@@ -20,7 +26,14 @@ export const createFirebaseUser = createAsyncThunk(
         const auth = getAuth();
         try {
             const result = await createUserWithEmailAndPassword(auth, email, password)
-            return thunkApi.fulfillWithValue({ accessToken: result.user.accessToken, firebaseUid: result.user.uid });
+            const payload = {
+                accessToken: result.user.accessToken,
+                firebaseUid: result.user.uid,
+                emailVerified: result.user.emailVerified,
+                email: result.user.email
+            };
+            console.log(payload);
+            return thunkApi.fulfillWithValue(payload);
         } catch (e) {
             return thunkApi.rejectWithValue(e.code);
         }

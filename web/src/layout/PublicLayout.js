@@ -27,7 +27,7 @@ export default function PublicLayout() {
     }
 
     return (
-        <div className="layout publicLayout">
+        <div className="layout layout__public">
             <header className="header header__public animation__fadeInDown dropshadow">
                 <div className="header__fullwidth header__public__content">
                     <h5 onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>

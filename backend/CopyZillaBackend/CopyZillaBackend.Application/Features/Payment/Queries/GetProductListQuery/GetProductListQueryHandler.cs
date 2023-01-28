@@ -4,8 +4,8 @@ using MediatR;
 
 namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery
 {
-	public class GetProductListQueryHandler : IRequestHandler<GetProductListQuery, GetProductListQueryResult>
-	{
+    public class GetProductListQueryHandler : IRequestHandler<GetProductListQuery, GetProductListQueryResult>
+    {
         private readonly IStripeService _stripeService;
 
         public GetProductListQueryHandler(IStripeService stripeService)
@@ -17,8 +17,20 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQu
         {
             var result = new GetProductListQueryResult();
 
-            result.Value = await _stripeService.GetAvailableProductsAsync(request.ProductType);
-            result.Value = result.Value.OrderBy(e => int.Parse(e.Metadata["credit_count"])).ToList();
+            var products = await _stripeService.GetAvailableProductsAsync(request.ProductType);
+            products = products.OrderBy(e => int.Parse(e.Metadata["credit_count"])).ToList();
+
+            result.Value = products.Select(e =>
+            {
+                return new GetProductListQueryDTO()
+                {
+                    Name = e.Name,
+                    PriceId = e.DefaultPriceId,
+                    PriceFormatted = e.Metadata["price_formatted"],
+                    CreditFormatted = e.Metadata["credit_count_formatted"]
+                };
+            })
+            .ToList();
 
             return result;
         }
