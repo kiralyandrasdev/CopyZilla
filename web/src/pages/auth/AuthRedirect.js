@@ -5,6 +5,8 @@ import { Outlet, useNavigate } from 'react-router-dom';
 function AuthRedirect() {
     const navigate = useNavigate();
 
+    const path = window.location.pathname;
+
     useEffect(() => {
         const auth = getAuth();
 
@@ -17,7 +19,9 @@ function AuthRedirect() {
                     navigate('/auth/verifyEmail');
                 }
             } else {
-                navigate('/auth/login');
+                if (path === '/auth/verifyEmail') {
+                    navigate('/auth/login');
+                }
             }
         });
 
