@@ -1,5 +1,6 @@
 ﻿using System;
 using CopyZillaBackend.Application.Contracts.Persistence;
+using EmailValidation;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
@@ -25,6 +26,11 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
             RuleFor(e => e)
                 .Must(e => e.Options.Email != null)
                 .WithMessage("Email must not be null.")
+                .WithErrorCode("400");
+
+            RuleFor(e => e)
+                .Must(e => EmailValidator.Validate(e.Options.Email))
+                .WithMessage("Email address is not valid.")
                 .WithErrorCode("400");
         }
 

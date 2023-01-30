@@ -3,7 +3,6 @@ using CopyZillaBackend.Application;
 using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
-using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,3 +54,5 @@ app.UseCors("localhost");
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 app.Run();
+
+public partial class Program { }

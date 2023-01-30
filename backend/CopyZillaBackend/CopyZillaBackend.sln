@@ -5,28 +5,30 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4D0EA975-C4D7-4757-8364-BC07AB1B201D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C183C62A-7A56-4C5A-B5BB-30B28B59EE19}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C183C62A-7A56-4C5A-B5BB-30B28B59EE19}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{6DB898D9-DC29-477F-A419-C9A309E6B17B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.API", "CopyZillaBackend.API\CopyZillaBackend.API.csproj", "{626983D3-8D60-4D27-93A1-5B1ACB2C7AA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.API", "src\CopyZillaBackend.API\CopyZillaBackend.API.csproj", "{626983D3-8D60-4D27-93A1-5B1ACB2C7AA1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{071C9661-DB28-4A75-B76A-0730D6D54166}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{34586A9A-2AB4-4512-B068-AC7CE739A9BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.Infrastructure", "CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj", "{673095CB-8B51-4403-ACFE-F73571053C40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.Infrastructure", "src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj", "{673095CB-8B51-4403-ACFE-F73571053C40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Persistence", "CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj", "{3EC4A5C7-0677-472B-8BD7-1D31A389A617}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Persistence", "src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj", "{3EC4A5C7-0677-472B-8BD7-1D31A389A617}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Domain", "CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj", "{258A8889-355D-4E5C-85D6-9903AF16ED20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Domain", "src\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj", "{258A8889-355D-4E5C-85D6-9903AF16ED20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Application", "CopyZillaBackend.Application\CopyZillaBackend.Application.csproj", "{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Application", "src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj", "{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8D037E1-7C1C-482A-B4A4-8D734AE5187A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Tests", "tests\API.Tests\API.Tests.csproj", "{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{3EC4A5C7-0677-472B-8BD7-1D31A389A617} = {34586A9A-2AB4-4512-B068-AC7CE739A9BC}
 		{258A8889-355D-4E5C-85D6-9903AF16ED20} = {071C9661-DB28-4A75-B76A-0730D6D54166}
 		{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07} = {071C9661-DB28-4A75-B76A-0730D6D54166}
+		{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D} = {C183C62A-7A56-4C5A-B5BB-30B28B59EE19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6380D143-60FA-4DF8-A578-5E6971EFC2B5}

@@ -3,7 +3,10 @@
 
 # Azure Functions localsettings file
 local.settings.json
-./CopyZillaBackend.API/appsettings.Development.json
+./src/CopyZillaBackend.API/appsettings.Development.json
+
+# Local integration test appsettings.json
+./tests/API.Tests/test_appsettings.Development.json
 
 # User-specific files
 *.suo

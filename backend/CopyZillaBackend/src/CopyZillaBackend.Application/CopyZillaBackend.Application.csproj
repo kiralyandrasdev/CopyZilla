@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <PackageReference Include="Stripe.net" Version="41.4.0" />
+    <PackageReference Include="EmailValidation" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,5 +64,6 @@
     <None Remove="Features\User\Commands\SavePromptResultCommand\" />
     <None Remove="Features\User\Queries\GetSavedPromptResultListQuery\" />
     <None Remove="Features\User\Commands\DeletePromptResultCommand\" />
+    <None Remove="EmailValidation" />
   </ItemGroup>
 </Project>

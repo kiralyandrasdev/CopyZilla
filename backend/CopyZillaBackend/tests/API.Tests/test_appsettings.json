@@ -1,0 +1,19 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "OpenAI:ApiKey": "",
+  "ConnectionStrings": {
+    "SqlConnection": "",
+    "UserStorage": ""
+  },
+  "Client": {
+    "Url": "http://localhost:3000",
+    "CheckoutSuccessRedirectRoute": "/user/checkout/completed",
+    "CheckoutCancelRedirectRoute": "/user/checkout/canceled"
+  },
+  "StripeApiKey": ""
+}
