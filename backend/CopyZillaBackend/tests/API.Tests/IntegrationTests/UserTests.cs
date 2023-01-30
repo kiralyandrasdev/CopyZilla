@@ -4,6 +4,7 @@ using API.Tests.Database;
 using API.Tests.Engine;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
+using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using CopyZillaBackend.Domain.Entities;
 using Newtonsoft.Json;
 
@@ -167,6 +168,61 @@ namespace API.Tests.IntegrationTests
             Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
             Assert.False(result!.Success);
             Assert.NotEmpty(result.ErrorMessage);
+        }
+
+        [Fact]
+        public async Task Should_Update_User()
+        {
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+            var customer = await _stripeManager.CreateCustomerAsync(userEmail);
+
+            var user = new User()
+            {
+                FirebaseUId = userHint,
+                Email = userEmail,
+                FirstName = userHint,
+                LastName = userHint,
+                StripeCustomerId = customer.Id,
+                SubscriptionPlanName = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                CreditCount = 20,
+            };
+
+            var dbUser = await _databaseManager.AddUserAsync(user);
+            user.Id = dbUser!.Id;
+
+            var options = new UpdateUserCommandOptions()
+            {
+                Email = $"{userHint}@modified.com",
+                FirstName = userHint + "modified",
+                LastName = userHint + "modified",
+            };
+
+            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
+            var response = await _client.PatchAsync($"/api/user/{user.Id}", httpContent);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<UpdateUserCommandResult>(responseBody);
+
+            Assert.NotNull(result);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+
+            var updatedUser = await _databaseManager.FindUserAsync(userHint);
+
+            Assert.NotNull(updatedUser);
+            Assert.Equal(updatedUser!.StripeCustomerId, customer.Id);
+            Assert.True(result!.Success);
+            Assert.Equal(options.Email, updatedUser!.Email);
+            Assert.Equal(options.FirstName, updatedUser!.FirstName);
+            Assert.Equal(options.LastName, updatedUser!.LastName);
+
+            var updatedCustomer = await _stripeManager.FindCustomerAsync(userHint);
+
+            Assert.NotNull(customer);
+            Assert.Equal(options.Email, updatedCustomer!.Email);
+
+            await _stripeManager.DeleteCustomerAsync(customer.Id);
         }
     }
 }

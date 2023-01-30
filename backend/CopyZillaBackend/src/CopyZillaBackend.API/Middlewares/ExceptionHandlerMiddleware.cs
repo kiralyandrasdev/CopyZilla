@@ -1,6 +1,5 @@
 ﻿using CopyZillaBackend.Application.Events;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace CopyZillaBackend.API.Middlewares
@@ -23,14 +22,21 @@ namespace CopyZillaBackend.API.Middlewares
             }
             catch (ValidationException ex)
             {
-                context.Response.StatusCode = 400;
+                var error = ex.Errors.FirstOrDefault();
+
+                if (int.TryParse(error?.ErrorCode, out int statusCode))
+                    context.Response.StatusCode = statusCode;
+                else
+                    context.Response.StatusCode = 400;
+
                 var response = new BaseEventResult()
                 {
-                    ErrorMessage = ex.Message
+                    ErrorMessage = error?.ErrorMessage ?? ex.Message,
                 };
+
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Internal server error.");

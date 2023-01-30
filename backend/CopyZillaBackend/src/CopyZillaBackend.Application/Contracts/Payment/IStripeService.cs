@@ -1,18 +1,31 @@
-﻿using System;
+﻿using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
+using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using Stripe;
 
 namespace CopyZillaBackend.Application.Contracts.Payment
 {
-	public interface IStripeService
-	{
-		Task<Customer> CreateCustomerAsync(string email);
+    public interface IStripeService
+    {
+        /// <summary>
+        /// Creates customer in stripe and returns customer id.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+		Task<Customer> CreateCustomerAsync(CreateUserCommandOptions options);
 
-		/// <summary>
-		/// Returns null if customer does not exist.
-		/// </summary>
-		/// <param name="identity"></param>
-		/// <returns></returns>
-		Task<Customer> GetCustomerByIdAsync(string customerId);
+        /// <summary>
+        /// Updates customer in stripe.
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="options"></param>
+        Task UpdateCustomerAsync(string customerId, UpdateUserCommandOptions options);
+
+        /// <summary>
+        /// Returns null if customer does not exist.
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        Task<Customer> GetCustomerByIdAsync(string customerId);
 
         /// <summary>
         /// Returns null if customer does not exist.

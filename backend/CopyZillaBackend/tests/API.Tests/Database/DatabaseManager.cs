@@ -25,14 +25,16 @@ namespace API.Tests.Database
             context.Database.Migrate();
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task<User?> AddUserAsync(User user)
         {
             var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
             using var scope = scopeFactory!.CreateScope();
             var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
 
-            await context!.Users.AddAsync(user);
+            var result = await context!.Users.AddAsync(user);
             await context.SaveChangesAsync();
+
+            return result.Entity;
         }
 
         public async Task<User?> FindUserAsync(string firebaseUid)

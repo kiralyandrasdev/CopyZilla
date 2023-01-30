@@ -7,6 +7,7 @@ using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
+using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
 using CopyZillaBackend.Application.Features.User.Queries.GetUserQuery;
 using MediatR;
@@ -56,11 +57,14 @@ namespace CopyZillaBackend.API.Controllers
             return _responseManager.MapActionResult(result);
         }
 
-        /// <summary>
-        /// TODO: Implement user update endpoint: email address (stripe, db)
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        [HttpPatch]
+        [Route("{userId}")]
+        public async Task<ActionResult<UpdateUserCommandResult>> UpdateUserAsync(Guid userId, [FromBody] UpdateUserCommandOptions options)
+        {
+            var result = await _mediator.Send(new UpdateUserCommand(userId, options));
+
+            return _responseManager.MapActionResult(result);
+        }
 
         [HttpGet]
         [Route("{userId}/promptResults")]

@@ -16,6 +16,13 @@ namespace API.Tests.Stripe
             StripeConfiguration.ApiKey = configuration!.GetValue<string>("StripeApiKey");
         }
 
+        public async Task<Customer> CreateCustomerAsync(string email)
+        {
+            var service = new CustomerService();
+            var options = new CustomerCreateOptions() { Email = email };
+            return await service.CreateAsync(options);
+        }
+
         public async Task<Customer> FindCustomerAsync(string customerId)
         {
             var service = new CustomerService();

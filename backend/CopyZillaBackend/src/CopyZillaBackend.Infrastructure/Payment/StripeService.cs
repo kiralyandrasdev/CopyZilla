@@ -1,6 +1,6 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Payment;
-using Microsoft.AspNetCore.Mvc;
+﻿using CopyZillaBackend.Application.Contracts.Payment;
+using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
+using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 using Stripe.Checkout;
@@ -46,13 +46,34 @@ namespace CopyZillaBackend.Infrastructure.Payment
             return new StripeCheckoutSession(session.Url);
         }
 
-        public async Task<Customer> CreateCustomerAsync(string email)
+        public async Task<Customer> CreateCustomerAsync(CreateUserCommandOptions options)
         {
             var service = new CustomerService();
 
-            var options = new CustomerCreateOptions() { Email = email };
+            string name = string.Empty;
 
-            return await service.CreateAsync(options);
+            if (!string.IsNullOrEmpty(options.FirstName) && !string.IsNullOrEmpty(options.LastName))
+                name = options.FirstName + " " + options.LastName;
+
+            var customerCreateOptions = new CustomerCreateOptions()
+            {
+                Email = options.Email,
+                Name = string.IsNullOrEmpty(name) ? "" : name,
+            };
+
+            return await service.CreateAsync(customerCreateOptions);
+        }
+
+        public async Task UpdateCustomerAsync(string customerId, UpdateUserCommandOptions options)
+        {
+            var service = new CustomerService();
+
+            var customerUpdateOptions = new CustomerUpdateOptions()
+            {
+                Email = options.Email
+            };
+
+            await service.UpdateAsync(customerId, customerUpdateOptions);
         }
 
         public async Task<Subscription> CreateSubscriptionAsync(string customerId, string priceId)
@@ -89,7 +110,7 @@ namespace CopyZillaBackend.Infrastructure.Payment
             var priceService = new PriceService();
             var priceGetOptions = new PriceGetOptions() { Expand = new List<string>() { "currency_options" } };
 
-            foreach(var product in filteredProducts)
+            foreach (var product in filteredProducts)
             {
                 product.DefaultPrice = await priceService.GetAsync(product.DefaultPriceId, priceGetOptions);
             }

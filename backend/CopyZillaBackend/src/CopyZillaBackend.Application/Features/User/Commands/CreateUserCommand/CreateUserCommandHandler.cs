@@ -30,7 +30,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
             if (!result.Success)
                 return result;
 
-            var customer = await _stripeService.CreateCustomerAsync(request.Options.Email);
+            var customer = await _stripeService.CreateCustomerAsync(request.Options);
 
             /// Get default subscription from Stripe (based on metadata key value)
             /// Attach the subscription to the customer
