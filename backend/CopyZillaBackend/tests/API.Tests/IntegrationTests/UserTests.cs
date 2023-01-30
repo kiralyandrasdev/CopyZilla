@@ -30,7 +30,6 @@ namespace API.Tests.IntegrationTests
         public async Task Should_Create_User()
         {
             var userHint = Guid.NewGuid().ToString();
-
             var options = new CreateUserCommandOptions()
             {
                 FirebaseUid = userHint,
@@ -82,6 +81,78 @@ namespace API.Tests.IntegrationTests
             {
                 FirebaseUid = userHint,
                 Email = $"{userHint}@test.com",
+                FirstName = userHint,
+                LastName = userHint,
+            };
+
+            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/api/user", httpContent);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
+
+            Assert.NotNull(result);
+            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
+            Assert.False(result!.Success);
+            Assert.NotEmpty(result.ErrorMessage);
+        }
+
+        [Fact]
+        public async Task Should_Not_Create_User_With_Incorrect_Email()
+        {
+            var userHint = Guid.NewGuid().ToString();
+            var options = new CreateUserCommandOptions()
+            {
+                FirebaseUid = userHint,
+                Email = userHint,
+                FirstName = userHint,
+                LastName = userHint,
+            };
+
+            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/api/user", httpContent);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
+
+            Assert.NotNull(result);
+            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
+            Assert.False(result!.Success);
+            Assert.NotEmpty(result.ErrorMessage);
+        }
+
+        [Fact]
+        public async Task Should_Not_Create_User_With_Empty_FirebaseUid()
+        {
+            var userHint = Guid.NewGuid().ToString();
+            var options = new CreateUserCommandOptions()
+            {
+                FirebaseUid = "",
+                Email = userHint,
+                FirstName = userHint,
+                LastName = userHint,
+            };
+
+            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/api/user", httpContent);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
+
+            Assert.NotNull(result);
+            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
+            Assert.False(result!.Success);
+            Assert.NotEmpty(result.ErrorMessage);
+        }
+
+        [Fact]
+        public async Task Should_Not_Create_User_With_Empty_Email()
+        {
+            var userHint = Guid.NewGuid().ToString();
+            var options = new CreateUserCommandOptions()
+            {
+                FirebaseUid = userHint,
+                Email = "",
                 FirstName = userHint,
                 LastName = userHint,
             };

@@ -1,4 +1,5 @@
 using CopyZillaBackend.API.Helpers;
+using CopyZillaBackend.API.Middlewares;
 using CopyZillaBackend.Application;
 using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
@@ -49,7 +50,7 @@ app.UseCors("localhost");
 
 //app.UseAuthorization();
 
-//app.UseMiddleware<AuthorizationMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
