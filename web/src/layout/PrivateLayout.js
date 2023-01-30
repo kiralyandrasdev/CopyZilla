@@ -13,7 +13,6 @@ export default function PrivateLayout() {
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
-        console.log("Signed out");
         navigate("/auth/login");
       }
     });

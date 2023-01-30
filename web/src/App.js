@@ -11,6 +11,7 @@ import CreatePage from './pages/app/Create';
 import CreditRefill from './pages/app/CreditRefill';
 import SavedResultsPage from './pages/app/SavedResults';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
+import SplashPage from './pages/app/SplashPage';
 import AccountRecovery from './pages/auth/AccountRecovery';
 import AuthRedirect from './pages/auth/AuthRedirect';
 import Login from './pages/auth/Login';
@@ -41,6 +42,7 @@ function App() {
         </Route>
         <Route element={<FullscreenLayout />}>
           <Route path="/selectSubscription" element={<SelectSubscriptionPage />} />
+          <Route path="/splash" element={<SplashPage />} />
         </Route>
       </Route>
       <Route element={<AuthRedirect />}>

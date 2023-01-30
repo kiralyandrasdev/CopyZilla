@@ -19,6 +19,8 @@ function AuthRedirect() {
                     navigate('/auth/verifyEmail');
                 }
             } else {
+                console.log("no user");
+                console.log(path);
                 if (path === '/auth/verifyEmail') {
                     navigate('/auth/login');
                 }
