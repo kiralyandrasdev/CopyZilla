@@ -1,9 +1,7 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Payment;
+﻿using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
 using MediatR;
-using System.Linq;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 {
@@ -56,6 +54,8 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
                 LastName = request.Options.LastName,
                 SubscriptionPlanName = subscriptionPlanName,
                 SubscriptionValidUntil = subscriptionValidUntil,
+                PlanType = 0,
+                CreditCount = 20,
             };
 
             await _repository.AddAsync(user);

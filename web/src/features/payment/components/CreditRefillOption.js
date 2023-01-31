@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { AsyncButton } from "../../../components";
-import { CHECKOUT_MODE, createCheckoutSessionAsync } from "../actions/paymentActions";
-import "./CreditRefillOption.css";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { AsyncButton } from '../../../components';
+import { CHECKOUT_MODE, createCheckoutSessionAsync } from '../actions/paymentActions';
+import './CreditRefillOption.css';
 
-export default function CreditRefillOptions(props) {
+function CreditRefillOption(props) {
     const [isLoading, setIsLoading] = useState(false);
+    const { firebaseUid } = useSelector(state => state.auth);
 
     const handleCreateCheckoutSession = async () => {
         setIsLoading(true);
-        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.PAYMENT, { firebaseUid: props.data.firebaseUid, priceId: props.data.priceId });
+        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.PAYMENT, { firebaseUid: firebaseUid, priceId: props.item.priceId });
         setIsLoading(false);
 
         if (redirectUrl) {
@@ -16,23 +18,24 @@ export default function CreditRefillOptions(props) {
         }
     }
 
-    let className = "creditRefill__optionContainer dropshadow animation__fadeInUp";
+    let className = "credit__option animation__fadeInUp dropshadow";
 
     if (props.hasOwnProperty("order")) {
-        className += ` creditRefill__optionContainer__${props.order}`;
+        className += ` credit__option__${props.order}`;
         console.log(className)
     }
 
     return (
         <div className={className}>
-            <div className="creditRefill__optionContainer__header">
-                <div className="creditRefill__optionContainer__creditCount">
-                    <h5>{props.data.creditCount}</h5>
-                    <p> kredit</p>
-                </div>
-                <p>{props.data.cost || "0 Forint"}</p>
+            <div className="credit__option__header">
+                <h6>{props.item.name}</h6>
+                <p className="description">{props.item.priceFormatted}</p>
             </div>
+            <span className="credit__option__divider"></span>
+            <h5>{props.item.creditFormatted}</h5>
             <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Kiválaszt"></AsyncButton>
         </div>
     );
 }
+
+export default CreditRefillOption;

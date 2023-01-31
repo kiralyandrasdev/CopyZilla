@@ -161,7 +161,7 @@ header {
   background-color: var(--grey2);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   .header__fullwidth {
     display: none;
   }

@@ -31,7 +31,7 @@ namespace CopyZillaBackend.API.Controllers
         [HttpPost("payment")]
         public async Task<ActionResult<CreateCheckoutSessionCommandResult>> CreatePaymentCheckoutSessionAsync([FromBody] CreateCheckoutSessionOptions options)
         {
-            var result = await _mediator.Send(new CreateCheckoutSessionCommand("subscription", options));
+            var result = await _mediator.Send(new CreateCheckoutSessionCommand("payment", options));
 
             return _responseManager.MapActionResult(result);
         }

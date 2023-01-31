@@ -46,7 +46,7 @@
     text-align: center;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 1200px) {
     .page__creditRefill {
         height: 100%;
     }

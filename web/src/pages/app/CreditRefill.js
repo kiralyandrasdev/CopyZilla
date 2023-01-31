@@ -25,13 +25,7 @@ export default function CreditRefill() {
             return <p>Nincs elérhető csomag.</p>
         }
         const items = goods.map((item, index) => {
-            return <CreditRefillOptions order={index} key={index} data={{
-                name: item.metadata["credit_count"] + " kredit",
-                firebaseUid: firebaseUid,
-                priceId: item.defaultPriceId,
-                cost: item.defaultPrice.unitAmount / 100 + " Forint",
-                creditCount: item.metadata["credit_count"]
-            }} />
+            return <CreditRefillOptions order={index} key={index} item={item} />
         });
         return items;
     }

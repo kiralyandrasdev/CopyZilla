@@ -48,7 +48,6 @@ namespace API.Tests.IntegrationTests
 
             Assert.NotNull(user);
             Assert.NotNull(user!.StripeCustomerId);
-            Assert.NotNull(result);
             Assert.True(response.IsSuccessStatusCode);
 
             var stripeCustomer = await _stripeManager.FindCustomerAsync(user!.StripeCustomerId!);

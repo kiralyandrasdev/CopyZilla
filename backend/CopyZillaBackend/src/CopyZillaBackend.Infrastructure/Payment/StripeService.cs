@@ -58,7 +58,7 @@ namespace CopyZillaBackend.Infrastructure.Payment
             var customerCreateOptions = new CustomerCreateOptions()
             {
                 Email = options.Email,
-                Name = string.IsNullOrEmpty(name) ? "" : name,
+                Name = name,
             };
 
             return await service.CreateAsync(customerCreateOptions);
