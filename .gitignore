@@ -4,3 +4,4 @@
 
 /backend/CopyZillaBackend/src/CopyZillaBackend.API/appsettings.Development.json
 /backend/CopyZillaBackend/tests/API.Tests/test_appsettings.Development.json
+/backend/CopyZillaBackend/.editorconfig
