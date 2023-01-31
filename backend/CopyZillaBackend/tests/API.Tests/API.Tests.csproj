@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -34,7 +34,6 @@
     <None Remove="Microsoft.AspNetCore.Mvc.Testing" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="test_appsettings.json" />
-    <None Remove="test_appsettings.Development.json" />
     <None Remove="Stripe.net" />
     <None Remove="Database\" />
   </ItemGroup>
@@ -47,9 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="test_appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="test_appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
