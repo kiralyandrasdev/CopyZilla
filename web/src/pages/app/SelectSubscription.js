@@ -10,8 +10,6 @@ import './SelectSubscription.css';
 function SelectSubscriptionPage() {
     const navigate = useNavigate();
 
-    const { firebaseUid } = useSelector(state => state.auth);
-
     const [subscriptionList, setSubscriptionList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,8 +23,9 @@ function SelectSubscriptionPage() {
         if (subscriptionList.length < 1) {
             return <p>Nincs elérhető csomag.</p>
         }
-        const items = subscriptionList.map((item, index) => {
-            return <SubscriptionOption order={index} key={index} firebaseUid={firebaseUid} item={item} />
+        console.log(subscriptionList);
+        const items = subscriptionList.filter(e => !e.default).map((item, index) => {
+            return <SubscriptionOption order={index} key={index} item={item} />
         });
         return items;
     }
