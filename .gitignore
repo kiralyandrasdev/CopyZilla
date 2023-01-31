@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/backend/CopyZillaBackend/src/CopyZillaBackend.API/appsettings.Development.json
+/backend/CopyZillaBackend/tests/API.Tests/test_appsettings.Development.json
