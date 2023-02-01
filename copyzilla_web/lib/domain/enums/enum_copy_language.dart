@@ -1,4 +1,0 @@
-enum CopyLanguage {
-  english,
-  hungarian,
-}
