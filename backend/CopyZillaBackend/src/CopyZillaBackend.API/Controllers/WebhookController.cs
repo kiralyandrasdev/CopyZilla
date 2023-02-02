@@ -33,9 +33,9 @@ namespace CopyZillaBackend.API.Controllers
         /// <returns></returns>
         [Route("payment")]
         [HttpPost]
-        public async Task<IActionResult> ProcessStripeWebhook([FromServices] IServiceScopeFactory serviceScopeFactory)
+        public IActionResult ProcessStripeWebhook([FromServices] IServiceScopeFactory serviceScopeFactory)
         {
-            var body = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+            var body = new StreamReader(HttpContext.Request.Body).ReadToEndAsync().Result;
             var @event = JsonConvert.DeserializeObject<Event>(body);
 
             if (_supportedPaymentEventTypes.ContainsKey(@event?.Type!))

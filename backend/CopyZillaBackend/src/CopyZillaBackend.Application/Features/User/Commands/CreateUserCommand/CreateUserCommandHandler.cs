@@ -32,18 +32,13 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 
             /// Get default subscription from Stripe (based on metadata key value)
             /// Attach the subscription to the customer
-            var subscriptions = await _stripeService.GetAvailableProductsAsync("subscription");
-            var defaultSubscription = subscriptions.FirstOrDefault(e => e.Metadata.ContainsKey("default"));
+            var products = await _stripeService.GetAvailableProductsAsync("subscription");
+            var defaultProduct = products.FirstOrDefault(e => e.Metadata["plan_type"] == "default");
 
-            if (defaultSubscription == null)
-                throw new Exception("Default subscription not found. Please contact support. (Error code: 1001)");
+            if (defaultProduct == null)
+                throw new Exception("Default product not found. Please contact support. (Error code: 1001)");
 
-            await _stripeService.CreateSubscriptionAsync(customer.Id, defaultSubscription.DefaultPriceId);
-
-            string subscriptionPlanName = $"subscriptionPlanName{DateTime.Now.ToShortDateString()}";
-
-            /// Get the current billing cycle end date
-            DateTime subscriptionValidUntil = DateTime.UtcNow.AddDays(30);
+            await _stripeService.CreateSubscriptionAsync(customer.Id, defaultProduct.DefaultPriceId);
 
             var user = new Domain.Entities.User()
             {
@@ -52,10 +47,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
                 Email = request.Options.Email,
                 FirstName = request.Options.FirstName,
                 LastName = request.Options.LastName,
-                SubscriptionPlanName = subscriptionPlanName,
-                SubscriptionValidUntil = subscriptionValidUntil,
-                PlanType = 0,
-                CreditCount = 20,
+                SubscriptionPlanName = defaultProduct.Name,
+                PlanType = defaultProduct.Metadata["plan_type"],
+                CreditCount = int.TryParse(defaultProduct.Metadata["credit_count"], out int i) ? i : 20,
             };
 
             await _repository.AddAsync(user);

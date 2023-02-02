@@ -41,9 +41,7 @@ namespace API.Tests.IntegrationTests
 
             var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("/api/user", httpContent);
-            var responseBody = await response.Content.ReadAsStringAsync();
 
-            var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
             var user = await _databaseManager.FindUserAsync(options.FirebaseUid);
 
             Assert.NotNull(user);
@@ -72,7 +70,7 @@ namespace API.Tests.IntegrationTests
                 StripeCustomerId = userHint,
                 SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                CreditCount = 20,
+                PlanType = "default",
             };
 
             await _databaseManager.AddUserAsync(user);
@@ -80,7 +78,7 @@ namespace API.Tests.IntegrationTests
             var options = new CreateUserCommandOptions()
             {
                 FirebaseUid = userHint,
-                Email = $"{userHint}@test.com",
+                Email = userEmail,
                 FirstName = userHint,
                 LastName = userHint,
             };
@@ -185,7 +183,7 @@ namespace API.Tests.IntegrationTests
                 StripeCustomerId = customer.Id,
                 SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                CreditCount = 20,
+                PlanType = "default",
             };
 
             var dbUser = await _databaseManager.AddUserAsync(user);
@@ -216,7 +214,7 @@ namespace API.Tests.IntegrationTests
             Assert.Equal(options.FirstName, updatedUser!.FirstName);
             Assert.Equal(options.LastName, updatedUser!.LastName);
 
-            var updatedCustomer = await _stripeManager.FindCustomerAsync(userHint);
+            var updatedCustomer = await _stripeManager.FindCustomerAsync(user.StripeCustomerId);
 
             Assert.NotNull(customer);
             Assert.Equal(options.Email, updatedCustomer!.Email);

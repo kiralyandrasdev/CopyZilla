@@ -36,6 +36,8 @@
     <None Remove="test_appsettings.json" />
     <None Remove="Stripe.net" />
     <None Remove="Database\" />
+    <None Remove="test_appsettings.Development.json" />
+    <None Remove="Engine\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
@@ -48,8 +50,12 @@
     <Content Include="test_appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="test_appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="Engine\" />
   </ItemGroup>
 </Project>

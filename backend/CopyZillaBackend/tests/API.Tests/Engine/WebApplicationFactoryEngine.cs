@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -53,7 +53,7 @@ namespace API.Tests.Engine
                 var configurationDescriptorListClone = new List<ServiceDescriptor>();
                 configurationDescriptorListClone.AddRange(configurationDescriptorList);
 
-                foreach(var configuration in configurationDescriptorListClone)
+                foreach (var configuration in configurationDescriptorListClone)
                 {
                     services.Remove(configuration);
                 }

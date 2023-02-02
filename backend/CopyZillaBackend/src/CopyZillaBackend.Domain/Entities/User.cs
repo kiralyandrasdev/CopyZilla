@@ -11,9 +11,8 @@
         public bool AccountDeleted { get; set; }
         public DateTime SubscriptionValidUntil { get; set; }
         public string SubscriptionPlanName { get; set; }
-
-        // 0 = free; 1 = paid; 2 = trial
-        public int PlanType { get; set; }
+        // default, paid, trial
+        public string PlanType { get; set; }
         public int CreditCount { get; set; } = 20;
     }
 }

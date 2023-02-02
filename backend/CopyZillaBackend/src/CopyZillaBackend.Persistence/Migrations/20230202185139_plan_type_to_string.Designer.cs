@@ -3,6 +3,7 @@ using System;
 using CopyZillaBackend.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyZillaBackend.Persistence.Migrations
 {
     [DbContext(typeof(CopyZillaBackendDBContext))]
-    partial class CopyZillaBackendDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230202185139_plan_type_to_string")]
+    partial class plantypetostring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

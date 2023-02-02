@@ -15,6 +15,24 @@ namespace CopyZillaBackend.Persistence.Repositories
             _configuration = configuration;
         }
 
+        public override async Task UpdateAsync(User entity)
+        {
+            var result = await _context.Users.FirstOrDefaultAsync(e => e.Id == entity.Id);
+
+            if (result == null)
+                return;
+
+            _context.Entry(result).State = EntityState.Detached;
+
+            result.Email = entity.Email;
+            result.FirstName = entity.FirstName;
+            result.LastName = entity.LastName;
+
+            _context.Users.Update(result);
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<bool> ExistsAsync(string firebaseuId)
         {
             return (await _context.Users.FirstOrDefaultAsync(e => e.FirebaseUId == firebaseuId)) != null;

@@ -1,6 +1,6 @@
-﻿using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Common;
+using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CopyZillaBackend.Persistence.Repositories
@@ -33,16 +33,14 @@ namespace CopyZillaBackend.Persistence.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             var result = await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == entity.Id);
 
-            if(result == null)
+            if (result == null)
                 return;
 
             _context.Entry(result).State = EntityState.Detached;
-
-            result = entity;
 
             _context.Set<T>().Update(result);
 
