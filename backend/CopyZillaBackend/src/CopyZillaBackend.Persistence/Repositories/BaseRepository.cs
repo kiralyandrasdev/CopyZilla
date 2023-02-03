@@ -40,7 +40,7 @@ namespace CopyZillaBackend.Persistence.Repositories
             if (result == null)
                 return;
 
-            _context.Entry(result).State = EntityState.Detached;
+            result = result.CopyFrom(entity);
 
             _context.Set<T>().Update(result);
 

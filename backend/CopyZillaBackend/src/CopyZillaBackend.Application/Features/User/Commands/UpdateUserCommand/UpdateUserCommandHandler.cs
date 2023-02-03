@@ -32,7 +32,12 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
                 return result;
 
             var user = _mapper.Map<Domain.Entities.User>(request.Options);
+
             user.Id = request.UserId;
+            user.Email = request.Options.Email;
+            user.FirstName = request.Options.FirstName ?? user.FirstName;
+            user.LastName = request.Options.LastName ?? user.LastName;
+
             await _repository.UpdateAsync(user);
 
             if (!string.IsNullOrEmpty(request.Options.Email))

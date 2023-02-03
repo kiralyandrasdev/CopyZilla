@@ -45,7 +45,7 @@ namespace API.Tests.Database
             using (var scope = scopeFactory!.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
-                user = await context!.Users.FirstOrDefaultAsync(e => e.FirebaseUId == firebaseUid);
+                user = await context!.Users.FirstOrDefaultAsync(e => e.FirebaseUid == firebaseUid);
             }
 
             return user;

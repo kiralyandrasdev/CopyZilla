@@ -132,6 +132,12 @@ namespace CopyZillaBackend.Infrastructure.Payment
 
             return await service.GetAsync(customerId, options);
         }
+
+        public async Task<Product> GetProductAsync(string productId)
+        {
+            var service = new ProductService();
+            return await service.GetAsync(productId);
+        }
     }
 }
 

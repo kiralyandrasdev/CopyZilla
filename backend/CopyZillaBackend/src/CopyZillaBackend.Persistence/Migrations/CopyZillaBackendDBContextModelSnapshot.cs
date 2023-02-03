@@ -47,7 +47,7 @@ namespace CopyZillaBackend.Persistence.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("FirebaseUId")
+                    b.Property<string>("FirebaseUid")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -58,7 +58,6 @@ namespace CopyZillaBackend.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PlanType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("StripeCustomerId")
@@ -66,10 +65,9 @@ namespace CopyZillaBackend.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SubscriptionPlanName")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("SubscriptionValidUntil")
+                    b.Property<DateTime?>("SubscriptionValidUntil")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");

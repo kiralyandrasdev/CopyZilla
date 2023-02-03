@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyZillaBackend.Persistence.Migrations
 {
     [DbContext(typeof(CopyZillaBackendDBContext))]
-    [Migration("20230202185139_plan_type_to_string")]
-    partial class plantypetostring
+    [Migration("20230202232317_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace CopyZillaBackend.Persistence.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("FirebaseUId")
+                    b.Property<string>("FirebaseUid")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -61,7 +61,6 @@ namespace CopyZillaBackend.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PlanType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("StripeCustomerId")
@@ -69,10 +68,9 @@ namespace CopyZillaBackend.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SubscriptionPlanName")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("SubscriptionValidUntil")
+                    b.Property<DateTime?>("SubscriptionValidUntil")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");

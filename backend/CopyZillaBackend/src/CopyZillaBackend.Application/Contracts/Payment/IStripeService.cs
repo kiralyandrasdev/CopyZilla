@@ -50,6 +50,13 @@ namespace CopyZillaBackend.Application.Contracts.Payment
         Task<List<Product>> GetAvailableProductsAsync(string type);
 
         /// <summary>
+        /// Returns product by id.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        Task<Product> GetProductAsync(string productId);
+
+        /// <summary>
         /// Creates checkout session url to follow for client to complete purchase.
         /// Mode: 'subscription' or 'payment'
         /// </summary>

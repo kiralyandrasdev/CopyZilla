@@ -11,21 +11,21 @@ namespace CopyZillaBackend.Infrastructure.Webhook.Events
 {
     [WebhookEventHandler(WebhookEventType.CheckoutSessionCompleted)]
     public class CheckoutSessionCompletedEventHandler : IWebhookEventHandler
-	{
+    {
         private readonly Event _event;
         private readonly IUserRepository _userRepository;
 
         public CheckoutSessionCompletedEventHandler(Event @event, IUserRepository userRepository)
-		{
+        {
             _event = @event;
             _userRepository = userRepository;
-		}
+        }
 
         public async Task ExecuteAsync()
         {
             var sessionService = new SessionService();
 
-            var sessionData = _event.Data.Object  == null ? null : _event.Data.Object as Session;
+            var sessionData = _event.Data.Object == null ? null : _event.Data.Object as Session;
 
             if (sessionData == null)
                 return;
@@ -47,7 +47,7 @@ namespace CopyZillaBackend.Infrastructure.Webhook.Events
             if (user == null)
                 return;
 
-            await _userRepository.IncreaseCreditCount(user.FirebaseUId, int.Parse(product.Metadata["credit_count"]));
+            await _userRepository.IncreaseCreditCount(user.FirebaseUid, int.Parse(product.Metadata["credit_count"]));
         }
     }
 }

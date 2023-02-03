@@ -1,4 +1,5 @@
-﻿using CopyZillaBackend.Application.Events;
+﻿using System.Diagnostics;
+using CopyZillaBackend.Application.Events;
 using FluentValidation;
 using Newtonsoft.Json;
 
@@ -36,8 +37,9 @@ namespace CopyZillaBackend.API.Middlewares
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
-            catch (Exception _)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex);
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Internal server error.");
             }

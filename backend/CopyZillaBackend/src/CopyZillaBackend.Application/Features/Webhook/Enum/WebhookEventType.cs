@@ -1,9 +1,10 @@
-﻿using System;
-namespace CopyZillaBackend.Application.Webhook.Enum
+﻿namespace CopyZillaBackend.Application.Webhook.Enum
 {
-	public enum WebhookEventType
-	{
-		CheckoutSessionCompleted
-	}
+    public enum WebhookEventType
+    {
+        CheckoutSessionCompleted,
+        InvoicePaymentSucceeded,
+        CustomerSubscriptionCreated,
+    }
 }
 

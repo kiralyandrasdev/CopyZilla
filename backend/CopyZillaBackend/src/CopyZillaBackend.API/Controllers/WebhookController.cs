@@ -1,7 +1,4 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Helpers;
-using CopyZillaBackend.Application.Contracts.Payment;
-using CopyZillaBackend.Application.Features.Webhook.Command;
+﻿using CopyZillaBackend.Application.Features.Webhook.Command;
 using CopyZillaBackend.Application.Webhook.Enum;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -16,8 +13,12 @@ namespace CopyZillaBackend.API.Controllers
     [Route("api/[controller]")]
     public class WebhookController : ControllerBase
     {
-        private static readonly Dictionary<string, WebhookEventType> _supportedPaymentEventTypes
-            = new Dictionary<string, WebhookEventType>() { { "checkout.session.completed", WebhookEventType.CheckoutSessionCompleted } };
+        private static readonly Dictionary<string, WebhookEventType> _supportedPaymentEventTypes = new()
+            {
+                { "checkout.session.completed", WebhookEventType.CheckoutSessionCompleted },
+                { "invoice.payment_succeeded", WebhookEventType.InvoicePaymentSucceeded },
+                { "customer.subscription.created", WebhookEventType.CustomerSubscriptionCreated },
+            };
 
         /// <summary>
         /// TODO: Verify Stripe signature to secure endpoint: https://stripe.com/docs/webhooks/signatures.

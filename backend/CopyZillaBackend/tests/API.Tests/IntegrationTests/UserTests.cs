@@ -63,7 +63,7 @@ namespace API.Tests.IntegrationTests
 
             var user = new User()
             {
-                FirebaseUId = userHint,
+                FirebaseUid = userHint,
                 Email = userEmail,
                 FirstName = userHint,
                 LastName = userHint,
@@ -176,7 +176,7 @@ namespace API.Tests.IntegrationTests
 
             var user = new User()
             {
-                FirebaseUId = userHint,
+                FirebaseUid = userHint,
                 Email = userEmail,
                 FirstName = userHint,
                 LastName = userHint,
@@ -210,6 +210,7 @@ namespace API.Tests.IntegrationTests
             Assert.NotNull(updatedUser);
             Assert.Equal(updatedUser!.StripeCustomerId, customer.Id);
             Assert.True(result!.Success);
+            Assert.Equal(user.FirebaseUid, updatedUser!.FirebaseUid);
             Assert.Equal(options.Email, updatedUser!.Email);
             Assert.Equal(options.FirstName, updatedUser!.FirstName);
             Assert.Equal(options.LastName, updatedUser!.LastName);
