@@ -23,13 +23,14 @@ function SelectSubscriptionPage() {
         if (subscriptionList.length < 1) {
             return <p>Nincs elérhető csomag.</p>
         }
-        const items = subscriptionList.filter(e => !e.default).map((item, index) => {
+        const items = subscriptionList.filter(e => e.planType !== "default").map((item, index) => {
             return <SubscriptionOption order={index} key={index} item={item} />
         });
         return items;
     }
 
     const handleSkipUpgrade = () => {
+        localStorage.setItem("initialized", true);
         navigate("/user/editor");
     }
 

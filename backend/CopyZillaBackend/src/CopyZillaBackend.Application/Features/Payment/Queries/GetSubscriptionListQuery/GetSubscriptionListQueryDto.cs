@@ -6,6 +6,6 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionL
         public string PriceId { get; set; }
         public string PriceFormatted { get; set; }
         public string CreditFormatted { get; set; }
-        public bool Default { get; set; }
+        public string PlanType { get; set; }
     }
 }

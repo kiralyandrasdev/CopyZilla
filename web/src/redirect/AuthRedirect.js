@@ -6,14 +6,17 @@ import { AuthContext } from '../features/authentication/authContext';
 function AuthRedirect() {
     const navigate = useNavigate();
 
-    const path = window.location.pathname;
-
     const { user, updateUser } = useContext(AuthContext);
 
     useEffect(() => {
         const auth = getAuth();
 
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+            const path = window.location.pathname;
+
+            console.log("Auth state changed: " + firebaseUser);
+            console.log("Path: ", path);
+
             updateUser(firebaseUser);
 
             if (firebaseUser) {

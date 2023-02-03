@@ -27,7 +27,7 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionL
                     PriceId = e.DefaultPriceId,
                     PriceFormatted = e.Metadata["price_formatted"],
                     CreditFormatted = e.Metadata["credit_count_formatted"],
-                    Default = e.Metadata.ContainsKey("default") && e.Metadata["default"] == "true",
+                    PlanType = e.Metadata["plan_type"],
                 };
             })
             .ToList();
