@@ -22,7 +22,6 @@ function CreditRefillOption(props) {
 
     if (props.hasOwnProperty("order")) {
         className += ` credit__option__${props.order}`;
-        console.log(className)
     }
 
     return (

@@ -166,8 +166,6 @@ export default function CreatePage() {
                 advancedPrompt,
                 language.value,
             );
-
-            console.log(advancedPromptObject);
             dispatch(processAdvancedPrompt({ firebaseUid, prompt: advancedPromptObject }));
         }
     }

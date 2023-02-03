@@ -24,7 +24,6 @@ export default function usePersistState(storageKey, initialState) {
     // Create a replacement method that will set the state like normal, but that also saves the new state into the store.
     const setState = (newState) => {
         if (!newState) {
-            console.log("setting to null")
             localStorage.removeItem(storageKey);
         } else {
             localStorage.setItem(storageKey, JSON.stringify(newState));

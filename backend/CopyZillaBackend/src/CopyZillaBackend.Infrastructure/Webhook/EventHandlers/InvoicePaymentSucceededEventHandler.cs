@@ -31,8 +31,6 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
             if (user == null)
                 throw new Exception("User is null");
 
-            // user.SubscriptionValidUntil = invoice.PeriodEnd;
-
             var productId = invoice.Lines.Data.FirstOrDefault()?.Price.ProductId;
 
             if (productId == null)
@@ -51,10 +49,12 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
 
             var creditCount = int.Parse(product.Metadata["credit_count"]);
             var planType = product.Metadata["plan_type"];
+            var periodEnd = invoice.Lines.Data.FirstOrDefault()?.Period.End;
 
             user.SubscriptionPlanName = product.Name;
-            user.PlanType = planType;
             user.CreditCount += creditCount;
+            user.PlanType = planType;
+            user.SubscriptionValidUntil = periodEnd;
 
             await _userRepository.UpdateAsync(user);
         }

@@ -22,7 +22,6 @@ export const userSlice = createSlice({
         builder.addCase(
             getUser.fulfilled,
             (state, action) => {
-                console.log("getUser.fulfilled: " + JSON.stringify(action))
                 state.isLoading = false;
                 state.user = action.payload;
             }
@@ -43,7 +42,6 @@ export const userSlice = createSlice({
         builder.addCase(
             createUser.fulfilled,
             (state, action) => {
-                console.log("createUser.fulfilled: " + JSON.stringify(action))
                 state.isLoading = false;
                 state.user = action.payload;
             }

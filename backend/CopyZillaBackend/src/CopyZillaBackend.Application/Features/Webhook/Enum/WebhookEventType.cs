@@ -5,6 +5,11 @@
         CheckoutSessionCompleted,
         InvoicePaymentSucceeded,
         CustomerSubscriptionCreated,
+        CustomerSubscriptionUpdated,
+        CustomerSubscriptionDeleted,
+        CustomerSubscriptionTrialWillEnd,
+        InvoicePaymentFailed,
+        InvoicePaymentActionRequired,
     }
 }
 

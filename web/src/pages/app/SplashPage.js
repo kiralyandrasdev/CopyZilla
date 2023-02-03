@@ -20,7 +20,6 @@ function SplashPage() {
     useEffect(() => {
         if (userFetchResult) {
             updateUser(userFetchResult);
-            console.log(userFetchResult);
         }
     }, [userFetchResult]);
 

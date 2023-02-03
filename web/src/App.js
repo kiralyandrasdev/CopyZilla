@@ -13,7 +13,6 @@ import SavedResultsPage from './pages/app/SavedResults';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
 import SplashPage from './pages/app/SplashPage';
 import AccountRecovery from './pages/auth/AccountRecovery';
-import AuthRedirect from './pages/auth/AuthRedirect';
 import Login from './pages/auth/Login';
 import SignUp from './pages/auth/SignUp';
 import VerifyEmailPage from './pages/auth/VerifyEmail';
@@ -25,13 +24,13 @@ import LandingPage from './pages/website/Landing';
 import PricingPage from './pages/website/Pricing';
 import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
 import TermsOfServicePage from './pages/website/TermsOfService';
-import PrivateRoutes from './utils/PrivateRoutes';
+import AuthRedirect from './redirect/AuthRedirect';
 
 function App() {
   initializeApp(firebaseConfig);
   return (
     <Routes>
-      <Route element={<PrivateRoutes />}>
+      <Route element={<AuthRedirect />}>
         <Route element={<PrivateLayout />} path="/user">
           <Route path="/user/editor" element={<CreatePage />} />
           <Route path="/user/savedResults" element={<SavedResultsPage />} />
@@ -39,13 +38,12 @@ function App() {
           <Route path="/user/creditRefill" element={<CreditRefill />} />
           <Route path="/user/checkout/completed" element={<CheckoutCompleted />} />
           <Route path="/user/checkout/canceled" element={<CheckoutCanceled />} />
+          <Route path="/user/subscriptionExpired" element={<SelectSubscriptionPage />} />
         </Route>
         <Route element={<FullscreenLayout />}>
-          <Route path="/selectSubscription" element={<SelectSubscriptionPage />} />
-          <Route path="/splash" element={<SplashPage />} />
+          <Route path="/user/selectSubscription" element={<SelectSubscriptionPage />} />
+          <Route path="/user/splash" element={<SplashPage />} />
         </Route>
-      </Route>
-      <Route element={<AuthRedirect />}>
         <Route element={<PublicLayout />} path="/auth">
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/signup" element={<SignUp />} />

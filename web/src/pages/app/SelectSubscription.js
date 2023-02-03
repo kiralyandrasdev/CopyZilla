@@ -23,7 +23,6 @@ function SelectSubscriptionPage() {
         if (subscriptionList.length < 1) {
             return <p>Nincs elérhető csomag.</p>
         }
-        console.log(subscriptionList);
         const items = subscriptionList.filter(e => !e.default).map((item, index) => {
             return <SubscriptionOption order={index} key={index} item={item} />
         });

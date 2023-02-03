@@ -1,10 +1,13 @@
 import { getAuth, sendEmailVerification } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { AsyncButton, TextButton } from '../../../components';
 import { signOutFirebaseUser } from '../actions/authActions';
 
 function VerifyEmailForm() {
+    const navigate = useNavigate();
+
     const { email } = useSelector((state) => state.auth);
     const [message, setMessage] = useState(null);
 
@@ -14,6 +17,11 @@ function VerifyEmailForm() {
         const auth = getAuth();
         await sendEmailVerification(auth.currentUser);
         setMessage("Megerősítő e-mail elküldve.");
+    }
+
+    const handleSignOut = () => {
+        dispatch(signOutFirebaseUser());
+        navigate('/auth/login');
     }
 
     return (
@@ -27,7 +35,7 @@ function VerifyEmailForm() {
             </div>
             {message && <p className="authForm__message">{message}</p>}
             <div className="authForm__secondaryActions">
-                <TextButton color="var(--grey3)" title="Bejelentkezés más felhasználóval" onClick={() => dispatch(signOutFirebaseUser())} />
+                <TextButton color="var(--grey3)" title="Bejelentkezés más felhasználóval" onClick={() => handleSignOut()} />
             </div>
         </div>
     );

@@ -54,8 +54,6 @@ export default function SavedResultsPage() {
             </>
         }
 
-        console.log(items);
-
         return (
             <div className="page__savedResultsPage__list">
                 {items.map((promptResult, index) => {

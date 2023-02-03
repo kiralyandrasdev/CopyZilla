@@ -27,21 +27,18 @@ export const editorSlice = createSlice({
         builder.addCase(
             processQuickPrompt.fulfilled,
             (state, action) => {
-                console.log("processQuickPrompt.fulfilled: ", action.payload)
                 state.result = action.payload;
                 state.isLoading = false;
             });
         builder.addCase(
             processQuickPrompt.pending,
             (state) => {
-                console.log("processQuickPrompt.pending")
                 state.isLoading = true;
             }
         );
         builder.addCase(
             processQuickPrompt.rejected,
             (state, action) => {
-                console.log("processQuickPrompt.rejected: ", action.payload)
                 state.error = action.payload;
                 state.isLoading = false;
             }
@@ -49,7 +46,6 @@ export const editorSlice = createSlice({
         builder.addCase(
             processAdvancedPrompt.fulfilled,
             (state, action) => {
-                console.log("processAdvancedPrompt.fulfilled: ", action)
                 state.result = action.payload;
                 state.isLoading = false;
             }
@@ -57,14 +53,12 @@ export const editorSlice = createSlice({
         builder.addCase(
             processAdvancedPrompt.pending,
             (state) => {
-                console.log("processAdvancedPrompt.pending")
                 state.isLoading = true;
             }
         );
         builder.addCase(
             processAdvancedPrompt.rejected,
             (state, action) => {
-                console.log("processAdvancedPrompt.rejected: ", action.payload)
                 state.isLoading = false;
                 state.error = action.payload;
             }

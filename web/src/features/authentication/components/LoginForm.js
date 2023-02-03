@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
 import { loginFirebaseUser } from "../actions/authActions";
 import { resetAuthError } from "../authSlice";
+import { firebaseLoginErrorMessage } from "../utils/authUtils";
 import "./AuthForm.css";
 
 export default function LoginForm() {
@@ -61,19 +62,7 @@ export default function LoginForm() {
         if (emailErrorMessage) return emailErrorMessage;
         if (passwordErrorMessage) return passwordErrorMessage;
         if (!error) return error;
-        if (error == "auth/invalid-email") {
-            return "Helytelen e-mail cím";
-        }
-        if (error == "auth/user-not-found") {
-            return "Nem található felhasználó";
-        }
-        if (error == "auth/wrong-password") {
-            return "Helytelen jelszó";
-        }
-        if (error == "auth/network-request-failed") {
-            return "Hálózati hiba";
-        }
-        return error;
+        return firebaseLoginErrorMessage(error);
     }, [emailErrorMessage, passwordErrorMessage, error]);
 
     return (

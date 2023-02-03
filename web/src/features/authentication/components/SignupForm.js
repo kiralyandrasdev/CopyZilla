@@ -7,6 +7,7 @@ import { AsyncButton, TextButton, TextField } from "../../../components";
 import { useCreateUserMutation } from "../../api/apiSlice";
 import { createFirebaseUser } from "../actions/authActions";
 import { resetAuthError } from "../authSlice";
+import { firebaseSignupErrorMessage } from "../utils/authUtils";
 import "./AuthForm.css";
 
 export default function SignupForm() {
@@ -29,7 +30,8 @@ export default function SignupForm() {
         {
             isLoading: userCreateLoading,
             error: userCreateError,
-            data: userCreateUser
+            data: userCreateUser,
+            isSuccess: userApiCreateSuccess,
         }
     ] = useCreateUserMutation();
 
@@ -37,9 +39,7 @@ export default function SignupForm() {
     const loading = firebaseCreateLoading || userCreateLoading;
 
     useEffect(() => {
-        console.log("accessToken", accessToken);
-        console.log("userCreateUser", userCreateUser);
-        if (accessToken && userCreateUser) {
+        if (accessToken && userApiCreateSuccess) {
             routeChange("/auth/verifyEmail");
         }
     }, [accessToken, userCreateUser]);
@@ -114,25 +114,7 @@ export default function SignupForm() {
         if (passwordErrorMessage) return passwordErrorMessage;
         if (passwordConfirmationErrorMessage) return passwordConfirmationErrorMessage;
         if (!error) return error;
-        if (error == "auth/invalid-email") {
-            return "Helytelen e-mail cím";
-        }
-        if (error == "auth/user-not-found") {
-            return "Nem található felhasználó";
-        }
-        if (error == "auth/wrong-password") {
-            return "Helytelen jelszó";
-        }
-        if (error == "auth/email-already-in-use") {
-            return "Ez az e-mail cím már használatban van";
-        }
-        if (error == "auth/weak-password") {
-            return "A jelszónak minimum 8 karaktert kell tartalmaznia"
-        }
-        if (error == "auth/network-request-failed") {
-            return "Hálózati hiba";
-        }
-        return error;
+        return firebaseSignupErrorMessage(error);
     }, [emailErrorMessage, passwordErrorMessage, passwordConfirmationErrorMessage, error]);
 
     return (

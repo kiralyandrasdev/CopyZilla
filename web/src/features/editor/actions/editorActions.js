@@ -5,7 +5,6 @@ export const processQuickPrompt = createAsyncThunk(
     'editor/processQuickPrompt',
     async ({ firebaseUid, prompt }, thunkApi) => {
         try {
-            console.log("quick prompt: ", prompt)
             const response = await axios.post(`https://localhost:7107/api/user/${firebaseUid}/quickPrompt`, prompt);
             return thunkApi.fulfillWithValue(response.data.value);
         } catch (e) {

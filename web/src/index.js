@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import { UserContextProvider } from './features';
+import { AuthContextProvider } from './features/authentication/authContext';
 import './index.css';
 import store from './redux/store/store';
 import reportWebVitals from './reportWebVitals';
@@ -13,9 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <UserContextProvider>
-        <App></App>
-      </UserContextProvider>
+      <AuthContextProvider>
+        <UserContextProvider>
+          <App></App>
+        </UserContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </Provider>
 );

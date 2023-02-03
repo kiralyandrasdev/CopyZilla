@@ -32,7 +32,6 @@ export const createFirebaseUser = createAsyncThunk(
                 emailVerified: result.user.emailVerified,
                 email: result.user.email
             };
-            console.log(payload);
             return thunkApi.fulfillWithValue(payload);
         } catch (e) {
             return thunkApi.rejectWithValue(e.code);
@@ -47,7 +46,6 @@ export const signOutFirebaseUser = createAsyncThunk(
         try {
             return await auth.signOut();
         } catch (e) {
-            console.log("signed out error: ", e.code)
             return thunkApi.rejectWithValue(e.code);
         }
     }

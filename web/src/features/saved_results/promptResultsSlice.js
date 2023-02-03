@@ -12,14 +12,11 @@ export const promptResultsSlice = createSlice({
             state.items.unshift(action.payload.promptResult);
         },
         removePromptResult: (state, action) => {
-            console.log("removePromptResult", action.payload)
             state.items = state.items.filter(result => result.id !== action.payload.promptResultId);
-            console.log(state.items);
         },
     },
     extraReducers: {
         [getPromptResults.fulfilled]: (state, action) => {
-            console.log("getPromptResults.fulfilled");
             state.items = action.payload;
             state.isLoading = false;
         },
