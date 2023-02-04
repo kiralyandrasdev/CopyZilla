@@ -68,6 +68,13 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['PromptResults'],
         }),
+        removePaidSubscription: builder.mutation({
+            query: ({ userId }) => ({
+                url: `/user/${userId}/removePaidSubscription`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['User'],
+        }),
     }),
 })
 
@@ -79,6 +86,7 @@ export const {
     useGetPromptResultsQuery,
     useSavePromptResultMutation,
     useDeletePromptResultMutation,
+    useRemovePaidSubscriptionMutation,
 } = apiSlice;
 
 export default apiSlice;

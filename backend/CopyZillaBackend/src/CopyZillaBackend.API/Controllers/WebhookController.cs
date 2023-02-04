@@ -23,6 +23,7 @@ namespace CopyZillaBackend.API.Controllers
                 // { "customer.subscription.trial_will_end", WebhookEventType.CustomerSubscriptionTrialWillEnd },
                 { "invoice.payment_failed", WebhookEventType.InvoicePaymentFailed },
                 // { "invoice.payment_action_required", WebhookEventType.InvoicePaymentActionRequired },
+                { "customer.subscription.updated", WebhookEventType.CustomerSubscriptionUpdated }
             };
 
         /// <summary>

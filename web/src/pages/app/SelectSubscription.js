@@ -10,6 +10,8 @@ import './SelectSubscription.css';
 function SelectSubscriptionPage() {
     const navigate = useNavigate();
 
+    const { firebaseUid } = useSelector(state => state.auth);
+
     const [subscriptionList, setSubscriptionList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +32,7 @@ function SelectSubscriptionPage() {
     }
 
     const handleSkipUpgrade = () => {
-        localStorage.setItem("initialized", true);
+        localStorage.setItem(`initialized_${firebaseUid}`, true);
         navigate("/user/editor");
     }
 

@@ -9,6 +9,7 @@ import PublicLayout from './layout/PublicLayout';
 import Account from './pages/app/Account';
 import CreatePage from './pages/app/Create';
 import CreditRefill from './pages/app/CreditRefill';
+import PaymentOverduePage from './pages/app/PaymentOverdue';
 import SavedResultsPage from './pages/app/SavedResults';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
 import AccountRecovery from './pages/auth/AccountRecovery';
@@ -41,9 +42,10 @@ function App() {
             <Route path="/user/checkout/canceled" element={<CheckoutCanceled />} />
             <Route path="/user/subscriptionExpired" element={<SelectSubscriptionPage />} />
           </Route>
-        </Route>
-        <Route element={<FullscreenLayout />}>
-          <Route path="/user/selectSubscription" element={<SelectSubscriptionPage />} />
+          <Route element={<FullscreenLayout />}>
+            <Route path="/user/selectSubscription" element={<SelectSubscriptionPage />} />
+            <Route path="/user/paymentOverdue" element={<PaymentOverduePage />} />
+          </Route>
         </Route>
         <Route element={<PublicLayout />} path="/auth">
           <Route path="/auth/login" element={<Login />} />

@@ -11,6 +11,7 @@ export default function InitRedirect() {
 
     const { firebaseUid } = useSelector(state => state.auth);
 
+
     const {
         data: user,
         error,
@@ -26,10 +27,28 @@ export default function InitRedirect() {
         if (!user) return;
 
         if (user.planType === "default") {
-            const initialized = localStorage.getItem("initialized")
+            const initialized = localStorage.getItem(`initialized_${firebaseUid}`)
 
             if (!initialized) {
                 navigate("/user/selectSubscription");
+                return;
+            }
+
+            navigate("/user/editor");
+            return;
+        }
+
+        if (user.subscriptionValidUntil) {
+            console.log("subscriptionValidUntil: ", user.subscriptionValidUntil);
+
+            const subscriptionValidUntil = new Date(user.subscriptionValidUntil);
+            const now = new Date();
+
+            if (subscriptionValidUntil > now) {
+                const path = window.location.pathname;
+                if (path !== "/user/paymentOverdue") {
+                    navigate("/user/paymentOverdue");
+                }
             }
         }
 
