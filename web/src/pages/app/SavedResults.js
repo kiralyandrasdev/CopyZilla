@@ -6,6 +6,7 @@ import { deletePromptResult, getPromptResults } from '../../features/saved_resul
 import SavedPromptResult from '../../features/saved_results/components/SavedPromptResult';
 import { removePromptResult } from '../../features/saved_results/promptResultsSlice';
 import { UserContext } from '../../features/user/context/userContext';
+import './AppPage.css';
 import './SavedResults.css';
 
 function LoadingPlaceholder() {

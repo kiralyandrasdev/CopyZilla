@@ -2,14 +2,12 @@
     display: flex;
     flex-direction: column;
     background-color: var(--grey3);
+    justify-content: space-between;
     border-radius: 8px;
     padding: 20px;
-    height: 100%;
+    height: calc(60vh - 120px);
     width: 100%;
-}
-
-.promptResultView__result {
-    height: 400px;
+    min-height: 400px;
 }
 
 .promptResultView__result__placeholder__container {
@@ -24,10 +22,6 @@
     padding: 20px;
     height: 100%;
     width: 100%;
-}
-
-.promptResultView__result__placeholder {
-    background-color: red;
 }
 
 .promptResultView__result__placeholder__svg {

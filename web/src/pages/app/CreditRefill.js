@@ -4,6 +4,7 @@ import PurchaseSvg from "../../assets/purchase.svg";
 import { LoadingIndicator } from "../../components";
 import { getGoodsList } from "../../features/payment/actions/paymentActions";
 import CreditRefillOptions from "../../features/payment/components/CreditRefillOption";
+import './AppPage.css';
 import './CreditRefill.css';
 
 export default function CreditRefill() {

@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AsyncButton, DropdownButton, TextButton, TextField } from "../../components";
 import SwitchButton from "../../components/ui/SwitchButton";
 import { processAdvancedPrompt, processQuickPrompt } from "../../features/editor/actions/editorActions";
 import PromptResultView from "../../features/editor/components/PromptResultView";
 import AdvancedPrompt from "../../features/editor/models/advancedPrompt";
 import QuickPrompt from "../../features/editor/models/quickPrompt";
+import { openCustomerPortal } from "../../features/payment/actions/paymentActions";
 import { UserContext } from "../../features/user/context/userContext";
+import './AppPage.css';
 import "./Create.css";
 
 const testresult = "A 20. századi magyarországi kommunizmus egy olyan politikai rendszer volt, amely a szovjet típusú szocializmus alapelveit követte. A kommunizmus Magyarországon 1945-ben kezdődött, amikor a Szovjetunió megszállta az országot. A kommunizmus alatt a magyarokat egy állami kontrollált gazdasági és politikai rendszer alá helyezték. A kormányzat a szocialista pártokon keresztül irányította az országot, és korlátozta a polgárok szabadságát. A kommunizmus alatt a magyaroknak számos korlátozással kellett szembenézniük. A kormányzat korlátozta a szabad véleménynyilvánítást, a média szabályozását, a szakszervezeteket és a vallási szervezeteket. A kommunizmus alatt a magyaroknak csak korlátozott szabadságuk volt, és a kormányzat szigorúan ellenőrizte a polgárok mindennapi életét. A kommunizmus alatt a magyarok számára számos problémával kellett szembenézniük. A kormányzat korlátozta a gazdasági fejlődést, ami a magyarok számára komoly anyagi nehézségeket okozott. A kommunizmus alatt a magyaroknak számos szociális problémával kellett szembenézniük, beleértve a munkanélküliséget, a magas létminimumot és a magas inflációt. A 20. századi magyarországi kommunizmus 1989-ben ért véget, amikor a szovjet típusú szocializmus bukott. Azóta Magyarország egy demokratikus országgá vált, és a polgárok számos szabadságot élveznek. Azóta Magyarország sikeresen fejlődik, és a magyarok életminősége jelentősen javult.";
@@ -15,6 +18,8 @@ const testresult2 = "asd";
 export default function CreatePage() {
     const { firebaseUid } = useSelector((state) => state.auth);
     const { user, decreaseCreditCount } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const outOfCredits = user.creditCount < 1;
     const processEnabled = !outOfCredits && user.creditCount;
@@ -205,7 +210,9 @@ export default function CreatePage() {
     return (
         <div className="page page__createPage animation__fadeInUp">
             <h4>Létrehozása</h4>
-            <PromptResultView isLoading={isLoading} value={resultText}></PromptResultView>
+            <div className="createPage__resultContainer">
+                <PromptResultView isLoading={isLoading} value={resultText}></PromptResultView>
+            </div>
             <div className="createPage__modeToggleRow">
                 <SwitchButton active={mode == "quickMode"} onClick={() => handleModeChange("quickMode")} title="Gyors mód"></SwitchButton>
                 <SwitchButton active={mode == "advancedMode"} onClick={() => handleModeChange("advancedMode")} title="Haladó mód"></SwitchButton>
@@ -216,9 +223,9 @@ export default function CreatePage() {
                 outOfCredits &&
                 <div className="outOfCredits__section">
                     <p className="centered-text">Nincs több kredited.</p>
-                    <TextButton color="#38FFC3" title="Vásárolj kreditet"></TextButton>
+                    <TextButton color="var(--green)" title="Vásárolj kreditet" onClick={() => navigate("/user/creditRefill")}></TextButton>
                     <p>vagy</p>
-                    <TextButton color="#38FFC3" title="válts nagyobb csomagra"></TextButton>
+                    <TextButton color="var(--green)" title="válts nagyobb csomagra" onClick={() => openCustomerPortal(user.email)}></TextButton>
                 </div>
             }
         </div>

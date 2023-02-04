@@ -2,10 +2,21 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     row-gap: 20px;
     width: 100%;
+    min-height: calc(100vh - 120px);
 }
+
+/* 
+.createPage__resultContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    row-gap: 20px;
+    width: 100%;
+} */
 
 .createPage__modeToggleRow {
     display: flex;

@@ -16,6 +16,10 @@
     justify-content: center;
 }
 
+.sidebar__header h5 {
+    cursor: pointer;
+}
+
 .sidebar__bottom_nav {
     display: flex;
     flex-direction: column;

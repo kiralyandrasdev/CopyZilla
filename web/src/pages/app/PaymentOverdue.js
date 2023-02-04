@@ -4,7 +4,7 @@ import { AsyncButton, TextButton } from '../../components';
 import { UserContext } from '../../features';
 import { openCustomerPortal } from '../../features/payment/actions/paymentActions';
 import './PaymentOverdue.css';
-
+import './AppPage.css';
 
 export default function PaymentOverduePage() {
     const { user } = useContext(UserContext);

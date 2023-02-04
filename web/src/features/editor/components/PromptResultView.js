@@ -113,44 +113,42 @@ export default function PromptResultView(props) {
 
     return (
         <div className="promptResultView">
-            <div className="promptResultView__result">
-                {
-                    props.isLoading ?
-                        ShimmerText() :
-                        isEmpty ?
-                            PlaceHolder()
-                            :
-                            <div className="promptResultView__result__fulfilled">
-                                <div className="promptResultView__result__value animation__fadeInUp">
-                                    <p>{props.value}</p>
-                                </div>
-                                <div className="promptResultView__result__action__list">
-                                    <div ref={savePopupRef} className="promptResultView__result__action__container">
-                                        <div className={actionClass} onClick={() => handleSaveOpen()}>
-                                            <FiStar></FiStar>
-                                            <p>Mentés</p>
-                                        </div>
-                                        <div className={savePopupClass}>
-                                            <h6>Szöveg mentése</h6>
-                                            <TextField onChange={handlePromptResultTitleChange} value={promptResultTitle} title="Cím" hint={currentDate.toISOString()}></TextField>
-                                            <div className="save__popup__button__row">
-                                                <TextButton onClick={handleSave} title="Mentés" color="var(--green)"></TextButton>
-                                            </div>
+            {
+                props.isLoading ?
+                    ShimmerText() :
+                    isEmpty ?
+                        PlaceHolder()
+                        :
+                        <div className="promptResultView__result__fulfilled">
+                            <div className="promptResultView__result__value animation__fadeInUp">
+                                <p>{props.value}</p>
+                            </div>
+                            <div className="promptResultView__result__action__list">
+                                <div ref={savePopupRef} className="promptResultView__result__action__container">
+                                    <div className={actionClass} onClick={() => handleSaveOpen()}>
+                                        <FiStar></FiStar>
+                                        <p>Mentés</p>
+                                    </div>
+                                    <div className={savePopupClass}>
+                                        <h6>Szöveg mentése</h6>
+                                        <TextField onChange={handlePromptResultTitleChange} value={promptResultTitle} title="Cím" hint={currentDate.toISOString()}></TextField>
+                                        <div className="save__popup__button__row">
+                                            <TextButton onClick={handleSave} title="Mentés" color="var(--green)"></TextButton>
                                         </div>
                                     </div>
-                                    <div ref={copyPopupRef} className="promptResultView__result__action__container">
-                                        <div className={actionClass} onClick={() => handleCopy()}>
-                                            <BiCopy></BiCopy>
-                                            <p>Vágólapra másolás</p>
-                                        </div>
-                                        <div className={copyPopupClass}>
-                                            <p>Vágólapra másolva!</p>
-                                        </div>
+                                </div>
+                                <div ref={copyPopupRef} className="promptResultView__result__action__container">
+                                    <div className={actionClass} onClick={() => handleCopy()}>
+                                        <BiCopy></BiCopy>
+                                        <p>Vágólapra másolás</p>
+                                    </div>
+                                    <div className={copyPopupClass}>
+                                        <p>Vágólapra másolva!</p>
                                     </div>
                                 </div>
                             </div>
-                }
-            </div>
+                        </div>
+            }
         </div>
     );
 }

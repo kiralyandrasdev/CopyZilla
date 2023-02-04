@@ -5,6 +5,7 @@ import ChoiceSvg from '../../assets/choice.svg';
 import { LoadingIndicator, TextButton } from '../../components';
 import { getSubscriptionList } from '../../features/payment/actions/paymentActions';
 import SubscriptionOption from '../../features/payment/components/SubscriptionOption';
+import './AppPage.css';
 import './SelectSubscription.css';
 
 function SelectSubscriptionPage() {
@@ -52,7 +53,7 @@ function SelectSubscriptionPage() {
         return (
             <div className="page page__selectSubscription">
                 <img src={ChoiceSvg} alt="" className="page__selectSubscription__illustration illustration__150" />
-                <h5>Válassz csomagot és láss neki a munkának</h5>
+                <h4>Válassz csomagot és láss neki a munkának</h4>
                 <div className="page__selectSubscription__options__container">
                     {itemContainer()}
                 </div>

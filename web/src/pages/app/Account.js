@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { FiKey, FiMail } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { LoadingIndicator, TextButton } from "../../components";
 import { useGetUserQuery } from "../../features/api/apiSlice";
 import { openCustomerPortal } from "../../features/payment/actions/paymentActions";
 import './Account.css';
+import './AppPage.css';
 
 export default function Profile() {
     const { firebaseUid } = useSelector((state) => state.auth);
