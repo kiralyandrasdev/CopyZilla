@@ -26,6 +26,8 @@ export default function InitRedirect() {
 
         if (!user) return;
 
+        const path = window.location.pathname;
+
         if (user.planType === "default") {
             const initialized = localStorage.getItem(`initialized_${firebaseUid}`)
 
@@ -34,7 +36,9 @@ export default function InitRedirect() {
                 return;
             }
 
-            navigate("/user/editor");
+            if (!path.includes("/user")) {
+                navigate("/user/editor");
+            }
             return;
         }
 
@@ -44,11 +48,15 @@ export default function InitRedirect() {
             const subscriptionValidUntil = new Date(user.subscriptionValidUntil);
             const now = new Date();
 
-            if (subscriptionValidUntil > now) {
-                const path = window.location.pathname;
+            if (subscriptionValidUntil <= now) {
                 if (path !== "/user/paymentOverdue") {
                     navigate("/user/paymentOverdue");
                 }
+                return;
+            }
+
+            if (!path.includes("/user")) {
+                navigate("/user/editor");
             }
         }
 

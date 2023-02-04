@@ -53,8 +53,6 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
                 user.SubscriptionValidUntil = DateTime.UtcNow.AddDays(-1);
             else
                 user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
-
-            if (planType == "paid")
                 user.CreditCount += int.Parse(product.Metadata["credit_count"]);
 
             await _repository.UpdateAsync(user);

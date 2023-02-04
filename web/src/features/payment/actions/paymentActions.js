@@ -31,3 +31,7 @@ export const getSubscriptionList = async () => {
         return null;
     }
 }
+
+export function openCustomerPortal(email) {
+    window.open(`https://billing.stripe.com/p/login/test_5kA7tD9f7eTN6OYcMM?prefilled_email=${email}`, '_blank', 'noopener,noreferrer');
+}
