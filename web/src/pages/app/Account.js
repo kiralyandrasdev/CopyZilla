@@ -32,7 +32,7 @@ export default function Profile() {
 
         return (
             <>
-                <div className="page__account__section">
+                <div className="page__account__section page__account__section__1 animation__fadeInUp">
                     <h5>Fiók</h5>
                     <p className="description email__heading">{user.email}</p>
                     <div className="spacer"></div>
@@ -41,20 +41,22 @@ export default function Profile() {
                         <TextButton color="white" prefixIcon={<FiMail />} title="E-mail cím megváltoztatása"></TextButton>
                     </div>
                 </div>
-                <div className="page__account__section">
+                <div className="page__account__section page__account__section__2 animation__fadeInUp">
                     <h5>Előfizetés</h5>
                     <div className="spacer"></div>
                     <p>{user.subscriptionPlanName}</p>
                     <p className="description">Megújul ekkor: {getDate(user.subscriptionValidUntil)}</p>
                     <TextButton color="var(--green)" underline={true} title="Előfizetés és fizetési adatok kezelése" onClick={() => openCustomerPortal(user.email)}></TextButton>
                 </div>
-                <TextButton color="var(--grey2)" underline={true} title="Fiók törlése"></TextButton>
+                <div className="page__account__section__3 animation__fadeInUp">
+                    <TextButton color="var(--grey2)" underline={true} title="Fiók törlése"></TextButton>
+                </div>
             </>
         );
     }
 
     return (
-        <div className="page page__account page__centerContent animation__fadeInUp">
+        <div className="page page__account page__centerContent">
             {content()}
         </div >
     );

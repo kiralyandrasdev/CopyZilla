@@ -11,6 +11,14 @@
     text-align: start;
 }
 
+.page__account__section__2 {
+    animation-delay: 0.2s;
+}
+
+.page__account__section__3 {
+    animation-delay: 0.4s;
+}
+
 .spacer {
     height: 10px;
 }
