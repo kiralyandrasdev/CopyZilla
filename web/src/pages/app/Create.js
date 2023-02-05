@@ -209,7 +209,7 @@ export default function CreatePage() {
 
     return (
         <div className="page page__createPage animation__fadeInUp">
-            <h4>Létrehozása</h4>
+            <h4>Létrehozás</h4>
             <div className="createPage__resultContainer">
                 <PromptResultView isLoading={isLoading} value={resultText}></PromptResultView>
             </div>
