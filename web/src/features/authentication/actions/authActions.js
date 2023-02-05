@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
+import { EmailAuthProvider, createUserWithEmailAndPassword, getAuth, reauthenticateWithCredential, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 
 export const loginFirebaseUser = createAsyncThunk(
     'auth/loginUser',
@@ -50,3 +50,16 @@ export const signOutFirebaseUser = createAsyncThunk(
         }
     }
 )
+
+export const updateEmailWithReauth = ({ password, newEmail }) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, password);
+    return reauthenticateWithCredential(user, credential)
+        .then(() => {
+            return user.updateEmail(newEmail)
+        })
+        .then(() => {
+            return user.sendEmailVerification()
+        })
+}

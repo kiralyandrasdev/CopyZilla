@@ -12,6 +12,8 @@ import CreditRefill from './pages/app/CreditRefill';
 import PaymentOverduePage from './pages/app/PaymentOverdue';
 import SavedResultsPage from './pages/app/SavedResults';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
+import ChangeEmailPage from './pages/app/account/ChangeEmail';
+import ChangePasswordPage from './pages/app/account/ChangePassword';
 import AccountRecovery from './pages/auth/AccountRecovery';
 import Login from './pages/auth/Login';
 import SignUp from './pages/auth/SignUp';
@@ -37,6 +39,8 @@ function App() {
             <Route path="/user/editor" element={<CreatePage />} />
             <Route path="/user/savedResults" element={<SavedResultsPage />} />
             <Route path="/user/account" element={<Account />} />
+            <Route path="/user/account/changeEmail" element={<ChangeEmailPage />} />
+            <Route path="/user/account/changePassword" element={<ChangePasswordPage />} />
             <Route path="/user/creditRefill" element={<CreditRefill />} />
             <Route path="/user/checkout/completed" element={<CheckoutCompleted />} />
             <Route path="/user/checkout/canceled" element={<CheckoutCanceled />} />

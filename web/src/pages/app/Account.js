@@ -1,6 +1,7 @@
 import React from "react";
 import { FiKey, FiMail } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { LoadingIndicator, TextButton } from "../../components";
 import { useGetUserQuery } from "../../features/api/apiSlice";
 import { openCustomerPortal } from "../../features/payment/actions/paymentActions";
@@ -14,6 +15,8 @@ function getDate(date) {
 
 export default function Profile() {
     const { firebaseUid } = useSelector((state) => state.auth);
+
+    const navigate = useNavigate();
 
     const {
         data: user,
@@ -37,8 +40,8 @@ export default function Profile() {
                     <p className="description email__heading">{user.email}</p>
                     <div className="spacer"></div>
                     <div className="account__buttons">
-                        <TextButton color="white" prefixIcon={<FiKey />} title="Jelszó megváltoztatása"></TextButton>
-                        <TextButton color="white" prefixIcon={<FiMail />} title="E-mail cím megváltoztatása"></TextButton>
+                        <TextButton color="white" prefixIcon={<FiMail />} title="E-mail cím megváltoztatása" onClick={() => navigate("/user/account/changeEmail")}></TextButton>
+                        <TextButton color="white" prefixIcon={<FiKey />} title="Jelszó megváltoztatása" onClick={() => navigate("/user/account/changePassword")}></TextButton>
                     </div>
                 </div>
                 <div className="page__account__section page__account__section__2 animation__fadeInUp">
