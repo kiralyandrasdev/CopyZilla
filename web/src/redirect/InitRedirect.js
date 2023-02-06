@@ -39,6 +39,10 @@ export default function InitRedirect() {
             if (!path.includes("/user")) {
                 navigate("/user/editor");
             }
+            else if (path.includes("/user/paymentOverdue")) {
+                navigate("/user/editor");
+            }
+
             return;
         }
 
