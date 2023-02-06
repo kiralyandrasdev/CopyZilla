@@ -51,6 +51,7 @@ function ChangeEmailPage() {
             await updateEmailWithReauth({ password, email });
             setMessage("Sikeresen megváltoztattad az e-mail címedet. Ne felejtsd el visszaigazolni az új címedet!");
         } catch (error) {
+            console.log(error.code);
             setError(firebaseUpdateEmailErrorMessage(error.code));
             console.log(error);
         }
