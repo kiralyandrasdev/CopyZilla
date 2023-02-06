@@ -50,6 +50,7 @@ export function firebaseUpdateEmailErrorMessage(error) {
         return "Ez az e-mail cím már használatban van";
     }
     if (error = "auth/requires-recent-login") {
+        console.log("UTIL", error);
         return "Túl sok próbálkozás. Kérlek próbáld újra később";
     }
     if (error = "auth/weak-password") {
@@ -65,6 +66,7 @@ export function firebaseUpdateEmailErrorMessage(error) {
         return "Helytelen e-mail cím";
     }
     if (error = "auth/too-many-requests") {
+        console.log("UTIL2", error);
         return "Túl sok próbálkozás. Kérlek próbáld újra később";
     }
     return error;
