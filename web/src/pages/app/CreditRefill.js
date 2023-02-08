@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import PurchaseSvg from "../../assets/purchase.svg";
 import { LoadingIndicator } from "../../components";
 import { getGoodsList } from "../../features/payment/actions/paymentActions";
@@ -8,8 +7,6 @@ import './AppPage.css';
 import './CreditRefill.css';
 
 export default function CreditRefill() {
-    const { firebaseUid } = useSelector(state => state.auth);
-
     const [isLoading, setIsLoading] = useState(true);
 
     const [goods, setGoods] = useState([]);
@@ -43,7 +40,7 @@ export default function CreditRefill() {
         return (
             <div className="page page__creditRefill">
                 <div className="creditRefill__page__header animation__fadeInDown">
-                    <img className="illustration__150" src={PurchaseSvg}></img>
+                    <img className="illustration__150" src={PurchaseSvg} alt="Loading..."></img>
                     <h4>Válassz csomagot és folytasd a munkát</h4>
                 </div>
                 <div className="creditRefill__itemsContainer">

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ChoiceSvg from '../../assets/choice.svg';
 import { LoadingIndicator, TextButton } from '../../components';
+import { AuthContext } from '../../features/authentication/authContext';
 import { getSubscriptionList } from '../../features/payment/actions/paymentActions';
 import SubscriptionOption from '../../features/payment/components/SubscriptionOption';
 import './AppPage.css';
@@ -11,7 +12,7 @@ import './SelectSubscription.css';
 function SelectSubscriptionPage() {
     const navigate = useNavigate();
 
-    const { firebaseUid } = useSelector(state => state.auth);
+    const { firebaseUid } = useContext(AuthContext);
 
     const [subscriptionList, setSubscriptionList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

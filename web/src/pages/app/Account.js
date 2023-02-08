@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FiKey, FiMail } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingIndicator, TextButton } from "../../components";
 import { useGetUserQuery } from "../../features/api/apiSlice";
+import { AuthContext } from "../../features/authentication/authContext";
 import { openCustomerPortal } from "../../features/payment/actions/paymentActions";
 import './Account.css';
 import './AppPage.css';
@@ -14,7 +15,7 @@ function getDate(date) {
 }
 
 export default function Profile() {
-    const { firebaseUid } = useSelector((state) => state.auth);
+    const { firebaseUid } = useContext(AuthContext);
 
     const navigate = useNavigate();
 

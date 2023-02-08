@@ -13,7 +13,8 @@ export const AuthContextProvider = ({ children }) => {
 
     const value = {
         user,
-        updateUser
+        updateUser,
+        firebaseUid: user && user.uid,
     }
 
     return (

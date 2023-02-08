@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FiMenu, FiPlus } from "react-icons/fi";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AsyncButton } from "../../components";
 import useOutsideAlerter from "../../components/utils/useOutsideAlerter";
 import { useGetUserQuery } from "../../features/api/apiSlice";
+import { AuthContext } from "../../features/authentication/authContext";
 import { UserContext } from "../../features/user/context/userContext";
 import './PrivateHeader.css';
 
 export default function PrivateHeader() {
-    const { firebaseUid } = useSelector((state) => state.auth);
+    const { firebaseUid } = useContext(AuthContext);
     const { user, updateUser } = useContext(UserContext);
 
     const [menuActive, setMenuActive] = useState(false);

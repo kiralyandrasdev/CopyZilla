@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
 {
-	public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
-	{
-		private readonly IUserRepository _repository;
+    public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
+    {
+        private readonly IUserRepository _repository;
 
         public GetUserQueryValidator(IUserRepository repository)
         {

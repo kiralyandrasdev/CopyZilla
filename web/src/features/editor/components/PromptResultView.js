@@ -28,7 +28,7 @@ function PlaceHolder() {
     return (
         <div className="promptResultView__result__placeholder__container">
             <h6>Konfiguráld a beállításokat, majd kattints a szöveg létrehozás gombra</h6>
-            <img className="promptResultView__result__placeholder__svg" src={PlaceHolderSvg}></img>
+            <img className="promptResultView__result__placeholder__svg" src={PlaceHolderSvg} alt="Loading..."></img>
         </div>
     )
 }

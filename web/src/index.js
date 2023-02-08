@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
+import { AppContextProvider } from './context/appContext';
 import { UserContextProvider } from './features';
 import { AuthContextProvider } from './features/authentication/authContext';
 import './index.css';
@@ -14,11 +15,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <AuthContextProvider>
-        <UserContextProvider>
-          <App></App>
-        </UserContextProvider>
-      </AuthContextProvider>
+      <AppContextProvider>
+        <AuthContextProvider>
+          <UserContextProvider>
+            <App></App>
+          </UserContextProvider>
+        </AuthContextProvider>
+      </AppContextProvider>
     </BrowserRouter>
   </Provider>
 );

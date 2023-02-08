@@ -17,6 +17,10 @@ export const apiSlice = createApi({
             providesTags: ['User'],
             transformResponse: (response) => {
                 return response.value;
+            },
+            transformErrorResponse: (response) => {
+                console.log(response);
+                return response.data;
             }
         }),
         createUser: builder.mutation({
@@ -25,6 +29,10 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: user,
             }),
+            transformErrorResponse: (response) => {
+                console.log(response);
+                return response.data;
+            },
             invalidatesTags: ['User'],
         }),
         processQuickPrompt: builder.mutation({

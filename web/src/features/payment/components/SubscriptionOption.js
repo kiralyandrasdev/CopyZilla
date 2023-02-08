@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useState } from 'react';
 import { AsyncButton } from '../../../components';
+import { UserContext } from '../../user/context/userContext';
 import { CHECKOUT_MODE, createCheckoutSessionAsync } from '../actions/paymentActions';
 import './SubscriptionOption.css';
 
 function SubscriptionOption(props) {
     const [isLoading, setIsLoading] = useState(false);
-    const { firebaseUid } = useSelector(state => state.auth);
+    const { firebaseUid } = useContext(UserContext);
 
     const handleCreateCheckoutSession = async () => {
         setIsLoading(true);

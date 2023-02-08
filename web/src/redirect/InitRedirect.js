@@ -1,30 +1,43 @@
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { LoadingIndicator } from '../components';
+import NotFoundSvg from '../assets/not_found.svg';
+import { LoadingIndicator, TextButton } from '../components';
 import { UserContext } from '../features';
-import { useGetUserQuery } from '../features/api/apiSlice';
+import { useCreateUserMutation, useGetUserQuery } from '../features/api/apiSlice';
+import { logout } from '../features/authentication/actions/authActions';
+import { AuthContext } from '../features/authentication/authContext';
+import styles from './InitRedirect.module.css';
 
 export default function InitRedirect() {
     const navigate = useNavigate();
     const { updateUser } = useContext(UserContext);
-
-    const { firebaseUid } = useSelector(state => state.auth);
-
+    const { user, firebaseUid } = useContext(AuthContext);
 
     const {
-        data: user,
+        data: apiUser,
         error,
         isError,
         isFetching,
     } = useGetUserQuery({ firebaseUid });
 
+    const [
+        createUser,
+        {
+            isLoading: userCreateLoading,
+            error: userCreateError,
+            data: createdUser,
+            isSuccess: userCreateSuccess,
+            isError: userCreateErrorOccurred,
+        }
+    ] = useCreateUserMutation();
+
     useEffect(() => {
-        if (user) {
-            updateUser(user);
+        if (!apiUser) {
+            return;
         }
 
-        if (!user) return;
+        updateUser(apiUser);
 
         const path = window.location.pathname;
 
@@ -43,8 +56,6 @@ export default function InitRedirect() {
         }
 
         if (user.subscriptionValidUntil) {
-            console.log("subscriptionValidUntil: ", user.subscriptionValidUntil);
-
             const subscriptionValidUntil = new Date(user.subscriptionValidUntil);
             const now = new Date();
 
@@ -59,24 +70,44 @@ export default function InitRedirect() {
                 navigate("/user/editor");
             }
         }
-
-    }, [user]);
+    }, []);
 
     if (isError) {
+        if (!userCreateLoading) {
+            if (error.statusCode === "404") {
+                createUser({ email: user.email, firebaseUid: firebaseUid })
+            }
+        }
+        
         return (
-            <div className="page page__splash">
-                <div>
-                    <h4>Hiba történt</h4>
-                    <p>{JSON.stringify(error)}</p>
+            <div className={styles.initRedirect}>
+                <div className={styles.initRedirect__content}>
+                    <img src={NotFoundSvg} className="illustration__150"></img>
+                    <h5>Uh oh, váratlan hiba történt</h5>
+                    <div className={styles.initRedirect__content__error__description}>
+                        <p>{error.errorMessage}</p>
+                        {error.statusCode && <p className="description">Kód: {error.statusCode}</p>}
+                    </div>
+                    <TextButton
+                        title="Vedd fel velünk a kapcsolatot"
+                        color="var(--green)"
+                        onClick={() => navigate("/contact")}
+                    />
+                    <TextButton
+                        title="Kijelentkezés"
+                        onClick={() => logout()}
+                    />
                 </div>
             </div>
         );
     }
 
-    if (isFetching) {
+    if (isFetching || userCreateLoading) {
         return (
-            <div className="page page__splash">
-                <LoadingIndicator color="white"></LoadingIndicator>;
+            <div className={styles.initRedirect}>
+                <div className={styles.initRedirect__content}>
+                    <LoadingIndicator color="white"></LoadingIndicator>
+                </div>
             </div>
         );
     }

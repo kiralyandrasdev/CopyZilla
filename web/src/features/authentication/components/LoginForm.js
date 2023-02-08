@@ -1,11 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
-import { loginFirebaseUser } from "../actions/authActions";
-import { resetAuthError } from "../authSlice";
+import { login } from "../actions/authActions";
 import { firebaseLoginErrorMessage } from "../utils/authUtils";
 import "./AuthForm.css";
 
@@ -13,12 +11,11 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [emailErrorMessage, setEmailErrorMessage] = useState('');
-    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { loading, error } = useSelector((state) => state.auth);
-
-    const dispatch = useDispatch();
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     function handleEmailChange(event) {
         setEmail(event.target.value);
@@ -28,42 +25,40 @@ export default function LoginForm() {
         setPassword(event.target.value);
     };
 
-    const updateEmailErrorMessage = (value) => {
-        setEmailErrorMessage(value);
-    }
-
-    const updatePasswordErrorMessage = (value) => {
-        setPasswordErrorMessage(value);
-    }
-
     let navigate = useNavigate();
     const routeChange = (path) => {
         navigate(path);
     }
 
-    const handleLogin = () => {
-        dispatch(resetAuthError());
-        if (email === '') {
-            updateEmailErrorMessage('E-mail cím megadása kötelező');
-            return;
+    const canSubmit = () => {
+        if (email.length === 0) {
+            setError('E-mail cím megadása kötelező');
+            setEmailError(true);
+            return false;
         } else {
-            updateEmailErrorMessage('');
+            setEmailError(false);
         }
-        if (password === '') {
-            updatePasswordErrorMessage('Jelszó megadása kötelező');
-            return;
+        if (password.length === 0) {
+            setError('Jelszó megadása kötelező');
+            setPasswordError(true);
+            return false;
         } else {
-            updatePasswordErrorMessage('');
+            setPasswordError(false);
         }
-        dispatch(loginFirebaseUser({ email, password }));
+        return true;
     }
 
-    const loginErrorMessage = useCallback(() => {
-        if (emailErrorMessage) return emailErrorMessage;
-        if (passwordErrorMessage) return passwordErrorMessage;
-        if (!error) return error;
-        return firebaseLoginErrorMessage(error);
-    }, [emailErrorMessage, passwordErrorMessage, error]);
+    const handleLogin = async () => {
+        if (!canSubmit()) return;
+        setIsLoading(true);
+        setError('');
+        try {
+            await login({ email, password });
+        } catch (e) {
+            setError(firebaseLoginErrorMessage(e.code));
+        }
+        setIsLoading(false);
+    }
 
     return (
         <div className="authForm loginForm">
@@ -73,17 +68,17 @@ export default function LoginForm() {
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
-                    <TextField light={true} error={emailErrorMessage} hint="E-mail cím" title="E-mail cím" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
+                    <TextField light={true} error={emailError} hint="E-mail cím" title="E-mail cím" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
                 </div>
                 <div className="authForm__field__password">
-                    <TextField light={true} error={passwordErrorMessage} hint="Jelszó" title="Jelszó" value={password} suffixIcon={<RiLockPasswordLine />} onChange={handlePasswordChange} password={true}></TextField>
+                    <TextField light={true} error={passwordError} hint="Jelszó" title="Jelszó" value={password} suffixIcon={<RiLockPasswordLine />} onChange={handlePasswordChange} password={true}></TextField>
                 </div>
                 <a className="description loginForm__passwordRecovery" href="/auth/accountRecovery">Elfelejtetted a jelszavad?</a>
             </div>
             <div className="authForm__primaryActions">
-                <AsyncButton loading={loading} onClick={() => handleLogin()} title="Bejelentkezés"></AsyncButton>
+                <AsyncButton loading={isLoading} onClick={() => handleLogin()} title="Bejelentkezés"></AsyncButton>
             </div>
-            {loginErrorMessage() ? <p style={{ "color": "var(--red)", "textAlign": "center" }}>{loginErrorMessage()}</p> : null}
+            {error && <p style={{ "color": "var(--red)", "textAlign": "center" }}>{error}</p>}
             <div className="authForm__secondaryActions">
                 <p className="description loginForm__noAccountQuestion">Nincs fiókod? </p>
                 <TextButton color="var(--grey3)" title="Fiók létrehozása" onClick={() => routeChange("/auth/signup")} />
