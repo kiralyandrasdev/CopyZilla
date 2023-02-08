@@ -17,12 +17,6 @@ export async function logout() {
     await auth.signOut();
 }
 
-export async function deleteAccount() {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    await user.delete();
-}
-
 export const updateEmailWithReauth = async ({ password, email }) => {
     const auth = getAuth();
     const user = auth.currentUser;

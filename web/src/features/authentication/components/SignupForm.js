@@ -1,3 +1,4 @@
+import { sendEmailVerification } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -97,6 +98,7 @@ export default function SignupForm() {
                     setError(JSON.stringify(data.error));
                 }
             });
+            await sendEmailVerification(user);
         } catch (e) {
             setError(firebaseSignupErrorMessage(e.code));
         }
