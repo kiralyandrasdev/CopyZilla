@@ -11,7 +11,7 @@ import styles from './InitRedirect.module.css';
 export default function InitRedirect() {
     const navigate = useNavigate();
     const { updateUser } = useContext(UserContext);
-    const { user, firebaseUid } = useContext(AuthContext);
+    const { firebaseUid } = useContext(AuthContext);
 
     const {
         data: apiUser,
@@ -21,7 +21,7 @@ export default function InitRedirect() {
     } = useGetUserQuery({ firebaseUid });
 
     useEffect(() => {
-        if (!apiUser) {
+        if (apiUser == null) {
             return;
         }
 
@@ -29,10 +29,10 @@ export default function InitRedirect() {
 
         const path = window.location.pathname;
 
-        if (user.planType === "default") {
+        if (apiUser.planType) {
             const initialized = localStorage.getItem(`initialized_${firebaseUid}`)
 
-            if (!initialized) {
+            if (!initialized && path !== "/user/selectSubscription") {
                 navigate("/user/selectSubscription");
                 return;
             }
@@ -47,8 +47,8 @@ export default function InitRedirect() {
             return;
         }
 
-        if (user.subscriptionValidUntil) {
-            const subscriptionValidUntil = new Date(user.subscriptionValidUntil);
+        if (apiUser.subscriptionValidUntil) {
+            const subscriptionValidUntil = new Date(apiUser.subscriptionValidUntil);
             const now = new Date();
 
             if (subscriptionValidUntil <= now) {
@@ -62,7 +62,7 @@ export default function InitRedirect() {
                 navigate("/user/editor");
             }
         }
-    }, []);
+    });
 
     if (isError) {
         return (
