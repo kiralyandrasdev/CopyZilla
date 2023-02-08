@@ -74,7 +74,7 @@ namespace CopyZillaBackend.Persistence.Repositories
                 CreatedOn = DateTime.UtcNow,
             };
 
-            var connectionString = _configuration.GetConnectionString("UserStorage");
+            var connectionString = _configuration.GetConnectionString("MongoConnection");
 
             var client = new MongoClient(connectionString);
             var db = client.GetDatabase("user_db");
@@ -85,7 +85,7 @@ namespace CopyZillaBackend.Persistence.Repositories
 
         public async Task<List<PromptResult>> GetSavedPromptResultListAsync(Guid userId)
         {
-            var connectionString = _configuration.GetConnectionString("UserStorage");
+            var connectionString = _configuration.GetConnectionString("MongoConnection");
 
             var client = new MongoClient(connectionString);
             var db = client.GetDatabase("user_db");
@@ -98,7 +98,7 @@ namespace CopyZillaBackend.Persistence.Repositories
 
         public async Task DeletePromptResultAsync(Guid userId, Guid promptResultId)
         {
-            var connectionString = _configuration.GetConnectionString("UserStorage");
+            var connectionString = _configuration.GetConnectionString("MongoConnection");
 
             var client = new MongoClient(connectionString);
             var db = client.GetDatabase("user_db");
