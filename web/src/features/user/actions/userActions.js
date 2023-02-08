@@ -24,3 +24,14 @@ export const getUser = createAsyncThunk(
         }
     }
 )
+
+export const deleteUser = createAsyncThunk(
+    "user/deleteUser",
+    async (firebaseUid, thunkApi) => {
+        try {
+            await axios.delete(`https://localhost:7107/api/user/${firebaseUid}`);
+        } catch (e) {
+            return thunkApi.rejectWithValue(JSON.stringify(e));
+        }
+    }
+)

@@ -76,6 +76,13 @@ namespace CopyZillaBackend.Infrastructure.Payment
             await service.UpdateAsync(customerId, customerUpdateOptions);
         }
 
+        public async Task DeleteCustomerAsync(string customerId)
+        {
+            var service = new CustomerService();
+
+            await service.DeleteAsync(customerId);
+        }
+
         public async Task<Subscription> CreateSubscriptionAsync(string customerId, string priceId)
         {
             var options = new SubscriptionCreateOptions

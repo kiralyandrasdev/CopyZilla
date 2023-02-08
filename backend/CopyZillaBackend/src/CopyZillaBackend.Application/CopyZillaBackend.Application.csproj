@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\User\Commands\" />
     <Folder Include="Features\User\Queries\" />
     <Folder Include="Features\User\Commands\CreateUserCommand\" />
     <Folder Include="Features\Prompt\" />
@@ -42,7 +41,6 @@
     <Folder Include="Features\Payment\Queries\GetProductListQuery\" />
     <Folder Include="Features\User\Commands\SavePromptResultCommand\" />
     <Folder Include="Features\User\Queries\GetSavedPromptResultListQuery\" />
-    <Folder Include="Features\User\Commands\DeletePromptResultCommand\" />
   </ItemGroup>
 
   <ItemGroup>

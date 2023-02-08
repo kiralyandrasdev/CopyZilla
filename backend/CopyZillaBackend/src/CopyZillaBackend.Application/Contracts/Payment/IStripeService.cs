@@ -35,6 +35,13 @@ namespace CopyZillaBackend.Application.Contracts.Payment
         Task<Customer> GetCustomerByEmailAsync(string email);
 
         /// <summary>
+        /// Deletes a customer in Stripe.
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        Task DeleteCustomerAsync(string customerId);
+
+        /// <summary>
         /// Attaches new subscription to customer based on priceId.
         /// PriceId points to corresponding product.
         /// </summary>
