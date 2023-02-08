@@ -2,7 +2,6 @@ import { getAuth } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LoadingIndicator } from '../components';
-import { AppContext } from '../context/appContext';
 import { AuthContext } from '../features/authentication/authContext';
 import styles from './AuthRedirect.module.css';
 
@@ -10,7 +9,6 @@ function AuthRedirect() {
     const navigate = useNavigate();
 
     const { user, updateUser } = useContext(AuthContext);
-    const { preventAuthRedirect } = useContext(AppContext);
 
     useEffect(() => {
         const auth = getAuth();
@@ -21,8 +19,6 @@ function AuthRedirect() {
             console.log("Auth state changed: " + firebaseUser);
 
             updateUser(firebaseUser);
-
-            if (preventAuthRedirect) return;
 
             if (firebaseUser) {
                 if (firebaseUser.emailVerified) {

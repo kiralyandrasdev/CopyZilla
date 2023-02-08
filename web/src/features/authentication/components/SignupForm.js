@@ -4,7 +4,6 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AsyncButton, TextButton, TextField } from "../../../components";
-import { AppContext } from "../../../context/appContext";
 import { useCreateUserMutation } from "../../api/apiSlice";
 import { deleteAccount, login, logout, signup } from "../actions/authActions";
 import { firebaseSignupErrorMessage } from "../utils/authUtils";
@@ -12,9 +11,6 @@ import "./AuthForm.css";
 
 export default function SignupForm() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const { setPreventAuthRedirect } = useContext(AppContext);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -91,15 +87,14 @@ export default function SignupForm() {
     const handleSignup = async () => {
         if (!canSubmit()) return;
 
-        setPreventAuthRedirect(true);
         setIsLoading(true);
         setError('');
 
         try {
             const user = await signup({ email, password });
-            createUser({ email: user.email, firebaseUid: user.uid }).then((data) => {
+            createUser({ email, firebaseUid: user.uid }).then((data) => {
                 if (data.error) {
-                    deleteAccount();
+                    setError(JSON.stringify(data.error));
                 }
             });
         } catch (e) {
@@ -107,7 +102,6 @@ export default function SignupForm() {
         }
 
         setIsLoading(false);
-        setPreventAuthRedirect(false);
     }
 
     return (

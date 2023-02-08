@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import NotFoundSvg from '../assets/not_found.svg';
 import { LoadingIndicator, TextButton } from '../components';
 import { UserContext } from '../features';
-import { useCreateUserMutation, useGetUserQuery } from '../features/api/apiSlice';
+import { useGetUserQuery } from '../features/api/apiSlice';
 import { logout } from '../features/authentication/actions/authActions';
 import { AuthContext } from '../features/authentication/authContext';
 import styles from './InitRedirect.module.css';
@@ -20,17 +19,6 @@ export default function InitRedirect() {
         isError,
         isFetching,
     } = useGetUserQuery({ firebaseUid });
-
-    const [
-        createUser,
-        {
-            isLoading: userCreateLoading,
-            error: userCreateError,
-            data: createdUser,
-            isSuccess: userCreateSuccess,
-            isError: userCreateErrorOccurred,
-        }
-    ] = useCreateUserMutation();
 
     useEffect(() => {
         if (!apiUser) {
@@ -73,12 +61,6 @@ export default function InitRedirect() {
     }, []);
 
     if (isError) {
-        if (!userCreateLoading) {
-            if (error.statusCode === "404") {
-                createUser({ email: user.email, firebaseUid: firebaseUid })
-            }
-        }
-        
         return (
             <div className={styles.initRedirect}>
                 <div className={styles.initRedirect__content}>
@@ -102,7 +84,7 @@ export default function InitRedirect() {
         );
     }
 
-    if (isFetching || userCreateLoading) {
+    if (isFetching) {
         return (
             <div className={styles.initRedirect}>
                 <div className={styles.initRedirect__content}>
