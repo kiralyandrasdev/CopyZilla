@@ -50,11 +50,6 @@
       Include="..\..\src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="test_appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="Engine\" />
   </ItemGroup>
