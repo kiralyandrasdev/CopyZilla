@@ -4,8 +4,10 @@ using API.Tests.Database;
 using API.Tests.Engine;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
+using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using CopyZillaBackend.Domain.Entities;
+using FluentAssertions;
 using Newtonsoft.Json;
 
 namespace API.Tests.IntegrationTests
@@ -44,13 +46,13 @@ namespace API.Tests.IntegrationTests
 
             var user = await _databaseManager.FindUserAsync(options.FirebaseUid);
 
-            Assert.NotNull(user);
-            Assert.NotNull(user!.StripeCustomerId);
-            Assert.True(response.IsSuccessStatusCode);
+            user.Should().NotBeNull();
+            user!.StripeCustomerId.Should().NotBeNull();
+            response.IsSuccessStatusCode.Should().BeTrue();
 
             var stripeCustomer = await _stripeManager.FindCustomerAsync(user!.StripeCustomerId!);
 
-            Assert.Equal(options.Email, stripeCustomer!.Email);
+            options.Email.Should().BeEquivalentTo(stripeCustomer!.Email);
 
             await _stripeManager.DeleteCustomerAsync(user!.StripeCustomerId!);
         }
@@ -89,10 +91,10 @@ namespace API.Tests.IntegrationTests
 
             var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
 
-            Assert.NotNull(result);
-            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
-            Assert.False(result!.Success);
-            Assert.NotEmpty(result.ErrorMessage);
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result!.Success.Should().BeFalse();
+            result.ErrorMessage.Should().NotBeEmpty();
         }
 
         [Fact]
@@ -113,10 +115,10 @@ namespace API.Tests.IntegrationTests
 
             var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
 
-            Assert.NotNull(result);
-            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
-            Assert.False(result!.Success);
-            Assert.NotEmpty(result.ErrorMessage);
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result!.Success.Should().BeFalse();
+            result.ErrorMessage.Should().NotBeEmpty();
         }
 
         [Fact]
@@ -137,10 +139,10 @@ namespace API.Tests.IntegrationTests
 
             var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
 
-            Assert.NotNull(result);
-            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
-            Assert.False(result!.Success);
-            Assert.NotEmpty(result.ErrorMessage);
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result!.Success.Should().BeFalse();
+            result.ErrorMessage.Should().NotBeEmpty();
         }
 
         [Fact]
@@ -161,10 +163,10 @@ namespace API.Tests.IntegrationTests
 
             var result = JsonConvert.DeserializeObject<CreateUserCommandResult>(responseBody);
 
-            Assert.NotNull(result);
-            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
-            Assert.False(result!.Success);
-            Assert.NotEmpty(result.ErrorMessage);
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result!.Success.Should().BeFalse();
+            result.ErrorMessage.Should().NotBeEmpty();
         }
 
         [Fact]
@@ -202,25 +204,63 @@ namespace API.Tests.IntegrationTests
 
             var result = JsonConvert.DeserializeObject<UpdateUserCommandResult>(responseBody);
 
-            Assert.NotNull(result);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var updatedUser = await _databaseManager.FindUserAsync(userHint);
 
-            Assert.NotNull(updatedUser);
-            Assert.Equal(updatedUser!.StripeCustomerId, customer.Id);
-            Assert.True(result!.Success);
-            Assert.Equal(user.FirebaseUid, updatedUser!.FirebaseUid);
-            Assert.Equal(options.Email, updatedUser!.Email);
-            Assert.Equal(options.FirstName, updatedUser!.FirstName);
-            Assert.Equal(options.LastName, updatedUser!.LastName);
+            updatedUser.Should().NotBeNull();
+            updatedUser!.StripeCustomerId.Should().BeEquivalentTo(customer.Id);
+            result!.Success.Should().BeTrue();
+            user.FirebaseUid.Should().BeEquivalentTo(updatedUser!.FirebaseUid);
+            options.Email.Should().BeEquivalentTo(updatedUser!.Email);
+            options.FirstName.Should().BeEquivalentTo(updatedUser!.FirstName);
+            options.LastName.Should().BeEquivalentTo(updatedUser!.LastName);
 
             var updatedCustomer = await _stripeManager.FindCustomerAsync(user.StripeCustomerId);
 
-            Assert.NotNull(customer);
-            Assert.Equal(options.Email, updatedCustomer!.Email);
+            customer.Should().NotBeNull();
+            options.Email.Should().BeEquivalentTo(updatedCustomer!.Email);
 
             await _stripeManager.DeleteCustomerAsync(customer.Id);
+        }
+
+        [Fact]
+        public async Task Should_Delete_User()
+        {
+            // arrange
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+            var customer = await _stripeManager.CreateCustomerAsync(userEmail);
+
+            var user = new User()
+            {
+                FirebaseUid = userHint,
+                Email = userEmail,
+                FirstName = userHint,
+                LastName = userHint,
+                StripeCustomerId = customer.Id,
+                SubscriptionPlanName = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                PlanType = "default",
+            };
+
+            var dbUser = await _databaseManager.AddUserAsync(user);
+            user.Id = dbUser!.Id;
+
+            // act
+            var response = await _client.DeleteAsync($"/api/user/{user.Id}");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<DeleteUserCommandResult>(responseBody);
+
+            var deletedCustomer = await _stripeManager.FindCustomerAsync(customer.Id);
+            var deletedUser = await _databaseManager.FindUserAsync(user.FirebaseUid);
+
+            // assert
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            deletedCustomer.Deleted.Should().BeTrue();
+            deletedUser.Should().BeNull();
         }
     }
 }
