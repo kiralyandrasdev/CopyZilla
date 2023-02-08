@@ -6,6 +6,7 @@ using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent;
 using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
+using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
@@ -62,6 +63,15 @@ namespace CopyZillaBackend.API.Controllers
         public async Task<ActionResult<UpdateUserCommandResult>> UpdateUserAsync(Guid userId, [FromBody] UpdateUserCommandOptions options)
         {
             var result = await _mediator.Send(new UpdateUserCommand(userId, options));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpDelete]
+        [Route("{userId}")]
+        public async Task<ActionResult<DeleteUserCommandResult>> DeleteUserAsync(Guid userId)
+        {
+            var result = await _mediator.Send(new DeleteUserCommand(userId));
 
             return _responseManager.MapActionResult(result);
         }

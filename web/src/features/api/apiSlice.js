@@ -35,6 +35,13 @@ export const apiSlice = createApi({
             },
             invalidatesTags: ['User'],
         }),
+        deleteUser: builder.mutation({
+            query: ({ userId }) => ({
+                url: `/user/${userId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['User'],
+        }),
         processQuickPrompt: builder.mutation({
             query: (firebaseUid, prompt) => ({
                 url: `/user/${firebaseUid}/quickPrompt`,
@@ -89,6 +96,7 @@ export const apiSlice = createApi({
 export const {
     useGetUserQuery,
     useCreateUserMutation,
+    useDeleteUserMutation,
     useProcessQuickPromptMutation,
     useProcessAdvancedPromptMutation,
     useGetPromptResultsQuery,

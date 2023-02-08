@@ -36,10 +36,6 @@ export default function SignupForm() {
         setConfirmationPassword(event.target.value);
     };
 
-    useEffect(() => {
-        setError(error);
-    }, [user, error]);
-
     const [
         createUser,
         {

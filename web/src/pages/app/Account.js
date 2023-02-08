@@ -53,7 +53,7 @@ export default function Profile() {
                     <TextButton color="var(--green)" underline={true} title="Előfizetés és fizetési adatok kezelése" onClick={() => openCustomerPortal(user.email)}></TextButton>
                 </div>
                 <div className="page__account__section__3 animation__fadeInUp">
-                    <TextButton color="var(--grey2)" underline={true} title="Fiók törlése"></TextButton>
+                    <TextButton color="var(--grey2)" underline={true} title="Fiók törlése" onClick={() => navigate("/user/account/deleteAccount")}></TextButton>
                 </div>
             </>
         );

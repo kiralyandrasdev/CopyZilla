@@ -28,6 +28,7 @@ import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
 import TermsOfServicePage from './pages/website/TermsOfService';
 import AuthRedirect from './redirect/AuthRedirect';
 import InitRedirect from './redirect/InitRedirect';
+import DeleteAccountPage from './pages/app/account/DeleteAccount';
 
 function App() {
   initializeApp(firebaseConfig);
@@ -40,6 +41,7 @@ function App() {
             <Route path="/user/savedResults" element={<SavedResultsPage />} />
             <Route path="/user/account" element={<Account />} />
             <Route path="/user/account/changeEmail" element={<ChangeEmailPage />} />
+            <Route path="/user/account/deleteAccount" element={<DeleteAccountPage />} />
             <Route path="/user/account/changePassword" element={<ChangePasswordPage />} />
             <Route path="/user/creditRefill" element={<CreditRefill />} />
             <Route path="/user/checkout/completed" element={<CheckoutCompleted />} />
