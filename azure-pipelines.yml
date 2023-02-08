@@ -1,0 +1,30 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - backend
+    exclude:
+    - web
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: CI
+  displayName: Build, test and deploy docker image to ACR
+  jobs:
+  - job: Test
+    displayName: Run tests
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: 'backend/CopyZillaBackend/tests/API.Tests/API.Tests.csproj'
+        testRunTitle: 'Integration Tests'

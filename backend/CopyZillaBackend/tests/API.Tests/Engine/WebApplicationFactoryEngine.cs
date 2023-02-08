@@ -14,26 +14,23 @@ namespace API.Tests.Engine
 {
     public class WebApplicationFactoryEngine<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        public IConfiguration Configuration { get; private set; }
         public DbContext Context { get; set; }
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            IConfiguration configuration = null;
+
             var directory = Directory.GetCurrentDirectory();
             var settingsFile = "test_appsettings.json";
-            var developmentSettingsFile = "test_appsettings.Development.json";
 
             builder.ConfigureAppConfiguration(conf =>
             {
-                if (File.Exists(developmentSettingsFile))
+                if (!File.Exists(settingsFile))
                 {
-                    Configuration = conf.AddJsonFile(Path.Combine(directory, developmentSettingsFile)).Build();
+                    configuration = conf.Build();
                     return;
                 }
 
-                if (!File.Exists(settingsFile))
-                    throw new OperationCanceledException("Integration test appsettings.json file could not be located.");
-
-                Configuration = conf.AddJsonFile(Path.Combine(directory, settingsFile)).Build();
+                configuration = conf.AddJsonFile(Path.Combine(directory, settingsFile)).Build();
             });
 
             builder.ConfigureServices(services =>
@@ -58,11 +55,11 @@ namespace API.Tests.Engine
                     services.Remove(configuration);
                 }
 
-                services.AddSingleton(Configuration);
+                services.AddSingleton(configuration);
 
                 services.AddDbContext<CopyZillaBackendDBContext>(options =>
                 {
-                    var connectionString = Configuration.GetConnectionString("SqlConnection");
+                    var connectionString = configuration.GetConnectionString("SqlConnection");
                     options.UseNpgsql(connectionString);
                     options.LogTo(message => Debug.WriteLine(message));
                     options.EnableSensitiveDataLogging();
