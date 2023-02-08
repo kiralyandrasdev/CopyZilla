@@ -33,3 +33,15 @@
     height: 1px;
     background-color: var(--grey4);
 }
+
+.credit__option__1 {
+    animation-delay: 0.2s;
+}
+
+.credit__option__2 {
+    animation-delay: 0.4s;
+}
+
+.credit__option__3 {
+    animation-delay: 0.6s;
+}

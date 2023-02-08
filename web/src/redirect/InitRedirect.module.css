@@ -1,0 +1,30 @@
+.initRedirect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--grey4);
+    text-align: center;
+    padding: 20px;
+}
+
+.initRedirect__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    row-gap: 20px;
+    max-width: 600px;
+}
+
+.initRedirect__content__error__description {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--grey3);
+    padding: 20px;
+    border-radius: 8px;
+    row-gap: 10px;
+}

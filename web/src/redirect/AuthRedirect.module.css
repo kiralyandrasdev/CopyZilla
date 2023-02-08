@@ -1,0 +1,21 @@
+.authRedirect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--grey4);
+    text-align: center;
+    padding: 20px;
+}
+
+.authRedirect__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    row-gap: 20px;
+    max-width: 600px;
+}

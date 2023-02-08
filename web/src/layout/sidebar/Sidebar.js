@@ -1,14 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { signOutFirebaseUser } from "../../features/authentication/actions/authActions";
+import { logout } from "../../features/authentication/actions/authActions";
 import './Sidebar.css';
 import SidebarNavItem from "./nav/SidebarNavItem";
 
 export default function Sidebar() {
-    const dispatch = useDispatch();
-
-    const handleSignOut = () => {
-        dispatch(signOutFirebaseUser());
+    const handleSignOut = async () => {
+        await logout();
     }
 
     const handleHeaderClick = () => {

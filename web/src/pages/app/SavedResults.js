@@ -49,7 +49,7 @@ export default function SavedResultsPage() {
 
         if (isEmpty) {
             return <>
-                <img className="illustration" src={EmptySavedSvg}></img>
+                <img className="illustration" src={EmptySavedSvg} alt="Loading..."></img>
                 <h4>Nem tálalható elmentett szöveg a fiókodban.</h4>
                 <p className="description">Hozz létre szöveget, majd mentsd el a kedvenceid.</p>
             </>

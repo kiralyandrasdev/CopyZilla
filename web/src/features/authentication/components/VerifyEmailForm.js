@@ -1,17 +1,13 @@
 import { getAuth, sendEmailVerification } from 'firebase/auth';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AsyncButton, TextButton } from '../../../components';
-import { signOutFirebaseUser } from '../actions/authActions';
+import { logout } from '../actions/authActions';
+import { AuthContext } from '../authContext';
 
 function VerifyEmailForm() {
-    const navigate = useNavigate();
-
-    const { email } = useSelector((state) => state.auth);
+    const { user } = useContext(AuthContext);
     const [message, setMessage] = useState(null);
-
-    const dispatch = useDispatch();
 
     const handleVerifyEmail = async () => {
         const auth = getAuth();
@@ -19,16 +15,15 @@ function VerifyEmailForm() {
         setMessage("Megerősítő e-mail elküldve.");
     }
 
-    const handleSignOut = () => {
-        dispatch(signOutFirebaseUser());
-        navigate('/auth/login');
+    const handleSignOut = async () => {
+        await logout();
     }
 
     return (
         <div className="authForm loginForm">
             <div className="authForm__header">
                 <h4>E-mail cím ellenőrzése</h4>
-                <p className="description">Kérünk, ellenőrizd e-mail címed. A megerősítő linket elküldtük a {email} címre. Amennyiben nem találod az üzenetet, kérj új megerősítő linket.</p>
+                {user && <p className="description">Kérünk, ellenőrizd e-mail címed. A megerősítő linket elküldtük a {user.email} címre. Amennyiben nem találod az üzenetet, kérj új megerősítő linket.</p>}
             </div>
             <div className="authForm__primaryActions">
                 <AsyncButton onClick={() => handleVerifyEmail()} title="Megerősítő e-mail küldése"></AsyncButton>

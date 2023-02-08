@@ -1,12 +1,13 @@
 ﻿using System;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
+using FluentValidation;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
 {
-	public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryResult>
-	{
+    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryResult>
+    {
         private readonly IUserRepository _repository;
 
         public GetUserQueryHandler(IUserRepository repository)

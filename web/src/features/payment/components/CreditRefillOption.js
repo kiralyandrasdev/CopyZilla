@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useState } from 'react';
 import { AsyncButton } from '../../../components';
+import { AuthContext } from '../../authentication/authContext';
 import { CHECKOUT_MODE, createCheckoutSessionAsync } from '../actions/paymentActions';
 import './CreditRefillOption.css';
 
 function CreditRefillOption(props) {
     const [isLoading, setIsLoading] = useState(false);
-    const { firebaseUid } = useSelector(state => state.auth);
+    const { firebaseUid } = useContext(AuthContext);
 
     const handleCreateCheckoutSession = async () => {
         setIsLoading(true);

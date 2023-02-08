@@ -1,6 +1,5 @@
 ﻿using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Application.Events;
-using CopyZillaBackend.Application.Features;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CopyZillaBackend.API.Helpers

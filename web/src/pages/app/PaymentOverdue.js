@@ -11,7 +11,7 @@ export default function PaymentOverduePage() {
 
     return (
         <div className="page page__paymentOverdue">
-            <img src={PurchaseSvg} className="illustration__150"></img>
+            <img src={PurchaseSvg} className="illustration__150" alt="Loading..."></img>
             <h4>A legutóbbi kifizetés nem sikerült</h4>
             <p className='description'>Frissítsd fizetési adataid, hogy folytathasd a munkát, vagy válts ingyenes csomagunkra.</p>
             <AsyncButton color="green" title="Fizetési adatok módosítása" onClick={() => openCustomerPortal(user.email)}></AsyncButton>
