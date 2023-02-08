@@ -13,10 +13,6 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  sqlConnection: $(SQLCONNECTION)
-  mongoConnection: $(MONGOCONNECTION)
-  test_sqlConnection: $(CONNECTIONSTRINGS__SQLCONNECTION)
-  test_mongoConnection: $(CONNECTIONSTRINGS__MONGOCONNECTION)
 
 stages:
 - stage: CI
