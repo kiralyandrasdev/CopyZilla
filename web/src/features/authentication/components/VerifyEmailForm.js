@@ -12,7 +12,7 @@ function VerifyEmailForm() {
     const handleVerifyEmail = async () => {
         const auth = getAuth();
         await sendEmailVerification(auth.currentUser);
-        setMessage("Megerősítő e-mail elküldve.");
+        setMessage("Megerősítő e-mail elküldve");
     }
 
     const handleSignOut = async () => {
