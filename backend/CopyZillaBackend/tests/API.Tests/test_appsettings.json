@@ -6,6 +6,10 @@
     }
   },
   "OpenAI:ApiKey": "",
+  "MongoDB": {
+    "DatabaseName": "",
+    "CollectionName": ""
+  },
   "ConnectionStrings": {
     "SqlConnection": "",
     "MongoConnection": ""
