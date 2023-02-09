@@ -30,7 +30,7 @@ stages:
     displayName: Build and push docker image to ACR
     jobs:
       - job: Build
-        displayName: Build
+        displayName: Build docker image
         pool:
           vmImage: $(vmImageName)
         steps:
@@ -45,6 +45,7 @@ stages:
               tags: |
                 $(tag)
       - job: Push
+        dependsOn: Build
         displayName: Push image to ACR
         pool:
           vmImage: $(vmImageName)
