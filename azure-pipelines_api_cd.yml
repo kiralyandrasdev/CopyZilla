@@ -57,3 +57,5 @@ stages:
             repository: 'apicopyzilla'
             containerRegistry: $(dockerRegistryServiceConnection)
             command: 'push'
+            tags: |
+              $(tag)
