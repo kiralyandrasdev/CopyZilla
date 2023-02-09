@@ -75,22 +75,26 @@ namespace CopyZillaBackend.Persistence.Repositories
             };
 
             var connectionString = _configuration.GetConnectionString("MongoConnection");
+            var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
 
             var client = new MongoClient(connectionString);
-            var db = client.GetDatabase("user_db");
+            var db = client.GetDatabase(databaseName);
 
-            var collection = db.GetCollection<PromptResult>("saved_prompt_results");
+            var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
+            var collection = db.GetCollection<PromptResult>(collectionName);
             await collection.InsertOneAsync(promptResult);
         }
 
         public async Task<List<PromptResult>> GetSavedPromptResultListAsync(Guid userId)
         {
             var connectionString = _configuration.GetConnectionString("MongoConnection");
+            var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
 
             var client = new MongoClient(connectionString);
-            var db = client.GetDatabase("user_db");
+            var db = client.GetDatabase(databaseName);
 
-            var collection = db.GetCollection<PromptResult>("saved_prompt_results");
+            var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
+            var collection = db.GetCollection<PromptResult>(collectionName);
             var result = await collection.FindAsync(e => e.UserId == userId);
 
             return (await result.ToListAsync()).OrderByDescending(e => e.CreatedOn).ToList();
@@ -99,11 +103,13 @@ namespace CopyZillaBackend.Persistence.Repositories
         public async Task DeletePromptResultAsync(Guid userId, Guid promptResultId)
         {
             var connectionString = _configuration.GetConnectionString("MongoConnection");
+            var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
 
             var client = new MongoClient(connectionString);
-            var db = client.GetDatabase("user_db");
+            var db = client.GetDatabase(databaseName);
 
-            var collection = db.GetCollection<PromptResult>("saved_prompt_results");
+            var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
+            var collection = db.GetCollection<PromptResult>(collectionName);
             await collection.FindOneAndDeleteAsync(e => e.Id == promptResultId && e.UserId == userId);
         }
     }
