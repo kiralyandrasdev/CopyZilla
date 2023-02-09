@@ -40,8 +40,12 @@ namespace CopyZillaBackend.API.Middlewares
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                var response = new BaseEventResult()
+                {
+                    ErrorMessage = ex.Message,
+                };
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Internal server error.");
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
         }
     }

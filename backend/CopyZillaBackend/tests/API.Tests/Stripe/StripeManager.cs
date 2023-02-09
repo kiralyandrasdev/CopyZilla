@@ -13,7 +13,7 @@ namespace API.Tests.Stripe
             _factory = factory;
 
             var configuration = _factory.Services.GetService(typeof(IConfiguration)) as IConfiguration;
-            StripeConfiguration.ApiKey = configuration!.GetValue<string>("StripeApiKey");
+            StripeConfiguration.ApiKey = configuration!.GetSection("Stripe").GetValue<string>("ApiKey");
         }
 
         public async Task<Customer> CreateCustomerAsync(string email)

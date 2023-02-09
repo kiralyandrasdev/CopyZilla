@@ -41,19 +41,14 @@
     <None Remove="Engine\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
+    <ProjectReference
+      Include="..\..\src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
     <ProjectReference Include="..\..\src\CopyZillaBackend.API\CopyZillaBackend.API.csproj" />
-    <ProjectReference Include="..\..\src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
+    <ProjectReference
+      Include="..\..\src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
     <ProjectReference Include="..\..\src\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj" />
-    <ProjectReference Include="..\..\src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="test_appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="test_appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference
+      Include="..\..\src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
