@@ -15,7 +15,7 @@ namespace CopyZillaBackend.Infrastructure.Payment
         {
             _configuration = configuration;
 
-            StripeConfiguration.ApiKey = _configuration.GetValue<string>("StripeApiKey");
+            StripeConfiguration.ApiKey = _configuration.GetSection("Stripe").GetValue<string>("ApiKey");
         }
 
         public async Task<StripeCheckoutSession> CreateCheckoutSessionAsync(string customerId, string priceId, string mode)
