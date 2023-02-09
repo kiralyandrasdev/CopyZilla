@@ -28,11 +28,11 @@ variables:
   vmImageName: "ubuntu-latest"
 
 stages:
-  - stage: Build
+  - stage: BuildAndPush
     displayName: Build and push docker image to ACR
     jobs:
       - job: Build
-        displayName: Build docker image
+        displayName: Build and push docker image to ACR
         pool:
           vmImage: $(vmImageName)
         steps:
@@ -46,16 +46,10 @@ stages:
               arguments: '--build-arg SQLCONNECTION=$(SQLCONNECTION) --build-arg MONGOCONNECTION=$(MONGOCONNECTION) --build-arg STRIPEAPIKEY=$(STRIPEAPIKEY) --build-arg OPENAIAPIKEY=$(OPENAIAPIKEY) --build-arg JWTSECRET=$(JWTSECRET)'
               tags: |
                 $(tag)
-      - job: Push
-        dependsOn: Build
-        displayName: Push image to ACR
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-        - task: Docker@2
-          inputs:
-            repository: 'apicopyzilla'
-            containerRegistry: $(dockerRegistryServiceConnection)
-            command: 'push'
-            tags: |
-              $(tag)
+          - task: Docker@2
+            inputs:
+              repository: 'apicopyzilla'
+              containerRegistry: $(dockerRegistryServiceConnection)
+              command: 'push'
+              tags: |
+                $(tag)
