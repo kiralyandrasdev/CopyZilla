@@ -37,8 +37,8 @@ stages:
           - task: Docker@2
             displayName: Build docker image
             inputs:
-              containerRegistry: 'copyzillaliveapi'
               repository: 'apicopyzilla'
+              containerRegistry: 'copyzillaliveapi.azurecr.io'
               command: 'build'
               Dockerfile: '$(Build.SourcesDirectory)/backend/CopyZillaBackend/Dockerfile'
               arguments: '--build-arg SQLCONNECTION=$(SQLCONNECTION) --build-arg MONGOCONNECTION=$(MONGOCONNECTION) --build-arg STRIPEAPIKEY=$(STRIPEAPIKEY) --build-arg OPENAIAPIKEY=$(OPENAIAPIKEY) --build-arg JWTSECRET=$(JWTSECRET)'
@@ -52,7 +52,6 @@ stages:
         steps:
         - task: Docker@2
           inputs:
-            containerRegistry: 'copyzillaliveapi'
             repository: 'apicopyzilla'
+            containerRegistry: 'copyzillaliveapi.azurecr.io'
             command: 'push'
-        
