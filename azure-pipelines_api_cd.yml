@@ -47,6 +47,7 @@ stages:
               tags: |
                 $(tag)
           - task: Docker@2
+            displayName: "Push docker image to ACR"
             inputs:
               repository: 'apicopyzilla'
               containerRegistry: $(dockerRegistryServiceConnection)
