@@ -22,6 +22,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCo
 
             validationResult.Resolve(result);
 
+            if (!result.Success)
+                return result;
+
             await _repository.SavePromptResultAsync(request.UserId, request.Options.Title, request.Options.Content);
 
             return result;
