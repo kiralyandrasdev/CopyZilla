@@ -1,0 +1,51 @@
+trigger:
+  branches:
+    include:
+      - main
+    exclude:
+      - feature/*
+      - bugfix/*
+  paths:
+    include:
+      - backend
+    exclude:
+      - web
+
+resources:
+  - repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: "dc94c617-0446-4dc2-b472-7f76b1874658"
+  imageRepository: "apicopyzilla"
+  containerRegistry: "copyzillaliveapi.azurecr.io"
+  dockerfilePath: "$(Build.SourcesDirectory)/backend/CopyZillaBackend/Dockerfile"
+  tag: "$(Build.BuildId)"
+  sqlConnection: ${SQLCONNECTION}
+  mongoConnection: ${MONGOCONNECTION}
+  stripeApiKey: ${STRIPEAPIKEY}
+  openAiApiKey: ${OPENAIAPIKEY}
+  jwtSecret: ${JWTSECRET}
+
+  # Agent VM image name
+  vmImageName: "ubuntu-latest"
+
+stages:
+  - stage: Build
+    displayName: Build and push stage
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              arguments: "--build-arg SQLCONNECTION=$(SQLCONNECTION) --build-arg MONGOCONNECTION=$(MONGOCONNECTION) --build-arg STRIPEAPIKEY=$(STRIPEAPIKEY) --build-arg OPENAIAPIKEY=$(OPENAIAPIKEY) --build-arg JWTSECRET=$(JWTSECRET)"
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(dockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
