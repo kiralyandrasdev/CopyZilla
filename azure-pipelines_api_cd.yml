@@ -15,11 +15,6 @@ resources:
   - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: "dc94c617-0446-4dc2-b472-7f76b1874658"
-  imageRepository: "apicopyzilla"
-  containerRegistry: "copyzillaliveapi.azurecr.io"
-  dockerfilePath: "$(Build.SourcesDirectory)/backend/CopyZillaBackend/Dockerfile"
   tag: "$(Build.BuildId)"
   sqlConnection: ${SQLCONNECTION}
   mongoConnection: ${MONGOCONNECTION}
@@ -32,7 +27,7 @@ variables:
 
 stages:
   - stage: Build
-    displayName: Build and push stage
+    displayName: Build and push docker image to ACR
     jobs:
       - job: Build
         displayName: Build
@@ -40,12 +35,23 @@ stages:
           vmImage: $(vmImageName)
         steps:
           - task: Docker@2
-            displayName: Build and push an image to container registry
+            displayName: Build docker image
             inputs:
-              arguments: "--build-arg SQLCONNECTION=$(SQLCONNECTION) --build-arg MONGOCONNECTION=$(MONGOCONNECTION) --build-arg STRIPEAPIKEY=$(STRIPEAPIKEY) --build-arg OPENAIAPIKEY=$(OPENAIAPIKEY) --build-arg JWTSECRET=$(JWTSECRET)"
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(dockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
+              containerRegistry: 'copyzillaliveapi'
+              repository: 'apicopyzilla'
+              command: 'build'
+              Dockerfile: '$(Build.SourcesDirectory)/backend/CopyZillaBackend/Dockerfile'
+              arguments: '--build-arg SQLCONNECTION=$(SQLCONNECTION) --build-arg MONGOCONNECTION=$(MONGOCONNECTION) --build-arg STRIPEAPIKEY=$(STRIPEAPIKEY) --build-arg OPENAIAPIKEY=$(OPENAIAPIKEY) --build-arg JWTSECRET=$(JWTSECRET)'
               tags: |
                 $(tag)
+      - job: Push
+        displayName: Push image to ACR
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+        - task: Docker@2
+          inputs:
+            containerRegistry: 'copyzillaliveapi'
+            repository: 'apicopyzilla'
+            command: 'push'
+        
