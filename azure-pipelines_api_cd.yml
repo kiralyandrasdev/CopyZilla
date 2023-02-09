@@ -18,12 +18,11 @@ resources:
 variables:
   dockerRegistryServiceConnection: "dc94c617-0446-4dc2-b472-7f76b1874658"
   tag: "$(Build.BuildId)"
-  sqlConnection: $(SQLCONNECTION)
-  mongoConnection: $(MONGOCONNECTION)
-  stripeApiKey: $(STRIPEAPIKEY)
-  openAiApiKey: $(OPENAIAPIKEY)
-  jwtSecret: $(JWTSECRET)
-  
+  sqlConnection: "$(VAR_SQLCONNECTION)"
+  mongoConnection: "$(VAR_MONGOCONNECTION)"
+  stripeApiKey: "$(VAR_STRIPEAPIKEY)"
+  openAiApiKey: "$(VAR_OPENAIAPIKEY)"
+  jwtSecret: "$(VAR_JWTSECRET)"
 
   # Agent VM image name
   vmImageName: "ubuntu-latest"
