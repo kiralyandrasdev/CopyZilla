@@ -14,6 +14,12 @@ ENV STRIPE__APIKEY=${STRIPEAPIKEY}
 ENV OPENAI__APIKEY=${OPENAIAPIKEY}
 ENV SECRETS__JWTSECRET=${JWTSECRET}
 
+RUN echo 'Postgres connection string: $SQLCONNECTION'
+RUN echo 'Mongo connection string: $MONGOCONNECTION'
+RUN echo 'Stripe API key: $STRIPEAPIKEY'
+RUN echo 'OpenAI API key: $OPENAIAPIKEY'
+RUN echo 'JWT secret: $JWTSECRET'
+
 ENV ASPNETCORE_URLS=http://+:5000
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
