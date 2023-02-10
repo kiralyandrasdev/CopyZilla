@@ -1,4 +1,5 @@
 import axios from "axios";
+import { apiBaseUrl, stripeCustomerPortalUrl } from "../../../config/envConfig";
 
 export const CHECKOUT_MODE = {
     PAYMENT: "PAYMENT",
@@ -7,7 +8,7 @@ export const CHECKOUT_MODE = {
 
 export const createCheckoutSessionAsync = async (mode, data) => {
     try {
-        const response = await axios.post(`https://localhost:7107/api/checkout/${mode.toLowerCase()}`, data);
+        const response = await axios.post(`${apiBaseUrl}/checkout/${mode.toLowerCase()}`, data);
         return response.data.value.checkoutRedirectUrl;
     } catch (e) {
         return null;
@@ -16,7 +17,7 @@ export const createCheckoutSessionAsync = async (mode, data) => {
 
 export const getGoodsList = async () => {
     try {
-        const response = await axios.get("https://localhost:7107/api/product/goods");
+        const response = await axios.get(`${apiBaseUrl}/product/goods`);
         return response.data.value;
     } catch (e) {
         return null;
@@ -25,7 +26,7 @@ export const getGoodsList = async () => {
 
 export const getSubscriptionList = async () => {
     try {
-        const response = await axios.get("https://localhost:7107/api/product/subscriptions");
+        const response = await axios.get(`${apiBaseUrl}/product/subscriptions`);
         return response.data.value;
     } catch (e) {
         return null;
@@ -33,5 +34,5 @@ export const getSubscriptionList = async () => {
 }
 
 export function openCustomerPortal(email) {
-    window.open(`https://billing.stripe.com/p/login/test_5kA7tD9f7eTN6OYcMM?prefilled_email=${email}`, '_blank', 'noopener,noreferrer');
+    window.open(`${stripeCustomerPortalUrl}?prefilled_email=${email}`, '_blank', 'noopener,noreferrer');
 }

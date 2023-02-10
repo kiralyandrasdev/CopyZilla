@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PlaceHolderSvg from "../../../assets/empty_editor.svg";
 import { TextButton, TextField } from "../../../components";
 import useOutsideAlerter from "../../../components/utils/useOutsideAlerter";
-import { useSavePromptResultMutation } from "../../api/apiSlice";
 import { savePromptResult } from "../../saved_results/actions/savedResultsActions";
 import { pushPromptResult } from "../../saved_results/promptResultsSlice";
 import { UserContext } from "../../user/context/userContext";
