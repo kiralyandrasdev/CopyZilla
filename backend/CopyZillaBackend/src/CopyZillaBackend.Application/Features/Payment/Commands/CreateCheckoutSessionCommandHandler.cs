@@ -1,12 +1,11 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Payment;
+﻿using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.Payment.Commands
 {
-	public class CreateCheckoutSessionCommandHandler : IRequestHandler<CreateCheckoutSessionCommand, CreateCheckoutSessionCommandResult>
+    public class CreateCheckoutSessionCommandHandler : IRequestHandler<CreateCheckoutSessionCommand, CreateCheckoutSessionCommandResult>
 	{
         private readonly IUserRepository _repository;
         private readonly IStripeService _stripeService;
