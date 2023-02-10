@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.9.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -33,24 +34,24 @@
     <None Remove="Microsoft.AspNetCore.Hosting" />
     <None Remove="Microsoft.AspNetCore.Mvc.Testing" />
     <None Remove="Microsoft.EntityFrameworkCore" />
-    <None Remove="test_appsettings.json" />
     <None Remove="Stripe.net" />
     <None Remove="Database\" />
-    <None Remove="test_appsettings.Development.json" />
     <None Remove="Engine\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference
-      Include="..\..\src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
     <ProjectReference Include="..\..\src\CopyZillaBackend.API\CopyZillaBackend.API.csproj" />
-    <ProjectReference
-      Include="..\..\src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
+    <ProjectReference Include="..\..\src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
     <ProjectReference Include="..\..\src\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj" />
-    <ProjectReference
-      Include="..\..\src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="Engine\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="test_appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

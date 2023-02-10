@@ -59,52 +59,5 @@ namespace CopyZillaBackend.Persistence.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(e => e.StripeCustomerId == customerId);
         }
-
-        public async Task SavePromptResultAsync(Guid userId, string? title, string content)
-        {
-            if (string.IsNullOrEmpty(title))
-                title = DateTime.UtcNow.ToString("s");
-
-            var promptResult = new PromptResult()
-            {
-                Id = Guid.NewGuid(),
-                UserId = userId,
-                Title = title,
-                Content = content,
-                CreatedOn = DateTime.UtcNow,
-            };
-
-            var connectionString = _configuration.GetConnectionString("MongoConnection");
-
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase("user_db");
-
-            var collection = db.GetCollection<PromptResult>("saved_prompt_results");
-            await collection.InsertOneAsync(promptResult);
-        }
-
-        public async Task<List<PromptResult>> GetSavedPromptResultListAsync(Guid userId)
-        {
-            var connectionString = _configuration.GetConnectionString("MongoConnection");
-
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase("user_db");
-
-            var collection = db.GetCollection<PromptResult>("saved_prompt_results");
-            var result = await collection.FindAsync(e => e.UserId == userId);
-
-            return (await result.ToListAsync()).OrderByDescending(e => e.CreatedOn).ToList();
-        }
-
-        public async Task DeletePromptResultAsync(Guid userId, Guid promptResultId)
-        {
-            var connectionString = _configuration.GetConnectionString("MongoConnection");
-
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase("user_db");
-
-            var collection = db.GetCollection<PromptResult>("saved_prompt_results");
-            await collection.FindOneAndDeleteAsync(e => e.Id == promptResultId && e.UserId == userId);
-        }
     }
 }

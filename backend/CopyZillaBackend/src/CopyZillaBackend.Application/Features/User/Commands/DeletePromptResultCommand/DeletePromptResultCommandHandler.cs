@@ -6,9 +6,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeletePromptResult
 {
     public class DeletePromptResultCommandHandler : IRequestHandler<DeletePromptResultCommand, DeletePromptResultCommandResult>
 	{
-        private readonly IUserRepository _repository;
+        private readonly IMongoRepository _repository;
 
-        public DeletePromptResultCommandHandler(IUserRepository repository)
+        public DeletePromptResultCommandHandler(IMongoRepository repository)
         {
             _repository = repository;
         }

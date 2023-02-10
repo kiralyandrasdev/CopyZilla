@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Tests.Database
 {
-    public class DatabaseManager
+    public class PostgresDBManager
     {
         private readonly WebApplicationFactory<Program> _factory;
 
-        public DatabaseManager(WebApplicationFactory<Program> factory)
+        public PostgresDBManager(WebApplicationFactory<Program> factory)
         {
             _factory = factory;
         }
@@ -49,6 +49,16 @@ namespace API.Tests.Database
             }
 
             return user;
+        }
+
+        public void RemoveUser(User user)
+        {
+            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+            using (var scope = scopeFactory!.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
+                context!.Users.Remove(user);
+            }
         }
     }
 }
