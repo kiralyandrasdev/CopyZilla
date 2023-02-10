@@ -14,7 +14,7 @@ namespace CopyZillaBackend.Persistence.Repositories
             _configuration = configuration;
         }
 
-        public async Task<PromptResult> AddAsync(PromptResult promptResult)
+        public async Task AddPromptResultAsync(PromptResult promptResult)
         {
             if (string.IsNullOrEmpty(promptResult.Title))
                 promptResult.Title = DateTime.UtcNow.ToString("s");
@@ -28,8 +28,6 @@ namespace CopyZillaBackend.Persistence.Repositories
             var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
             var collection = db.GetCollection<PromptResult>(collectionName);
             await collection.InsertOneAsync(promptResult);
-
-            return promptResult;
         }
 
         public async Task<List<PromptResult>> GetPromptResultListAsync(Guid userId)
@@ -58,36 +56,6 @@ namespace CopyZillaBackend.Persistence.Repositories
             var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
             var collection = db.GetCollection<PromptResult>(collectionName);
             await collection.FindOneAndDeleteAsync(e => e.Id == promptResultId && e.UserId == userId);
-        }
-
-        public Task<IReadOnlyList<PromptResult>> ListAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<PromptResult?> GetByIdAsync(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> ExistsAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(PromptResult entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IReadOnlyList<PromptResult>> GetPagedReponseAsync(int page, int size)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCo
                 Content = request.Options.Content
             };
 
-            await _mongoRepository.AddAsync(promptResult);
+            await _mongoRepository.AddPromptResultAsync(promptResult);
 
             return result;
         }
