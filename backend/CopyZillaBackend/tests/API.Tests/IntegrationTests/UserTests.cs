@@ -4,9 +4,11 @@ using API.Tests.Database;
 using API.Tests.Engine;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
+using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
+using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -359,13 +361,92 @@ namespace API.Tests.IntegrationTests
         [Fact]
         public async Task Should_Get_Saved_Prompt_Results()
         {
-            
+            // arrange
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+
+            var user = new User()
+            {
+                FirebaseUid = userHint,
+                Email = userEmail,
+                FirstName = userHint,
+                LastName = userHint,
+                StripeCustomerId = userHint,
+                SubscriptionPlanName = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                PlanType = "default",
+            };
+
+            var dbUser = await _postgresDbManager.AddUserAsync(user);
+            user.Id = dbUser!.Id;
+
+            var promptResult = new PromptResult()
+            {
+                Id = Guid.NewGuid(),
+                UserId = Guid.Parse(userHint),
+                Title= userHint,
+                Content = "test"
+            };
+
+            await _mongodbDbManager.AddPromptResultAsync(promptResult);
+
+            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
+
+            // act
+            var response = await _client.GetAsync($"/api/user/{user.Id}/promptResults");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<GetSavedPromptResultListQueryResult>(responseBody);
+
+            // assert
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Value.Count.Should().Be(promptResults.Count);
+            result.Value.Should().BeEquivalentTo(promptResults);
         }
 
         [Fact]
         public async Task Should_Delete_Prompt_Result()
         {
+            // arrange
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
 
+            var user = new User()
+            {
+                FirebaseUid = userHint,
+                Email = userEmail,
+                FirstName = userHint,
+                LastName = userHint,
+                StripeCustomerId = userHint,
+                SubscriptionPlanName = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                PlanType = "default",
+            };
+
+            var dbUser = await _postgresDbManager.AddUserAsync(user);
+            user.Id = dbUser!.Id;
+
+            var promptResult = new PromptResult()
+            {
+                Id = Guid.NewGuid(),
+                UserId = Guid.Parse(userHint),
+                Title = userHint,
+                Content = "test"
+            };
+
+            await _mongodbDbManager.AddPromptResultAsync(promptResult);
+
+            // act
+            var response = await _client.DeleteAsync($"/api/user/{user.Id}/promptResults/{promptResult.Id}");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<DeletePromptResultCommandResult>(responseBody);
+
+            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
+
+            // assert
+            result.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            promptResults.Count.Should().Be(0);
         }
     }
 }

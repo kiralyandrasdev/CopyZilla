@@ -14,19 +14,10 @@ namespace CopyZillaBackend.Persistence.Repositories
             _configuration = configuration;
         }
 
-        public async Task<PromptResult> AddAsync(PromptResult entity)
+        public async Task<PromptResult> AddAsync(PromptResult promptResult)
         {
-            if (string.IsNullOrEmpty(entity.Title))
-                entity.Title = DateTime.UtcNow.ToString("s");
-
-            var promptResult = new PromptResult()
-            {
-                Id = Guid.NewGuid(),
-                UserId = entity.UserId,
-                Title = entity.Title,
-                Content = entity.Content,
-                CreatedOn = DateTime.UtcNow,
-            };
+            if (string.IsNullOrEmpty(promptResult.Title))
+                promptResult.Title = DateTime.UtcNow.ToString("s");
 
             var connectionString = _configuration.GetConnectionString("MongoConnection");
             var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");

@@ -30,6 +30,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCo
 
             var promptResult = new PromptResult()
             {
+                Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 Title = request!.Options!.Title!,
                 Content = request.Options.Content

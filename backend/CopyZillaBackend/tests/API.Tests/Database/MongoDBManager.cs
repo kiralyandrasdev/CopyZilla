@@ -30,6 +30,21 @@ namespace API.Tests.Database
             newDb.GetCollection<PromptResult>(collectionName);
         }
 
+        public async Task<PromptResult> AddPromptResultAsync(PromptResult promptResult)
+        {
+            var connectionString = _factory.Configuration.GetConnectionString("MongoConnection");
+            var databaseName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
+            var collectionName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
+
+            var client = new MongoClient(connectionString);
+            var db = client.GetDatabase(databaseName);
+
+            var collection = db.GetCollection<PromptResult>(collectionName);
+            await collection.InsertOneAsync(promptResult);
+
+            return promptResult;
+        }
+
         public async Task<List<PromptResult>> GetPromptResultListAsync(Guid userId)
         {
             var connectionString = _factory.Configuration.GetConnectionString("MongoConnection");
