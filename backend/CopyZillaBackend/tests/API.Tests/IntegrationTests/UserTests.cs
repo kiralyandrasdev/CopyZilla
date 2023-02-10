@@ -301,7 +301,7 @@ namespace API.Tests.IntegrationTests
             var responseBody = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<SavePromptResultCommandResult>(responseBody);
 
-            var promptResults = await _mongodbDbManager.GetListOfPromptResultsAsync(user.Id);
+            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
 
             // assert
             result.Should().NotBeNull();
@@ -346,7 +346,7 @@ namespace API.Tests.IntegrationTests
             var responseBody = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<SavePromptResultCommandResult>(responseBody);
 
-            var promptResults = await _mongodbDbManager.GetListOfPromptResultsAsync(user.Id);
+            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
 
             // assert
             result.Should().NotBeNull();

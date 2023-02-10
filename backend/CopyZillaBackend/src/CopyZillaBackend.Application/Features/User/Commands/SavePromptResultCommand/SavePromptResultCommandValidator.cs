@@ -1,10 +1,9 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand
 {
-	public class SavePromptResultCommandValidator : AbstractValidator<SavePromptResultCommand>
+    public class SavePromptResultCommandValidator : AbstractValidator<SavePromptResultCommand>
 	{
 		private readonly IUserRepository _repository;
 

@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using CopyZillaBackend.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace API.Tests.Engine
 {
     public class WebApplicationFactoryEngine<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        public DbContext Context { get; set; }
+        public IConfiguration Configuration { get; private set; }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             IConfiguration configuration = null;
@@ -59,11 +57,13 @@ namespace API.Tests.Engine
 
                 services.AddDbContext<CopyZillaBackendDBContext>(options =>
                 {
-                    var connectionString = configuration.GetConnectionString("SqlConnection");
+                    var connectionString = configuration!.GetConnectionString("SqlConnection");
                     options.UseNpgsql(connectionString);
                     options.LogTo(message => Debug.WriteLine(message));
                     options.EnableSensitiveDataLogging();
                 });
+
+                Configuration = configuration!;
 
                 var sp = services.BuildServiceProvider();
 

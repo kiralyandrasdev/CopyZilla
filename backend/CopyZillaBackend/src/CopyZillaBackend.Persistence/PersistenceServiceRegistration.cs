@@ -11,9 +11,11 @@ namespace CopyZillaBackend.Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             Console.WriteLine(configuration.GetConnectionString("SqlConnection"));
+            Console.WriteLine(configuration.GetConnectionString("MongoConnection"));
             services.AddDbContext<CopyZillaBackendDBContext>(options => options.UseNpgsql(configuration.GetConnectionString("SqlConnection")));
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMongoRepository, MongoRepository>();
 
             return services;
         }

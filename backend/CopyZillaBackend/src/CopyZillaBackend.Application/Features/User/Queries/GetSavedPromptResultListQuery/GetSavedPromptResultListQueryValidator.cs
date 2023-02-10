@@ -1,10 +1,9 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery
 {
-	public class GetSavedPromptResultListQueryValidator : AbstractValidator<GetSavedPromptResultListQuery>
+    public class GetSavedPromptResultListQueryValidator : AbstractValidator<GetSavedPromptResultListQuery>
 	{
 		private readonly IUserRepository _repository;
 
