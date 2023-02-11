@@ -1,9 +1,11 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
+using CopyZillaBackend.Application.Contracts.Logging;
 using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using CopyZillaBackend.Application.Contracts.Webhook;
 using CopyZillaBackend.Infrastructure.Authorization;
+using CopyZillaBackend.Infrastructure.Logging;
 using CopyZillaBackend.Infrastructure.OpenAI;
 using CopyZillaBackend.Infrastructure.Payment;
 using CopyZillaBackend.Infrastructure.Prompt;
@@ -21,6 +23,7 @@ namespace CopyZillaBackend.Infrastructure
             services.AddSingleton<IPromptBuilder, PromptBuilder>();
             services.AddSingleton<IStripeService, StripeService>();
             services.AddSingleton<IWebhookEventHandlerProvider, WebhookEventHandlerProvider>();
+            services.AddSingleton<ICloudLogService, CloudLogService>();
 
             return services;
         }

@@ -24,6 +24,8 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddTransient<IResponseManager, ResponseManager>();
 
+builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+
 builder.Services.AddCors(options => options
         .AddPolicy(name: "localhost", (policy) =>
         {
@@ -49,8 +51,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseCors("localhost");
-
-//app.UseAuthorization();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 

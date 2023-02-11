@@ -1,31 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="JWT" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="Stripe.net" Version="41.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Payment\" />
-    <None Remove="Stripe.net" />
-    <None Remove="Webhook\" />
-    <None Remove="Webhook\Events\" />
+    <PackageReference Include="JWT" Version="10.0.2"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2"/>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
+    <PackageReference Include="Stripe.net" Version="41.5.0"/>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1"/>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Payment\" />
-    <Folder Include="Webhook\" />
-    <Folder Include="Webhook\EventHandlers\" />
+    <ProjectReference Include="..\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Payment\"/>
+    <None Remove="Stripe.net"/>
+    <None Remove="Webhook\"/>
+    <None Remove="Webhook\Events\"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Payment\"/>
+    <Folder Include="Webhook\"/>
+    <Folder Include="Webhook\EventHandlers\"/>
   </ItemGroup>
 </Project>
