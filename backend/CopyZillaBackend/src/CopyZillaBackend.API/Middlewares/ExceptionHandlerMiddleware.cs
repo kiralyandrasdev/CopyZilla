@@ -1,25 +1,25 @@
 ﻿using System.Diagnostics;
+using CopyZillaBackend.Application.Contracts.Logging;
 using CopyZillaBackend.Application.Events;
 using FluentValidation;
 using Newtonsoft.Json;
 
 namespace CopyZillaBackend.API.Middlewares
 {
-    public class ExceptionHandlerMiddleware
+    public class ExceptionHandlerMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
-        // private readonly ILogger _logger;
+        private readonly ICloudLogService _cloudLogService;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+        public ExceptionHandlerMiddleware(ICloudLogService cloudLogService)
         {
-            _next = next;
+            _cloudLogService = cloudLogService;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (ValidationException ex)
             {
@@ -35,6 +35,9 @@ namespace CopyZillaBackend.API.Middlewares
                     ErrorMessage = error?.ErrorMessage ?? ex.Message,
                 };
 
+                string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
+                await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
+
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
             catch (Exception ex)
@@ -42,9 +45,13 @@ namespace CopyZillaBackend.API.Middlewares
                 Debug.WriteLine(ex);
                 var response = new BaseEventResult()
                 {
-                    ErrorMessage = ex.Message,
+                    ErrorMessage = "An error occurred while processing your request. Contact support if the problem persists.",
                 };
                 context.Response.StatusCode = 500;
+
+                string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
+                await _cloudLogService.WriteLogAsync(log, LogLevel.Critical);
+
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
         }

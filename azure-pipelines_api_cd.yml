@@ -23,6 +23,7 @@ variables:
   stripeApiKey: "$(VAR_STRIPEAPIKEY)"
   openAiApiKey: "$(VAR_OPENAIAPIKEY)"
   jwtSecret: "$(VAR_JWTSECRET)"
+  azureLogStorageConnection: "$(VAR_AZURELOGSTORAGECONNECTION)"
 
   # Agent VM image name
   vmImageName: "ubuntu-latest"
@@ -39,18 +40,18 @@ stages:
           - task: Docker@2
             displayName: Build docker image
             inputs:
-              repository: 'apicopyzilla'
+              repository: "apicopyzilla"
               containerRegistry: $(dockerRegistryServiceConnection)
-              command: 'build'
-              Dockerfile: '$(Build.SourcesDirectory)/backend/CopyZillaBackend/Dockerfile'
-              arguments: '--build-arg SQLCONNECTION="${{variables.sqlConnection}}" --build-arg MONGOCONNECTION="${{variables.mongoConnection}}" --build-arg STRIPEAPIKEY="${{variables.stripeApiKey}}" --build-arg OPENAIAPIKEY="${{variables.openAiApiKey}}" --build-arg JWTSECRET="${{variables.jwtSecret}}"'
+              command: "build"
+              Dockerfile: "$(Build.SourcesDirectory)/backend/CopyZillaBackend/Dockerfile"
+              arguments: '--build-arg SQLCONNECTION="${{variables.sqlConnection}}" --build-arg MONGOCONNECTION="${{variables.mongoConnection}}" --build-arg STRIPEAPIKEY="${{variables.stripeApiKey}}" --build-arg OPENAIAPIKEY="${{variables.openAiApiKey}}" --build-arg JWTSECRET="${{variables.jwtSecret}}" --build-arg AZURELOGSTORAGECONNECTION="${{variables.azureLogStorageConnection}}"'
               tags: |
                 $(tag)
           - task: Docker@2
             displayName: "Push docker image to ACR"
             inputs:
-              repository: 'apicopyzilla'
+              repository: "apicopyzilla"
               containerRegistry: $(dockerRegistryServiceConnection)
-              command: 'push'
+              command: "push"
               tags: |
                 $(tag)
