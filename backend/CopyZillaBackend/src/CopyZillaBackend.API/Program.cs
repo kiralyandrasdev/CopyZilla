@@ -4,6 +4,8 @@ using CopyZillaBackend.Application;
 using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json.Serialization;
 
@@ -55,6 +57,11 @@ app.UseCors("localhost");
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.GetApplicationDefault(),
+});
 
 app.Run();
 

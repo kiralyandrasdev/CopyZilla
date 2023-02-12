@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using CopyZillaBackend.Application.Contracts.Logging;
 using CopyZillaBackend.Application.Events;
+using FirebaseAdmin.Auth;
 using FluentValidation;
 using Newtonsoft.Json;
 
@@ -20,6 +21,20 @@ namespace CopyZillaBackend.API.Middlewares
             try
             {
                 await next(context);
+            }
+            catch (FirebaseAuthException ex)
+            {
+                context.Response.StatusCode = 401;
+
+                var response = new BaseEventResult()
+                {
+                    ErrorMessage = "Invalid token.",
+                };
+
+                string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
+                await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
+
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
             catch (ValidationException ex)
             {
