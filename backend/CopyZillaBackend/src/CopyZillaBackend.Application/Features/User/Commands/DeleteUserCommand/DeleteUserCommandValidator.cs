@@ -16,15 +16,18 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
 
             RuleFor(e => e)
               .Must(e => e.UserId != Guid.Empty)
-              .WithMessage("UserId must not be empty.");
+              .WithMessage("UserId must not be empty.")
+              .WithErrorCode("400");
 
             RuleFor(e => e)
                .MustAsync(ExistsInDbAsync)
-               .WithMessage("User with specified UserId does not exist in the database.");
+               .WithMessage("User with specified UserId does not exist in the database.")
+               .WithErrorCode("404");
 
             RuleFor(e => e)
               .MustAsync(ExistsInStripeAsync)
-              .WithMessage("User with specified StripeCustomerId does not exist in Stripe.");
+              .WithMessage("User with specified StripeCustomerId does not exist in Stripe.")
+              .WithErrorCode("404");
         }
 
         private async Task<bool> ExistsInDbAsync(DeleteUserCommand e, CancellationToken _)
@@ -37,10 +40,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
             // get user from db
             var userFromDatabase = await _repository.GetByIdAsync(e.UserId);
 
-            if (userFromDatabase == null)
-                throw new Exception("User not found in the database.");
-
-            return await _stripeService.GetCustomerByIdAsync(userFromDatabase.StripeCustomerId) is not null;
+            return await _stripeService.GetCustomerByIdAsync(userFromDatabase!.StripeCustomerId) is not null;
         }
     }
 }

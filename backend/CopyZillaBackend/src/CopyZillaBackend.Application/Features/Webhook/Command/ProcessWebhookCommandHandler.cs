@@ -1,12 +1,9 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Payment;
-using CopyZillaBackend.Application.Contracts.Persistence;
-using CopyZillaBackend.Application.Contracts.Webhook;
+﻿using CopyZillaBackend.Application.Contracts.Webhook;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.Webhook.Command
 {
-	public class ProcessWebhookCommandHandler : IRequestHandler<ProcessWebhookCommand, ProcessWebhookCommandResult>
+    public class ProcessWebhookCommandHandler : IRequestHandler<ProcessWebhookCommand, ProcessWebhookCommandResult>
 	{
         private readonly IWebhookEventHandlerProvider _webhookEventHandlerProvider;
 

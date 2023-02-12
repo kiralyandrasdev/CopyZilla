@@ -8,7 +8,8 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQu
 		{
             RuleFor(e => e)
                .Must(e => !string.IsNullOrEmpty(e.ProductType))
-               .WithMessage("ProductType must not be null.");
+               .WithMessage("ProductType must not be null.")
+                .WithErrorCode("400");
         }
 	}
 }

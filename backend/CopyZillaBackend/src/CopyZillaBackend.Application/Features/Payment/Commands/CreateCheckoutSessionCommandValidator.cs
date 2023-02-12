@@ -1,10 +1,9 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.Payment.Commands
 {
-	public class CreateCheckoutSessionCommandValidator : AbstractValidator<CreateCheckoutSessionCommand>
+    public class CreateCheckoutSessionCommandValidator : AbstractValidator<CreateCheckoutSessionCommand>
 	{
 		private readonly IUserRepository _repository;
 
@@ -14,15 +13,18 @@ namespace CopyZillaBackend.Application.Features.Payment.Commands
 
             RuleFor(e => e)
                 .Must(e => e.Options.FirebaseUid != null)
-                .WithMessage("FirebaseUID must not be null.");
+                .WithMessage("FirebaseUID must not be null.")
+                .WithErrorCode("400");
 
             RuleFor(e => e)
               .Must(e => e.Options.PriceId != null)
-              .WithMessage("PriceId must not be null.");
+              .WithMessage("PriceId must not be null.")
+                .WithErrorCode("400");
 
             RuleFor(e => e)
                 .MustAsync(ExistsAsync)
-                .WithMessage("User with given FirebaseUID does not exist.");
+                .WithMessage("User with given FirebaseUID does not exist.")
+                .WithErrorCode("404");
         }
 
         private async Task<bool> ExistsAsync(CreateCheckoutSessionCommand e, CancellationToken token)
