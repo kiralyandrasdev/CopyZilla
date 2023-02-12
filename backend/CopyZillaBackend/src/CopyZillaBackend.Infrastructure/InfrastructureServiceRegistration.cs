@@ -1,10 +1,12 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
+using CopyZillaBackend.Application.Contracts.Firebase;
 using CopyZillaBackend.Application.Contracts.Logging;
 using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using CopyZillaBackend.Application.Contracts.Webhook;
 using CopyZillaBackend.Infrastructure.Authorization;
+using CopyZillaBackend.Infrastructure.Firebase;
 using CopyZillaBackend.Infrastructure.Logging;
 using CopyZillaBackend.Infrastructure.OpenAI;
 using CopyZillaBackend.Infrastructure.Payment;
@@ -24,6 +26,7 @@ namespace CopyZillaBackend.Infrastructure
             services.AddSingleton<IStripeService, StripeService>();
             services.AddSingleton<IWebhookEventHandlerProvider, WebhookEventHandlerProvider>();
             services.AddSingleton<ICloudLogService, CloudLogService>();
+            services.AddSingleton<IFirebaseService, FirebaseService>();
 
             return services;
         }

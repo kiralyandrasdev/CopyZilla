@@ -17,18 +17,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.Infrastructure", "src\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj", "{673095CB-8B51-4403-ACFE-F73571053C40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Persistence", "src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj", "{3EC4A5C7-0677-472B-8BD7-1D31A389A617}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.Persistence", "src\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj", "{3EC4A5C7-0677-472B-8BD7-1D31A389A617}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Domain", "src\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj", "{258A8889-355D-4E5C-85D6-9903AF16ED20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.Domain", "src\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj", "{258A8889-355D-4E5C-85D6-9903AF16ED20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyZillaBackend.Application", "src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj", "{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyZillaBackend.Application", "src\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj", "{3DB4ABDF-5FD9-48A3-A5DF-8DA5BE14BB07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8D037E1-7C1C-482A-B4A4-8D734AE5187A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Tests", "tests\API.Tests\API.Tests.csproj", "{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Tests", "tests\API.Tests\API.Tests.csproj", "{7919E208-FCEF-4AA3-B4B9-EA30ABC8781D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
