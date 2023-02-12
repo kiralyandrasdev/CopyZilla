@@ -11,7 +11,7 @@ namespace CopyZillaBackend.Infrastructure.Firebase
         {
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromFile("../../firebaseConfig.json"),
+                Credential = GoogleCredential.FromFile("../../config/firebaseConfig.json"),
             });
         }
 
