@@ -4,7 +4,6 @@ using CopyZillaBackend.Application;
 using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
-using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
