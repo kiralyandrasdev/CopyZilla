@@ -12,9 +12,12 @@ using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultLis
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
 using Newtonsoft.Json;
+using Xunit.Priority;
 
 namespace API.Tests.IntegrationTests
 {
+    [Collection("Serial")]
+    [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     public class UserTests : IClassFixture<WebApplicationFactoryEngine<Program>>
     {
         private readonly WebApplicationFactoryEngine<Program> _factory;
@@ -293,8 +296,8 @@ namespace API.Tests.IntegrationTests
 
             var options = new SavePromptResultCommandOptions()
             {
-                 Title= userHint,
-                 Content = "test",
+                Title = userHint,
+                Content = "test",
             };
 
             // act
@@ -384,7 +387,7 @@ namespace API.Tests.IntegrationTests
             {
                 Id = Guid.NewGuid(),
                 UserId = Guid.Parse(userHint),
-                Title= userHint,
+                Title = userHint,
                 Content = "test"
             };
 
