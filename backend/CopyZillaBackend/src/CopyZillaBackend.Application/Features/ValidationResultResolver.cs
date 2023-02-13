@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using FluentValidation;
+using FluentValidation.Results;
 
 namespace CopyZillaBackend.Application.Events
 {
@@ -10,6 +11,8 @@ namespace CopyZillaBackend.Application.Events
             {
                 response.StatusCode = result.Errors.First().ErrorCode;
                 response.ErrorMessage = result.Errors.First().ErrorMessage;
+
+                throw new ValidationException(result.Errors);
             }
             return result;
         }

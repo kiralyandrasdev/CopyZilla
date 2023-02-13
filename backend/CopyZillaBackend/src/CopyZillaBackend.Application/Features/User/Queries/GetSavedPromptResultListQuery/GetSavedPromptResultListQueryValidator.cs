@@ -13,7 +13,8 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResul
 
             RuleFor(e => e)
                 .MustAsync(ExistsAsync)
-                .WithMessage("The specified user does not exist.");
+                .WithMessage("The specified user does not exist.")
+                .WithErrorCode("404");
         }
 
         private async Task<bool> ExistsAsync(GetSavedPromptResultListQuery e, CancellationToken token)
