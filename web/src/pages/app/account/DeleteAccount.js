@@ -3,7 +3,6 @@ import { FiKey, FiMail } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { AsyncButton, TextField } from '../../../components';
 import EmailSvg from '../../../assets/email.svg';
-import { deleteAccountWithReauth } from '../../../features/authentication/actions/authActions';
 import './ChangeEmail.css';
 import { useDeleteUserMutation } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
@@ -62,7 +61,6 @@ function DeleteAccountPage() {
         setMessage("");
 
         try {
-            await deleteAccountWithReauth({password});
             deleteUser({userId:user.id});
         } catch (error) {
             console.log(error.code);
