@@ -1,14 +1,17 @@
 import { getAuth } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LoadingIndicator } from '../components';
 import { AuthContext } from '../features/authentication/authContext';
+import { setAccessToken } from '../features/authentication/authSlice';
 import styles from './AuthRedirect.module.css';
 
 function AuthRedirect() {
     const navigate = useNavigate();
 
     const { user, updateUser } = useContext(AuthContext);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const auth = getAuth();
@@ -16,11 +19,14 @@ function AuthRedirect() {
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
             const path = window.location.pathname;
 
-            console.log("Auth state changed: " + firebaseUser);
-
             updateUser(firebaseUser);
 
             if (firebaseUser) {
+
+                if (firebaseUser.accessToken) {
+                    dispatch(setAccessToken(firebaseUser.accessToken));
+                }
+
                 if (firebaseUser.emailVerified) {
                     if (!path.includes("/user")) {
                         navigate('/user/editor');

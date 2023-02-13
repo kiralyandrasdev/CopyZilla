@@ -4,9 +4,12 @@ using CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQ
 using FluentAssertions;
 using Newtonsoft.Json;
 using System.Net;
+using Xunit.Priority;
 
 namespace API.Tests.IntegrationTests
 {
+    [Collection("Serial")]
+    [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     public class ProductTests : IClassFixture<WebApplicationFactoryEngine<Program>>
     {
         private readonly WebApplicationFactoryEngine<Program> _factory;

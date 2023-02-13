@@ -65,15 +65,19 @@ export default function InitRedirect() {
     });
 
     if (isError) {
+        console.log(error);
         return (
             <div className={styles.initRedirect}>
                 <div className={styles.initRedirect__content}>
                     <img src={NotFoundSvg} className="illustration__150"></img>
                     <h5>Uh oh, váratlan hiba történt</h5>
-                    <div className={styles.initRedirect__content__error__description}>
-                        <p>{error.errorMessage}</p>
-                        {error.statusCode && <p className="description">Kód: {error.statusCode}</p>}
-                    </div>
+                    {
+                        error.errorMessage &&
+                        <div className={styles.initRedirect__content__error__description}>
+                            <p>{error.errorMessage}</p>
+                            {error.statusCode && <p className="description">Kód: {error.statusCode}</p>}
+                        </div>
+                    }
                     <TextButton
                         title="Vedd fel velünk a kapcsolatot"
                         color="var(--green)"

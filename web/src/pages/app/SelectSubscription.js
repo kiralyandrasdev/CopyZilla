@@ -16,15 +16,16 @@ function SelectSubscriptionPage() {
 
     const [subscriptionList, setSubscriptionList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { accessToken } = useSelector(state => state.auth);
 
     const getSubscriptionListAsync = async () => {
-        const result = await getSubscriptionList();
+        const result = await getSubscriptionList({ accessToken });
         setSubscriptionList(result);
         setIsLoading(false);
     }
 
     const itemContainer = () => {
-        if (subscriptionList.length < 1) {
+        if (!subscriptionList || subscriptionList.length < 1) {
             return <p>Nincs elérhető csomag.</p>
         }
         const items = subscriptionList.filter(e => e.planType !== "default").map((item, index) => {

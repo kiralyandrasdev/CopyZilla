@@ -4,7 +4,15 @@ import { apiBaseUrl } from '../../config/envConfig';
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: apiBaseUrl, headers: {
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().auth.accessToken;
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
+        baseUrl: apiBaseUrl,
+        headers: {
             'Content-Type': 'application/json',
         }
     }),

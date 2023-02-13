@@ -16,6 +16,7 @@ import "./Create.css";
 export default function CreatePage() {
     const { firebaseUid } = useContext(AuthContext);
     const { user, decreaseCreditCount } = useContext(UserContext);
+    const { accessToken } = useSelector(state => state.auth);
 
     const navigate = useNavigate();
 
@@ -163,13 +164,15 @@ export default function CreatePage() {
                 language.value
             );
 
-            dispatch(processQuickPrompt({ firebaseUid, prompt: quickPromptObject }));
+            console.log(accessToken);
+
+            dispatch(processQuickPrompt({ accessToken, firebaseUid, prompt: quickPromptObject }));
         } else {
             const advancedPromptObject = new AdvancedPrompt(
                 advancedPrompt,
                 language.value,
             );
-            dispatch(processAdvancedPrompt({ firebaseUid, prompt: advancedPromptObject }));
+            dispatch(processAdvancedPrompt({ accessToken, firebaseUid, prompt: advancedPromptObject }));
         }
     }
 
