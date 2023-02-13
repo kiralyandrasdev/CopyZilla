@@ -1,4 +1,5 @@
 ﻿using CopyZillaBackend.API.Exceptions;
+using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 
 namespace CopyZillaBackend.API.Middlewares
@@ -32,7 +33,7 @@ namespace CopyZillaBackend.API.Middlewares
                 throw new AuthException("Authorization header is missing.");
 
             // Check if the token is valid.
-            await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(authorizationHeader.Replace("Bearer ", ""));
+            await FirebaseAuth.GetAuth(FirebaseApp.GetInstance("default")).VerifyIdTokenAsync(authorizationHeader.Replace("Bearer ", ""));
 
             await next(context);
         }
