@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { AsyncButton } from '../../../components';
 import { UserContext } from '../../user/context/userContext';
 import { CHECKOUT_MODE, createCheckoutSessionAsync } from '../actions/paymentActions';
@@ -8,9 +9,11 @@ function SubscriptionOption(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { firebaseUid } = useContext(UserContext);
 
+    const { accessToken } = useSelector(state => state.auth)
+
     const handleCreateCheckoutSession = async () => {
         setIsLoading(true);
-        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.SUBSCRIPTION, { firebaseUid: firebaseUid, priceId: props.item.priceId });
+        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.SUBSCRIPTION, { firebaseUid: firebaseUid, priceId: props.item.priceId }, accessToken);
         setIsLoading(false);
 
         if (redirectUrl) {

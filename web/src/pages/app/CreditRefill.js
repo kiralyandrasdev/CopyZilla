@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import PurchaseSvg from "../../assets/purchase.svg";
 import { LoadingIndicator } from "../../components";
 import { getGoodsList } from "../../features/payment/actions/paymentActions";
@@ -8,12 +9,13 @@ import './CreditRefill.css';
 
 export default function CreditRefill() {
     const [isLoading, setIsLoading] = useState(true);
+    const { accessToken } = useSelector(state => state.auth);
 
     const [goods, setGoods] = useState([]);
 
     const fetchGoods = async () => {
         setIsLoading(true);
-        const result = await getGoodsList();
+        const result = await getGoodsList({ accessToken });
         setGoods(result);
         setIsLoading(false);
     }

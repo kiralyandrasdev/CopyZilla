@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deletePromptResult, getPromptResults, savePromptResult } from "./actions/savedResultsActions";
+import { getPromptResults } from "./actions/savedResultsActions";
 
 export const promptResultsSlice = createSlice({
     name: "savedResults",

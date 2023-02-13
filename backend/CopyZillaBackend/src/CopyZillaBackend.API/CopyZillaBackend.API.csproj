@@ -5,21 +5,27 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="11.1.0"/>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="FirebaseAdmin" Version="2.3.0"/>
+    <PackageReference Include="FirebaseAdmin" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.13" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj"/>
-    <ProjectReference Include="..\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj"/>
-    <ProjectReference Include="..\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj"/>
+    <ProjectReference Include="..\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
+    <ProjectReference Include="..\CopyZillaBackend.Infrastructure\CopyZillaBackend.Infrastructure.csproj" />
+    <ProjectReference Include="..\CopyZillaBackend.Persistence\CopyZillaBackend.Persistence.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Microsoft.EntityFrameworkCore.Design"/>
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="firebaseConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

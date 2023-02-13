@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { AsyncButton } from '../../../components';
 import { AuthContext } from '../../authentication/authContext';
 import { CHECKOUT_MODE, createCheckoutSessionAsync } from '../actions/paymentActions';
@@ -8,9 +9,11 @@ function CreditRefillOption(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { firebaseUid } = useContext(AuthContext);
 
+    const { accessToken } = useSelector(state => state.auth)
+
     const handleCreateCheckoutSession = async () => {
         setIsLoading(true);
-        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.PAYMENT, { firebaseUid: firebaseUid, priceId: props.item.priceId });
+        const redirectUrl = await createCheckoutSessionAsync(CHECKOUT_MODE.PAYMENT, { firebaseUid: firebaseUid, priceId: props.item.priceId }, accessToken);
         setIsLoading(false);
 
         if (redirectUrl) {

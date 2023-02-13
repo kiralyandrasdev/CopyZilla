@@ -34,6 +34,7 @@ function PlaceHolder() {
 
 export default function PromptResultView(props) {
     const { user } = useContext(UserContext);
+    const { accessToken } = useSelector(state => state.auth);
 
     const [promptResultTitle, setPromptResultTitle] = useState("");
     const handlePromptResultTitleChange = (e) => {
@@ -83,6 +84,7 @@ export default function PromptResultView(props) {
     const handleSave = () => {
         handleSaveActive(false);
         var payload = {
+            accessToken: accessToken,
             userId: user.id,
             promptResult: {
                 title: promptResultTitle,

@@ -4,9 +4,14 @@ import { apiBaseUrl } from "../../../config/envConfig";
 
 export const processQuickPrompt = createAsyncThunk(
     'editor/processQuickPrompt',
-    async ({ firebaseUid, prompt }, thunkApi) => {
+    async ({ accessToken, firebaseUid, prompt }, thunkApi) => {
         try {
-            const response = await axios.post(`${apiBaseUrl}/user/${firebaseUid}/quickPrompt`, prompt);
+            const response = await axios.post(`${apiBaseUrl}/user/${firebaseUid}/quickPrompt`, prompt,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                    }
+                });
             return thunkApi.fulfillWithValue(response.data.value);
         } catch (e) {
             return thunkApi.rejectWithValue(e);
@@ -16,9 +21,14 @@ export const processQuickPrompt = createAsyncThunk(
 
 export const processAdvancedPrompt = createAsyncThunk(
     'editor/processAdvancedPrompt',
-    async ({ firebaseUid, prompt }, thunkApi) => {
+    async ({ accessToken, firebaseUid, prompt }, thunkApi) => {
         try {
-            const response = await axios.post(`${apiBaseUrl}/user/${firebaseUid}/advancedPrompt`, prompt);
+            const response = await axios.post(`${apiBaseUrl}/user/${firebaseUid}/advancedPrompt`, prompt,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                    }
+                });
             return thunkApi.fulfillWithValue(response.data.value);
         } catch (e) {
             return thunkApi.rejectWithValue(e);

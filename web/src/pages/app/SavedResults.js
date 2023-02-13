@@ -26,19 +26,20 @@ function LoadingPlaceholder() {
 export default function SavedResultsPage() {
     const { user } = useContext(UserContext);
     const { isLoading, items } = useSelector(state => state.promptResults);
+    const { accessToken } = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
     const handleDeletePromptResult = (payload) => {
-        dispatch(deletePromptResult(payload));
+        dispatch(deletePromptResult(accessToken, payload));
         dispatch(removePromptResult(payload));
     }
 
     useEffect(() => {
-        if (user.id) {
-            dispatch(getPromptResults({ userId: user.id }));
+        if (user.id && accessToken) {
+            dispatch(getPromptResults({ accessToken, userId: user.id }));
         }
-    }, [user]);
+    }, [user, accessToken]);
 
     const isEmpty = items.length === 0 && !isLoading;
 

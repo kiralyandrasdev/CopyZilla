@@ -4,10 +4,15 @@ import { apiBaseUrl } from "../../../config/envConfig";
 
 export const getPromptResults = createAsyncThunk(
     'promptResults/getPromptResults',
-    async ({ userId, link }, thunkApi) => {
+    async ({ accessToken, userId, link }, thunkApi) => {
         try {
             const url = link || `${apiBaseUrl}/user/${userId}/promptResults`;
-            const response = await axios.get(url, prompt);
+            const response = await axios.get(url,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
             return thunkApi.fulfillWithValue(response.data.value);
         } catch (e) {
             return thunkApi.rejectWithValue(e);
@@ -17,9 +22,14 @@ export const getPromptResults = createAsyncThunk(
 
 export const savePromptResult = createAsyncThunk(
     'promptResults/savePromptResult',
-    async ({ userId, promptResult }, thunkApi) => {
+    async ({ accessToken, userId, promptResult }, thunkApi) => {
         try {
-            await axios.post(`${apiBaseUrl}/user/${userId}/promptResults`, promptResult);
+            await axios.post(`${apiBaseUrl}/user/${userId}/promptResults`, promptResult,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
         } catch (e) {
             return thunkApi.rejectWithValue(e);
         }
@@ -28,9 +38,14 @@ export const savePromptResult = createAsyncThunk(
 
 export const deletePromptResult = createAsyncThunk(
     'promptResults/deletePromptResult',
-    async ({ userId, promptResultId }, thunkApi) => {
+    async (accessToken, { userId, promptResultId }, thunkApi) => {
         try {
-            await axios.delete(`${apiBaseUrl}/user/${userId}/promptResults/${promptResultId}`);
+            await axios.delete(`${apiBaseUrl}/user/${userId}/promptResults/${promptResultId}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
         } catch (e) {
             return thunkApi.rejectWithValue(e);
         }

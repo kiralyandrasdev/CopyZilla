@@ -6,27 +6,42 @@ export const CHECKOUT_MODE = {
     SUBSCRIPTION: "SUBSCRIPTION",
 }
 
-export const createCheckoutSessionAsync = async (mode, data) => {
+export const createCheckoutSessionAsync = async (mode, data, accessToken) => {
     try {
-        const response = await axios.post(`${apiBaseUrl}/checkout/${mode.toLowerCase()}`, data);
+        const response = await axios.post(`${apiBaseUrl}/checkout/${mode.toLowerCase()}`, data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                }
+            });
         return response.data.value.checkoutRedirectUrl;
     } catch (e) {
         return null;
     }
 }
 
-export const getGoodsList = async () => {
+export const getGoodsList = async ({ accessToken }) => {
     try {
-        const response = await axios.get(`${apiBaseUrl}/product/goods`);
+        const response = await axios.get(`${apiBaseUrl}/product/goods`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                }
+            });
         return response.data.value;
     } catch (e) {
         return null;
     }
 }
 
-export const getSubscriptionList = async () => {
+export const getSubscriptionList = async ({ accessToken }) => {
     try {
-        const response = await axios.get(`${apiBaseUrl}/product/subscriptions`);
+        const response = await axios.get(`${apiBaseUrl}/product/subscriptions`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                }
+            });
         return response.data.value;
     } catch (e) {
         return null;

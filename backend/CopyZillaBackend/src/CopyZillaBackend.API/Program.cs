@@ -6,13 +6,20 @@ using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
-using Microsoft.AspNetCore.Http.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+    );
+
 builder.Services.AddLogging();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,6 +33,7 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddTransient<IResponseManager, ResponseManager>();
 
+builder.Services.AddTransient<AuthorizationMiddleware>();
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
 
 builder.Services.AddCors(options => options
@@ -56,11 +64,16 @@ app.UseCors("localhost");
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
+app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == false, app =>
+{
+    app.UseMiddleware<AuthorizationMiddleware>();
+});
+
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.GetApplicationDefault(),
+    Credential = GoogleCredential.FromFile("firebaseConfig.json"),
 });
 
 app.Run();

@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using CopyZillaBackend.API.Exceptions;
+using CopyZillaBackend.API.Json;
 using CopyZillaBackend.Application.Contracts.Logging;
 using CopyZillaBackend.Application.Events;
 using FirebaseAdmin.Auth;
@@ -22,20 +24,6 @@ namespace CopyZillaBackend.API.Middlewares
             {
                 await next(context);
             }
-            catch (FirebaseAuthException ex)
-            {
-                context.Response.StatusCode = 401;
-
-                var response = new BaseEventResult()
-                {
-                    ErrorMessage = "Invalid token.",
-                };
-
-                string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
-                await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
-
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
-            }
             catch (ValidationException ex)
             {
                 var error = ex.Errors.FirstOrDefault();
@@ -53,21 +41,32 @@ namespace CopyZillaBackend.API.Middlewares
                 string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
                 await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
 
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
-                var response = new BaseEventResult()
-                {
-                    ErrorMessage = "An error occurred while processing your request. Contact support if the problem persists.",
-                };
-                context.Response.StatusCode = 500;
-
+                var response = new BaseEventResult();
                 string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
+
+                if (ex is AuthException || ex is FirebaseAuthException)
+                {
+                    context.Response.StatusCode = 401;
+                    response.ErrorMessage = ex.Message;
+
+                    await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
+                    return;
+                }
+
+                Debug.WriteLine(ex);
+
+                context.Response.StatusCode = 500;
+                response.ErrorMessage = "An error occurred while processing your request. Contact support if the problem persists.";
+
                 await _cloudLogService.WriteLogAsync(log, LogLevel.Critical);
 
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
             }
         }
     }
