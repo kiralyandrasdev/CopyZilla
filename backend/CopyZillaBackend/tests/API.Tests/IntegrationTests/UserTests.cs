@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using API.Tests.Database;
 using API.Tests.Engine;
+using API.Tests.Firebase;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
@@ -25,6 +26,7 @@ namespace API.Tests.IntegrationTests
         private readonly PostgresDBManager _postgresDbManager;
         private readonly MongoDBManager _mongodbDbManager;
         private readonly StripeManager _stripeManager;
+        private readonly FirebaseManager _firebaseManager;
 
         public UserTests(WebApplicationFactoryEngine<Program> factory)
         {
@@ -33,6 +35,7 @@ namespace API.Tests.IntegrationTests
             _postgresDbManager = new PostgresDBManager(factory);
             _mongodbDbManager = new MongoDBManager(factory);
             _stripeManager = new StripeManager(factory);
+            _firebaseManager = new FirebaseManager(factory);
 
             _postgresDbManager.ClearSchema();
             _mongodbDbManager.ClearSchema();
@@ -240,11 +243,11 @@ namespace API.Tests.IntegrationTests
             // arrange
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
+
             var customer = await _stripeManager.CreateCustomerAsync(userEmail);
 
             var user = new User()
             {
-                FirebaseUid = userHint,
                 Email = userEmail,
                 FirstName = userHint,
                 LastName = userHint,
@@ -253,6 +256,9 @@ namespace API.Tests.IntegrationTests
                 SubscriptionValidUntil = DateTime.UtcNow,
                 PlanType = "default",
             };
+
+            var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);
+            user.FirebaseUid = firebaseUser.Uid;
 
             var dbUser = await _postgresDbManager.AddUserAsync(user);
             user.Id = dbUser!.Id;
