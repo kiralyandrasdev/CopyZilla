@@ -28,5 +28,28 @@ namespace API.Tests.Firebase
 
             return await FirebaseAuth.GetAuth(FirebaseApp.GetInstance("default")).CreateUserAsync(args);
         }
+
+        public async Task<UserRecord> GetUserAsync(string uid)
+        {
+            return await FirebaseAuth.GetAuth(FirebaseApp.GetInstance("default")).GetUserAsync(uid);
+        }
+
+        public async Task<List<ExportedUserRecord>> ListUsersAsync()
+        {
+            var result = new List<ExportedUserRecord>();
+            var enumerator = FirebaseAuth.GetAuth(FirebaseApp.GetInstance("default")).ListUsersAsync(null).GetAsyncEnumerator();
+
+            while (await enumerator.MoveNextAsync())
+            {
+                result.Add(enumerator.Current);
+            }
+
+            return result;
+        }
+
+        public async Task DeleteUserAsync(string uid)
+        {
+            await FirebaseAuth.GetAuth(FirebaseApp.GetInstance("default")).DeleteUserAsync(uid);
+        }
     }
 }
