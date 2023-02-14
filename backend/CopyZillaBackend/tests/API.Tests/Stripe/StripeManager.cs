@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.JsonPatch.Internal;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Stripe;
@@ -33,6 +34,14 @@ namespace API.Tests.Stripe
         {
             var service = new CustomerService();
             await service.DeleteAsync(customerId);
+        }
+
+        public async Task<StripeList<Customer>> ListCustomersAsync()
+        {
+            var service = new CustomerService();
+            var customers = await service.ListAsync();
+
+            return customers;
         }
     }
 }

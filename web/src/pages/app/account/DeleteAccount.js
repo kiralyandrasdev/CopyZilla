@@ -1,15 +1,13 @@
 import React, { useRef, useState, useContext } from 'react';
 import { FiKey, FiMail } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
 import { AsyncButton, TextField } from '../../../components';
 import EmailSvg from '../../../assets/email.svg';
-import { deleteAccountWithReauth } from '../../../features/authentication/actions/authActions';
 import './ChangeEmail.css';
 import { useDeleteUserMutation } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
+import { logout } from '../../../features/authentication/actions/authActions';
 
 function DeleteAccountPage() {
-    const dispatch = useDispatch();
     const {user} = useContext(UserContext)
     const [
         deleteUser,
@@ -32,12 +30,16 @@ function DeleteAccountPage() {
     const [confirmationError, setConfirmationError] = useState(false);
 
     const canSubmit = () => {
-
         if (password.length === 0) {
             setPasswordError(true);
             setError("A jelszó megadása kötelező!");
             return false;
-        } else {
+        } /*else if(password !== "") {
+            setPasswordError(true);
+            setError("A jelszó nem megfelelő!")
+            return false;
+        }*/
+        else {
             setPasswordError(false);
             setError("");
         }
@@ -60,10 +62,9 @@ function DeleteAccountPage() {
         setIsLoading(true);
         setError("");
         setMessage("");
-
         try {
-            await deleteAccountWithReauth({password});
             deleteUser({userId:user.id});
+            await logout();
         } catch (error) {
             console.log(error.code);
             setError(error.code);
