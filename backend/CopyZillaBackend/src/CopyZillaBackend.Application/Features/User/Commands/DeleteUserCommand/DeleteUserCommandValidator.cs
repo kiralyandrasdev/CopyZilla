@@ -18,7 +18,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
 
             RuleFor(e => e)
                .MustAsync(ExistsInDbAsync)
-               .WithMessage($"User does not exist in db.")
+               .WithMessage($"User with specified UserId does not exist in the database.")
                .WithErrorCode("404");
         }
 
