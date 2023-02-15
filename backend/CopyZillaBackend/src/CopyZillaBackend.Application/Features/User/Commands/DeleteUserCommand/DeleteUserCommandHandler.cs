@@ -33,9 +33,6 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
             // get user from db
             var userFromDatabase = await _userRepository.GetByIdAsync(request.UserId);
 
-            if (userFromDatabase == null)
-                throw new Exception("User not found in the database.");
-
             // delete user from db
             await _userRepository.DeleteAsync(request.UserId);
 

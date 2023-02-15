@@ -40,7 +40,10 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
             // get user from db
             var userFromDatabase = await _repository.GetByIdAsync(e.UserId);
 
-            return await _stripeService.GetCustomerByIdAsync(userFromDatabase!.StripeCustomerId) is not null;
+            if (userFromDatabase == null)
+                throw new Exception("");
+
+            return await _stripeService.GetCustomerByIdAsync(userFromDatabase.StripeCustomerId) is not null;
         }
     }
 }
