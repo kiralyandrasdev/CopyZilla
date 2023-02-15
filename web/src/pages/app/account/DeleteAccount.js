@@ -11,15 +11,7 @@ import { logout } from '../../../features/authentication/actions/authActions';
 function DeleteAccountPage() {
     const dispatch = useDispatch();
     const {user} = useContext(UserContext)
-    const [
-        deleteUser,
-        {
-            isLoading: userDeleteLoading,
-            error: userDeleteError,
-            data: userDeleteUser,
-            isSuccess: userApiDeleteSuccess,
-        }
-    ] = useDeleteUserMutation();
+    const [deleteUser] = useDeleteUserMutation();
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -61,9 +53,7 @@ function DeleteAccountPage() {
         setMessage("");
 
         try {
-            userDeleteLoading(true);
             deleteUser({userId:user.id});
-            userDeleteLoading(false);
             await logout();
         } catch (error) {
             console.log(error.code);
