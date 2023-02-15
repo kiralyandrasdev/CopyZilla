@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using API.Tests.Database;
 using API.Tests.Engine;
+using API.Tests.Firebase;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
@@ -10,6 +11,7 @@ using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultComman
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
 using CopyZillaBackend.Domain.Entities;
+using FirebaseAdmin.Auth;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit.Priority;
@@ -18,13 +20,14 @@ namespace API.Tests.IntegrationTests
 {
     [Collection("Serial")]
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
-    public class UserTests : IClassFixture<WebApplicationFactoryEngine<Program>>
+    public class UserTests : IClassFixture<WebApplicationFactoryEngine<Program>>, IDisposable
     {
         private readonly WebApplicationFactoryEngine<Program> _factory;
         private readonly HttpClient _client;
         private readonly PostgresDBManager _postgresDbManager;
         private readonly MongoDBManager _mongodbDbManager;
         private readonly StripeManager _stripeManager;
+        private readonly FirebaseManager _firebaseManager;
 
         public UserTests(WebApplicationFactoryEngine<Program> factory)
         {
@@ -33,7 +36,9 @@ namespace API.Tests.IntegrationTests
             _postgresDbManager = new PostgresDBManager(factory);
             _mongodbDbManager = new MongoDBManager(factory);
             _stripeManager = new StripeManager(factory);
+            _firebaseManager = new FirebaseManager(factory);
 
+            // clear on-prem db before tests
             _postgresDbManager.ClearSchema();
             _mongodbDbManager.ClearSchema();
         }
@@ -240,11 +245,11 @@ namespace API.Tests.IntegrationTests
             // arrange
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
+
             var customer = await _stripeManager.CreateCustomerAsync(userEmail);
 
             var user = new User()
             {
-                FirebaseUid = userHint,
                 Email = userEmail,
                 FirstName = userHint,
                 LastName = userHint,
@@ -253,6 +258,9 @@ namespace API.Tests.IntegrationTests
                 SubscriptionValidUntil = DateTime.UtcNow,
                 PlanType = "default",
             };
+
+            var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);
+            user.FirebaseUid = firebaseUser.Uid;
 
             var dbUser = await _postgresDbManager.AddUserAsync(user);
             user.Id = dbUser!.Id;
@@ -263,6 +271,7 @@ namespace API.Tests.IntegrationTests
             var result = JsonConvert.DeserializeObject<DeleteUserCommandResult>(responseBody);
 
             var deletedCustomer = await _stripeManager.FindCustomerAsync(customer.Id);
+            var deleteFirebaseUser = async () => { await _firebaseManager.DeleteUserAsync(user.FirebaseUid); };
             var deletedUser = await _postgresDbManager.FindUserAsync(user.FirebaseUid);
 
             // assert
@@ -270,6 +279,7 @@ namespace API.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             deletedCustomer.Deleted.Should().BeTrue();
             deletedUser.Should().BeNull();
+            await deleteFirebaseUser.Should().ThrowAsync<FirebaseAuthException>();
         }
 
         [Fact]
@@ -450,6 +460,26 @@ namespace API.Tests.IntegrationTests
             result.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             promptResults.Count.Should().Be(0);
+        }
+
+        public async void Dispose()
+        {
+            // clear stripe and firebase after tests
+            var customers = await _stripeManager.ListCustomersAsync();
+            var users = await _firebaseManager.ListUsersAsync();
+
+            var testCustomers = customers.Where(c => Guid.TryParse(c.Email.Split('@')[0], out _));
+            var testUsers = users.Where(u => Guid.TryParse(u.Email.Split('@')[0], out _));
+
+            foreach (var customer in testCustomers)
+            {
+                await _stripeManager.DeleteCustomerAsync(customer.Id);
+            }
+
+            foreach (var user in testUsers)
+            {
+                await _firebaseManager.DeleteUserAsync(user.Uid);
+            }
         }
     }
 }
