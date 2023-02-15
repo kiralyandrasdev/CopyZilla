@@ -1,14 +1,23 @@
 import React, { useContext, useRef, useState } from 'react';
 import { FiKey, FiMail } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
 import EmailSvg from '../../../assets/email.svg';
 import { AsyncButton, TextField } from '../../../components';
-import { updateEmailWithReauth } from '../../../features/authentication/actions/authActions';
-import { AuthContext } from '../../../features/authentication/authContext';
-import { firebaseUpdateEmailErrorMessage } from '../../../features/authentication/utils/authUtils';
+import { useUpdateUserMutation, useGetUserQuery } from '../../../features/api/apiSlice';
+import { UserContext } from '../../../features';
 import './ChangeEmail.css';
 
 function ChangeEmailPage() {
+    const {user} = useContext(UserContext)
+    const [
+        updateUser,
+        {
+            isLoading: userDeleteLoading,
+            error: userDeleteError,
+            data: userDeleteUser,
+            isSuccess: userApiDeleteSuccess,
+        }
+    ] = useUpdateUserMutation();
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
@@ -18,8 +27,6 @@ function ChangeEmailPage() {
 
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState(false);
-
-    const { user } = useContext(AuthContext);
 
     const canSubmit = () => {
         if (password.length === 0) {
@@ -49,11 +56,11 @@ function ChangeEmailPage() {
         setMessage("");
 
         try {
-            await updateEmailWithReauth({ password, email });
+            updateUser({userId:user.id, user:{...user, email: email}})
             setMessage("Sikeresen megváltoztattad az e-mail címedet. Ne felejtsd el visszaigazolni az új címedet!");
         } catch (error) {
             console.log(error.code);
-            setError(firebaseUpdateEmailErrorMessage(error.code));
+            setError("");
             console.log(error);
         }
 
@@ -69,7 +76,7 @@ function ChangeEmailPage() {
             </div>
             <div className="changeEmail__form">
                 <TextField password={true} error={passwordError} suffixIcon={<FiKey />} value={password} onChange={(e) => setPassword(e.target.value)} hint="Jelszó"></TextField>
-                <TextField error={emailError} suffixIcon={<FiMail />} value={user.email} onChange={(e) => setEmail(e.target.value)} hint="Új e-mail cím"></TextField>
+                <TextField error={emailError} suffixIcon={<FiMail />} value={email} onChange={(e) => setEmail(e.target.value)} hint="Új e-mail cím"></TextField>
                 <div className="changeEmail__form__actions">
                     <AsyncButton loading={isLoading} title="Megerősítő levél küldése" onClick={() => handleSubmit()}></AsyncButton>
                 </div>
