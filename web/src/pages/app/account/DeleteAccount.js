@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext } from 'react';
 import { FiKey, FiMail } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 import { AsyncButton, TextField } from '../../../components';
 import EmailSvg from '../../../assets/email.svg';
 import './ChangeEmail.css';
@@ -8,6 +9,7 @@ import { UserContext } from '../../../features';
 import { logout } from '../../../features/authentication/actions/authActions';
 
 function DeleteAccountPage() {
+    const dispatch = useDispatch();
     const {user} = useContext(UserContext)
     const [deleteUser] = useDeleteUserMutation();
 
@@ -22,16 +24,12 @@ function DeleteAccountPage() {
     const [confirmationError, setConfirmationError] = useState(false);
 
     const canSubmit = () => {
+
         if (password.length === 0) {
             setPasswordError(true);
             setError("A jelszó megadása kötelező!");
             return false;
-        } /*else if(password !== "") {
-            setPasswordError(true);
-            setError("A jelszó nem megfelelő!")
-            return false;
-        }*/
-        else {
+        } else {
             setPasswordError(false);
             setError("");
         }
@@ -51,8 +49,10 @@ function DeleteAccountPage() {
     const handleSubmit = async () => {
         if (!canSubmit()) return;
    
+        setIsLoading(true);
         setError("");
         setMessage("");
+
         try {
             deleteUser({userId:user.id});
             await logout();
@@ -61,6 +61,8 @@ function DeleteAccountPage() {
             setError(error.code);
             console.log(error);
         }
+
+        setIsLoading(false);
     }
 
     return (
