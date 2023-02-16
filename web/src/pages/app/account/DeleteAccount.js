@@ -6,10 +6,9 @@ import EmailSvg from '../../../assets/email.svg';
 import './ChangeEmail.css';
 import { useDeleteUserMutation } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
-import { logout } from '../../../features/authentication/actions/authActions';
+import { logout, tryReauthenticationWithPassword } from '../../../features/authentication/actions/authActions';
 
 function DeleteAccountPage() {
-    const dispatch = useDispatch();
     const {user} = useContext(UserContext)
     const [deleteUser] = useDeleteUserMutation();
 
@@ -28,6 +27,15 @@ function DeleteAccountPage() {
         if (password.length === 0) {
             setPasswordError(true);
             setError("A jelszó megadása kötelező!");
+            return false;
+        } else {
+            setPasswordError(false);
+            setError("");
+        }
+        
+        if (!tryReauthenticationWithPassword({password})) {
+            setPasswordError(true);
+            setError("A jelszó nem megfelelő!");
             return false;
         } else {
             setPasswordError(false);

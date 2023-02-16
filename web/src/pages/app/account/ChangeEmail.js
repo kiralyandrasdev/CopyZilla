@@ -5,18 +5,11 @@ import { AsyncButton, TextField } from '../../../components';
 import { useUpdateUserMutation, useGetUserQuery } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
 import './ChangeEmail.css';
+import { tryReauthenticationWithPassword } from '../../../features/authentication/actions/authActions';
 
 function ChangeEmailPage() {
     const {user} = useContext(UserContext)
-    const [
-        updateUser,
-        {
-            isLoading: userDeleteLoading,
-            error: userDeleteError,
-            data: userDeleteUser,
-            isSuccess: userApiDeleteSuccess,
-        }
-    ] = useUpdateUserMutation();
+    const [updateUser,] = useUpdateUserMutation();
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -37,6 +30,16 @@ function ChangeEmailPage() {
             setPasswordError(false);
             setError("");
         }
+
+        if (!tryReauthenticationWithPassword({password})) {
+            setPasswordError(true);
+            setError("A jelszó nem megfelelő!");
+            return false;
+        } else {
+            setPasswordError(false);
+            setError("");
+        }
+
         if (email.length === 0) {
             setEmailError(true);
             setError("Az új e-mail cím megadása kötelező!");
@@ -45,6 +48,7 @@ function ChangeEmailPage() {
             setEmailError(false);
             setError("");
         }
+        
         return true;
     }
 

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { EmailAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, reauthenticateWithCredential } from "firebase/auth";
 
 export async function login({ email, password }) {
     const auth = getAuth();
@@ -15,4 +15,25 @@ export async function signup({ email, password }) {
 export async function logout() {
     const auth = getAuth();
     await auth.signOut();
+}
+
+export const reauthenticateWithPassword = async ({ password }) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, password);
+
+    return await reauthenticateWithCredential(user, credential);
+}
+
+export const tryReauthenticationWithPassword = async ({ password }) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, password);
+
+    try {
+        await reauthenticateWithCredential(user, credential);
+    } catch (error) {
+        return false;
+    }
+    return true;
 }
