@@ -1,4 +1,5 @@
 using AutoMapper;
+using CopyZillaBackend.Application.Contracts.Firebase;
 using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
@@ -10,12 +11,14 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
     {
         private readonly IUserRepository _repository;
         private readonly IStripeService _stripeService;
+        private readonly IFirebaseService _firebaseService;
         private readonly IMapper _mapper;
 
-        public UpdateUserCommandHandler(IUserRepository repository, IStripeService stripeService, IMapper mapper)
+        public UpdateUserCommandHandler(IUserRepository repository, IStripeService stripeService, IFirebaseService firebaseService, IMapper mapper)
         {
             _repository = repository;
             _stripeService = stripeService;
+            _firebaseService = firebaseService; 
             _mapper = mapper;
         }
 
@@ -43,7 +46,12 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
             if (!string.IsNullOrEmpty(request.Options.Email))
             {
                 var userFromDatabase = await _repository.GetByIdAsync(request.UserId);
+
+                // update user email in stripe
                 await _stripeService.UpdateCustomerAsync(userFromDatabase!.StripeCustomerId, request.Options);
+
+                // update user email in firebase
+                await _firebaseService.UpdateFirebaseUserAsync(userFromDatabase!.FirebaseUid, request.Options);
             }
 
             return result;
