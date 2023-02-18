@@ -34,9 +34,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
             if (!result.Success)
                 return result;
 
-            var user = _mapper.Map<Domain.Entities.User>(request.Options);
+            var userFromDatabase = await _repository.GetByIdAsync(request.UserId);
+            var user = _mapper.Map<Domain.Entities.User>(userFromDatabase);
 
-            user.Id = request.UserId;
             user.Email = request.Options.Email;
             user.FirstName = request.Options.FirstName ?? user.FirstName;
             user.LastName = request.Options.LastName ?? user.LastName;
@@ -45,8 +45,6 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
 
             if (!string.IsNullOrEmpty(request.Options.Email))
             {
-                var userFromDatabase = await _repository.GetByIdAsync(request.UserId);
-
                 // update user email in stripe
                 await _stripeService.UpdateCustomerAsync(userFromDatabase!.StripeCustomerId, request.Options);
 
