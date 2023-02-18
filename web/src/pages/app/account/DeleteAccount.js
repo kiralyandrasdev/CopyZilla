@@ -1,23 +1,16 @@
 import React, { useRef, useState, useContext } from 'react';
 import { FiKey, FiMail } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 import { AsyncButton, TextField } from '../../../components';
 import EmailSvg from '../../../assets/email.svg';
 import './ChangeEmail.css';
 import { useDeleteUserMutation } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
-import { logout } from '../../../features/authentication/actions/authActions';
+import { logout, tryReauthenticationWithPassword } from '../../../features/authentication/actions/authActions';
 
 function DeleteAccountPage() {
     const {user} = useContext(UserContext)
-    const [
-        deleteUser,
-        {
-            isLoading: userDeleteLoading,
-            error: userDeleteError,
-            data: userDeleteUser,
-            isSuccess: userApiDeleteSuccess,
-        }
-    ] = useDeleteUserMutation();
+    const [deleteUser] = useDeleteUserMutation();
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -30,16 +23,21 @@ function DeleteAccountPage() {
     const [confirmationError, setConfirmationError] = useState(false);
 
     const canSubmit = () => {
+
         if (password.length === 0) {
             setPasswordError(true);
             setError("A jelszó megadása kötelező!");
             return false;
-        } /*else if(password !== "") {
+        } else {
+            setPasswordError(false);
+            setError("");
+        }
+        
+        if (!tryReauthenticationWithPassword({password})) {
             setPasswordError(true);
-            setError("A jelszó nem megfelelő!")
+            setError("A jelszó nem megfelelő!");
             return false;
-        }*/
-        else {
+        } else {
             setPasswordError(false);
             setError("");
         }
@@ -58,10 +56,11 @@ function DeleteAccountPage() {
 
     const handleSubmit = async () => {
         if (!canSubmit()) return;
-
+   
         setIsLoading(true);
         setError("");
         setMessage("");
+
         try {
             deleteUser({userId:user.id});
             await logout();

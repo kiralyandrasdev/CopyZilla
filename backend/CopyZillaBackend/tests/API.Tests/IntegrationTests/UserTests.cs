@@ -192,7 +192,6 @@ namespace API.Tests.IntegrationTests
 
             var user = new User()
             {
-                FirebaseUid = userHint,
                 Email = userEmail,
                 FirstName = userHint,
                 LastName = userHint,
@@ -201,6 +200,9 @@ namespace API.Tests.IntegrationTests
                 SubscriptionValidUntil = DateTime.UtcNow,
                 PlanType = "default",
             };
+
+            var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);
+            user.FirebaseUid= firebaseUser.Uid;
 
             var dbUser = await _postgresDbManager.AddUserAsync(user);
             user.Id = dbUser!.Id;
@@ -221,22 +223,19 @@ namespace API.Tests.IntegrationTests
             result.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var updatedUser = await _postgresDbManager.FindUserAsync(userHint);
-
-            updatedUser.Should().NotBeNull();
-            updatedUser!.StripeCustomerId.Should().BeEquivalentTo(customer.Id);
-            result!.Success.Should().BeTrue();
-            user.FirebaseUid.Should().BeEquivalentTo(updatedUser!.FirebaseUid);
-            options.Email.Should().BeEquivalentTo(updatedUser!.Email);
-            options.FirstName.Should().BeEquivalentTo(updatedUser!.FirstName);
-            options.LastName.Should().BeEquivalentTo(updatedUser!.LastName);
-
+            var updatedUser = await _postgresDbManager.FindUserAsync(dbUser.FirebaseUid);
             var updatedCustomer = await _stripeManager.FindCustomerAsync(user.StripeCustomerId);
+            var updatedFirebaseUser = await _firebaseManager.GetUserAsync(user.FirebaseUid);
 
-            customer.Should().NotBeNull();
-            options.Email.Should().BeEquivalentTo(updatedCustomer!.Email);
-
-            await _stripeManager.DeleteCustomerAsync(customer.Id);
+            result!.Success.Should().BeTrue();
+            updatedUser.Should().NotBeNull();
+            updatedCustomer.Should().NotBeNull();
+            updatedFirebaseUser.Should().NotBeNull();
+            updatedUser!.StripeCustomerId.Should().BeEquivalentTo(customer.Id);
+            updatedUser!.FirebaseUid.Should().BeEquivalentTo(user.FirebaseUid);
+            updatedUser!.Email.Should().BeEquivalentTo(options.Email);
+            updatedCustomer!.Email.Should().BeEquivalentTo(options.Email);
+            updatedFirebaseUser!.Email.Should().BeEquivalentTo(options.Email);
         }
 
         [Fact]
@@ -462,23 +461,23 @@ namespace API.Tests.IntegrationTests
             promptResults.Count.Should().Be(0);
         }
 
-        public async void Dispose()
+        public void Dispose()
         {
             // clear stripe and firebase after tests
-            var customers = await _stripeManager.ListCustomersAsync();
-            var users = await _firebaseManager.ListUsersAsync();
+            var customers = _stripeManager.ListCustomersAsync().GetAwaiter().GetResult();
+            var users = _firebaseManager.ListUsersAsync().GetAwaiter().GetResult();
 
             var testCustomers = customers.Where(c => Guid.TryParse(c.Email.Split('@')[0], out _));
             var testUsers = users.Where(u => Guid.TryParse(u.Email.Split('@')[0], out _));
 
             foreach (var customer in testCustomers)
             {
-                await _stripeManager.DeleteCustomerAsync(customer.Id);
+                _stripeManager.DeleteCustomerAsync(customer.Id).GetAwaiter().GetResult();
             }
 
             foreach (var user in testUsers)
             {
-                await _firebaseManager.DeleteUserAsync(user.Uid);
+                _firebaseManager.DeleteUserAsync(user.Uid).GetAwaiter().GetResult();
             }
         }
     }

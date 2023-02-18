@@ -25,7 +25,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
         {
             var result = new DeleteUserCommandResult();
 
-            var validator = new DeleteUserCommandValidator(_userRepository, _stripeService, _firebaseService);
+            var validator = new DeleteUserCommandValidator(_userRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             validationResult.Resolve(result);
@@ -36,16 +36,21 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
             // get user from db
             var userFromDatabase = await _userRepository.GetByIdAsync(request.UserId);
 
-            if (userFromDatabase == null)
-                throw new Exception("User not found in the database.");
-
             // delete user from db
             await _userRepository.DeleteAsync(request.UserId);
 
             // delete user from stripe
+            var customer = await _stripeService.GetCustomerByIdAsync(userFromDatabase!.StripeCustomerId);
+            if (customer == null)
+                throw new Exception($"Customer with customerId: {userFromDatabase.StripeCustomerId} does not exist in Stripe");
+
             await _stripeService.DeleteCustomerAsync(userFromDatabase.StripeCustomerId);
 
             // delete user from firebase
+            var firebaseUser = await _firebaseService.GetFirebaseUserAsync(userFromDatabase!.FirebaseUid);
+            if (firebaseUser == null)
+                throw new Exception($"Firebase user with id: {userFromDatabase.FirebaseUid} does not exist in Firebase");
+
             await _firebaseService.DeleteFirebaseUserAsync(userFromDatabase.FirebaseUid);
 
             //delete user prompt results from mongodb

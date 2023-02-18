@@ -1,7 +1,5 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
-using FluentValidation;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery

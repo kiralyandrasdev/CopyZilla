@@ -44,6 +44,18 @@ export const apiSlice = createApi({
             },
             invalidatesTags: ['User'],
         }),
+        updateUser: builder.mutation({
+            query: ({userId, user }) => ({
+                url: `/user/${userId}`,
+                method: 'PATCH',
+                body: user
+            }),
+            transformErrorResponse: (response) => {
+                console.log(response);
+                return response.data;
+            },
+            invalidatesTags: ['User'],
+        }),
         deleteUser: builder.mutation({
             query: ({ userId }) => ({
                 url: `/user/${userId}`,
@@ -105,6 +117,7 @@ export const apiSlice = createApi({
 export const {
     useGetUserQuery,
     useCreateUserMutation,
+    useUpdateUserMutation,
     useDeleteUserMutation,
     useProcessQuickPromptMutation,
     useProcessAdvancedPromptMutation,

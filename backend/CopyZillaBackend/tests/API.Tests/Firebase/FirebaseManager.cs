@@ -20,7 +20,6 @@ namespace API.Tests.Firebase
             {
                 Email = user.Email,
                 EmailVerified = false,
-                PhoneNumber = "+11234567890",
                 Password = "secretPassword",
                 DisplayName = user.Id.ToString(),
                 Disabled = false,
