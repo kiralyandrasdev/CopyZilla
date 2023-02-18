@@ -5,7 +5,7 @@ import { AsyncButton, TextField } from '../../../components';
 import { useUpdateUserMutation, useGetUserQuery } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
 import './ChangeEmail.css';
-import { tryReauthenticationWithPassword } from '../../../features/authentication/actions/authActions';
+import { logout, tryReauthenticationWithPassword } from '../../../features/authentication/actions/authActions';
 
 function ChangeEmailPage() {
     const {user} = useContext(UserContext)
@@ -61,7 +61,8 @@ function ChangeEmailPage() {
 
         try {
             updateUser({userId:user.id, user:{...user, email: email}})
-            setMessage("Sikeresen megváltoztattad az e-mail címedet. Ne felejtsd el visszaigazolni az új címedet!");
+            setMessage("Sikeresen megváltoztattad az e-mail címedet. Rövid időn belül kijelentkeztetünk.");
+            await logout();
         } catch (error) {
             console.log(error.code);
             setError("");
@@ -76,13 +77,13 @@ function ChangeEmailPage() {
             <img className="illustration__100" src={EmailSvg}></img>
             <div className="changeEmail__heading">
                 <h5>E-mail cím megváltoztatása</h5>
-                <p className="description">A módosítást követően ellenőrző linket küldünk az új e-mail címedre</p>
+                <p className="description">A módosítást követően újra be kell majd jelentkezned.</p>
             </div>
             <div className="changeEmail__form">
                 <TextField password={true} error={passwordError} suffixIcon={<FiKey />} value={password} onChange={(e) => setPassword(e.target.value)} hint="Jelszó"></TextField>
                 <TextField error={emailError} suffixIcon={<FiMail />} value={email} onChange={(e) => setEmail(e.target.value)} hint="Új e-mail cím"></TextField>
                 <div className="changeEmail__form__actions">
-                    <AsyncButton loading={isLoading} title="Megerősítő levél küldése" onClick={() => handleSubmit()}></AsyncButton>
+                    <AsyncButton loading={isLoading} title="E-mail cím megváltoztatása" onClick={() => handleSubmit()}></AsyncButton>
                 </div>
             </div>
             {error && <p className="red">{error}</p>}
