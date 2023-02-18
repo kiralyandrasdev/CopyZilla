@@ -39,7 +39,7 @@ namespace API.Tests.Stripe
         public async Task<StripeList<Customer>> ListCustomersAsync()
         {
             var service = new CustomerService();
-            var customers = await service.ListAsync();
+            var customers = await service.ListAsync(new CustomerListOptions() { Limit = 100 });
 
             return customers;
         }
