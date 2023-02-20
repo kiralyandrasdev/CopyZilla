@@ -1,5 +1,6 @@
 ﻿using CopyZillaBackend.Application.Contracts.Prompt;
 using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
 
 namespace CopyZillaBackend.Infrastructure.Prompt
@@ -26,6 +27,35 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             }
 
             return $"Write a {options.Style} {options.Category} for the following subject: '{options.Subject}'. Answer in English.";
+        }
+
+        public string Build(ProcessEmailPromptOptions options)
+        {
+            string prompt = $"{GetObjective(options.Objective)} to the following email from {options.Recipient}: '{options.CurrentEmail}', signed by {options.Sender}.";
+
+            if (!string.IsNullOrEmpty(options.Mood))
+            {
+                prompt += $" Make sure the mood of the email is {options.Mood}.";
+            }
+
+            if (!string.IsNullOrEmpty(options.Length))
+            {
+                prompt += $" Make sure the email is {options.Length}.";
+            }
+
+            if (!string.IsNullOrEmpty(options.Instructions))
+            {
+                prompt += $" Make sure the email contains the following: {options.Instructions}";
+            }
+
+            if (!string.IsNullOrEmpty(options.PreviousEmail))
+            {
+                prompt += $" This is the previous email for reference: {options.PreviousEmail}";
+            }
+
+            prompt += " Answer in the same language the email was written in.";
+
+            return prompt;
         }
 
         private string GetCopyStyle(string style)
@@ -118,6 +148,16 @@ namespace CopyZillaBackend.Infrastructure.Prompt
                 val = "bemutatkozást";
             }
             return begin + val;
+        }
+
+        private string GetObjective(string objective)
+        {
+            if (objective == "neutral")
+            {
+                return "Answer neutral";
+            }
+
+            return "Write an email by saying " + objective;
         }
     }
 }

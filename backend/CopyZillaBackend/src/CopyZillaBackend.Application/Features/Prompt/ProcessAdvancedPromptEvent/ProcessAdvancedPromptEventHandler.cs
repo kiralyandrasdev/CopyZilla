@@ -10,14 +10,12 @@ namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
     public class ProcessAdvancedPromptEventHandler : IRequestHandler<ProcessAdvancedPromptEvent, ProcessAdvancedPromptEventResult>
     {
         private readonly IUserRepository _repository;
-        private readonly IConfiguration _configuration;
         private readonly IOpenAIService _openAIService;
         private readonly IPromptBuilder _promptBuilder;
 
-        public ProcessAdvancedPromptEventHandler(IUserRepository repository, IConfiguration configuration, IOpenAIService openAIService, IPromptBuilder promptBuilder)
+        public ProcessAdvancedPromptEventHandler(IUserRepository repository, IOpenAIService openAIService, IPromptBuilder promptBuilder)
         {
             _repository = repository;
-            _configuration = configuration;
             _openAIService = openAIService;
             _promptBuilder = promptBuilder;
         }
