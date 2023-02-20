@@ -25,7 +25,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
 
             // Validate if create text options are valid
             var validator = new ProcessEmailPromptEventValidator(_repository);
-            var validationResult = validator.Validate(request);
+            var validationResult = await validator.ValidateAsync(request);
 
             validationResult.ResolveEventResult(result);
 

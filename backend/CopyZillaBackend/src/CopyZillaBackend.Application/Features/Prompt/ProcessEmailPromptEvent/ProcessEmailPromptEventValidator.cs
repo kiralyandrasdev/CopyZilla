@@ -21,7 +21,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
                .WithErrorCode("400");
             RuleFor(e => e)
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
-             .WithMessage("Mood must not be null!")
+             .WithMessage("Tone must not be null!")
              .WithErrorCode("400");
             RuleFor(e => e)
               .MustAsync(HasEnoughCreditsAsync)
