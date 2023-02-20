@@ -1,9 +1,10 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
 using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent;
-using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent.DTO;
 using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent;
-using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
+using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
@@ -105,20 +106,29 @@ namespace CopyZillaBackend.API.Controllers
 
         [HttpPost]
         [Route("{firebaseUid}/quickPrompt")]
-        public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync(string firebaseUid, [FromBody] QuickPromptOptions options)
+        public async Task<ActionResult<ProcessQuickPromptEventResult>> SendQuickPromptAsync(string firebaseUid, [FromBody] ProcessQuickPromptOptions options)
         {
-            _log.LogInformation($"[PromptController::SendQuickPromptAsync::{DateTime.Now.ToString()}] Invoked");
+            _log.LogInformation($"[{nameof(UserController)}::{nameof(SendQuickPromptAsync)}::{DateTime.Now}] Invoked");
 
             return await _mediator.Send(new ProcessQuickPromptEvent(firebaseUid, options));
         }
 
         [HttpPost]
         [Route("{firebaseUid}/advancedPrompt")]
-        public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync(string firebaseUid, [FromBody] AdvancedPromptOptions options)
+        public async Task<ActionResult<ProcessAdvancedPromptEventResult>> SendAdvancedPromptAsync(string firebaseUid, [FromBody] ProcessAdvancedPromptOptions options)
         {
-            _log.LogInformation($"[PromptController::SendAdvancedPromptAsync::{DateTime.Now.ToString()}] Invoked");
+            _log.LogInformation($"{nameof(UserController)}::{nameof(SendAdvancedPromptAsync)}::{DateTime.Now}] Invoked");
 
             return await _mediator.Send(new ProcessAdvancedPromptEvent(firebaseUid, options));
+        }
+
+        [HttpPost]
+        [Route("{firebaseUid}/emailPrompt")]
+        public async Task<ActionResult<ProcessEmailPromptEventResult>> SendEmailPrompt(string firebaseUid, [FromBody] ProcessEmailPromptOptions options)
+        {
+            _log.LogInformation($"{nameof(UserController)}::{nameof(SendEmailPrompt)}::{DateTime.Now}] Invoked");
+
+            return await _mediator.Send(new ProcessEmailPromptEvent(firebaseUid, options));
         }
     }
 }

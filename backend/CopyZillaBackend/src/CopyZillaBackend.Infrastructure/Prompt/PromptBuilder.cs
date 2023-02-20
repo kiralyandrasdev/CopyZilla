@@ -1,12 +1,12 @@
 ﻿using CopyZillaBackend.Application.Contracts.Prompt;
-using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent.DTO;
-using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
+using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
 
 namespace CopyZillaBackend.Infrastructure.Prompt
 {
     public class PromptBuilder : IPromptBuilder
     {
-        public string Build(AdvancedPromptOptions options)
+        public string Build(ProcessAdvancedPromptOptions options)
         {
             string languageCommand = string.Empty;
 
@@ -18,7 +18,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             return options.Prompt + languageCommand;
         }
 
-        public string Build(QuickPromptOptions options)
+        public string Build(ProcessQuickPromptOptions options)
         {
             if (options.Language == "hu")
             {

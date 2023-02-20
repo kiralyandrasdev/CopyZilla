@@ -1,6 +1,6 @@
-﻿namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO
+﻿namespace CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent
 {
-    public class QuickPromptOptions
+    public class ProcessQuickPromptOptions
     {
         public string Subject { get; set; }
         public string Category { get; set; }

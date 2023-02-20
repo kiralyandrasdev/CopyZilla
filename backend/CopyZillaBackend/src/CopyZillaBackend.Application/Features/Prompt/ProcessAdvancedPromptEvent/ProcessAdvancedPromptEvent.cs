@@ -1,4 +1,4 @@
-﻿using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent.DTO;
+﻿using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
@@ -6,9 +6,9 @@ namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
     public class ProcessAdvancedPromptEvent : IRequest<ProcessAdvancedPromptEventResult>
     {
         public string FirebaseUid { get; }
-        public AdvancedPromptOptions Options { get; }
+        public ProcessAdvancedPromptOptions Options { get; }
 
-        public ProcessAdvancedPromptEvent(string firebaseUid, AdvancedPromptOptions dto)
+        public ProcessAdvancedPromptEvent(string firebaseUid, ProcessAdvancedPromptOptions dto)
         {
             FirebaseUid = firebaseUid;
             Options = dto;
