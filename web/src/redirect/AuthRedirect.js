@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import { getAuth } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -6,6 +8,7 @@ import { LoadingIndicator } from '../components';
 import { AuthContext } from '../features/authentication/authContext';
 import { setAccessToken } from '../features/authentication/authSlice';
 import styles from './AuthRedirect.module.css';
+import { emailAiExtensionId } from '../config/envConfig';
 
 function AuthRedirect() {
     const navigate = useNavigate();
@@ -22,12 +25,15 @@ function AuthRedirect() {
             updateUser(firebaseUser);
 
             if (firebaseUser) {
-
                 if (firebaseUser.accessToken) {
                     dispatch(setAccessToken(firebaseUser.accessToken));
                 }
 
                 if (firebaseUser.emailVerified) {
+                    // chrome.runtime.sendMessage(emailAiExtensionId, firebaseUser.accessToken);
+
+                    localStorage.setItem('copyzilla_token', firebaseUser.accessToken);
+
                     if (!path.includes("/user")) {
                         navigate('/user/editor');
                     }
