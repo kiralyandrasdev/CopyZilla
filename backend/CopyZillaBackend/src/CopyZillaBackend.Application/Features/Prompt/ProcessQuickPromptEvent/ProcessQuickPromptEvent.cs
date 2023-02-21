@@ -1,4 +1,4 @@
-﻿using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
+﻿using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent
@@ -6,9 +6,9 @@ namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent
     public class ProcessQuickPromptEvent : IRequest<ProcessQuickPromptEventResult>
     {
         public string FirebaseUid { get; }
-        public QuickPromptOptions Options { get; }
+        public ProcessQuickPromptOptions Options { get; }
 
-        public ProcessQuickPromptEvent(string firebaseUid, QuickPromptOptions dto)
+        public ProcessQuickPromptEvent(string firebaseUid, ProcessQuickPromptOptions dto)
         {
             FirebaseUid = firebaseUid;
             Options = dto;

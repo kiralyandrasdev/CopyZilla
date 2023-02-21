@@ -27,9 +27,6 @@
   <ItemGroup>
     <Folder Include="Features\User\Queries\" />
     <Folder Include="Features\User\Commands\CreateUserCommand\" />
-    <Folder Include="Features\Prompt\" />
-    <Folder Include="Features\Prompt\ProcessAdvancedPromptEvent\" />
-    <Folder Include="Features\Prompt\ProcessQuickPromptEvent\" />
     <Folder Include="Features\User\Queries\GetUserQuery\" />
     <Folder Include="Contracts\Payment\" />
     <Folder Include="Features\Payment\" />

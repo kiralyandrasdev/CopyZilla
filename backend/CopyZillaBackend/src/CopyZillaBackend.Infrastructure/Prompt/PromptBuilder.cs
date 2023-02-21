@@ -1,12 +1,13 @@
 ﻿using CopyZillaBackend.Application.Contracts.Prompt;
-using CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent.DTO;
-using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent.DTO;
+using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
 
 namespace CopyZillaBackend.Infrastructure.Prompt
 {
     public class PromptBuilder : IPromptBuilder
     {
-        public string Build(AdvancedPromptOptions options)
+        public string Build(ProcessAdvancedPromptOptions options)
         {
             string languageCommand = string.Empty;
 
@@ -18,7 +19,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             return options.Prompt + languageCommand;
         }
 
-        public string Build(QuickPromptOptions options)
+        public string Build(ProcessQuickPromptOptions options)
         {
             if (options.Language == "hu")
             {
@@ -26,6 +27,25 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             }
 
             return $"Write a {options.Style} {options.Category} for the following subject: '{options.Subject}'. Answer in English.";
+        }
+
+        public string Build(ProcessEmailPromptOptions options)
+        {
+            string prompt = $"Write a long email by saying {options.Objective} to the following email: '{options.Email}'.";
+
+            if (!string.IsNullOrEmpty(options.Tone))
+            {
+                prompt += $" Make sure the tone of the email is {options.Tone}.";
+            }
+
+            if (!string.IsNullOrEmpty(options.Instructions))
+            {
+                prompt += $" Make sure the email contains the following: {options.Instructions}";
+            }
+
+            prompt += " Answer in the same language the email was written in.";
+
+            return prompt;
         }
 
         private string GetCopyStyle(string style)

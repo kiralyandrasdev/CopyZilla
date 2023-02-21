@@ -3,30 +3,29 @@ using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 
-namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
+namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
 {
-    public class ProcessAdvancedPromptEventHandler : IRequestHandler<ProcessAdvancedPromptEvent, ProcessAdvancedPromptEventResult>
+    public class ProcessEmailPromptEventHandler : IRequestHandler<ProcessEmailPromptEvent, ProcessEmailPromptEventResult>
     {
         private readonly IUserRepository _repository;
         private readonly IOpenAIService _openAIService;
         private readonly IPromptBuilder _promptBuilder;
 
-        public ProcessAdvancedPromptEventHandler(IUserRepository repository, IOpenAIService openAIService, IPromptBuilder promptBuilder)
+        public ProcessEmailPromptEventHandler(IUserRepository repository, IOpenAIService openAIService, IPromptBuilder promptBuilder)
         {
             _repository = repository;
             _openAIService = openAIService;
             _promptBuilder = promptBuilder;
         }
 
-        public async Task<ProcessAdvancedPromptEventResult> Handle(ProcessAdvancedPromptEvent request, CancellationToken cancellationToken)
+        public async Task<ProcessEmailPromptEventResult> Handle(ProcessEmailPromptEvent request, CancellationToken cancellationToken)
         {
-            var result = new ProcessAdvancedPromptEventResult();
+            var result = new ProcessEmailPromptEventResult();
 
             // Validate if create text options are valid
-            var validator = new ProcessAdvancedPromptEventValidator();
-            var validationResult = validator.Validate(request);
+            var validator = new ProcessEmailPromptEventValidator(_repository);
+            var validationResult = await validator.ValidateAsync(request);
 
             validationResult.ResolveEventResult(result);
 
