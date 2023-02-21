@@ -12,6 +12,12 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             _repository = repository;
 
             RuleFor(e => e)
+             .MustAsync(HasEnoughCreditsAsync)
+             .WithMessage("Sajnos kifogytál a felhasználható kreditekből." +
+                    " Ha továbbra is használni szeretnéd ezt a funkciót," +
+                    " vásárolj krediteket a CopyZilla fiókodon keresztül.")
+             .WithErrorCode("400");
+            RuleFor(e => e)
               .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Objective))
               .WithMessage("Objective must not be null!")
               .WithErrorCode("400");
@@ -23,10 +29,6 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
              .WithMessage("Tone must not be null!")
              .WithErrorCode("400");
-            RuleFor(e => e)
-              .MustAsync(HasEnoughCreditsAsync)
-              .WithMessage("The user does not have enough credits.")
-              .WithErrorCode("400");
         }
 
         private async Task<bool> HasEnoughCreditsAsync(ProcessEmailPromptEvent e, CancellationToken _)
