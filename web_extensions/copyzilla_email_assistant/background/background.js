@@ -74,7 +74,11 @@ async function fetchUser({
     uid,
     token,
 }) {
-    const url = `https://localhost:7107/api/user/${uid}`;
+    const baseUrl = await getApiUrl();
+    const url = `${baseUrl}/user/${uid}`;
+
+    console.log("Sending request to: " + url);
+
     const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -82,6 +86,10 @@ async function fetchUser({
             Authorization: `Bearer ${token}`,
         },
     });
+    if (!response.ok) {
+        console.log(response);
+        throw new Error("Hiba történt a felhasználó lekérdezése közben.");
+    }
     const user = response.json();
     return user;
 }
@@ -91,7 +99,8 @@ async function writeReply(
     token,
     options
 ) {
-    const url = `https://localhost:7107/api/user/${uid}/emailPrompt`;
+    const baseUrl = await getApiUrl();
+    const url = `${baseUrl}/user/${uid}/emailPrompt`;
     const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -102,4 +111,16 @@ async function writeReply(
     });
     const data = await response.json();
     return data;
+}
+
+async function getApiUrl() {
+    return new Promise((resolve) => {
+        chrome.management.getSelf((info) => {
+            if (info.installType === "development") {
+                resolve("https://localhost:7107/api");
+            }
+
+            resolve("https://api.copyzilla.hu/api");
+        });
+    });
 }
