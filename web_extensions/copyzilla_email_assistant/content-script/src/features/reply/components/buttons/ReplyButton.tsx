@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import '../ReplyOption.css';
-import { AuthContext } from '../../../../../../src/context/authContext';
 
 export interface WriteButtonProp {
     isWriting: boolean;
@@ -8,13 +7,11 @@ export interface WriteButtonProp {
 }
 
 function ReplyButton(props: WriteButtonProp): JSX.Element {
-    const { user } = useContext(AuthContext);
-
-    let title = "Write ✍";
+    let title = "Megfogalmaz ✍";
     let textStyle = {};
 
     if (props.isWriting) {
-        title = "Writing... ✍";
+        title = "Íróink dolgoznak... ✍";
         textStyle = { "color": "var(--grey2)" }
     }
 
@@ -27,8 +24,8 @@ function ReplyButton(props: WriteButtonProp): JSX.Element {
     }
 
     return (
-        <div className="reply__option reply__button" onClick={() => handleClick()}>
-            <div className="reply__option__title" style={textStyle}>{title}</div>
+        <div className="reply__tone reply__button" onClick={() => handleClick()}>
+            <div className="reply__tone__title" style={textStyle}>{title}</div>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import '../ReplyOption.css';
 
 export interface ReplyTypeItem {
     title: string;
+    value: string;
 }
 
 export interface ReplyTypeProp {
@@ -19,8 +20,8 @@ function ReplyType(props: ReplyTypeProp): JSX.Element {
     }
 
     return (
-        <div className="reply__option" style={style} onClick={() => props.onSelect(props.item)}>
-            <div className="reply__option__title" >{props.item.title}</div>
+        <div className="reply__tone" style={style} onClick={() => props.onSelect(props.item)}>
+            <div className="reply__tone__title" >{props.item.title}</div>
         </div>
     );
 }

@@ -1,10 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import './main.css'
 import App from './App'
-import AuthContextProvider from '../../src/context/authContext';
-import AuthWrapper from '../../src/AuthWrapper';
 import { initializeApp } from '@firebase/app';
 import { firebaseConfig } from '../../src/config/firebaseConfig';
+import OptionsContextProvider from './context/optionsContext';
 
 initializeApp(firebaseConfig);
 
@@ -62,7 +61,9 @@ function appendEditor() {
   const root = createRoot(app!);
 
   root.render(
-    <App />
+    <OptionsContextProvider>
+      <App />
+    </OptionsContextProvider>
   )
 }
 

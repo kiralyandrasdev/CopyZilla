@@ -26,7 +26,7 @@ onAuthStateChanged(auth, (user) => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type == "to_background_WRITE_REPLY") {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.storage.sync.get(["uid", "token"], (result) => {
+            chrome.storage.sync.get(["uid", "token"], async (result) => {
                 if (!result.uid || !result.token) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_REPLY", data: {
@@ -36,28 +36,37 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                         sendResponse(response);
                     });
 
-                    return;
+                    return true;
                 }
 
-                writeReply(result.uid, result.token, request.data).then((response) => {
+                try {
+                    const replyRes = await writeReply(result.uid, result.token, request.data.options);
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_REPLY", data: {
-                            reply: response.value,
+                            reply: replyRes.value,
                         }
-                    }, (response) => {
-                        sendResponse(response);
+                    }, (errMessageRes) => {
+                        console.log("Returning from writeReply error");
+                        sendResponse(errMessageRes);
                     });
-                }).catch((error) => {
+                } catch (error) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_REPLY", data: {
                             reply: error.errorMessage ?? "Unknown error",
                         }
-                    }, (response) => {
-                        sendResponse(response);
+                    }, (errMessageRes) => {
+                        console.log("Returning from writeReply error");
+                        sendResponse(errMessageRes);
                     });
-                });
+                }
+
+                return true;
             });
+
+            return true;
         });
+
+        return true;
     }
 
     if (request.type == "GET_USER") {
@@ -92,7 +101,18 @@ async function writeReply(
     token,
     options
 ) {
-    return new Promise((resolve, reject) => {
-        resolve({ value: "Example value" });
+    const url = `https://localhost:7107/api/user/${uid}/emailPrompt`;
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(options),
     });
+    if(!response.ok) {
+        throw new Error("Error while writing reply");
+    }
+    const data = await response.json();
+    return data;
 }

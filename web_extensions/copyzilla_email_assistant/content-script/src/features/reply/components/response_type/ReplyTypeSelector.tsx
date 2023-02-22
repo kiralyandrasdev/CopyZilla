@@ -1,36 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ReplyType, { ReplyTypeItem } from './ReplyType';
 import '../ReplyOptionList.css';
+import { AvailableTypes } from '../../config/replyConfig';
+import { OptionsContext } from '../../../../context/optionsContext';
 
 function ReplyTypeSelector() {
-    const types: ReplyTypeItem[] = [
-        {
-            title: 'Say yes 👍',
-        },
-        {
-            title: 'Say no 👎',
-        },
-        {
-            title: 'Acknowledge 👌',
-        },
-/*         {
-            title: 'Ask a question ❓',
-        }, */
-        {
-            title: 'Say thanks 🙏',
-        },
-    ];
-
-    const [currentType, setCurrentType] = useState(types[0]);
+    const { options, setObjective } = useContext(OptionsContext);
 
     const typeComponents: React.FC = () => {
         return (
-            <div className="reply__option__list">
-                {types.map(type => (
+            <div className="reply__tone__list">
+                {AvailableTypes.map(type => (
                     <ReplyType
-                        item={{ title: type.title} }
-                        isSelected={type.title === currentType.title}
-                        onSelect={(item: ReplyTypeItem) => setCurrentType(item)}
+                        item={{ title: type.title, value: type.value }}
+                        isSelected={type.title === options.objective.title}
+                        onSelect={(item: ReplyTypeItem) => setObjective(item)}
                     />
                 ))}
             </div>
