@@ -1,6 +1,5 @@
 export default function getEmailText() {
     const messageBodyElement = document.querySelectorAll('.a3s.aiL');
-    console.log(messageBodyElement);
     let text = "";
     if (!messageBodyElement || messageBodyElement.length === 0) {
         text = getMsoNormalEmailText();

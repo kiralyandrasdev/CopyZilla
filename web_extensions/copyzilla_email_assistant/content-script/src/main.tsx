@@ -1,15 +1,15 @@
 import { createRoot } from 'react-dom/client';
 import './main.css'
 import App from './App'
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from './config/firebaseConfig';
-import AuthWrapper from './AuthWrapper';
-import AuthContextProvider from './context/authContext';
+import AuthContextProvider from '../../src/context/authContext';
+import AuthWrapper from '../../src/AuthWrapper';
+import { initializeApp } from '@firebase/app';
+import { firebaseConfig } from '../../src/config/firebaseConfig';
 
 initializeApp(firebaseConfig);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'WRITE_REPLY') {
+  if (request.type === 'to_content_WRITE_REPLY') {
     const messageBodyElement = document.querySelector('.Am.Al.editable.LW-avf.tS-tW');
     const replyLines = request.data.reply.split('\n');
 
@@ -31,10 +31,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         setTimeout(() => {
           lineElementReQuery.textContent += char;
           if (index === chars.length - 1 && lineIndex === replyLines.length - 1) {
-            console.log("Sending response from content script.");
-            sendResponse({ type: 'WRITE_REPLY_SUCCESS' });
+            sendResponse({ type: 'to_background_WRITE_REPLY_SUCCESS' });
           }
-        }, 50 * index /*  + 50 * line.length * lineIndex */);
+        }, 50 * index);
       });
     });
   }
@@ -63,13 +62,7 @@ function appendEditor() {
   const root = createRoot(app!);
 
   root.render(
-    <AuthContextProvider
-      children={
-        <AuthWrapper>
-          <App />
-        </AuthWrapper>
-      }
-    />
+    <App />
   )
 }
 
@@ -81,7 +74,6 @@ const target = document.body;
 const config = { childList: true, subtree: true };
 
 const observer = new MutationObserver((mutations) => {
-  console.log('mutation', mutations);
   observer.disconnect();
 
   setTimeout(() => {
