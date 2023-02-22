@@ -5,6 +5,7 @@ import { getAuth } from '@firebase/auth';
 import { getUser } from '../features/api/apiActions';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { ApplicationUser } from '../features/models/model_application_user';
+import { getWebsiteUrl } from '../config/envConfig';
 
 function SignedInView() {
     const { user } = useContext(AuthContext);
@@ -43,6 +44,11 @@ function SignedInView() {
         auth.signOut();
     }
 
+    const handleProfileClick = async () => {
+        const websiteUrl = await getWebsiteUrl();
+        window.open(`${websiteUrl}/user/account`, "_blank");
+    }
+
     const content = () => {
         if (loading) {
             return <LoadingIndicator />
@@ -57,7 +63,7 @@ function SignedInView() {
                 <p className="green">{applicationUser?.creditCount ?? "Unknown"} kredit</p>
                 <p>{user?.email}</p>
                 <p className="description">{applicationUser?.subscriptionPlanName}</p>
-                <p className="textButton" onClick={() => window.open("http://localhost:3000/user/account", "_blank")}>Fiók</p>
+                <p className="textButton" onClick={handleProfileClick}>Fiók</p>
             </>
         );
     }
