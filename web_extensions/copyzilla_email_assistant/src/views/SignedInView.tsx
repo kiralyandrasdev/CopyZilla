@@ -57,6 +57,7 @@ function SignedInView() {
                 <p className="green">{applicationUser?.creditCount ?? "Unknown"} kredit</p>
                 <p>{user?.email}</p>
                 <p className="description">{applicationUser?.subscriptionPlanName}</p>
+                <p className="textButton" onClick={() => window.open("http://localhost:3000/user/account", "_blank")}>Fiók</p>
             </>
         );
     }

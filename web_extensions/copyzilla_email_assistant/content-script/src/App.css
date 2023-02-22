@@ -37,6 +37,14 @@
   align-items: center;
 }
 
+.instructionsPopup__parent {
+  position: relative;
+}
+
+.textButton {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1300px) {
   .options {
     flex-direction: column;

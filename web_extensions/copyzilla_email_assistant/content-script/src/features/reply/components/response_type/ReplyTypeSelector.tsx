@@ -9,7 +9,7 @@ function ReplyTypeSelector() {
 
     const typeComponents: React.FC = () => {
         return (
-            <div className="reply__tone__list">
+            <div className="reply__option__list">
                 {AvailableTypes.map(type => (
                     <ReplyType
                         item={{ title: type.title, value: type.value }}

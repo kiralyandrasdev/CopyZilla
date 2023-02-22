@@ -24,8 +24,8 @@ function ReplyButton(props: WriteButtonProp): JSX.Element {
     }
 
     return (
-        <div className="reply__tone reply__button" onClick={() => handleClick()}>
-            <div className="reply__tone__title" style={textStyle}>{title}</div>
+        <div className="reply__option__container reply__button" onClick={() => handleClick()}>
+            <div className="reply__option__container__title" style={textStyle}>{title}</div>
         </div>
     );
 }

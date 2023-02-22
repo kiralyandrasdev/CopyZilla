@@ -1,0 +1,46 @@
+.instructionsPopup {
+    position: absolute;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--grey1);
+    background-color: white;
+    z-index: 100;
+    bottom: 30px;
+    left: -50%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.instructionsPopup__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 10px;
+    width: 100%;
+}
+
+.instructionsPopup textarea {
+    width: 200px;
+    height: 100px;
+    border: 1px solid var(--grey1);
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+    font-size: 12px;
+    outline: none;
+}
+
+.instructionsPopup textarea::placeholder {
+    color: var(--grey2);
+}
+
+.instructionsPopup__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    column-gap: 10px;
+}

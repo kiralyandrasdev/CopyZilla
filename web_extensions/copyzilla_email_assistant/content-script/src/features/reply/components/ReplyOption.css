@@ -1,4 +1,4 @@
-.reply__tone {
+.reply__option__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
     cursor: pointer;
 }
 
-.reply__tone__title {
+.reply__option__container__title {
     font-size: 12px;
     text-align: center;
     color: #000;

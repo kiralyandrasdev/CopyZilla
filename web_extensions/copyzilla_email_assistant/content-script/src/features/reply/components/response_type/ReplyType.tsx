@@ -20,8 +20,8 @@ function ReplyType(props: ReplyTypeProp): JSX.Element {
     }
 
     return (
-        <div className="reply__tone" style={style} onClick={() => props.onSelect(props.item)}>
-            <div className="reply__tone__title" >{props.item.title}</div>
+        <div className="reply__option__container" style={style} onClick={() => props.onSelect(props.item)}>
+            <div className="reply__option__container__title" >{props.item.title}</div>
         </div>
     );
 }
