@@ -1,6 +1,5 @@
-import React, { useRef, useState, useContext } from 'react';
-import { FiKey, FiMail } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useContext } from 'react';
+import { FiKey } from 'react-icons/fi';
 import { AsyncButton, TextField } from '../../../components';
 import EmailSvg from '../../../assets/email.svg';
 import './ChangeEmail.css';

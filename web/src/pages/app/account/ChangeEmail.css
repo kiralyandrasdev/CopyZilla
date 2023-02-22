@@ -1,3 +1,7 @@
 .changeEmail__form__actions {
     margin-top: 30px;
 }
+
+.changeEmail__form {
+    width: 250px;
+}

@@ -17,6 +17,7 @@ function AuthRedirect() {
         const auth = getAuth();
 
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+            console.log("Auth state changed: ", firebaseUser);
             const path = window.location.pathname;
 
             updateUser(firebaseUser);
