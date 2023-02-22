@@ -1,25 +1,36 @@
-/// <reference types="chrome" />
-/// <reference types="vite-plugin-svgr/client" />
-
-import logo from './logo.svg'
+import { useContext } from 'react'
 import './App.css'
+import { AuthContext } from './context/authContext'
+import SignedInView from './views/SignedInView'
+import SignedOutView from './views/SignedOutView'
+import LoadingIndicator from './components/LoadingIndicator'
+import { initializeApp } from '@firebase/app'
+import { firebaseConfig } from './config/firebaseConfig'
 
-function getLogo() {
-  if (window.chrome) {
-    return window.chrome.runtime.getURL(logo.toString())
-  }
-
-  return logo
-}
+initializeApp(firebaseConfig);
 
 function App() {
+  const { user } = useContext(AuthContext)
+
+  const view = () => {
+    if (user) {
+      return <SignedInView />
+    }
+
+    return <SignedOutView />
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={`${getLogo()}`} className="App-logo" alt="logo" />
-        <p>Hello, World!</p>
-        <p>I'm a Chrome Extension Popup!</p>
-      </header>
+    <div className="popup">
+      <div className="popup__header">
+        <h2>CopyZilla</h2>
+        <h3 className="green">Email Assistant</h3>
+      </div>
+      {view()}
+      <div className="popup__footer">
+        <p className="description textButton" onClick={() => window.open("https://copyzilla.hu/contact", "_blank")}>Segítségre van szükséged?</p>
+        <p className="description">© 2023 CopyZilla</p>
+      </div>
     </div>
   )
 }

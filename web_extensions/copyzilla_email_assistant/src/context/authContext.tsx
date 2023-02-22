@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState } from 'react'
+import React, { ReactNode, createContext, useEffect, useState } from 'react'
 
 export interface FirebaseUser {
     uid: string;
@@ -13,7 +13,7 @@ interface AuthContextValue {
 
 interface AuthContextProviderProps {
     children: ReactNode;
-  }
+}
 
 export const AuthContext = createContext<AuthContextValue>({
     user: null,
@@ -22,6 +22,18 @@ export const AuthContext = createContext<AuthContextValue>({
 
 const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }: AuthContextProviderProps) => {
     const [user, setUser] = useState<FirebaseUser | null>(null);
+
+    useEffect(() => {
+        chrome.storage.sync.get(['uid', 'token', 'email'], (res) => {
+            if (res.uid && res.token && res.email) {
+                setUser({
+                    uid: res.uid,
+                    token: res.token,
+                    email: res.email,
+                });
+            }
+        });
+    }, []);
 
     const contextValue: AuthContextValue = {
         user,
