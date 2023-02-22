@@ -20,8 +20,8 @@ function ReplyTone(props: ReplyToneProp): JSX.Element {
     }
 
     return (
-        <div className="reply__tone" onClick={() => props.onSelect(props.item)} style={style}>
-            <div className="reply__tone__title">{props.item.title}</div>
+        <div className="reply__option__container" onClick={() => props.onSelect(props.item)} style={style}>
+            <div className="reply__option__container__title">{props.item.title}</div>
         </div>
     );
 }

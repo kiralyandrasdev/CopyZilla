@@ -17,6 +17,19 @@
   padding: 0;
 }
 
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.description {
+  color: var(--grey2);
+  font-size: 12px;
+}
+
 p,a {
   font-size: 12px;
 }

@@ -9,7 +9,7 @@ function ReplyMoodSelector() {
 
     const moodComponents: React.FC = () => {
         return (
-            <div className="reply__tone__list">
+            <div className="reply__option__list">
                 {AvailableTones.map(item => (
                     <ReplyTone
                         item={{ title: item.title, value: item.value }}

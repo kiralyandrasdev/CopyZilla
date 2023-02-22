@@ -39,26 +39,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     return true;
                 }
 
-                try {
-                    const replyRes = await writeReply(result.uid, result.token, request.data.options);
-                    chrome.tabs.sendMessage(tabs[0].id, {
-                        type: "to_content_WRITE_REPLY", data: {
-                            reply: replyRes.value,
-                        }
-                    }, (errMessageRes) => {
-                        console.log("Returning from writeReply error");
-                        sendResponse(errMessageRes);
-                    });
-                } catch (error) {
-                    chrome.tabs.sendMessage(tabs[0].id, {
-                        type: "to_content_WRITE_REPLY", data: {
-                            reply: error.errorMessage ?? "Unknown error",
-                        }
-                    }, (errMessageRes) => {
-                        console.log("Returning from writeReply error");
-                        sendResponse(errMessageRes);
-                    });
-                }
+                const replyRes = await writeReply(result.uid, result.token, request.data.options);
+
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    type: "to_content_WRITE_REPLY", data: {
+                        reply: replyRes.errorMessage ?? replyRes.value,
+                    }
+                }, (errMessageRes) => {
+                    sendResponse(errMessageRes);
+                });
+
 
                 return true;
             });
@@ -110,9 +100,6 @@ async function writeReply(
         },
         body: JSON.stringify(options),
     });
-    if(!response.ok) {
-        throw new Error("Error while writing reply");
-    }
     const data = await response.json();
     return data;
 }
