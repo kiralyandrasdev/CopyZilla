@@ -1,4 +1,4 @@
-import { EmailAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, reauthenticateWithCredential } from "firebase/auth";
+import { EmailAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 
 export async function login({ email, password }) {
     const auth = getAuth();
@@ -15,6 +15,12 @@ export async function signup({ email, password }) {
 export async function logout() {
     const auth = getAuth();
     await auth.signOut();
+}
+
+export async function changePassword({ newPassword }) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    await updatePassword(user, newPassword);
 }
 
 export const reauthenticateWithPassword = async ({ password }) => {

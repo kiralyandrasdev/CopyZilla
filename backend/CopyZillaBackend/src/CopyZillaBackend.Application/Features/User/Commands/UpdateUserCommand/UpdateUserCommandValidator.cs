@@ -31,7 +31,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
                     return true;
                 })
                 .WithErrorCode("400")
-                .WithMessage("Email is not valid.");
+                .WithMessage("Provided email address is not in a valid format.");
         }
 
         private async Task<bool> ExistsAsync(UpdateUserCommand e, CancellationToken _)

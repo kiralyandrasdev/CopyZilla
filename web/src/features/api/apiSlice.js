@@ -29,7 +29,7 @@ export const apiSlice = createApi({
             },
             transformErrorResponse: (response) => {
                 console.log(response);
-                return response.data;
+                return response.errorMessage;
             }
         }),
         createUser: builder.mutation({
@@ -40,7 +40,7 @@ export const apiSlice = createApi({
             }),
             transformErrorResponse: (response) => {
                 console.log(response);
-                return response.data;
+                return response.errorMessage;
             },
             invalidatesTags: ['User'],
         }),
@@ -52,9 +52,9 @@ export const apiSlice = createApi({
             }),
             transformErrorResponse: (response) => {
                 console.log(response);
-                return response.data;
+                return response.data.errorMessage;
             },
-            invalidatesTags: ['User'],
+            // invalidatesTags: ['User'],
         }),
         deleteUser: builder.mutation({
             query: ({ userId }) => ({
@@ -104,13 +104,6 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['PromptResults'],
         }),
-        removePaidSubscription: builder.mutation({
-            query: ({ userId }) => ({
-                url: `/user/${userId}/removePaidSubscription`,
-                method: 'POST',
-            }),
-            invalidatesTags: ['User'],
-        }),
     }),
 })
 
@@ -123,8 +116,7 @@ export const {
     useProcessAdvancedPromptMutation,
     useGetPromptResultsQuery,
     useSavePromptResultMutation,
-    useDeletePromptResultMutation,
-    useRemovePaidSubscriptionMutation,
+    useDeletePromptResultMutation
 } = apiSlice;
 
 export default apiSlice;

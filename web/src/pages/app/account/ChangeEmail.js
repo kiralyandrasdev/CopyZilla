@@ -1,19 +1,24 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FiKey, FiMail } from 'react-icons/fi';
 import EmailSvg from '../../../assets/email.svg';
 import { AsyncButton, TextField } from '../../../components';
-import { useUpdateUserMutation, useGetUserQuery } from '../../../features/api/apiSlice';
+import { useUpdateUserMutation } from '../../../features/api/apiSlice';
 import { UserContext } from '../../../features';
 import './ChangeEmail.css';
-import { logout, tryReauthenticationWithPassword } from '../../../features/authentication/actions/authActions';
+import { logout, reauthenticateWithPassword } from '../../../features/authentication/actions/authActions';
 
 function ChangeEmailPage() {
-    const {user} = useContext(UserContext)
-    const [updateUser,] = useUpdateUserMutation();
+    const { user } = useContext(UserContext)
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [updateUser,
+        {
+            isLoading: isUpdating,
+            isSuccess: isUpdateSuccess,
+            isError: isUpdateError,
+            error: updateError
+        }] = useUpdateUserMutation();
+
     const [error, setError] = useState("");
-    const [message, setMessage] = useState("");
 
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -21,19 +26,23 @@ function ChangeEmailPage() {
     const [passwordError, setPasswordError] = useState(false);
     const [emailError, setEmailError] = useState(false);
 
+    useEffect(() => {
+        if (isUpdateError) {
+            setError(updateError);
+        }
+        if(isUpdateSuccess) {
+            setPassword("");
+            setEmail("");
+            setTimeout(() => {
+                logout();
+            }, 5000);
+        }
+    }, [isUpdateError, updateError, isUpdateSuccess]);
+
     const canSubmit = () => {
         if (password.length === 0) {
             setPasswordError(true);
             setError("A jelszó megadása kötelező!");
-            return false;
-        } else {
-            setPasswordError(false);
-            setError("");
-        }
-
-        if (!tryReauthenticationWithPassword({password})) {
-            setPasswordError(true);
-            setError("A jelszó nem megfelelő!");
             return false;
         } else {
             setPasswordError(false);
@@ -48,28 +57,21 @@ function ChangeEmailPage() {
             setEmailError(false);
             setError("");
         }
-        
+
         return true;
     }
 
     const handleSubmit = async () => {
         if (!canSubmit()) return;
 
-        setIsLoading(true);
-        setError("");
-        setMessage("");
-
         try {
-            updateUser({userId:user.id, user:{...user, email: email}})
-            setMessage("Sikeresen megváltoztattad az e-mail címedet. Rövid időn belül kijelentkeztetünk.");
-            await logout();
+            await reauthenticateWithPassword({ password });
         } catch (error) {
-            console.log(error.code);
-            setError("");
-            console.log(error);
+            setError(error.code);
+            return;
         }
 
-        setIsLoading(false);
+        updateUser({ userId: user.id, user: { ...user, email: email } });
     }
 
     return (
@@ -83,11 +85,11 @@ function ChangeEmailPage() {
                 <TextField password={true} error={passwordError} suffixIcon={<FiKey />} value={password} onChange={(e) => setPassword(e.target.value)} hint="Jelszó"></TextField>
                 <TextField error={emailError} suffixIcon={<FiMail />} value={email} onChange={(e) => setEmail(e.target.value)} hint="Új e-mail cím"></TextField>
                 <div className="changeEmail__form__actions">
-                    <AsyncButton loading={isLoading} title="E-mail cím megváltoztatása" onClick={() => handleSubmit()}></AsyncButton>
+                    <AsyncButton loading={isUpdating} title="E-mail cím megváltoztatása" onClick={() => handleSubmit()}></AsyncButton>
                 </div>
             </div>
             {error && <p className="red">{error}</p>}
-            {message && <p className="message">{message}</p>}
+            {isUpdateSuccess && <p>Sikeresen megváltoztattad az e-mail címed! Hamarosan kijelentkeztetünk a fiókodból.</p>}
         </div>
     );
 }
