@@ -36,7 +36,7 @@ function SelectSubscriptionPage() {
 
     const handleSkipUpgrade = () => {
         localStorage.setItem(`initialized_${firebaseUid}`, true);
-        navigate("/user/editor");
+        navigate("/user/home");
     }
 
     useEffect(() => {

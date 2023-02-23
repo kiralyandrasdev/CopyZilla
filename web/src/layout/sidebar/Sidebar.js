@@ -19,8 +19,8 @@ export default function Sidebar() {
                     <h5 onClick={() => handleHeaderClick()}>copyzilla</h5>
                 </div>
                 <div className="sidebar__main__nav">
-                    <SidebarNavItem textColor="var(--grey4)" color="var(--green)" path="/user/editor" active={true} text="Létrehozás"></SidebarNavItem>
-                    <SidebarNavItem text="Mentések" path="/user/savedResults"></SidebarNavItem>
+                    <SidebarNavItem textColor="var(--grey4)" color="var(--green)" path="/user/home" active={true} text="Email Assistant"></SidebarNavItem>
+                    {/* <SidebarNavItem text="Mentések" path="/user/savedResults"></SidebarNavItem> */}
                 </div>
             </div>
             <div className="sidebar__bottom_nav">
