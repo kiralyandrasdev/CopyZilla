@@ -1,75 +1,171 @@
-.page__landing__section {
-    padding: 60px 0px;
+.page__landing {
+    height: 100%
 }
 
-.page__landing__section__hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    column-gap: 30px;
-    min-height: calc(100vh - 120px);
+.landingSection {
+    padding: 40px;
+    row-gap: 20px;
+    column-gap: 40px;
 }
 
-.page__landing__section__hero__left {
+.landingSection__hero {
+    row-gap: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    row-gap: 30px;
-}
-
-.page__landing__section__hero__right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-.page__landing__section__hero__left__cta {
+.landingSection__hero__header {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: stretch;
+    row-gap: 20px;
+}
+
+.logoHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     row-gap: 10px;
+    column-gap: 10px;
+}
+
+.logo {
+    width: 24px;
+    height: 24px;
+}
+
+.downloadSection__button {
     width: 200px;
 }
 
-.page__landing__section__hero__left__cta p {
-    text-align: center;
+.downloadSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+    column-gap: 10px;
+}
+
+.downloadSection p {
     font-size: 12px;
 }
 
-.page__landing__section__2 {
+.supportSection {
     display: flex;
-    flex-direction: column;
-    row-gap: 60px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    row-gap: 20px;
+    column-gap: 10px;
+}
+
+.supportSection__item {
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+.supportSection__item img {
+    width: 24px;
+    height: 24px;
+}
+
+.landingSection__hero__demo {
+    height: 350px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 25px;
+    background-color: var(--grey0);
+    border: 1px solid var(--grey1);
+}
+
+.landingSection__hero__demo video {
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.landingSection__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "grid1 grid2";
+    column-gap: 30px;
+    row-gap: 30px;
     align-items: center;
     justify-content: center;
 }
 
-.page__landing__section__2__heading {
-    text-align: center;
+.landingSection__grid__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    row-gap: 20px;
+    padding: 20px;
 }
 
-@media (max-width: 768px) {
-    .page__landing__section {
-        padding: 60px 0px;
-    }
+.landingSection__grid__item__image {
+    border-radius: 25px;
+    /* background-color: var(--grey0); */
+    border: 1px solid var(--grey1);
+    width: 100%;
+    height: 100%;
+}
 
-    .page__landing__section__hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        row-gap: 60px;
-    }
+.landingSection__grid__item__image img {
+    width: 100%;
+}
 
-    .page__landing__section__hero__left {
-        display: flex;
+.landingSection__grid__item__image__small {
+    padding: 100px;
+}
+
+.landingSection__grid__item__text {
+    text-align: center;
+}
+/* 
+.landingSection__grid__item__text__left {
+    text-align: left;
+} */
+
+/* .landingSection__outlined {
+    background-color: var(--grey1);
+    border-radius: 25px;
+} */
+
+.landingSection__download {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: var(--green); */
+    border-radius: 25px;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(to top, white 0%, var(--green) 100%);
+}
+
+@media screen and (max-width: 1200px) {
+    .supportSection {
         flex-direction: column;
         align-items: center;
         justify-content: center;
         row-gap: 20px;
-        text-align: center;
+    }
+    .landingSection__grid {
+        grid-template-columns: 1fr;
+        grid-template-areas: "grid1" "grid2";
     }
 }

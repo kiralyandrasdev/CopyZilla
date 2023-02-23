@@ -3,6 +3,7 @@
 /* Colors */
 
 :root {
+  --grey0: #FEFDFE;
   --grey1: #F0F1F8;
   --grey2: #87889E;
   --grey3: #40414F;
@@ -21,6 +22,10 @@
 
 .red {
   color: var(--red);
+}
+
+.white {
+  color: var(--white);
 }
 
 * {
@@ -98,7 +103,7 @@ h3 {
 h4 {
   margin: 0px;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 h5 {
@@ -110,7 +115,7 @@ h5 {
 h6 {
   margin: 0px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 header {
@@ -158,6 +163,13 @@ header {
   width: 100%;
   height: 1px;
   background-color: var(--grey2);
+}
+
+.container {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--grey0);
+  border: 1px solid var(--grey1);
 }
 
 @media screen and (max-width: 1000px) {

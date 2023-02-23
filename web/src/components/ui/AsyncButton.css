@@ -10,6 +10,7 @@
     font-size: 14px;
     border-radius: 8px;
     height: 45px;
+    cursor: pointer;
 }
 
 .asyncButton button {
@@ -22,6 +23,19 @@
     font-size: 14px;
     width: 100%;
     height: 100%;
+}
+
+.asyncButton__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5px;
+}
+
+.asyncButton__prefixIcon {
+    width: 18px;
+    height: 18px;
 }
 
 .asyncButton__disabled button {

@@ -28,9 +28,9 @@ export default function PublicLayout() {
 
     return (
         <div className="layout layout__public">
-            <header className="header header__public animation__fadeInDown dropshadow">
+            <header className="header header__public animation__fadeInDown">
                 <div className="header__fullwidth header__public__content">
-                    <h5 onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>
+                    <h5 className="white" onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>
                     <div className="header__nav__row">
                         <a className="header__nav__row__item semi-bold" href="/auth/login">Bejelentkezés</a>
                         <a className="header__nav__row__item semi-bold" href="/pricing">Áraink</a>
@@ -44,7 +44,7 @@ export default function PublicLayout() {
                         <li onClick={() => nandleNavigate("/auth/login")} className="header__nav__item semi-bold green">Bejelentkezés</li>
                         <li onClick={() => nandleNavigate("/pricing")} className="header__nav__item semi-bold">Áraink</li>
                         <li onClick={() => nandleNavigate("/aboutUs")} className="header__nav__item semi-bold">Rólunk</li>
-                        <li onClick={() => nandleNavigate("/contact")} className="header__nav__item semi-bold">Kapcsolat</li>
+                    {/*     <li onClick={() => nandleNavigate("/contact")} className="header__nav__item semi-bold">Kapcsolat</li> */}
                     </ul>
                 </div>
             </header>
@@ -52,10 +52,11 @@ export default function PublicLayout() {
                 <Outlet></Outlet>
             </main>
             <footer className="footer footer__public">
-                <p>2023 © CopyZilla - Minden jog fenntartva</p>
+                <p>© 2023 CopyZilla</p>
+                <p>info@copyzilla.hu</p>
                 <a href="/termsOfService">Felhasználási feltételek</a>
                 <a href="/privacyPolicy">Adatvédelmi irányelvek</a>
-                <a href="/contact">Kapcsolat</a>
+                {/* <a href="/contact">Kapcsolat</a> */}
             </footer>
         </div>
     );

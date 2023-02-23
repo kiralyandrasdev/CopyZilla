@@ -26,8 +26,22 @@ function AsyncButton(props) {
         }
     }
 
+    let style = {};
+
+    if (props.hasOwnProperty("color")) {
+        style.backgroundColor = props.color;
+    }
+
+    const prefixIcon = () => {
+        if (props.hasOwnProperty("prefixIcon")) {
+            return <img style={style} src={props.prefixIcon} className="asyncButton__prefixIcon"></img>
+        }
+
+        return null;
+    }
+
     return (
-        <div className={className}>
+        <div className={className} style={style} onClick={onClick}>
             {
                 loading === true ?
                     <ClipLoader
@@ -37,7 +51,10 @@ function AsyncButton(props) {
                         speedMultiplier={1}
                         size="20px"
                     /> :
-                    <button className="semi-bold" onClick={onClick}>{props.title || "Button"}</button>
+                    <div className="semi-bold asyncButton__content">
+                        {prefixIcon()}
+                        {props.title || "Button"}
+                    </div>
             }
         </div>
     );
