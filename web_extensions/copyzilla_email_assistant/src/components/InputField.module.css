@@ -1,7 +1,8 @@
 .inputField {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
 }
 
 input {
@@ -27,6 +28,7 @@ input::placeholder {
     border-radius: 8px;
     background-color: var(--grey3);
     font-size: 14px;
+    width: 100%;
 }
 
 .inputField__container--error {

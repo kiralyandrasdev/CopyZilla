@@ -60,6 +60,7 @@ function LoginForm() {
                 onChange={handlePasswordChange}
                 placeholder="Jelszó"
                 suffixIcon={<FiKey />}
+                obscure={true}
             />
             <PrimaryButton
                 title="Bejelentkezés"

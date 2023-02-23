@@ -7,6 +7,7 @@ import { useGetUserQuery } from "../../features/api/apiSlice";
 import { AuthContext } from "../../features/authentication/authContext";
 import { UserContext } from "../../features/user/context/userContext";
 import './PrivateHeader.css';
+import { logout } from "../../features/authentication/actions/authActions";
 
 export default function PrivateHeader() {
     const { firebaseUid } = useContext(AuthContext);
@@ -101,7 +102,7 @@ export default function PrivateHeader() {
                     {/* <li onClick={() => nandleNavigate("/user/savedResults")} className="header__nav__item semi-bold">Mentések</li> */}
                     <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Kredit feltöltés</li>
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Fiók</li>
-                    <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Kijelentkezés</li>
+                    <li onClick={() => logout()} className="header__nav__item semi-bold">Kijelentkezés</li>
                 </ul>
             </header>
         </>
