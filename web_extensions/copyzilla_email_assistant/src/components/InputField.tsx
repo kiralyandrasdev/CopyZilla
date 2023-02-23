@@ -7,6 +7,7 @@ type InputFieldProps = {
     onChange: (value: string) => void;
     placeholder?: string;
     suffixIcon?: JSX.Element;
+    obscure?: boolean;
 }
 
 export default function InputField(props: InputFieldProps) {
@@ -18,6 +19,7 @@ export default function InputField(props: InputFieldProps) {
                     value={props.value}
                     onChange={(e) => props.onChange(e.target.value)}
                     placeholder={props.placeholder}
+                    type={props.obscure ? "password" : "text"}
                 />
                 {props.suffixIcon && <div className={styles.inputField__icon}>{props.suffixIcon}</div>}
             </div>
