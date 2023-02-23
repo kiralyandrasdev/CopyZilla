@@ -22,9 +22,7 @@ namespace CopyZillaBackend.API.Middlewares
                 signature);
 
             if (stripeEvent == null)
-            {
                 throw new StripeException("Could not verify webhook event.");
-            }
 
             await next(context);
         }
