@@ -23,7 +23,7 @@ import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
 import AboutUsPage from './pages/website/AboutUs';
 import ContactPage from './pages/website/Contact';
 import LandingPage from './pages/website/Landing';
-import PricingPage from './pages/website/Pricing';
+import PricingPage from './pages/website/pricing/Pricing';
 import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
 import TermsOfServicePage from './pages/website/TermsOfService';
 import AuthRedirect from './redirect/AuthRedirect';
@@ -38,7 +38,7 @@ function App() {
       <Route element={<AuthRedirect />}>
         <Route element={<InitRedirect />}>
           <Route element={<PrivateLayout />} path="/user">
-            {/* <Route path="/user/home" element={<CreatePage />} /> */}
+            {/* <Route path="/user/editor" element={<CreatePage />} /> */}
             {/* <Route path="/user/savedResults" element={<SavedResultsPage />} /> */}
             <Route path="/user/account" element={<Account />} />
             <Route path="/user/home" element={<HomePage />} />
@@ -66,7 +66,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/aboutUs" element={<AboutUsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        {/* <Route path="/contact" element={<ContactPage />} /> */}
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
       </Route>

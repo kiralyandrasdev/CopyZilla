@@ -6,6 +6,7 @@ import SignedOutView from './views/SignedOutView'
 import LoadingIndicator from './components/LoadingIndicator'
 import { initializeApp } from '@firebase/app'
 import { firebaseConfig } from './config/firebaseConfig'
+import { getWebsiteUrl } from './config/envConfig'
 
 initializeApp(firebaseConfig);
 
@@ -20,6 +21,11 @@ function App() {
     return <SignedOutView />
   }
 
+  const handleHelpClick = async () => {
+    const websiteUrl = await getWebsiteUrl() as string;
+    window.open(websiteUrl, "_blank");
+  }
+
   return (
     <div className="popup">
       <div className="popup__header">
@@ -28,7 +34,7 @@ function App() {
       </div>
       {view()}
       <div className="popup__footer">
-        <p className="description textButton" onClick={() => window.open("https://copyzilla.hu/contact", "_blank")}>Segítségre van szükséged?</p>
+        <p className="description textButton" onClick={() => handleHelpClick()}>Segítségre van szükséged?</p>
         <p className="description">© 2023 CopyZilla</p>
       </div>
     </div>

@@ -31,7 +31,8 @@
 }
 
 .textField__container--light {
-    background-color: var(--grey1);
+    background-color: var(--grey0);
+    border: 1px solid var(--grey1);
 }
 
 .textField__container--error {

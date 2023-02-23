@@ -1,0 +1,80 @@
+.pricingCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: var(--grey0);
+    border: 1px solid var(--grey1);
+    width: 300px;
+}
+
+.pricingCard__1 {
+    animation-delay: 0.1s;
+}
+
+.pricingCard__2 {
+    animation-delay: 0.2s;
+}
+
+.pricingCard__3 {
+    animation-delay: 0.3s;
+}
+
+.pricingCard__header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    row-gap: 10px;
+    width: 100%;
+    text-align: start;
+}
+
+.pricingCard__content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    row-gap: 10px;
+    width: 100%;
+    margin: 20px 0px;
+    height: 80px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+li>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 10px;
+}
+
+.pricingCard__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    row-gap: 10px;
+    width: 100%;
+    height: 150px;
+}
+
+.pricingCard__footer__pricing {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: flex-start;
+    column-gap: 10px;
+    width: 100%;
+    height: 50px;
+}
