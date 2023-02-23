@@ -29,6 +29,7 @@ import TermsOfServicePage from './pages/website/TermsOfService';
 import AuthRedirect from './redirect/AuthRedirect';
 import InitRedirect from './redirect/InitRedirect';
 import DeleteAccountPage from './pages/app/account/DeleteAccount';
+import HomePage from './pages/app/Home';
 
 function App() {
   initializeApp(firebaseConfig);
@@ -37,9 +38,10 @@ function App() {
       <Route element={<AuthRedirect />}>
         <Route element={<InitRedirect />}>
           <Route element={<PrivateLayout />} path="/user">
-            <Route path="/user/editor" element={<CreatePage />} />
-            <Route path="/user/savedResults" element={<SavedResultsPage />} />
+            {/* <Route path="/user/home" element={<CreatePage />} /> */}
+            {/* <Route path="/user/savedResults" element={<SavedResultsPage />} /> */}
             <Route path="/user/account" element={<Account />} />
+            <Route path="/user/home" element={<HomePage />} />
             <Route path="/user/account/changeEmail" element={<ChangeEmailPage />} />
             <Route path="/user/account/deleteAccount" element={<DeleteAccountPage />} />
             <Route path="/user/account/changePassword" element={<ChangePasswordPage />} />

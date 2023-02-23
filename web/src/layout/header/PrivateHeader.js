@@ -84,7 +84,7 @@ export default function PrivateHeader() {
                 <a className="header__nav__item semi-bold" href="/user/account">Fiók</a>
             </header>
             <header className="header header__private header__portrait animation__fadeInDown">
-                <FiPlus onClick={() => nandleNavigate("/user/editor")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
+                <FiPlus onClick={() => nandleNavigate("/user/home")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
                 <div className="header__main">
                     <h5>copyzilla</h5>
                 </div>
@@ -97,8 +97,8 @@ export default function PrivateHeader() {
                         </div>
                     </li>
                     <span className="header__nav__item__divider" />
-                    <li onClick={() => nandleNavigate("/user/editor")} className="header__nav__item semi-bold green">Létrehozás</li>
-                    <li onClick={() => nandleNavigate("/user/savedResults")} className="header__nav__item semi-bold">Mentések</li>
+                    <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Email Assistant</li>
+                    {/* <li onClick={() => nandleNavigate("/user/savedResults")} className="header__nav__item semi-bold">Mentések</li> */}
                     <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Kredit feltöltés</li>
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Fiók</li>
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Kijelentkezés</li>

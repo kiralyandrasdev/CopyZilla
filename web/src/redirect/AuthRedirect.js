@@ -29,7 +29,7 @@ function AuthRedirect() {
 
                 if (firebaseUser.emailVerified) {
                     if (!path.includes("/user")) {
-                        navigate('/user/editor');
+                        navigate('/user/home');
                     }
                     return;
                 }

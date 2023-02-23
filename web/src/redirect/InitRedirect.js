@@ -38,10 +38,10 @@ export default function InitRedirect() {
             }
 
             if (!path.includes("/user")) {
-                navigate("/user/editor");
+                navigate("/user/home");
             }
             else if (path.includes("/user/paymentOverdue")) {
-                navigate("/user/editor");
+                navigate("/user/home");
             }
 
             return;
@@ -59,7 +59,7 @@ export default function InitRedirect() {
             }
 
             if (!path.includes("/user")) {
-                navigate("/user/editor");
+                navigate("/user/home");
             }
         }
     });
