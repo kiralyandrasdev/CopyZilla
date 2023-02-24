@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "CopyZilla Email Assistant",
-  "description": "AI powered email assistant to help you write better emails",
-  "version": "1.0.0",
+  "description": "Gyorsabb és egyszerűbb email írás mesterséges intelligenciával",
+  "version": "1.0.1",
   "action": {
     "default_title": "CopyZilla Email Assistant",
     "default_popup": "index.html",
@@ -23,19 +23,9 @@
   "background": {
     "service_worker": "background/background.js"
   },
-  "externally_connectable": {
-    "matches": [
-      "https://*/*",
-      "http://*/*"
-    ]
-  },
   "permissions": [
     "storage",
     "tabs",
     "activeTab"
-  ],
-  "host_permissions": [
-    "https://*/*",
-    "http://*/*"
   ]
 }
