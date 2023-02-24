@@ -53,7 +53,7 @@ function SelectSubscriptionPage() {
         }
 
         return (
-            <div className="page page__selectSubscription">
+            <div className="page__selectSubscription">
                 <img src={ChoiceSvg} alt="" className="page__selectSubscription__illustration illustration__150" />
                 <h4>Válassz csomagot és láss neki a munkának</h4>
                 <div className="page__selectSubscription__options__container">
