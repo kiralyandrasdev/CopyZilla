@@ -35,6 +35,7 @@ builder.Services.AddTransient<IResponseManager, ResponseManager>();
 
 builder.Services.AddTransient<AuthorizationMiddleware>();
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+builder.Services.AddTransient<StripeWebhookMiddleware>();
 
 builder.Services.AddCors(options => options
         .AddPolicy(name: "localhost", (policy) =>
@@ -67,6 +68,11 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == false, app =>
 {
     app.UseMiddleware<AuthorizationMiddleware>();
+});
+
+app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == true, app =>
+{
+    app.UseMiddleware<StripeWebhookMiddleware>();
 });
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());

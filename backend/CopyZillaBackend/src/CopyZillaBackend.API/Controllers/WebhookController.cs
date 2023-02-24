@@ -26,8 +26,6 @@ namespace CopyZillaBackend.API.Controllers
             };
 
         /// <summary>
-        /// TODO: Verify Stripe signature to secure endpoint: https://stripe.com/docs/webhooks/signatures.
-        ///
         /// Webhook does not wait for event to finish processing and returns 204 as soon as possible as
         /// Stripe documentation suggests: https://stripe.com/docs/webhooks.
         ///
@@ -35,8 +33,6 @@ namespace CopyZillaBackend.API.Controllers
         ///
         /// Setup local testing environment: https://dashboard.stripe.com/test/webhooks
         /// </summary>
-        /// <param name="payload"></param>
-        /// <returns></returns>
         [Route("payment")]
         [HttpPost]
         public IActionResult ProcessStripeWebhook([FromServices] IServiceScopeFactory serviceScopeFactory)
