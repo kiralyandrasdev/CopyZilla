@@ -118,6 +118,7 @@
 
 .landingSection__grid__item__image {
     border-radius: 25px;
+    padding: 25px;
     /* background-color: var(--grey0); */
     border: 1px solid var(--grey1);
     width: 100%;
@@ -126,6 +127,8 @@
 
 .landingSection__grid__item__image img {
     width: 100%;
+    max-height: 400px;
+    object-fit: contain;
 }
 
 .landingSection__grid__item__image__small {

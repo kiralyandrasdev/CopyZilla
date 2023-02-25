@@ -49,7 +49,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     sendResponse(errMessageRes);
                 });
 
-
                 return true;
             });
 

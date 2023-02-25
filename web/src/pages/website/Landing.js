@@ -5,9 +5,9 @@ import BodyTextSvg from '../../assets/well_done.svg';
 import { AsyncButton } from '../../components';
 import './Landing.css';
 import Logo from '../../assets/logo256.png';
-import SampleReply1 from '../../assets/sample_reply_1.png';
-import SampleReply2 from '../../assets/sample_reply_2.png';
-import SampleInstructions from '../../assets/sample_instructions.png';
+import Context from '../../assets/context.png';
+import Multilingual from '../../assets/multilingual.png';
+import Instructions from '../../assets/instructions.png';
 import SampleReplyContext from '../../assets/sample_reply_context.png';
 import ChromeSvg from '../../assets/chrome.svg';
 import GmailSvg from '../../assets/gmail.svg';
@@ -21,10 +21,10 @@ function LandingPage() {
             <div className="landingSection landingSection__hero">
                 <div className="landingSection__hero__header">
                     <h4>Say hi to your new email companion! 🚀</h4>
-                    <h6>CopyZilla Email Assistant learns from your writing style to help you write emails faster and more efficiently.</h6>
+                    <h6>CopyZilla Email Assistant learns from your writing style to help you write emails faster and more efficiently</h6>
                 </div>
                 <div className="landingSection__hero__demo">
-                    <video loop={true} autoPlay={true} src="https://copyzillastaticassets.blob.core.windows.net/videos/copyzilla_en_demo.mov"></video>
+                    <video loop={true} autoPlay={true} src="https://copyzillastaticassets.blob.core.windows.net/videos/copyzilla_demo_en_peter.mov"></video>
                 </div>
                 <div className="supportSection">
                     <div className="supportSection__item">
@@ -54,12 +54,12 @@ function LandingPage() {
                     <p className="description">We guarantee that the responses will be impressive!</p>
                 </div>
                 <div className="landingSection__grid__item landingSection__grid__item__image">
-                    <img src={SampleReplyContext}></img>
+                    <img src={Context}></img>
                 </div>
             </div>
             <div className="landingSection landingSection__secondary landingSection__grid">
                 <div className="landingSection__grid__item landingSection__grid__item__image">
-                    <img src={SampleReply2}></img>
+                    <img src={Multilingual}></img>
                 </div>
                 <div className="landingSection__grid__item landingSection__grid__item__text landingSection__grid__item__text__right">
                     <h4>Multilingual</h4>
@@ -72,7 +72,7 @@ function LandingPage() {
                     <p className="description">You can provide additional context to ensure that we can provide the perfect response to every email.</p>
                 </div>
                 <div className="landingSection__grid__item landingSection__grid__item__image landingSection__grid__item__image__small">
-                    <img src={SampleInstructions}></img>
+                    <img src={Instructions}></img>
                 </div>
             </div>
             <div className="landingSection landingSection__download">
