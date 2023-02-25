@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CopyZilla Email Assistant",
-  "description": "Gyorsabb és egyszerűbb email írás mesterséges intelligenciával",
+  "description": "AI powered email assistant that helps you write better emails",
   "version": "1.0.1",
   "action": {
     "default_title": "CopyZilla Email Assistant",
