@@ -2,6 +2,7 @@
 using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.Prompt;
+using CopyZillaBackend.Application.Events;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
@@ -27,7 +28,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             var validator = new ProcessEmailPromptEventValidator(_repository);
             var validationResult = await validator.ValidateAsync(request);
 
-            validationResult.ResolveEventResult(result);
+            validationResult.Resolve(result);
 
             // If validation error occurs stop event and return response
             if (!result.Success) return result;

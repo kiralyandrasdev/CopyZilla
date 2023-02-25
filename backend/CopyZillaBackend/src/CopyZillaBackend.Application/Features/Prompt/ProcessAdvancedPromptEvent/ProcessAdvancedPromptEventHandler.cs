@@ -1,9 +1,7 @@
-﻿using CopyZillaBackend.Application.Common;
-using CopyZillaBackend.Application.Contracts.OpenAI;
+﻿using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 
 namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
 {
@@ -28,7 +26,7 @@ namespace CopyZillaBackend.Application.Events.ProcessAdvancedPromptEvent
             var validator = new ProcessAdvancedPromptEventValidator();
             var validationResult = validator.Validate(request);
 
-            validationResult.ResolveEventResult(result);
+            validationResult.Resolve(result);
 
             // If validation error occurs stop event and return response
             if (!result.Success) return result;

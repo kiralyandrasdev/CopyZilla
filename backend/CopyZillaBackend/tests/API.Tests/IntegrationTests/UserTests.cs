@@ -5,11 +5,9 @@ using API.Tests.Engine;
 using API.Tests.Firebase;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
-using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
-using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
-using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
+using CopyZillaBackend.Application.Features.User.Queries.GetUserQuery;
 using CopyZillaBackend.Domain.Entities;
 using FirebaseAdmin.Auth;
 using FluentAssertions;
@@ -184,6 +182,74 @@ namespace API.Tests.IntegrationTests
         }
 
         [Fact]
+        public async Task Should_Get_User()
+        {
+            // arrange 
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+            var user = new User()
+            {
+                Email = userEmail,
+                FirstName = userHint,
+                LastName = userHint,
+                StripeCustomerId = userHint,
+                FirebaseUid = userHint,
+                SubscriptionPlanName = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                PlanType = "default",
+            };
+
+            await _postgresDbManager.AddUserAsync(user);
+
+            // act
+            var response = await _client.GetAsync($"/api/user/{user.FirebaseUid}");
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<GetUserQueryResult>(responseBody);
+
+            // assert
+            result.Should().NotBeNull();
+            result!.Value.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Value!.Email.Should().Be(user.Email);
+            result.Value!.StripeCustomerId.Should().Be(user.StripeCustomerId);
+            result.Value!.FirebaseUid.Should().Be(user.FirebaseUid);
+        }
+
+        [Fact]
+        public async Task Should_Not_Get_User()
+        {
+            // arrange
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+            var user = new User()
+            {
+                Email = userEmail,
+                FirstName = userHint,
+                LastName = userHint,
+                StripeCustomerId = userHint,
+                FirebaseUid = userHint,
+                SubscriptionPlanName = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                PlanType = "default",
+            };
+
+            await _postgresDbManager.AddUserAsync(user);
+
+            // act
+            var response = await _client.GetAsync($"/api/user/{user.Id}");
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<GetUserQueryResult>(responseBody);
+
+            // assert
+            result.Should().NotBeNull();
+            result!.Value.Should().BeNull();
+            result.ErrorMessage.Should().NotBeNullOrEmpty();
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
         public async Task Should_Update_User()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -279,186 +345,6 @@ namespace API.Tests.IntegrationTests
             deletedCustomer.Deleted.Should().BeTrue();
             deletedUser.Should().BeNull();
             await deleteFirebaseUser.Should().ThrowAsync<FirebaseAuthException>();
-        }
-
-        [Fact]
-        public async Task Should_Save_Prompt_Result()
-        {
-            // arrange
-            var userHint = Guid.NewGuid().ToString();
-            var userEmail = $"{userHint}@test.com";
-
-            var user = new User()
-            {
-                FirebaseUid = userHint,
-                Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
-                StripeCustomerId = userHint,
-                SubscriptionPlanName = userHint,
-                SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
-            };
-
-            var dbUser = await _postgresDbManager.AddUserAsync(user);
-            user.Id = dbUser!.Id;
-
-            var options = new SavePromptResultCommandOptions()
-            {
-                Title = userHint,
-                Content = "test",
-            };
-
-            // act
-            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"/api/user/{user.Id}/promptResults", httpContent);
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<SavePromptResultCommandResult>(responseBody);
-
-            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
-
-            // assert
-            result.Should().NotBeNull();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            promptResults.Should().HaveCount(1);
-            promptResults.FirstOrDefault()!.UserId.Should().Be(user.Id);
-            promptResults.FirstOrDefault()!.Title.Should().Be(options.Title);
-            promptResults.FirstOrDefault()!.Content.Should().Be(options.Content);
-        }
-
-        [Fact]
-        public async Task Should_Not_Save_Prompt_Result_With_Empty_Content()
-        {
-            // arrange
-            var userHint = Guid.NewGuid().ToString();
-            var userEmail = $"{userHint}@test.com";
-
-            var user = new User()
-            {
-                FirebaseUid = userHint,
-                Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
-                StripeCustomerId = userHint,
-                SubscriptionPlanName = userHint,
-                SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
-            };
-
-            var dbUser = await _postgresDbManager.AddUserAsync(user);
-            user.Id = dbUser!.Id;
-
-            var options = new SavePromptResultCommandOptions()
-            {
-                Title = userHint,
-                Content = "",
-            };
-
-            // act
-            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"/api/user/{user.Id}/promptResults", httpContent);
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<SavePromptResultCommandResult>(responseBody);
-
-            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
-
-            // assert
-            result.Should().NotBeNull();
-            promptResults.Count.Should().Be(0);
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-            result!.Success.Should().BeFalse();
-            result.ErrorMessage.Should().NotBeEmpty();
-        }
-
-        [Fact]
-        public async Task Should_Get_Saved_Prompt_Results()
-        {
-            // arrange
-            var userHint = Guid.NewGuid().ToString();
-            var userEmail = $"{userHint}@test.com";
-
-            var user = new User()
-            {
-                FirebaseUid = userHint,
-                Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
-                StripeCustomerId = userHint,
-                SubscriptionPlanName = userHint,
-                SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
-            };
-
-            var dbUser = await _postgresDbManager.AddUserAsync(user);
-            user.Id = dbUser!.Id;
-
-            var promptResult = new PromptResult()
-            {
-                Id = Guid.NewGuid(),
-                UserId = Guid.Parse(userHint),
-                Title = userHint,
-                Content = "test"
-            };
-
-            await _mongodbDbManager.AddPromptResultAsync(promptResult);
-
-            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
-
-            // act
-            var response = await _client.GetAsync($"/api/user/{user.Id}/promptResults");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<GetSavedPromptResultListQueryResult>(responseBody);
-
-            // assert
-            result.Should().NotBeNull();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Value.Count.Should().Be(promptResults.Count);
-            result.Value.Should().BeEquivalentTo(promptResults);
-        }
-
-        [Fact]
-        public async Task Should_Delete_Prompt_Result()
-        {
-            // arrange
-            var userHint = Guid.NewGuid().ToString();
-            var userEmail = $"{userHint}@test.com";
-
-            var user = new User()
-            {
-                FirebaseUid = userHint,
-                Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
-                StripeCustomerId = userHint,
-                SubscriptionPlanName = userHint,
-                SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
-            };
-
-            var dbUser = await _postgresDbManager.AddUserAsync(user);
-            user.Id = dbUser!.Id;
-
-            var promptResult = new PromptResult()
-            {
-                Id = Guid.NewGuid(),
-                UserId = Guid.Parse(userHint),
-                Title = userHint,
-                Content = "test"
-            };
-
-            await _mongodbDbManager.AddPromptResultAsync(promptResult);
-
-            // act
-            var response = await _client.DeleteAsync($"/api/user/{user.Id}/promptResults/{promptResult.Id}");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<DeletePromptResultCommandResult>(responseBody);
-
-            var promptResults = await _mongodbDbManager.GetPromptResultListAsync(user.Id);
-
-            // assert
-            result.Should().NotBeNull();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            promptResults.Count.Should().Be(0);
         }
 
         public void Dispose()
