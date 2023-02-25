@@ -13,9 +13,9 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
 
             RuleFor(e => e)
              .MustAsync(HasEnoughCreditsAsync)
-             .WithMessage("Sajnos kifogytál a felhasználható kreditekből." +
-                    " Ha továbbra is használni szeretnéd ezt a funkciót," +
-                    " vásárolj krediteket a CopyZilla fiókodon keresztül.")
+             .WithMessage("Unfortunately, you have run out of credits." +
+             " If you would like to continue using this feature," +
+             " please purchase credits through your CopyZilla account.")
              .WithErrorCode("400");
             RuleFor(e => e)
               .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Objective))
