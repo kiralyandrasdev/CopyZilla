@@ -34,7 +34,7 @@ function App() {
       </div>
       {view()}
       <div className="popup__footer">
-        <p className="description textButton" onClick={() => handleHelpClick()}>Segítségre van szükséged?</p>
+        <p className="description textButton" onClick={() => handleHelpClick()}>Contact us</p>
         <p className="description">© 2023 CopyZilla</p>
       </div>
     </div>

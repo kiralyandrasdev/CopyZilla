@@ -1,4 +1,14 @@
-.page__auth {
+.page__auth { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* .page__auth {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -34,4 +44,4 @@
     .page__auth__section__left {
         display: none;
     }
-}
+} */

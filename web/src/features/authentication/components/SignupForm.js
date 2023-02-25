@@ -51,28 +51,28 @@ export default function SignupForm() {
 
     const canSubmit = () => {
         if (email.length === 0) {
-            setError('E-mail cím megadása kötelező');
+            setError("Email address is required");
             setEmailError(true);
             return false;
         } else {
             setEmailError(false);
         }
         if (password.length === 0) {
-            setError('Jelszó megadása kötelező');
+            setError("Password is required");
             setPasswordError(true);
             return false;
         } else {
             setPasswordError(false);
         }
         if (passwordConfirmation.length === 0) {
-            setError('Jelszó megerősítése kötelező');
+            setError("Password confirmation is required");
             setPasswordConfirmationError(true);
             return false;
         } else {
             setPasswordConfirmationError(false);
         }
         if (password !== passwordConfirmation) {
-            setError('A két jelszó nem egyezik');
+            setError("Passwords do not match");
             setPasswordConfirmationError(true);
             return false;
         } else {
@@ -105,16 +105,15 @@ export default function SignupForm() {
     return (
         <div className="authForm signUpForm">
             <div className="authForm__header">
-                <h4>Fiók létrehozása</h4>
-                <p className="description-text">Hozz létre új fiókot</p>
+                <h4>New account</h4>
+                <p className="description-text">Create a new account</p>
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
                     <TextField
                         light={true}
                         error={emailError}
-                        title="E-mail cím"
-                        hint="Fiókhoz tartozó e-mail cím"
+                        hint="Email address"
                         value={email} onChange={handleEmailChange}
                         suffixIcon={<HiOutlineMail />}
                     />
@@ -123,8 +122,7 @@ export default function SignupForm() {
                     <TextField
                         light={true}
                         error={passwordError}
-                        title="Jelszó"
-                        hint="Erős jelszó"
+                        hint="Password"
                         value={password}
                         onChange={handlePasswordChange}
                         suffixIcon={<RiLockPasswordLine />}
@@ -135,8 +133,7 @@ export default function SignupForm() {
                     <TextField
                         light={true}
                         error={passwordConfirmationError}
-                        title="Jelszó megerősítése"
-                        hint="Erős jelszó mégegyszer"
+                        hint="Confirm password"
                         value={passwordConfirmation}
                         onChange={handlePasswordConfirmationChange}
                         suffixIcon={<RiLockPasswordLine />}
@@ -145,12 +142,12 @@ export default function SignupForm() {
                 </div>
             </div>
             <div className="authForm__primaryActions">
-                <AsyncButton loading={loading} title="Regisztráció" onClick={() => handleSignup()}></AsyncButton>
+                <AsyncButton loading={loading} title="Create account" onClick={() => handleSignup()}></AsyncButton>
             </div>
             {error && <p style={{ "color": "var(--red)", "textAlign": "center" }}>{error}</p>}
             <div className="authForm__secondaryActions">
-                <p>Már van fiókod? </p>
-                <TextButton color="var(--grey3)" title="Bejelentkezés" onClick={() => navigate("/auth/login")} />
+                <p>Already have an account?</p>
+                <TextButton color="var(--grey3)" title="Sign in" onClick={() => navigate("/auth/login")} />
             </div>
         </div>
     );

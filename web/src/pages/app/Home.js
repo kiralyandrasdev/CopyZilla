@@ -4,16 +4,16 @@ import './Home.css';
 import { AsyncButton } from '../../components';
 
 function HomePage() {
-    const subText = "A CopyZilla Email Assistant segítséget nyújt neked a leveleid megfogalmazásában, és a szövegformázásban, hogy a munkád gyorsabbá és hatékonyabbá váljon.";
-    const prereqText = "A CopyZilla Email Assistant bővítményként elérhető a Google Chrome böngészőben. A letöltés után a böngészőben kattints a CopyZilla ikonra, majd jelentkezz be a CopyZilla fiókoddal, hogy elkezdhesd a munkát."
+    const subText = "CopyZilla Email Assistant helps you write better emails. It uses GPT-3 to generate emails based on context and your input."
+    const prereqText = "To get started, download the CopyZilla Email Assistant for Chrome, or any other browser that supports Chrome extensions."
     return (
         <div className="page page__home page__centerContent">
             <div className="page__home__content">
                 <img className="promptResultView__result__placeholder__svg" src={PlaceHolderSvg} alt="Loading..."></img>
-                <h5>Üdv a fedélzeten!</h5>
+                <h5>Welcome on board!</h5>
                 <p className='description'>{prereqText}</p>
                 <AsyncButton
-                    title="CopyZilla Email Assistant letöltése"
+                    title="Download CopyZilla Email Assistant for Chrome"
                     onClick={() => { }}
                 />
             </div>

@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 function PricingPage() {
     const navigate = useNavigate();
-    const headerText = "Kedvező csomagok mindenki számára";
-    const subHeaderText = "Vedd a kezedbe az írányítást az e-mail üzeneteid felett és hagyd, hogy időt takarítsunk meg neked."
-    const subText = "Egy e-mail megfogalmazása egy kreditet vesz igénybe"
+    const headerText = "Favorable packages for everyone";
+    const subHeaderText = "Take control over your email messages and let us help you save time"
+    const subText = "Composing an email requires one credit"
     return (
         <div className="page page__public page__pricing animation__fadeInUp">
             <div className="page__pricing__header">
@@ -17,40 +17,40 @@ function PricingPage() {
             <div className="pricing__cards">
                 <PricingCard
                     order="1"
-                    title="Személyes"
-                    description="Írj havonta 10 e-mail üzenetet a CopyZilla Email Assistant segítségével."
-                    price="Ingyenes"
+                    title="Personal"
+                    description="Write 10 email messages per month with the help of CopyZilla Email Assistant"
+                    price="Free"
                     features={[
-                        "10 kredit havonta",
-                        "Automatikus nyelv felismerés",
+                        "10 credits per month",
+                        "Automatic language detection",
                     ]}
                     onClick={() => navigate("/auth/login")}
                     selectColor="var(--grey1)"
                 />
                 <PricingCard
                     order="2"
-                    title="Profi"
-                    description="Írj havonta 100 e-mail üzenetet a CopyZilla Email Assistant segítségével."
-                    price="4490 Ft"
-                    pricingInterval="havonta"
+                    title="Pro"
+                    description="Write 100 email messages per month with the help of CopyZilla Email Assistant"
+                    price="9$"
+                    pricingInterval="per month"
                     features={[
-                        "100 kredit havonta",
-                        "Automatikus nyelv felismerés",
-                        "Új funkciók azonnali elérése",
+                        "100 credits per month",
+                        "Automatic language detection",
+                        "Instant access to new features",
                     ]}
                     onClick={() => navigate("/auth/login")}
                     selectColor="var(--green)"
                 />
                 <PricingCard
                     order="3"
-                    title="Üzleti"
-                    description="Írj havonta 300 e-mail üzenetet a CopyZilla Email Assistant segítségével."
-                    price="7490 Ft"
-                    pricingInterval="havonta"
+                    title="Business"
+                    description="Write 300 email messages per month with the help of CopyZilla Email Assistant"
+                    price="18$"
+                    pricingInterval="per month"
                     features={[
-                        "300 kredit havonta",
-                        "Automatikus nyelv felismerés",
-                        "Új funkciók azonnali elérése",
+                        "100 credits per month",
+                        "Automatic language detection",
+                        "Instant access to new features",
                     ]}
                     onClick={() => navigate("/auth/login")}
                     selectColor="var(-green)"

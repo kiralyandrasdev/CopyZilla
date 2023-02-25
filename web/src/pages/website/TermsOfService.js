@@ -4,40 +4,40 @@ import './TextPage.css';
 function TermsOfServicePage() {
     return (
         <div className="page page__public page__text animation__fadeInUp">
-            <h4>Felhasználási feltételek</h4>
+            <h4>Terms of service</h4>
             <p>
-                Köszönjük, hogy regisztráltál és használod a CopyZilla Email Assistant Chrome-bővítményt! Az alábbiakban bemutatjuk a felhasználási feltételeket, amelyekkel egyetértve elfogadod a bővítmény használatának feltételeit:
+                Thank you for registering and using the CopyZilla Email Assistant Chrome extension! Below we present the terms of use, which you agree to by accepting the terms of use of the extension:
             </p>
             <p>
-                Az ügyfelek emailjeit semmilyen formában nem tároljuk. Az AI által támogatott algoritmusunk csak az email tartalmát dolgozza fel, és csak ezzel az információval foglalkozik.
+                We do not store customers' emails in any form. Our AI-supported algorithm processes only the content of the email and deals only with this information.
             </p>
             <p>
-                Az egyetlen személyes adat, amit gyűjtünk, az email címed, amelyet azonosításra használunk.
+                The only personal data we collect is your email address, which we use for identification purposes.
             </p>
             <p>
-                A CopyZilla Email Assistant Chrome-bővítményt csak személyes célra használhatod, és nem szabad semmilyen jogi, üzleti vagy egyéb célra felhasználni.
+                You can only use the CopyZilla Email Assistant Chrome extension for personal purposes and must not use it for any legal, business, or other purpose.
             </p>
             <p>
-                A CopyZilla Email Assistant Chrome-bővítményt csak saját felelősségedre használhatod, és nem vállalunk felelősséget semmilyen kártérítési igényért.
+                You are solely responsible for using the CopyZilla Email Assistant Chrome extension and we are not responsible for any claims for damages.
             </p>
             <p>
-                A CopyZilla Email Assistant Chrome-bővítményt nem szabad olyan tevékenységre használni, amely másokat zaklat, fenyeget vagy bármilyen módon sért.
+                The CopyZilla Email Assistant Chrome extension must not be used for any activity that harasses, threatens, or otherwise harms others.
             </p>
             <p>
-                Az általunk nyújtott szolgáltatásokkal kapcsolatos véleményeket, észrevételeket és javaslatokat szívesen fogadjuk.
+                We welcome opinions, comments, and suggestions regarding the services we provide.
             </p>
             <p>
-                A CopyZilla Email Assistant Chrome-bővítmény használatával elfogadod, hogy az általunk nyújtott szolgáltatásokat bármikor módosíthatjuk, és ezeket a módosításokat a felhasználási feltételek változásával együtt érvényesítjük.
+                By using the CopyZilla Email Assistant Chrome extension, you agree that we may modify the services we provide at any time, and these modifications will be enforced with changes to the terms of use.
             </p>
             <p>
-                Az általunk nyújtott szolgáltatások bármilyen formában való jogosulatlan felhasználása tilos, és jogi következményekkel járhat.
+                Unauthorized use of the services we provide in any form is prohibited and may result in legal consequences.
             </p>
             <p>
-                Az általunk nyújtott szolgáltatásokhoz való hozzáféréshez regisztrálnod kell, és a regisztrációval beleegyezel a felhasználási feltételekbe.
-            </p >
+                You must register to access the services we provide and by registering, you agree to the terms of use.
+            </p>
             <p>
-                Ha bármilyen kérdésed van a felhasználási feltételekkel kapcsolatban, kérünk, vedd fel velünk a kapcsolatot az info@copyzilla.hu címen. Köszönjük a CopyZilla Email Assistant Chrome-bővítmény használatát, és reméljük, hogy elégedett leszel a szolgáltatásunkkal!
-            </p >
+                If you have any questions about the terms of use, please contact us at info@copyzilla.com. Thank you for using the CopyZilla Email Assistant Chrome extension, and we hope you are satisfied with our service!
+            </p>
         </div >
     );
 }

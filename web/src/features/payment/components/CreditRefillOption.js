@@ -31,11 +31,12 @@ function CreditRefillOption(props) {
         <div className={className}>
             <div className="credit__option__header">
                 <h6>{props.item.name}</h6>
-                <p className="description">{props.item.priceFormatted}</p>
+                <p>{props.item.priceFormatted}</p>
             </div>
-            <span className="credit__option__divider"></span>
-            <h5>{props.item.creditFormatted}</h5>
-            <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Kiválaszt"></AsyncButton>
+            <p className="description">{props.item.description}</p>
+   {/*          <span className="credit__option__divider"></span>
+            <h5>{props.item.creditFormatted}</h5> */}
+            <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Select"></AsyncButton>
         </div>
     );
 }

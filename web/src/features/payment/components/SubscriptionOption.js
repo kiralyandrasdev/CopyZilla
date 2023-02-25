@@ -36,9 +36,9 @@ function SubscriptionOption(props) {
             <span className="subscription__option__divider"></span>
             <div className="subscription__option__price__container">
                 <h6>{props.item.priceFormatted}</h6>
-                <p className="description">havonta</p>
+                <p className="description">per month</p>
             </div>
-            <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Kiválaszt"></AsyncButton>
+            <AsyncButton loading={isLoading} onClick={handleCreateCheckoutSession} title="Select"></AsyncButton>
         </div>
     );
 }

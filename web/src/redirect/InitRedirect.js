@@ -28,11 +28,10 @@ export default function InitRedirect() {
         updateUser(apiUser);
 
         const path = window.location.pathname;
+        const initialized = localStorage.getItem(`initialized_${firebaseUid}`)
 
-        if (apiUser.planType) {
-            const initialized = localStorage.getItem(`initialized_${firebaseUid}`)
-
-            if (!initialized && path !== "/user/selectSubscription") {
+        if (apiUser.planType !== "paid" && !initialized) {
+            if (path !== "/user/selectSubscription") {
                 navigate("/user/selectSubscription");
                 return;
             }
@@ -61,6 +60,10 @@ export default function InitRedirect() {
             if (!path.includes("/user")) {
                 navigate("/user/home");
             }
+        }
+
+        if(path === "/user/selectSubscription" && initialized) {
+            navigate("/user/home");
         }
     });
 

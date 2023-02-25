@@ -7,7 +7,7 @@ type InstructionsPopupProps = {
 }
 
 function InstructionsPopup(props: InstructionsPopupProps) {
-    const instructionsText = "Add meg a leveled mondani kívánt üzenetét, és hagyd, hogy megfogalmazzuk helyetted."
+    const instructionsText = "You can add instructions to form your reply. You can use this to add a custom message, or to add a link to one or more documents, etc";
 
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -46,16 +46,16 @@ function InstructionsPopup(props: InstructionsPopupProps) {
     return (
         <div ref={popupRef} className={styles.instructionsPopup}>
             <div className={styles.instructionsPopup__content}>
-                <label>Utasítások</label>
+                <label>Instructions</label>
                 <p className="description">{instructionsText}</p>
                 <textarea
                     value={instanceInstructions}
                     onChange={(e) => setInstanceInstructions(e.target.value)}
                 />
                 <div className={styles.instructionsPopup__buttons}>
-                    <p className="textButton" onClick={handleClear}>Törlés</p>
-                    <p className="textButton" onClick={handleClose}>Mégse</p>
-                    <p className="textButton green" onClick={handleSave}>Mentés</p>
+                    <p className="textButton" onClick={handleClear}>Clear</p>
+                    <p className="textButton" onClick={handleClose}>Cancel</p>
+                    <p className="textButton green" onClick={handleSave}>Save</p>
                 </div>
             </div>
         </div>

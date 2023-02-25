@@ -8,6 +8,7 @@ import { getSubscriptionList } from '../../features/payment/actions/paymentActio
 import SubscriptionOption from '../../features/payment/components/SubscriptionOption';
 import './AppPage.css';
 import './SelectSubscription.css';
+import PricingCard from '../website/pricing/cards/PricingCard';
 
 function SelectSubscriptionPage() {
     const navigate = useNavigate();
@@ -26,10 +27,24 @@ function SelectSubscriptionPage() {
 
     const itemContainer = () => {
         if (!subscriptionList || subscriptionList.length < 1) {
-            return <p>Nincs elérhető csomag.</p>
+            return <p>No items found</p>
         }
         const items = subscriptionList.filter(e => e.planType !== "default").map((item, index) => {
-            return <SubscriptionOption order={index} key={index} item={item} />
+            console.log(item);
+            return (
+                <PricingCard
+                    key={index}
+                    priceId={item.priceId}
+                    dark={true}
+                    order={index}
+                    title={item.name}
+                    description={item.description}
+                    price={item.priceFormatted}
+                    pricingInterval="per month"
+                    features={item.features}
+                    selectColor="var(-green)"
+                />
+            )
         });
         return items;
     }
@@ -55,11 +70,16 @@ function SelectSubscriptionPage() {
         return (
             <div className="page__selectSubscription">
                 <img src={ChoiceSvg} alt="" className="page__selectSubscription__illustration illustration__150" />
-                <h4>Válassz csomagot és láss neki a munkának</h4>
+                <h4>Select a plan that suits you</h4>
                 <div className="page__selectSubscription__options__container">
                     {itemContainer()}
                 </div>
-                <TextButton className="page__selectSubscription__skip__button animation__fadeInUp" color="var(--grey2)" underline={true} title="Folytatás ingyenes csomaggal" onClick={() => handleSkipUpgrade()}></TextButton>
+                <TextButton
+                    className="page__selectSubscription__skip__button animation__fadeInUp"
+                    color="var(--grey2)"
+                    underline={true}
+                    title="Continue with free plan"
+                    onClick={() => handleSkipUpgrade()}></TextButton>
             </div>
         );
     }

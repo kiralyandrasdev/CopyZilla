@@ -12,10 +12,20 @@ export default function PaymentOverduePage() {
     return (
         <div className="page page__paymentOverdue">
             <img src={PurchaseSvg} className="illustration__150" alt="Loading..."></img>
-            <h4>A legutóbbi kifizetés nem sikerült</h4>
-            <p className='description'>Frissítsd fizetési adataid, hogy folytathasd a munkát, vagy válts ingyenes csomagunkra.</p>
-            <AsyncButton color="green" title="Fizetési adatok módosítása" onClick={() => openCustomerPortal(user.email)}></AsyncButton>
-            <TextButton className="animation__fadeInUp" color="var(--grey2)" underline={true} title="Ingyenes csomagra váltok" onClick={() => openCustomerPortal(user.email)}></TextButton>
+            <p>Payment overdue</p>
+            <p className='description'>Your last payment failed. Please update your payment information to continue using CopyZilla Email Assistant, or switch to a free plan.</p>
+            <AsyncButton
+                color="green"
+                title="Manage payment information"
+                onClick={() => openCustomerPortal(user.email)}
+            />
+            <TextButton
+                className="animation__fadeInUp"
+                color="var(--grey2)"
+                underline={true}
+                title="Switch to free plan"
+                onClick={() => openCustomerPortal(user.email)}
+            />
         </div>
     );
 }

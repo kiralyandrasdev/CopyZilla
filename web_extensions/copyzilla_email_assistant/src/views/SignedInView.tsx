@@ -60,10 +60,10 @@ function SignedInView() {
 
         return (
             <>
-                <p className="green">{applicationUser?.creditCount ?? "Unknown"} kredit</p>
+                <p className="green">{applicationUser?.creditCount ?? "Unknown"} credits</p>
                 <p>{user?.email}</p>
                 <p className="description">{applicationUser?.subscriptionPlanName}</p>
-                <p className="textButton" onClick={handleProfileClick}>Fiók</p>
+                <p className="textButton" onClick={handleProfileClick}>Account</p>
             </>
         );
     }
@@ -71,7 +71,7 @@ function SignedInView() {
     return (
         <div className="view view__signedIn">
             {content()}
-            <p className="textButton" onClick={() => signOut()}>Kijelentkezés</p>
+            <p className="textButton" onClick={() => signOut()}>Sign out</p>
         </div>
     );
 }

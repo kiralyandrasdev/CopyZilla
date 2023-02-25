@@ -12,7 +12,7 @@ function InstructionsButton(props: InstructionsButtonProps): JSX.Element {
 
     return (
         <div className="reply__option__container" onClick={() => handleClick()}>
-            <div className="reply__option__container__title">Utasítások 🗒</div>
+            <div className="reply__option__container__title">Instructions 🗒</div>
         </div>
     );
 }

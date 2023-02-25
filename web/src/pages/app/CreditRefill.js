@@ -22,7 +22,7 @@ export default function CreditRefill() {
 
     const itemContainer = () => {
         if (goods.length < 1) {
-            return <p>Nincs elérhető csomag.</p>
+            return <p>No items found</p>
         }
         const items = goods.map((item, index) => {
             return <CreditRefillOptions order={index} key={index} item={item} />
@@ -43,12 +43,12 @@ export default function CreditRefill() {
             <div className="page page__creditRefill">
                 <div className="creditRefill__page__header animation__fadeInDown">
                     <img className="illustration__150" src={PurchaseSvg} alt="Loading..."></img>
-                    <h4>Válassz csomagot és folytasd a munkát</h4>
+                    <h4>Select a package that suits you</h4>
                 </div>
                 <div className="creditRefill__itemsContainer">
                     {itemContainer()}
                 </div>
-                <p className="description animation__fadeInUp">Válaszd ki a számodra legmegfelelőbb csomagot</p>
+                <p className="description animation__fadeInUp">You will be redirected to Stripe Checkout to complete the payment</p>
             </div>
         );
     }

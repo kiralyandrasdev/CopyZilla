@@ -13,9 +13,9 @@ function SignedOutView() {
 
     return (
         <div className="view view__signedOut">
-            <h2>Jelentkezz be a fiókodba</h2>
+            <h2>Sign in to your account</h2>
             <LoginForm />
-            <p className="description textButton" onClick={() => handleNewAccountClick()}>Új fiók létrehozása</p>
+            <p className="description textButton" onClick={() => handleNewAccountClick()}>Create new account</p>
         </div>
     );
 }
