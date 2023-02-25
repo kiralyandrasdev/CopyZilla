@@ -28,7 +28,7 @@ namespace CopyZillaBackend.Application.Events.ProcessQuickPromptEvent
             var validator = new ProcessQuickPromptEventValidator();
             var validationResult = validator.Validate(request);
 
-            validationResult.ResolveEventResult(result);
+            validationResult.Resolve(result);
 
             // If validation error occurs stop event and return response
             if (!result.Success) return result;

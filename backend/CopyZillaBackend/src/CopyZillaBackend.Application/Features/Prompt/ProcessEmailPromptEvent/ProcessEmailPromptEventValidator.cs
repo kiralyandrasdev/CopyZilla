@@ -23,7 +23,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
               .WithErrorCode("400");
             RuleFor(e => e)
                .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Email))
-               .WithMessage("CurrentEmail must not be null!")
+               .WithMessage("Email must not be null!")
                .WithErrorCode("400");
             RuleFor(e => e)
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
