@@ -7,11 +7,11 @@ export interface WriteButtonProp {
 }
 
 function ReplyButton(props: WriteButtonProp): JSX.Element {
-    let title = "Megfogalmaz ✍";
+    let title = "Compose ✍";
     let textStyle = {};
 
     if (props.isWriting) {
-        title = "Íróink dolgoznak... ✍";
+        title = "Composing... ✍";
         textStyle = { "color": "var(--grey2)" }
     }
 

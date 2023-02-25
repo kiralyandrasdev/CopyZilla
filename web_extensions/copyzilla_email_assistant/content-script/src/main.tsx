@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           if (index === chars.length - 1 && lineIndex === replyLines.length - 1) {
             sendResponse({ type: 'to_background_WRITE_REPLY_SUCCESS' });
           }
-        }, 50 * index);
+        }, 25 * index);
       });
     });
   }

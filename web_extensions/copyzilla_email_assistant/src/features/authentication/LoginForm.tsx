@@ -31,7 +31,7 @@ function LoginForm() {
 
             await signInWithEmailAndPassword(auth, email, password).then((res) => {
                 if (!res.user.emailVerified) {
-                    setError("E-mail cím nincs megerősítve!");
+                    setError("Email address is not verified");
                     setIsLoading(false);
                     
                 }
@@ -52,18 +52,18 @@ function LoginForm() {
             <InputField
                 value={email}
                 onChange={handleEmailChange}
-                placeholder="E-mail cím"
+                placeholder="Email address"
                 suffixIcon={<FiMail />}
             />
             <InputField
                 value={password}
                 onChange={handlePasswordChange}
-                placeholder="Jelszó"
+                placeholder="Password"
                 suffixIcon={<FiKey />}
                 obscure={true}
             />
             <PrimaryButton
-                title="Bejelentkezés"
+                title="Sign in"
                 isLoading={isLoading}
                 enabled={true}
                 onClick={() => handleLogin()}

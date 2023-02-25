@@ -3,45 +3,45 @@ import { ReplyTypeItem } from "../components/response_type/ReplyType";
 
 export const AvailableTypes: ReplyTypeItem[] = [
     {
-        title: 'Mondj igent 👍',
+        title: 'Say yes 👍',
         value: 'yes',
     },
     {
-        title: 'Mondj nemet 👎',
+        title: 'Say no 👎',
         value: 'no',
     },
     {
-        title: 'Tudomásul vesz 👌',
+        title: 'Acknowledge 👌',
         value: 'acknowledge',
     },
     /*         {
             title: 'Ask a question ❓',
         }, */
     {
-        title: 'Mondj köszönetet 🙏',
+        title: 'Say thanks 🙏',
         value: 'thanks',
     },
 ]
 
 export const AvailableTones: ReplyToneModel[] = [
     {
-        title: 'Semleges 😊',
+        title: 'Neutral 😊',
         value: 'neutral',
     },
     {
-        title: 'Izgatott 😃',
+        title: 'Excited 😃',
         value: 'excited',
     },
     {
-        title: 'Mérges 😡',
+        title: 'Angry 😡',
         value: 'angry',
     },
     {
-        title: 'Összezavart 😕',
+        title: 'Confused 😕',
         value: 'confused',
     },
     {
-        title: 'Stresszes 😰',
+        title: 'Stressed 😰',
         value: 'stressed',
     }
 ]

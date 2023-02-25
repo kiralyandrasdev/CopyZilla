@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (!result.uid || !result.token) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_REPLY", data: {
-                            reply: "Kérlek jelentkezz be a fiókodba a bővítmény ablakon keresztül a funkció használatához.",
+                            reply: "Please sign in to your account through the extension popup.",
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -88,7 +88,7 @@ async function fetchUser({
     });
     if (!response.ok) {
         console.log(response);
-        throw new Error("Hiba történt a felhasználó lekérdezése közben.");
+        throw new Error("Failed to fetch user.");
     }
     const user = response.json();
     return user;
