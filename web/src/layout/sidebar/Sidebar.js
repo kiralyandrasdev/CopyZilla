@@ -20,11 +20,10 @@ export default function Sidebar() {
                 </div>
                 <div className="sidebar__main__nav">
                     <SidebarNavItem textColor="var(--grey4)" color="var(--green)" path="/user/home" active={true} text="Email Assistant"></SidebarNavItem>
-                    {/* <SidebarNavItem text="Mentések" path="/user/savedResults"></SidebarNavItem> */}
                 </div>
             </div>
             <div className="sidebar__bottom_nav">
-                <a onClick={() => handleSignOut()}>Kijelentkezés</a>
+                <a onClick={() => handleSignOut()}>Sign out</a>
             </div>
         </div>
     );

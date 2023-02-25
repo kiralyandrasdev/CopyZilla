@@ -9,7 +9,7 @@
     width: 250px;
     height: 100%;
     row-gap: 10px;
-    text-align: center;
+    text-align: start;
 }
 
 .credit__option__header {

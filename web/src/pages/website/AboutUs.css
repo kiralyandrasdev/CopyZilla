@@ -1,11 +1,12 @@
 .page__aboutUs {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     text-align: center;
     padding: 20px;
     row-gap: 40px;
-    height: calc(100vh - 120px);
+    height: 100%;
+    width: 100%;
 }
 
 .person__grid {
@@ -37,6 +38,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: start;
+    text-align: center;
     row-gap: 20px;
 }

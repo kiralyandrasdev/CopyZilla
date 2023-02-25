@@ -46,7 +46,8 @@
     grid-template-rows: 1fr;
     grid-template-areas:
         ". content .";
-    background-color: var(--grey0);
+    /* background-color: var(--grey0); */
+    background-color: white;
     z-index: 100;
     border: 1px solid var(--grey1);
 }
@@ -65,10 +66,6 @@
     cursor: pointer;
 }
 
-/* .header__public__content h5 {
-    color: white
-} */
-
 .header__nav__row {
     display: flex;
     flex-direction: row;
@@ -77,10 +74,6 @@
     column-gap: 30px;
     width: 100%;
 }
-
-/* .header__nav__row a {
-    color: white
-} */
 
 .header__nav__icon--dark {
     color: var(--grey5);

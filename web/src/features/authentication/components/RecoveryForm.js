@@ -46,21 +46,21 @@ export default function RecoveryForm() {
     return (
         <div className="authForm recoveryForm">
             <div className="authForm__header">
-                <h4>Fiók helyreállítása</h4>
-                <p className="description-text">A folytatáshoz ellenőrző kódot küldünk a fiókhoz tartozó e-mail címre</p>
+                <h4>Recover account</h4>
+                <p className="description-text">We will send you an email with a link to reset your password.</p>
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
-                    <TextField error={emailError} light={true} hint="E-mail cím" title="E-mail cím" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
+                    <TextField error={emailError} light={true} hint="Email address" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
                 </div>
             </div>
             <div className="authForm__primaryActions">
-                <AsyncButton loading={false} onClick={() => handlePasswordResetEmail()} title="Ellenőrző kód küldése"></AsyncButton>
+                <AsyncButton loading={false} onClick={() => handlePasswordResetEmail()} title="Send verification link"></AsyncButton>
             </div>
             {message && <p className="authForm__message">{message}</p>}
             {errorMessage && <p style={{ "color": "var(--red)" }} className="red">{errorMessage}</p>}
             <div className="authForm__secondaryActions">
-                <TextButton color="var(--grey3)" title="Bejelentkezés" onClick={() => routeChange("/auth/login")} />
+                <TextButton color="var(--grey3)" title="Sign in" onClick={() => routeChange("/auth/login")} />
             </div>
         </div>
     );

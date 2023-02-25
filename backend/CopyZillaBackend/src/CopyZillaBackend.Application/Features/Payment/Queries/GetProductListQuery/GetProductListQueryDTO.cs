@@ -6,5 +6,6 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQu
         public string PriceId { get; set; }
         public string PriceFormatted { get; set; }
         public string CreditFormatted { get; set; }
+        public string Description { get; set; }
     }
 }

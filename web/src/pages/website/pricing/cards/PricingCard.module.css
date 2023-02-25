@@ -12,6 +12,11 @@
     width: 300px;
 }
 
+.pricingCard__dark {
+    background-color: var(--grey3);
+    border: 1px solid var(--grey4);
+}
+
 .pricingCard__1 {
     animation-delay: 0.1s;
 }
@@ -77,4 +82,8 @@ li>div {
     column-gap: 10px;
     width: 100%;
     height: 50px;
+}
+
+.pricingCard__header__pricingInterval {
+    color: var(--grey2);
 }

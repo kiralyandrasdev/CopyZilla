@@ -30,7 +30,7 @@ function ChangeEmailPage() {
         if (isUpdateError) {
             setError(updateError);
         }
-        if(isUpdateSuccess) {
+        if (isUpdateSuccess) {
             setPassword("");
             setEmail("");
             setTimeout(() => {
@@ -42,7 +42,7 @@ function ChangeEmailPage() {
     const canSubmit = () => {
         if (password.length === 0) {
             setPasswordError(true);
-            setError("A jelszó megadása kötelező!");
+            setError("Password is required");
             return false;
         } else {
             setPasswordError(false);
@@ -51,7 +51,7 @@ function ChangeEmailPage() {
 
         if (email.length === 0) {
             setEmailError(true);
-            setError("Az új e-mail cím megadása kötelező!");
+            setError("Email address is required");
             return false;
         } else {
             setEmailError(false);
@@ -78,18 +78,31 @@ function ChangeEmailPage() {
         <div className="page page__changeEmail page__centerContent">
             <img className="illustration__100" src={EmailSvg}></img>
             <div className="changeEmail__heading">
-                <h5>E-mail cím megváltoztatása</h5>
-                <p className="description">A módosítást követően újra be kell majd jelentkezned.</p>
+                <h5>Update email address</h5>
+                <p className="description">After changing your email address, you will be logged out of your account.</p>
             </div>
             <div className="changeEmail__form">
-                <TextField password={true} error={passwordError} suffixIcon={<FiKey />} value={password} onChange={(e) => setPassword(e.target.value)} hint="Jelszó"></TextField>
-                <TextField error={emailError} suffixIcon={<FiMail />} value={email} onChange={(e) => setEmail(e.target.value)} hint="Új e-mail cím"></TextField>
+                <TextField
+                    hint="Password"
+                    password={true}
+                    error={passwordError}
+                    suffixIcon={<FiKey />}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <TextField
+                    error={emailError}
+                    suffixIcon={<FiMail />}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    hint="New email address"
+                />
                 <div className="changeEmail__form__actions">
-                    <AsyncButton loading={isUpdating} title="E-mail cím megváltoztatása" onClick={() => handleSubmit()}></AsyncButton>
+                    <AsyncButton loading={isUpdating} title="Update email address" onClick={() => handleSubmit()}></AsyncButton>
                 </div>
             </div>
             {error && <p className="red">{error}</p>}
-            {isUpdateSuccess && <p>Sikeresen megváltoztattad az e-mail címed! Hamarosan kijelentkeztetünk a fiókodból.</p>}
+            {isUpdateSuccess && <p>Your email address has been changed. You will be logged out shortly.</p>}
         </div>
     );
 }

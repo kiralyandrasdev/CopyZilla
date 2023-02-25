@@ -46,23 +46,23 @@ export default function PrivateHeader() {
 
     const creditCount = () => {
         if (isFetching || isLoading) {
-            return "Betöltés..."
+            return "Loading..."
         }
 
         if (error) {
-            return "Hiba történt"
+            return "Unknown error"
         }
 
-        return user.creditCount + " kredit"
+        return user.creditCount + " credits"
     }
 
     const planName = () => {
         if (isFetching || isLoading) {
-            return "Betöltés..."
+            return "Loading..."
         }
 
         if (error) {
-            return "Hiba történt"
+            return "Unknown error"
         }
 
         return userFetchResult.subscriptionPlanName;
@@ -80,9 +80,9 @@ export default function PrivateHeader() {
                 <div className="header__private__control">
                     <p className="semi-bold">{planName()}</p>
                     <p className="creditCount semi-bold">{creditCount()}</p>
-                    <AsyncButton onClick={() => navigate("/user/creditRefill")} shrinked={true} title="Kredit feltöltés"></AsyncButton>
+                    <AsyncButton onClick={() => navigate("/user/creditRefill")} shrinked={true} title="Buy credits"></AsyncButton>
                 </div>
-                <a className="header__nav__item semi-bold" href="/user/account">Fiók</a>
+                <a className="header__nav__item semi-bold" href="/user/account">Account</a>
             </header>
             <header className="header header__private header__portrait animation__fadeInDown">
                 <FiPlus onClick={() => nandleNavigate("/user/home")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
@@ -100,9 +100,9 @@ export default function PrivateHeader() {
                     <span className="header__nav__item__divider" />
                     <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Email Assistant</li>
                     {/* <li onClick={() => nandleNavigate("/user/savedResults")} className="header__nav__item semi-bold">Mentések</li> */}
-                    <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Kredit feltöltés</li>
-                    <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Fiók</li>
-                    <li onClick={() => logout()} className="header__nav__item semi-bold">Kijelentkezés</li>
+                    <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Buy credits</li>
+                    <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Account</li>
+                    <li onClick={() => logout()} className="header__nav__item semi-bold">Sign out</li>
                 </ul>
             </header>
         </>

@@ -19,7 +19,7 @@ function ChangePasswordPage() {
 
     const canSubmit = () => {
         if (password.length === 0) {
-            setError("A jelenlegi jelszó megadása kötelező!");
+            setError("Current password is required");
             setPasswordError(true);
             return false;
         } else {
@@ -27,7 +27,7 @@ function ChangePasswordPage() {
             setError("");
         }
         if (newPassword.length === 0) {
-            setError("Az új jelszó megadása kötelező!");
+            setError("New password is required");
             setNewPasswordError(true);
             return false;
         } else {
@@ -61,16 +61,30 @@ function ChangePasswordPage() {
     return (
         <div className="page page__changePassword page__centerContent">
             <img className="illustration__100" src={PasswordSvg}></img>
-            <h5>Jelszó megváltoztatása</h5>
+            <h5>Update password</h5>
             <div className="changePassword__form">
-                <TextField password={true} error={passwordError} suffixIcon={<FiKey />} value={password} onChange={(e) => setPassword(e.target.value)} hint="Jelenlegi jelszó"></TextField>
-                <TextField password={true} error={newPasswordError} suffixIcon={<FiKey />} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} hint="Új jelszó"></TextField>
+                <TextField
+                    password={true}
+                    error={passwordError}
+                    suffixIcon={<FiKey />}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    hint="Current password"
+                />
+                <TextField
+                    password={true}
+                    error={newPasswordError}
+                    suffixIcon={<FiKey />}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    hint="New password"
+                />
                 <div className="changePassword__form__actions">
-                    <AsyncButton loading={loading} title="Jelszó megváltoztatása" onClick={() => onSubmit()}></AsyncButton>
+                    <AsyncButton loading={loading} title="Update password" onClick={() => onSubmit()}></AsyncButton>
                 </div>
             </div>
             {error && <p className="red">{error}</p>}
-            {success && <p>Sikeresen megváltoztattad a jelszavad!</p>}
+            {success && <p>You have successfully changed your password</p>}
         </div>
     );
 }

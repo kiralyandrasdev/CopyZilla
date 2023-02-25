@@ -61,7 +61,6 @@ export const apiSlice = createApi({
                 url: `/user/${userId}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['User'],
         }),
         processQuickPrompt: builder.mutation({
             query: (firebaseUid, prompt) => ({

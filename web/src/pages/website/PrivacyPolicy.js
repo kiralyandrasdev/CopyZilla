@@ -3,40 +3,40 @@ import React from 'react';
 function PrivacyPolicyPage() {
     return (
         <div className="page page__public page__text animation__fadeInUp">
-            <h4>Adatvédelmi irányelvek</h4>
+            <h4>Privacy Policy</h4>
             <p>
-            Köszönjük, hogy használod a CopyZilla Email Assistant Chrome-bővítményt! Az adatvédelmi irányelvek a következők:
+                Thank you for using the CopyZilla Email Assistant Chrome extension! Our privacy policy is as follows:
             </p>
             <p>
-            Az általad megadott adatokat bizalmasan kezeljük, és nem adjuk ki harmadik félnek, kivéve, ha erre jogszabály kötelez minket.
+                We treat the information you provide confidentially and do not disclose it to third parties, except where required by law.
             </p>
             <p>
-            Az emailjeid tartalmát csak az AI által támogatott algoritmusunk dolgozza fel, és azokat semmilyen más célból nem használjuk fel.
+                The content of your emails is processed only by our AI-supported algorithm, and we do not use it for any other purpose.
             </p>
             <p>
-            Az általunk begyűjtött adatokat csak akkor használjuk fel, ha azok a bővítmény működéséhez szükségesek.
+                We only use the data we collect if it is necessary for the functioning of the extension.
             </p>
             <p>
-            Az email címedet kizárólag azonosítási célból használjuk fel, és semmilyen más célra nem használjuk azt.
+                We use your email address for identification purposes only and do not use it for any other purpose.
             </p>
             <p>
-            Az általunk nyújtott szolgáltatásokhoz való hozzáféréshez szükséges adatokat biztonságosan tároljuk, és megteszünk minden szükséges óvintézkedést a jogosulatlan hozzáférés megakadályozása érdekében.
+                The data required to access the services we provide is stored securely, and we take all necessary precautions to prevent unauthorized access.
             </p>
             <p>
-            Az általunk nyújtott szolgáltatásokhoz való hozzáféréshez használt jelszavadat szintén biztonságosan tároljuk, és minden lehetséges módon megvédelmezzük.
+                We also store your password for accessing the services we provide securely and protect it in every possible way.
             </p>
             <p>
-            Az adatokat biztonságosan tároljuk, és megteszünk minden szükséges óvintézkedést a jogosulatlan hozzáférés, változtatás vagy törlés megakadályozása érdekében.
+                We store data securely and take all necessary precautions to prevent unauthorized access, modification, or deletion.
             </p>
             <p>
-            Az adatvédelmi irányelveket a felhasználási feltételekkel együtt érvényesítjük.
+                We enforce the privacy policy together with the terms of use.
             </p>
             <p>
-            Az adatvédelmi irányelvek változtatása esetén a felhasználókat értesítjük a változásokról, és az új irányelveket a közzétételük napjától érvényesítjük.
-            </p >
+                In the event of changes to the privacy policy, we will notify users of the changes and implement the new policy from the date of publication.
+            </p>
             <p>
-            Ha bármilyen kérdésed vagy észrevételed van az adatvédelmi irányelvekkel kapcsolatban, kérünk, vedd fel velünk a kapcsolatot az info@copyzilla.hu címen. Köszönjük, hogy a CopyZilla Email Assistant Chrome-bővítményt használod, és reméljük, hogy elégedett leszel a szolgáltatásunkkal!
-            </p >
+                If you have any questions or concerns about the privacy policy, please contact us at info@copyzilla.com. Thank you for using the CopyZilla Email Assistant Chrome extension, and we hope you are satisfied with our service!
+            </p>
         </div >
     );
 }

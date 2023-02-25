@@ -20,8 +20,8 @@ function LandingPage() {
         <div className="page page__public page__landing animation__fadeInUp">
             <div className="landingSection landingSection__hero">
                 <div className="landingSection__hero__header">
-                    <h4>Bemutatkozik az új, személyes e-mail asszisztensed 🚀</h4>
-                    <h6>A CopyZilla Email Assistant tanul az írási stílusodból, és válaszokat készít úgy, mintha te írtad volna őket.</h6>
+                    <h4>Say hi to your new email companion! 🚀</h4>
+                    <h6>CopyZilla Email Assistant learns from your writing style to help you write emails faster and more efficiently.</h6>
                 </div>
                 <div className="landingSection__hero__demo">
                     <video loop={true} autoPlay={true} src="https://copyzillastaticassets.blob.core.windows.net/videos/copyzilla_en_demo.mov"></video>
@@ -33,25 +33,25 @@ function LandingPage() {
                     </div>
                     <div className="supportSection__item">
                         <img src={OutlookSvg}></img>
-                        <p className="description">Outlook (hamarosan)</p>
+                        <p className="description">Outlook (soon)</p>
                     </div>
                 </div>
                 <div className="downloadSection">
                     <div className="downloadSection__button">
                         <AsyncButton
-                            title="Ingyenes letöltés"
+                            title="Download for Chrome"
                             onClick={() => { }}
                             prefixIcon={ChromeSvg}
                         />
                     </div>
-                    <p className='description'>Elérhető a Google Chrome bővítmény webáruházban</p>
+                    <p className='description'>Available for Chrome and Firefox</p>
                 </div>
             </div>
             <div className="landingSection landingSection__secondary landingSection__outlined landingSection__grid">
                 <div className="landingSection__grid__item landingSection__grid__item__text landingSection__grid__item__text__left">
-                    <h4>Kontextus</h4>
-                    <p className="description">A CopyZilla Email Assistant a levelezési láncból nyeri ki a kontextust, hogy intelligens válaszokat tudjon készíteni</p>
-                    <p className="description">Garantáljuk, hogy a válaszok lenyűgöznek majd!</p>
+                    <h4>Context</h4>
+                    <p className="description">CopyZilla Email Assistant extracts context from the email thread in order to create intelligent responses.</p>
+                    <p className="description">We guarantee that the responses will be impressive!</p>
                 </div>
                 <div className="landingSection__grid__item landingSection__grid__item__image">
                     <img src={SampleReplyContext}></img>
@@ -62,27 +62,29 @@ function LandingPage() {
                     <img src={SampleReply2}></img>
                 </div>
                 <div className="landingSection__grid__item landingSection__grid__item__text landingSection__grid__item__text__right">
-                    <h4>Többnyelvű</h4>
-                    <p className="description">Válaszolj bármely nyelven, hogy válaszod illeszkedjen a megválaszolandó e-mail nyelvéhez</p>
+                    <h4>Multilingual</h4>
+                    <p className="description">Respond in any language so that your response matches the language of the email being answered.</p>
                 </div>
             </div>
             <div className="landingSection landingSection__secondary landingSection__outlined landingSection__grid">
                 <div className="landingSection__grid__item landingSection__grid__item__text landingSection__grid__item__text__left">
-                    <h4>Szabd testre a választ!</h4>
-                    <p className="description">Extra kontextust adhatsz meg, hogy minden e-mailre tökéletes választ tudjunk adni</p>
+                    <h4>Tailor emails to your needs!</h4>
+                    <p className="description">You can provide additional context to ensure that we can provide the perfect response to every email.</p>
                 </div>
                 <div className="landingSection__grid__item landingSection__grid__item__image landingSection__grid__item__image__small">
                     <img src={SampleInstructions}></img>
                 </div>
             </div>
             <div className="landingSection landingSection__download">
-                <h6>Töltsd le a bővítményt és láss neki a hatékony levelezéshez!</h6>
-                <AsyncButton
-                    title="Ingyenes letöltés"
-                    onClick={() => navigate('/auth/login')}
-                    color="white"
-                    prefixIcon={ChromeSvg}
-                />
+                <h6>Download the extension and start efficient emailing today!</h6>
+                <div className="downloadSection__button">
+                    <AsyncButton
+                        title="Download for Chrome"
+                        onClick={() => { }}
+                        prefixIcon={ChromeSvg}
+                        color="white"
+                    />
+                </div>
             </div>
         </div>
     );

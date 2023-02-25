@@ -5,8 +5,8 @@ export default function CheckoutCompleted(props) {
     return (
         <div className="page page__centerContent page__checkout__callback animation__fadeInUp">
             <img className="illustration" src={WellDoneSvg}></img>
-            <h4>Jó munkát kívánunk!</h4>
-            <p className="description">Vásárlás után megeshet, hogy frissítened kell az oldalt.</p>
+            <h4>Payment successful</h4>
+            <p className="description">After payment you may need to refresh the page to see the changes in your account</p>
         </div>
     )
 }

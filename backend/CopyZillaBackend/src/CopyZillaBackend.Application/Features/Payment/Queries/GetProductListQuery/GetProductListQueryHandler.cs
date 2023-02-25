@@ -35,7 +35,8 @@ namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQu
                     Name = e.Name,
                     PriceId = e.DefaultPriceId,
                     PriceFormatted = e.Metadata["price_formatted"],
-                    CreditFormatted = e.Metadata["credit_count_formatted"]
+                    CreditFormatted = e.Metadata["credit_count_formatted"],
+                    Description = e.Description
                 };
             })
             .ToList();

@@ -32,14 +32,14 @@ export default function LoginForm() {
 
     const canSubmit = () => {
         if (email.length === 0) {
-            setError('E-mail cím megadása kötelező');
+            setError("Email address is required");
             setEmailError(true);
             return false;
         } else {
             setEmailError(false);
         }
         if (password.length === 0) {
-            setError('Jelszó megadása kötelező');
+            setError("Password is required");
             setPasswordError(true);
             return false;
         } else {
@@ -63,25 +63,25 @@ export default function LoginForm() {
     return (
         <div className="authForm loginForm">
             <div className="authForm__header">
-                <h4>Üdvözlünk</h4>
-                <p className="description">Jelentkezz be a fiókodba</p>
+                <h4>Hey there!</h4>
+                <p className="description">Sign in to your account</p>
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
-                    <TextField light={true} error={emailError} hint="E-mail cím" title="E-mail cím" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
+                    <TextField light={true} error={emailError} hint="Email address" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
                 </div>
                 <div className="authForm__field__password">
-                    <TextField light={true} error={passwordError} hint="Jelszó" title="Jelszó" value={password} suffixIcon={<RiLockPasswordLine />} onChange={handlePasswordChange} password={true}></TextField>
+                    <TextField light={true} error={passwordError} hint="Password" value={password} suffixIcon={<RiLockPasswordLine />} onChange={handlePasswordChange} password={true}></TextField>
                 </div>
-                <a className="description loginForm__passwordRecovery" href="/auth/accountRecovery">Elfelejtetted a jelszavad?</a>
+                <a className="description loginForm__passwordRecovery" href="/auth/accountRecovery">Forgot your password?</a>
             </div>
             <div className="authForm__primaryActions">
-                <AsyncButton loading={isLoading} onClick={() => handleLogin()} title="Bejelentkezés"></AsyncButton>
+                <AsyncButton loading={isLoading} onClick={() => handleLogin()} title="Sign in"></AsyncButton>
             </div>
             {error && <p style={{ "color": "var(--red)", "textAlign": "center" }}>{error}</p>}
             <div className="authForm__secondaryActions">
-                <p className="description loginForm__noAccountQuestion">Nincs fiókod? </p>
-                <TextButton color="var(--grey3)" title="Fiók létrehozása" onClick={() => routeChange("/auth/signup")} />
+                <p className="description loginForm__noAccountQuestion">Don't have an account? </p>
+                <TextButton color="var(--grey3)" title="Create new account" onClick={() => routeChange("/auth/signup")} />
             </div>
         </div>
     );

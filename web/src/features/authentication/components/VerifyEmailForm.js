@@ -8,11 +8,26 @@ import { AuthContext } from '../authContext';
 function VerifyEmailForm() {
     const { user } = useContext(AuthContext);
     const [message, setMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleVerifyEmail = async () => {
+        setIsLoading(true);
+
         const auth = getAuth();
-        await sendEmailVerification(auth.currentUser);
-        setMessage("Megerősítő e-mail elküldve");
+
+        try {
+            await sendEmailVerification(auth.currentUser);
+        } catch (error) {
+            setMessage(null);
+            setErrorMessage(error.code);
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(false);
+        setErrorMessage(null);
+        setMessage("Verification email sent. Please check your inbox.");
     }
 
     const handleSignOut = async () => {
@@ -22,15 +37,20 @@ function VerifyEmailForm() {
     return (
         <div className="authForm loginForm">
             <div className="authForm__header">
-                <h4>E-mail cím ellenőrzése</h4>
-                {user && <p className="description">Kérünk, ellenőrizd e-mail címed. A megerősítő linket elküldtük a {user.email} címre. Amennyiben nem találod az üzenetet, kérj új megerősítő linket.</p>}
+                <h4>Verify address</h4>
+                {user && <p className="description">We have sent a verification link to {user.email}. Please check your inbox and click the link to verify your email address.</p>}
             </div>
             <div className="authForm__primaryActions">
-                <AsyncButton onClick={() => handleVerifyEmail()} title="Megerősítő e-mail küldése"></AsyncButton>
+                <AsyncButton
+                    onClick={() => handleVerifyEmail()}
+                    title="Send verification email"
+                    loading={isLoading}
+                />
             </div>
             {message && <p className="authForm__message">{message}</p>}
+            {errorMessage && <p className="red">{errorMessage}</p>}
             <div className="authForm__secondaryActions">
-                <TextButton color="var(--grey3)" title="Bejelentkezés más felhasználóval" onClick={() => handleSignOut()} />
+                <TextButton color="var(--grey3)" title="Sign in with a different account" onClick={() => handleSignOut()} />
             </div>
         </div>
     );

@@ -31,29 +31,49 @@ export default function Profile() {
         }
 
         if (error) {
-            return <p>Hiba történt</p>;
+            return <p>Unknown error</p>;
         }
 
         return (
             <>
                 <div className="page__account__section page__account__section__1 animation__fadeInUp">
-                    <h5>Fiók</h5>
+                    <h5>Account</h5>
                     <p className="description email__heading">{user.email}</p>
                     <div className="spacer"></div>
                     <div className="account__buttons">
-                        <TextButton color="white" prefixIcon={<FiMail />} title="E-mail cím megváltoztatása" onClick={() => navigate("/user/account/changeEmail")}></TextButton>
-                        <TextButton color="white" prefixIcon={<FiKey />} title="Jelszó megváltoztatása" onClick={() => navigate("/user/account/changePassword")}></TextButton>
+                        <TextButton
+                            color="white"
+                            prefixIcon={<FiMail />}
+                            title="Update email address"
+                            onClick={() => navigate("/user/account/changeEmail")}
+                        />
+                        <TextButton
+                            color="white"
+                            prefixIcon={<FiKey />}
+                            title="Update password"
+                            onClick={() => navigate("/user/account/changePassword")}
+                        />
                     </div>
                 </div>
                 <div className="page__account__section page__account__section__2 animation__fadeInUp">
-                    <h5>Előfizetés</h5>
+                    <h5>Subscription</h5>
                     <div className="spacer"></div>
                     <p>{user.subscriptionPlanName}</p>
-                    <p className="description">Megújul ekkor: {getDate(user.subscriptionValidUntil)}</p>
-                    <TextButton color="var(--green)" underline={true} title="Előfizetés és fizetési adatok kezelése" onClick={() => openCustomerPortal(user.email)}></TextButton>
+                    <p className="description">Renews on: {getDate(user.subscriptionValidUntil)}</p>
+                    <TextButton
+                        color="var(--green)"
+                        underline={true}
+                        title="Manage subscription and payment details"
+                        onClick={() => openCustomerPortal(user.email)}
+                    />
                 </div>
                 <div className="page__account__section__3 animation__fadeInUp">
-                    <TextButton color="var(--grey2)" underline={true} title="Fiók törlése" onClick={() => navigate("/user/account/deleteAccount")}></TextButton>
+                    <TextButton
+                        color="var(--grey2)"
+                        underline={true}
+                        title="Delete account"
+                        onClick={() => navigate("/user/account/deleteAccount")}
+                    />
                 </div>
             </>
         );
