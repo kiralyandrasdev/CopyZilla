@@ -36,7 +36,7 @@ function TermsOfServicePage() {
                 You must register to access the services we provide and by registering, you agree to the terms of use.
             </p>
             <p>
-                If you have any questions about the terms of use, please contact us at info@copyzilla.com. Thank you for using the CopyZilla Email Assistant Chrome extension, and we hope you are satisfied with our service!
+                If you have any questions about the terms of use, please contact us at info@copyzilla.hu. Thank you for using the CopyZilla Email Assistant Chrome extension, and we hope you are satisfied with our service!
             </p>
         </div >
     );

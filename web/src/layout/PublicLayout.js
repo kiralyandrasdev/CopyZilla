@@ -53,7 +53,7 @@ export default function PublicLayout() {
             </main>
             <footer className="footer footer__public">
                 <p>© 2023 CopyZilla</p>
-                <p>info@copyzilla.com</p>
+                <p>info@copyzilla.hu</p>
                 <a href="/termsOfService">Terms of service</a>
                 <a href="/privacyPolicy">Privacy policy</a>
                 {/* <a href="/contact">Kapcsolat</a> */}

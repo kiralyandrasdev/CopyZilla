@@ -35,7 +35,7 @@ function PrivacyPolicyPage() {
                 In the event of changes to the privacy policy, we will notify users of the changes and implement the new policy from the date of publication.
             </p>
             <p>
-                If you have any questions or concerns about the privacy policy, please contact us at info@copyzilla.com. Thank you for using the CopyZilla Email Assistant Chrome extension, and we hope you are satisfied with our service!
+                If you have any questions or concerns about the privacy policy, please contact us at info@copyzilla.hu. Thank you for using the CopyZilla Email Assistant Chrome extension, and we hope you are satisfied with our service!
             </p>
         </div >
     );
