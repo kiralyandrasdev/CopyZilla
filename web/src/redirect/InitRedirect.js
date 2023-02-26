@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import NotFoundSvg from '../assets/not_found.svg';
-import { LoadingIndicator, TextButton } from '../components';
+import { LoadingIndicator, TextButton, TextField } from '../components';
 import { UserContext } from '../features';
 import { useGetUserQuery } from '../features/api/apiSlice';
 import { logout } from '../features/authentication/actions/authActions';
@@ -73,22 +73,19 @@ export default function InitRedirect() {
             <div className={styles.initRedirect}>
                 <div className={styles.initRedirect__content}>
                     <img src={NotFoundSvg} className="illustration__150"></img>
-                    <h5>Uh oh, váratlan hiba történt</h5>
+                    <h5>Oops, an unexpected error occurred.</h5>
                     {
                         error.errorMessage &&
                         <div className={styles.initRedirect__content__error__description}>
                             <p>{error.errorMessage}</p>
-                            {error.statusCode && <p className="description">Kód: {error.statusCode}</p>}
+                            {error.statusCode && <p className="description">Code: {error.statusCode}</p>}
                         </div>
                     }
+                    <p>Please contact us at info@copyzilla.hu.</p>
                     <TextButton
-                        title="Vedd fel velünk a kapcsolatot"
-                        color="var(--green)"
-                        onClick={() => navigate("/contact")}
-                    />
-                    <TextButton
-                        title="Kijelentkezés"
+                        title="Logout"
                         onClick={() => logout()}
+                        color="var(--green)"
                     />
                 </div>
             </div>
