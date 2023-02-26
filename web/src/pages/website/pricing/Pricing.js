@@ -48,7 +48,7 @@ function PricingPage() {
                     price="18$"
                     pricingInterval="per month"
                     features={[
-                        "100 credits per month",
+                        "300 credits per month",
                         "Automatic language detection",
                         "Instant access to new features",
                     ]}
