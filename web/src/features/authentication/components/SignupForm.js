@@ -81,6 +81,12 @@ export default function SignupForm() {
         return true;
     }
 
+    window.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            handleSignup();
+        }
+    });
+
     const handleSignup = async () => {
         if (!canSubmit()) return;
 

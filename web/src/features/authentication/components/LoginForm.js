@@ -47,6 +47,12 @@ export default function LoginForm() {
         }
         return true;
     }
+    
+    window.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    });
 
     const handleLogin = async () => {
         if (!canSubmit()) return;

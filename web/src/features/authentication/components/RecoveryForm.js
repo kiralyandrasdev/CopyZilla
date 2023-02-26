@@ -29,6 +29,12 @@ export default function RecoveryForm() {
         return true;
     }
 
+    window.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            handlePasswordResetEmail();
+        }
+    });
+
     const handlePasswordResetEmail = () => {
         if (!canSendEmail()) return;
         setMessage(null);
