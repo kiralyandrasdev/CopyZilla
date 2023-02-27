@@ -102,7 +102,7 @@ export default function SignupForm() {
             });
             await sendEmailVerification(user, {url:"https://copyzilla.hu/auth/login"});
         } catch (e) {
-            setError(firebaseSignupErrorMessage(e.code));
+            setError(e.code);
         }
 
         setIsLoading(false);

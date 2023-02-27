@@ -61,7 +61,7 @@ export default function LoginForm() {
         try {
             await login({ email, password });
         } catch (e) {
-            setError(firebaseLoginErrorMessage(e.code));
+            setError(e.code);
         }
         setIsLoading(false);
     }
