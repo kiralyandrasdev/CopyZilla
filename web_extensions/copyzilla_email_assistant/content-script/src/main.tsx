@@ -2,10 +2,15 @@ import { createRoot } from 'react-dom/client';
 import './main.css'
 import App from './App'
 import { initializeApp } from '@firebase/app';
-import { firebaseConfig } from '../../src/config/firebaseConfig';
+import { getFirebaseConfig } from '../../src/config/firebaseConfig';
 import OptionsContextProvider from './context/optionsContext';
 
-initializeApp(firebaseConfig);
+async function initializeFirebase() {
+  const firebaseConfig = await getFirebaseConfig();
+  initializeApp(firebaseConfig!);
+}
+
+initializeFirebase();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'to_content_WRITE_REPLY') {
