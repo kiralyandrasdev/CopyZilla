@@ -1,9 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import './main.css'
-import App from './App'
+import App, { MailClient } from './App'
 import { initializeApp } from '@firebase/app';
 import { firebaseConfig } from '../../src/config/firebaseConfig';
 import OptionsContextProvider from './context/optionsContext';
+import { getMailClient, getPopupMode } from './utils/optionsUtils';
 
 initializeApp(firebaseConfig);
 
@@ -40,35 +41,49 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-const appId = 'replyRoot'
+function insertApp() {
+  const appId = 'replyRoot'
 
-function appendEditor() {
   const existingContainer = document.getElementById(appId);
   if (existingContainer != null) {
     return;
   }
 
-  const replyTdElement = document.querySelector('.GQ');
-  if (!replyTdElement) {
+  let mailClient = getMailClient();
+
+  let targetClass = 'GQ';
+
+  if (mailClient === MailClient.Outlook) {
+    targetClass = '.yz4r1';
+  }
+
+  const appParent = document.querySelector(targetClass);
+  if (!appParent) {
+    console.log('No app parent found');
     return;
   }
 
   const app = document.createElement('div')
   app.id = appId;
 
-  replyTdElement.insertBefore(app, replyTdElement.firstChild);
+  let popupMode = getPopupMode(appParent);
+
+  appParent.insertBefore(app, appParent.firstChild);
 
   const root = createRoot(app!);
 
   root.render(
     <OptionsContextProvider>
-      <App />
+      <App
+        popupMode={popupMode}
+        mailClient={mailClient}
+      />
     </OptionsContextProvider>
   )
 }
 
 window.addEventListener("load", () => {
-  appendEditor();
+  insertApp();
 });
 
 const target = document.body;
@@ -78,7 +93,7 @@ const observer = new MutationObserver((mutations) => {
   observer.disconnect();
 
   setTimeout(() => {
-    appendEditor();
+    insertApp();
 
     observer.observe(target, config);
   }, 1000);

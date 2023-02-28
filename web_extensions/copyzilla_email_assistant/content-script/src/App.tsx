@@ -1,6 +1,6 @@
 /*global chrome*/
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './App.css'
 import ReplyMoodSelector from './features/reply/components/mood/ReplyToneSelector'
 import ReplyTypeSelector from './features/reply/components/response_type/ReplyTypeSelector'
@@ -10,10 +10,30 @@ import { OptionsContext } from './context/optionsContext';
 import InstructionsButton from './features/reply/components/buttons/InstructionsButton';
 import InstructionsPopup from './features/reply/components/popups/InstructionsPopup';
 
-export default function App() {
+export enum PopupMode {
+  Allow,
+  Disallow,
+}
+
+export enum MailClient {
+  Gmail,
+  Outlook,
+}
+
+type AppProps = {
+  popupMode: PopupMode;
+  mailClient: MailClient;
+}
+
+export default function App(props: AppProps) {
   const [isWriting, setIsWriting] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
-  const { options } = useContext(OptionsContext);
+  const { options, popupMode, setPopupMode, setMailClient } = useContext(OptionsContext);
+
+  useEffect(() => {
+    setPopupMode(props.popupMode);
+    setMailClient(props.mailClient);
+  }, []);
 
   const handleWrite = () => {
     setIsWriting(true);
@@ -48,7 +68,7 @@ export default function App() {
         </div>
         <div className="reply__actions">
           <div className="instructionsPopup__parent">
-            {instructionsOpen &&
+            {instructionsOpen && popupMode === PopupMode.Allow &&
               <InstructionsPopup
                 onClose={handleInstructionsOpen}
               />}
