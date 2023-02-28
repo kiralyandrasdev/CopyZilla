@@ -4,10 +4,15 @@ import './main.css'
 import App from './App'
 import AuthContextProvider from './context/authContext';
 import { initializeApp } from '@firebase/app';
-import { firebaseConfig } from './config/firebaseConfig';
+import { getFirebaseConfig } from './config/firebaseConfig';
 import AuthWrapper from './AuthWrapper';
 
-initializeApp(firebaseConfig);
+async function initializeFirebase() {
+  const firebaseConfig = await getFirebaseConfig();
+  initializeApp(firebaseConfig!);
+}
+
+initializeFirebase();
 
 createRoot(document.getElementById('root')!).render(
   <AuthContextProvider

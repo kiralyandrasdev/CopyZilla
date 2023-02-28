@@ -1,7 +1,7 @@
 import { initializeApp } from "@firebase/app";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
-const firebaseConfig = {
+const prodFirebaseConfig = {
     apiKey: "AIzaSyABqjrYSGB9I9yMnpDOzm2r09cPzU1Sjo4",
     authDomain: "copyzilla-f4288.firebaseapp.com",
     projectId: "copyzilla-f4288",
@@ -11,17 +11,44 @@ const firebaseConfig = {
     measurementId: "G-3FQX6DLE0N"
 };
 
-initializeApp(firebaseConfig);
+const devFirebaseConfig = {
+    apiKey: "AIzaSyCptuYRmGsGFKqlmxUgBI8sb95uSgA-34o",
+    authDomain: "copyzillatest.firebaseapp.com",
+    projectId: "copyzillatest",
+    storageBucket: "copyzillatest.appspot.com",
+    messagingSenderId: "499584646337",
+    appId: "1:499584646337:web:b6f5d0146efd3e56e52840"
+};
 
-const auth = getAuth();
+async function getFirebaseConfig() {
+    return new Promise((resolve) => {
+        chrome.management.getSelf((info) => {
+            if (info.installType === "development") {
+                resolve(devFirebaseConfig);
+            }
 
-onAuthStateChanged(auth, (user) => {
-    if (user && user.emailVerified) {
-        chrome.storage.sync.set({ uid: user.uid, token: user.accessToken, email: user.email });
-    } else {
-        chrome.storage.sync.set({ uid: null, token: null, email: null });
-    }
-});
+            resolve(prodFirebaseConfig);
+        });
+    });
+}
+
+async function initializeFirebase() {
+    const firebaseConfig = await getFirebaseConfig();
+
+    initializeApp(firebaseConfig);
+
+    const auth = getAuth();
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user && user.emailVerified) {
+            chrome.storage.sync.set({ uid: user.uid, token: user.accessToken, email: user.email });
+        } else {
+            chrome.storage.sync.set({ uid: null, token: null, email: null });
+        }
+    });
+} 
+
+initializeFirebase();
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type == "to_background_WRITE_REPLY") {

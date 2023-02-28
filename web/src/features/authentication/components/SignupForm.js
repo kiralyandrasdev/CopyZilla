@@ -8,6 +8,7 @@ import { AsyncButton, TextButton, TextField } from "../../../components";
 import { useCreateUserMutation } from "../../api/apiSlice";
 import { deleteAccount, login, logout, signup } from "../actions/authActions";
 import { firebaseSignupErrorMessage } from "../utils/authUtils";
+import { websiteUrl } from '../../../config/envConfig';
 import "./AuthForm.css";
 
 export default function SignupForm() {
@@ -100,8 +101,10 @@ export default function SignupForm() {
                     setError(JSON.stringify(data.error));
                 }
             });
-            await sendEmailVerification(user, {url:"https://copyzilla.hu/auth/login"});
+            const loginUrl = `${websiteUrl}/auth/login`;
+            await sendEmailVerification(user, {url:loginUrl});
         } catch (e) {
+            console.log(e);
             setError(e.code);
         }
 

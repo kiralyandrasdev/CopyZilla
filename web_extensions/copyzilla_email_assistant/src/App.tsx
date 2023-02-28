@@ -5,10 +5,15 @@ import SignedInView from './views/SignedInView'
 import SignedOutView from './views/SignedOutView'
 import LoadingIndicator from './components/LoadingIndicator'
 import { initializeApp } from '@firebase/app'
-import { firebaseConfig } from './config/firebaseConfig'
+import { getFirebaseConfig } from './config/firebaseConfig'
 import { getWebsiteUrl } from './config/envConfig'
 
-initializeApp(firebaseConfig);
+async function initializeFirebase() {
+  const firebaseConfig = await getFirebaseConfig();
+  initializeApp(firebaseConfig!);
+}
+
+initializeFirebase();
 
 function App() {
   const { user } = useContext(AuthContext)

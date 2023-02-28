@@ -77,11 +77,13 @@ app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") 
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
+string configFileName = app.Environment.IsDevelopment() ? "firebaseConfig.Development.json" : "firebaseConfig.json";
+
 if (FirebaseApp.GetInstance("default") is null)
 {
     FirebaseApp.Create(new AppOptions()
     {
-        Credential = GoogleCredential.FromFile("firebaseConfig.json"),
+        Credential = GoogleCredential.FromFile(configFileName),
     }, "default");
 }
 
