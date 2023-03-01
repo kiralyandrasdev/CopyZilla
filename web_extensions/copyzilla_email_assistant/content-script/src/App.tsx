@@ -1,11 +1,10 @@
 /*global chrome*/
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './App.css'
 import ReplyMoodSelector from './features/reply/components/mood/ReplyToneSelector'
 import ReplyTypeSelector from './features/reply/components/response_type/ReplyTypeSelector'
 import ReplyButton from './features/reply/components/buttons/ReplyButton'
-import gmail_parseEmail from './utils/gmailUtils';
 import { OptionsContext } from './context/optionsContext';
 import InstructionsButton from './features/reply/components/buttons/InstructionsButton';
 import InstructionsPopup from './features/reply/components/popups/InstructionsPopup';
@@ -41,9 +40,6 @@ export default function App(props: AppProps) {
       email = parseEmail();
     }
 
-    console.log('composeType', composeType);
-    console.log('email', email);
-
     const optionsDto = {
       email: email,
       objective: options.objective.value,
@@ -70,14 +66,15 @@ export default function App(props: AppProps) {
     <div className="app">
       <div className="options">
         <ReplyMoodSelector />
-        <ReplyTypeSelector />
+        {
+           composeType == ComposeType.Reply && <ReplyTypeSelector />
+        }
         <div className="reply__actions">
           <div className="instructionsPopup__parent">
             {instructionsOpen && popupMode === PopupMode.Allow &&
               <InstructionsPopup
                 onClose={handleInstructionsOpen}
               />}
-
             <InstructionsButton
               onClick={handleInstructionsOpen}
             />
