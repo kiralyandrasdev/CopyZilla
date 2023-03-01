@@ -87,7 +87,7 @@ export default function PrivateHeader() {
             <header className="header header__private header__portrait animation__fadeInDown">
                 <FiPlus onClick={() => nandleNavigate("/user/home")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
                 <div className="header__main">
-                    <h5>copyzilla</h5>
+                    <h5 onClick={() => nandleNavigate("/")}>copyzilla</h5>
                 </div>
                 <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon header__nav__icon--light"></FiMenu>
                 <ul ref={wrapperRef} className={menuClass}>
