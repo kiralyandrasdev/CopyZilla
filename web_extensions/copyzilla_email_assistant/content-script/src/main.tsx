@@ -8,6 +8,7 @@ import { MailClient } from './enum/mailClient';
 import App from './App';
 import { ComposeType } from './enum/composeType';
 import { PopupMode } from './enum/popupMode';
+import { ClientConfig, ClientConfigList } from './config/clientConfig';
 
 async function initializeFirebase() {
   const firebaseConfig = await getFirebaseConfig();
@@ -18,8 +19,19 @@ initializeFirebase();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'to_content_WRITE_EMAIL') {
-    const messageBodyElement = document.querySelector('.Am.Al.editable.LW-avf.tS-tW');
+    const client = getMailClient();
+
+    const messageEntryClass = ClientConfigList.get(client)!.messageEntryClass;
+
+    const messageBodyElement = document.querySelector(messageEntryClass);
     const replyLines = request.data.reply.split('\n');
+
+    // Remove all children
+    while (messageBodyElement?.firstChild) {
+      messageBodyElement.removeChild(messageBodyElement.firstChild);
+    }
+
+    console.log('replyLines', replyLines);
 
     replyLines.forEach((line: string, lineIndex: number) => {
       const lineElement = document.createElement('div');
@@ -61,15 +73,11 @@ function insertApp() {
     return;
   }
 
-  let mailClient = getMailClient();
+  const mailClient = getMailClient();
 
-  let targetClass = '.GQ';
+  const appEntryClass = ClientConfigList.get(mailClient)!.appEntryClass;
 
-  if (mailClient === MailClient.Outlook) {
-    targetClass = '.yz4r1';
-  }
-
-  const appParent = document.querySelector(targetClass);
+  const appParent = document.querySelector(appEntryClass);
   if (!appParent) {
     return;
   }
@@ -86,6 +94,13 @@ function insertApp() {
   let composeType = ComposeType.Reply;
 
   if (mailClient === MailClient.Gmail && popupMode === PopupMode.Disallow) {
+    composeType = ComposeType.New;
+  }
+
+  const previousEmailEntryClass = ClientConfigList.get(MailClient.Outlook)?.previousEmailEntryClass;
+  const messageBodyElement = document.querySelectorAll(previousEmailEntryClass!);
+
+  if(messageBodyElement.length < 1 && mailClient === MailClient.Outlook) {
     composeType = ComposeType.New;
   }
 

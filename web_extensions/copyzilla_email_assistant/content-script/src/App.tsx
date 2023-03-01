@@ -5,7 +5,7 @@ import './App.css'
 import ReplyMoodSelector from './features/reply/components/mood/ReplyToneSelector'
 import ReplyTypeSelector from './features/reply/components/response_type/ReplyTypeSelector'
 import ReplyButton from './features/reply/components/buttons/ReplyButton'
-import getEmailText from './utils/emailUtils';
+import gmail_parseEmail from './utils/gmailUtils';
 import { OptionsContext } from './context/optionsContext';
 import InstructionsButton from './features/reply/components/buttons/InstructionsButton';
 import InstructionsPopup from './features/reply/components/popups/InstructionsPopup';
@@ -13,6 +13,7 @@ import { PopupMode } from './enum/popupMode';
 import { MailClient } from './enum/mailClient';
 import Instructions from './features/reply/components/instructions/Instructions';
 import { ComposeType } from './enum/composeType';
+import parseEmail from './utils/emailUtils';
 
 type AppProps = {
   popupMode: PopupMode;
@@ -34,11 +35,14 @@ export default function App(props: AppProps) {
   const handleWrite = () => {
     setIsWriting(true);
 
-    let email = '';
+    let email: string | null = '';
 
     if (composeType === ComposeType.Reply) {
-      email = getEmailText();
+      email = parseEmail();
     }
+
+    console.log('composeType', composeType);
+    console.log('email', email);
 
     const optionsDto = {
       email: email,
