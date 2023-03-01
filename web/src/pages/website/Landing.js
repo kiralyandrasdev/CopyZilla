@@ -26,8 +26,8 @@ function LandingPage() {
         <div className="page page__public page__landing animation__fadeInUp">
             <div className="landingSection landingSection__hero">
                 <div className="landingSection__hero__header">
-                    <h4>Say hi to your new email companion! 🚀</h4>
-                    <h6>CopyZilla Email Assistant learns from your writing style to help you write emails faster and more efficiently</h6>
+                    <h4>Let Us Write Your Emails for You! 🚀</h4>
+                    <h6>Let CopyZilla Email Assistant Be Your Email Wingman - It Writes Emails So You Don't Have To</h6>
                 </div>
                 <div className="landingSection__hero__demo">
                     <video loop={true} autoPlay={true} src="https://copyzillastaticassets.blob.core.windows.net/videos/copyzilla_demo_en_peter.mov"></video>
