@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             chrome.storage.sync.get(["uid", "token"], async (result) => {
                 if (!result.uid || !result.token) {
                     chrome.tabs.sendMessage(tabs[0].id, {
-                        type: "to_content_WRITE_REPLY", data: {
+                        type: "to_content_WRITE_EMAIL", data: {
                             reply: "Please sign in to your account through the extension popup.",
                         }
                     }, (response) => {
