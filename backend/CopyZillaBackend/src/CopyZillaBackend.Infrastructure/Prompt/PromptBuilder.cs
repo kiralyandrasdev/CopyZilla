@@ -37,7 +37,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
                     $" I don't need the subject of the email. Make sure the tone of the email is {options.Tone}.";
             }
 
-            string replyPrompt = $"Write a long and polite email by saying {options.Objective} to the following email: '{options.Email}'.";
+            string replyPrompt = $"Write a polite email by saying {options.Objective} to the following email: '{options.Email}'.";
 
             if (!string.IsNullOrEmpty(options.Tone))
             {
