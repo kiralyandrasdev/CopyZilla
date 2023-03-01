@@ -19,11 +19,11 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
              .WithErrorCode("400");
             RuleFor(e => e)
              .Must(InstructionsIsNotNullIfEmailIsEmpty)
-             .WithMessage("Instructions must not be null!")
+             .WithMessage("Instructions must not be null if previous email is not provided.")
              .WithErrorCode("400");
             RuleFor(e => e)
               .Must(ObjectiveIsNullIfEmailIsEmpty)
-              .WithMessage("Objective must be null!")
+              .WithMessage("Objective must be null if previous email is not provided.")
               .WithErrorCode("400");
             RuleFor(e => e)
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
@@ -40,14 +40,18 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
 
         private bool InstructionsIsNotNullIfEmailIsEmpty(ProcessEmailPromptEvent e)
         {
-            return string.IsNullOrEmpty(e.Options.Email) ? 
-                !string.IsNullOrEmpty(e.Options!.Instructions) : string.IsNullOrEmpty(e.Options!.Instructions);
+            if (string.IsNullOrEmpty(e.Options.Email))
+                return !string.IsNullOrEmpty(e.Options!.Instructions);
+
+            return true;
         }
 
         private bool ObjectiveIsNullIfEmailIsEmpty(ProcessEmailPromptEvent e)
         {
-            return string.IsNullOrEmpty(e.Options.Email) ?
-                string.IsNullOrEmpty(e.Options!.Objective) : !string.IsNullOrEmpty(e.Options!.Objective);
+            if (string.IsNullOrEmpty(e.Options.Email))
+                return string.IsNullOrEmpty(e.Options!.Objective);
+
+            return true;
         }
     }
 }
