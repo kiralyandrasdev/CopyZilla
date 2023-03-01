@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AsyncButton, TextButton } from '../../../components';
 import { logout } from '../actions/authActions';
 import { AuthContext } from '../authContext';
+import { websiteUrl } from '../../../config/envConfig';
 
 function VerifyEmailForm() {
     const { user } = useContext(AuthContext);
@@ -17,7 +18,8 @@ function VerifyEmailForm() {
         const auth = getAuth();
 
         try {
-            await sendEmailVerification(auth.currentUser);
+            const loginUrl = `${websiteUrl}/auth/login`;
+            await sendEmailVerification(user, {url:loginUrl});
         } catch (error) {
             setMessage(null);
             setErrorMessage(error.code);
