@@ -12,7 +12,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://mail.google.com/*"
+        "https://mail.google.com/*",
+        "https://outlook.office.com/*"
       ],
       "js": [
         "content-script/src/main.tsx"

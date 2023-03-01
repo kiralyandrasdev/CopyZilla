@@ -1,22 +1,16 @@
-export default function getEmailText() {
-    const messageBodyElement = document.querySelectorAll('.a3s.aiL');
-    let text = "";
-    if (!messageBodyElement || messageBodyElement.length === 0) {
-        text = getMsoNormalEmailText();
-    } else {
-        text = messageBodyElement[0].textContent ?? "";
-    }
-    return text.replace(/\n/g, " ");
-}
+import { MailClient } from "../enum/mailClient";
+import gmail_parseEmail from "./gmailUtils";
+import { getMailClient } from "./optionsUtils";
+import outlook_parseEmail from "./outlookUtils";
 
-function getMsoNormalEmailText() {
-    const pList = document.querySelectorAll('p[class="MsoNormal"]');
-    if (!pList || pList.length === 0) {
-        return "";
+export default function parseEmail() : string {
+    const mailClient = getMailClient();
+    switch (mailClient) {
+        case MailClient.Gmail:
+            return gmail_parseEmail();
+        case MailClient.Outlook:
+            return outlook_parseEmail();
+        default:
+            return "";
     }
-    let text = "";
-    for (let i = 0; i < pList.length; i++) {
-        text += pList[i].textContent;
-    }
-    return text;
 }

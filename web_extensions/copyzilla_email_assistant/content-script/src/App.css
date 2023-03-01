@@ -1,9 +1,8 @@
 .app {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  column-gap: 20px;
-  row-gap: 5px;
+  column-gap: 10px;
+  row-gap: 10px;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 5px 12px;
@@ -12,20 +11,12 @@
 .options {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   row-gap: 5px;
+  column-gap: 5px;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
   column-gap: 20px;
-}
-
-.reply__tones {
-  display: flex;
-  flex-direction: row;
-  row-gap: 5px;
-  column-gap: 20px;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .reply__actions {
@@ -43,35 +34,4 @@
 
 .textButton {
   cursor: pointer;
-}
-
-@media screen and (max-width: 1300px) {
-  .options {
-    flex-direction: column;
-    row-gap: 5px;
-    width: 100%;
-  }
-
-  .reply__tones {
-    width: 100%;
-  }
-
-  .reply__actions {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 1100px) {
-  .reply__tones {
-    flex-direction: column;
-    row-gap: 5px;
-  }
-
-  .reply__actions {
-    justify-content: center;
-  }
-
-  .app {
-    align-items: center;
-  }
 }

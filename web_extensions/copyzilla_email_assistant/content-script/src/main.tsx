@@ -1,9 +1,14 @@
 import { createRoot } from 'react-dom/client';
 import './main.css'
-import App from './App'
 import { initializeApp } from '@firebase/app';
 import { getFirebaseConfig } from '../../src/config/firebaseConfig';
 import OptionsContextProvider from './context/optionsContext';
+import { getMailClient, getPopupMode } from './utils/optionsUtils';
+import { MailClient } from './enum/mailClient';
+import App from './App';
+import { ComposeType } from './enum/composeType';
+import { PopupMode } from './enum/popupMode';
+import { ClientConfig, ClientConfigList } from './config/clientConfig';
 
 async function initializeFirebase() {
   const firebaseConfig = await getFirebaseConfig();
@@ -13,9 +18,20 @@ async function initializeFirebase() {
 initializeFirebase();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'to_content_WRITE_REPLY') {
-    const messageBodyElement = document.querySelector('.Am.Al.editable.LW-avf.tS-tW');
+  if (request.type === 'to_content_WRITE_EMAIL') {
+    const client = getMailClient();
+
+    const messageEntryClass = ClientConfigList.get(client)!.messageEntryClass;
+
+    const messageBodyElement = document.querySelector(messageEntryClass);
     const replyLines = request.data.reply.split('\n');
+
+    // Remove all children
+    while (messageBodyElement?.firstChild) {
+      messageBodyElement.removeChild(messageBodyElement.firstChild);
+    }
+
+    console.log('replyLines', replyLines);
 
     replyLines.forEach((line: string, lineIndex: number) => {
       const lineElement = document.createElement('div');
@@ -31,49 +47,76 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
       const chars = line.split('');
 
-      chars.forEach((char, index) => {
+      // Append a new blank line if we're not on the last line and chars is empty
+      if (chars.length === 0 && lineIndex !== replyLines.length - 1) {
+        lineElementReQuery.appendChild(document.createElement('br'));
+      }
+
+      chars.forEach((char, charIndex) => {
         setTimeout(() => {
           lineElementReQuery.textContent += char;
-          if (index === chars.length - 1 && lineIndex === replyLines.length - 1) {
-            sendResponse({ type: 'to_background_WRITE_REPLY_SUCCESS' });
-          }
-        }, 25 * index);
+        }, 25 * charIndex);
       });
     });
+
+    sendResponse({ type: 'to_background_WRITE_REPLY_SUCCESS' });
   }
 
   return true;
 });
 
-const appId = 'replyRoot'
+function insertApp() {
+  const appId = 'replyRoot'
 
-function appendEditor() {
   const existingContainer = document.getElementById(appId);
   if (existingContainer != null) {
     return;
   }
 
-  const replyTdElement = document.querySelector('.GQ');
-  if (!replyTdElement) {
+  const mailClient = getMailClient();
+
+  const appEntryClass = ClientConfigList.get(mailClient)!.appEntryClass;
+
+  const appParent = document.querySelector(appEntryClass);
+  if (!appParent) {
     return;
   }
 
   const app = document.createElement('div')
   app.id = appId;
 
-  replyTdElement.insertBefore(app, replyTdElement.firstChild);
+  let popupMode = getPopupMode(appParent);
+
+  appParent.insertBefore(app, appParent.firstChild);
 
   const root = createRoot(app!);
 
+  let composeType = ComposeType.Reply;
+
+  if (mailClient === MailClient.Gmail && popupMode === PopupMode.Disallow) {
+    composeType = ComposeType.New;
+  }
+
+  const previousEmailEntryClass = ClientConfigList.get(MailClient.Outlook)?.previousEmailEntryClass;
+  const messageBodyElement = document.querySelectorAll(previousEmailEntryClass!);
+
+  if(messageBodyElement.length < 1 && mailClient === MailClient.Outlook) {
+    composeType = ComposeType.New;
+  }
+
   root.render(
     <OptionsContextProvider>
-      <App />
+      <App
+        composeType={composeType}
+        popupMode={popupMode}
+        mailClient={mailClient}
+      />
     </OptionsContextProvider>
   )
 }
 
 window.addEventListener("load", () => {
-  appendEditor();
+  insertApp();
 });
 
 const target = document.body;
@@ -83,7 +126,7 @@ const observer = new MutationObserver((mutations) => {
   observer.disconnect();
 
   setTimeout(() => {
-    appendEditor();
+    insertApp();
 
     observer.observe(target, config);
   }, 1000);

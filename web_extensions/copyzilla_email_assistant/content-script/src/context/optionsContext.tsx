@@ -2,6 +2,9 @@ import React, { ReactNode, createContext, useEffect, useState } from 'react'
 import { AvailableTones, AvailableTypes } from '../features/reply/config/replyConfig';
 import { ReplyToneModel } from '../features/reply/components/mood/ReplyTone';
 import { ReplyTypeItem } from '../features/reply/components/response_type/ReplyType';
+import { PopupMode } from '../enum/popupMode';
+import { MailClient } from '../enum/mailClient';
+import { ComposeType } from '../enum/composeType';
 
 export interface GenerateEmailOptions {
     email: string;
@@ -15,6 +18,12 @@ export interface GenerateEmailResponse {
 }
 
 interface OptionsContextValue {
+    popupMode: PopupMode;
+    setPopupMode: (popupMode: PopupMode) => void;
+    mailClient: MailClient;
+    setMailClient: (mailClient: MailClient) => void;
+    composeType: ComposeType;
+    setComposeType: (composeType: ComposeType) => void;
     options: GenerateEmailOptions;
     setEmail: (email: string) => void;
     setObjective: (objective: ReplyToneModel) => void;
@@ -27,6 +36,12 @@ interface OptionsContextValueProviderProps {
 }
 
 export const OptionsContext = createContext<OptionsContextValue>({
+    popupMode: PopupMode.Allow,
+    setPopupMode: () => {},
+    mailClient: MailClient.Gmail,
+    setMailClient: () => {},
+    composeType: ComposeType.Reply,
+    setComposeType: () => {},
     options: {
         email: '',
         objective: AvailableTypes[0],
@@ -40,12 +55,28 @@ export const OptionsContext = createContext<OptionsContextValue>({
 });
 
 const OptionsContextProvider: React.FC<OptionsContextValueProviderProps> = ({ children }: OptionsContextValueProviderProps) => {
+    const [popupMode, setPopupMode] = useState<PopupMode>(PopupMode.Allow);
+    const [mailClient, setMailClient] = useState<MailClient>(MailClient.Gmail);
+    const [composeType, setComposeType] = useState<ComposeType>(ComposeType.Reply);
+
     const [email, setEmail] = useState('');
     const [objective, setObjective] = useState(AvailableTypes[0]);
     const [tone, setTone] = useState(AvailableTones[0]);
     const [instructions, setInstructions] = useState<string>('');
 
     const contextValue: OptionsContextValue = {
+        popupMode: popupMode,
+        setPopupMode: (popupMode: PopupMode) => {
+            setPopupMode(popupMode);
+        },
+        mailClient: mailClient,
+        setMailClient: (mailClient: MailClient) => {
+            setMailClient(mailClient);
+        },
+        composeType: composeType,
+        setComposeType: (composeType: ComposeType) => {
+            setComposeType(composeType);
+        },
         options: {
             email,
             objective,
