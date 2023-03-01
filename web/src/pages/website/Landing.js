@@ -16,6 +16,12 @@ import OutlookSvg from '../../assets/outlook.svg';
 function LandingPage() {
     const navigate = useNavigate();
 
+    const chromeDownloadUrl = "https://chrome.google.com/webstore/detail/copyzilla-email-assistant/gakgnepokfbooliogomceelndhjgahkf";
+
+    const handleDownload = (url) => {
+        window.open(url, "_blank");
+    }
+
     return (
         <div className="page page__public page__landing animation__fadeInUp">
             <div className="landingSection landingSection__hero">
@@ -33,18 +39,18 @@ function LandingPage() {
                     </div>
                     <div className="supportSection__item">
                         <img src={OutlookSvg}></img>
-                        <p className="description">Outlook (soon)</p>
+                        <p className="description">Outlook</p>
                     </div>
                 </div>
                 <div className="downloadSection">
                     <div className="downloadSection__button">
                         <AsyncButton
                             title="Download for Chrome"
-                            onClick={() => { }}
+                            onClick={() => handleDownload(chromeDownloadUrl)}
                             prefixIcon={ChromeSvg}
                         />
                     </div>
-                    <p className='description'>Available for Chrome and Firefox</p>
+                    <p className='description'>Available for Google Chrome</p>
                 </div>
             </div>
             <div className="landingSection landingSection__secondary landingSection__outlined landingSection__grid">
@@ -80,7 +86,7 @@ function LandingPage() {
                 <div className="downloadSection__button">
                     <AsyncButton
                         title="Download for Chrome"
-                        onClick={() => { }}
+                        onClick={() => handleDownload(chromeDownloadUrl)}
                         prefixIcon={ChromeSvg}
                         color="white"
                     />
