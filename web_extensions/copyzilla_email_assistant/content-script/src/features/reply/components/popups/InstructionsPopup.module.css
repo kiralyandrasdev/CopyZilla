@@ -22,7 +22,7 @@
 
 .instructionsPopup textarea {
     width: 200px;
-    height: 100px;
+    height: 60px;
     border: 1px solid var(--grey1);
     border-radius: 8px;
     padding: 10px;

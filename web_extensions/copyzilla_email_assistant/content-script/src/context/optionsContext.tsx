@@ -2,7 +2,9 @@ import React, { ReactNode, createContext, useEffect, useState } from 'react'
 import { AvailableTones, AvailableTypes } from '../features/reply/config/replyConfig';
 import { ReplyToneModel } from '../features/reply/components/mood/ReplyTone';
 import { ReplyTypeItem } from '../features/reply/components/response_type/ReplyType';
-import { MailClient as MailClient, PopupMode } from '../App';
+import { PopupMode } from '../enum/popupMode';
+import { MailClient } from '../enum/mailClient';
+import { ComposeType } from '../enum/composeType';
 
 export interface GenerateEmailOptions {
     email: string;
@@ -20,6 +22,8 @@ interface OptionsContextValue {
     setPopupMode: (popupMode: PopupMode) => void;
     mailClient: MailClient;
     setMailClient: (mailClient: MailClient) => void;
+    composeType: ComposeType;
+    setComposeType: (composeType: ComposeType) => void;
     options: GenerateEmailOptions;
     setEmail: (email: string) => void;
     setObjective: (objective: ReplyToneModel) => void;
@@ -36,6 +40,8 @@ export const OptionsContext = createContext<OptionsContextValue>({
     setPopupMode: () => {},
     mailClient: MailClient.Gmail,
     setMailClient: () => {},
+    composeType: ComposeType.Reply,
+    setComposeType: () => {},
     options: {
         email: '',
         objective: AvailableTypes[0],
@@ -51,6 +57,7 @@ export const OptionsContext = createContext<OptionsContextValue>({
 const OptionsContextProvider: React.FC<OptionsContextValueProviderProps> = ({ children }: OptionsContextValueProviderProps) => {
     const [popupMode, setPopupMode] = useState<PopupMode>(PopupMode.Allow);
     const [mailClient, setMailClient] = useState<MailClient>(MailClient.Gmail);
+    const [composeType, setComposeType] = useState<ComposeType>(ComposeType.Reply);
 
     const [email, setEmail] = useState('');
     const [objective, setObjective] = useState(AvailableTypes[0]);
@@ -65,6 +72,10 @@ const OptionsContextProvider: React.FC<OptionsContextValueProviderProps> = ({ ch
         mailClient: mailClient,
         setMailClient: (mailClient: MailClient) => {
             setMailClient(mailClient);
+        },
+        composeType: composeType,
+        setComposeType: (composeType: ComposeType) => {
+            setComposeType(composeType);
         },
         options: {
             email,

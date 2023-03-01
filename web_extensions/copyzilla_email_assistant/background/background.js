@@ -51,7 +51,7 @@ async function initializeFirebase() {
 initializeFirebase();
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.type == "to_background_WRITE_REPLY") {
+    if (request.type == "to_background_WRITE_EMAIL") {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.storage.sync.get(["uid", "token"], async (result) => {
                 if (!result.uid || !result.token) {
@@ -66,10 +66,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     return true;
                 }
 
+                if(request.composeType === "new" && !request.data.options.instructions) {
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        type: "to_content_WRITE_EMAIL", data: {
+                            reply: "Please enter instructions for a new email."
+                        }
+                    }, (response) => {
+                                    sendResponse(response);
+                    });
+
+                    return true;
+                } 
+
                 const replyRes = await writeReply(result.uid, result.token, request.data.options);
 
                 chrome.tabs.sendMessage(tabs[0].id, {
-                    type: "to_content_WRITE_REPLY", data: {
+                    type: "to_content_WRITE_EMAIL", data: {
                         reply: replyRes.errorMessage ?? replyRes.value,
                     }
                 }, (errMessageRes) => {
@@ -103,8 +115,6 @@ async function fetchUser({
     const baseUrl = await getApiUrl();
     const url = `${baseUrl}/user/${uid}`;
 
-    console.log("Sending request to: " + url);
-
     const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -113,7 +123,6 @@ async function fetchUser({
         },
     });
     if (!response.ok) {
-        console.log(response);
         throw new Error("Failed to fetch user.");
     }
     const user = response.json();

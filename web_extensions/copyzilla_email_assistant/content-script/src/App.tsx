@@ -1,6 +1,6 @@
 /*global chrome*/
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './App.css'
 import ReplyMoodSelector from './features/reply/components/mood/ReplyToneSelector'
 import ReplyTypeSelector from './features/reply/components/response_type/ReplyTypeSelector'
@@ -9,44 +9,47 @@ import getEmailText from './utils/emailUtils';
 import { OptionsContext } from './context/optionsContext';
 import InstructionsButton from './features/reply/components/buttons/InstructionsButton';
 import InstructionsPopup from './features/reply/components/popups/InstructionsPopup';
-
-export enum PopupMode {
-  Allow,
-  Disallow,
-}
-
-export enum MailClient {
-  Gmail,
-  Outlook,
-}
+import { PopupMode } from './enum/popupMode';
+import { MailClient } from './enum/mailClient';
+import Instructions from './features/reply/components/instructions/Instructions';
+import { ComposeType } from './enum/composeType';
 
 type AppProps = {
   popupMode: PopupMode;
   mailClient: MailClient;
+  composeType: ComposeType;
 }
 
 export default function App(props: AppProps) {
   const [isWriting, setIsWriting] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
-  const { options, popupMode, setPopupMode, setMailClient } = useContext(OptionsContext);
+  const { options, popupMode, setPopupMode, setMailClient, composeType, setComposeType } = useContext(OptionsContext);
 
   useEffect(() => {
     setPopupMode(props.popupMode);
     setMailClient(props.mailClient);
+    setComposeType(props.composeType);
   }, []);
 
   const handleWrite = () => {
     setIsWriting(true);
 
+    let email = '';
+
+    if (composeType === ComposeType.Reply) {
+      email = getEmailText();
+    }
+
     const optionsDto = {
-      email: getEmailText(),
+      email: email,
       objective: options.objective.value,
       tone: options.tone.value,
       instructions: options.instructions,
     };
 
     chrome.runtime.sendMessage({
-      type: 'to_background_WRITE_REPLY',
+      type: 'to_background_WRITE_EMAIL',
+      composeType: composeType.toString(),
       data: {
         options: optionsDto
       }
@@ -62,16 +65,15 @@ export default function App(props: AppProps) {
   return (
     <div className="app">
       <div className="options">
-        <div className="reply__tones">
-          <ReplyMoodSelector />
-          <ReplyTypeSelector />
-        </div>
+        <ReplyMoodSelector />
+        <ReplyTypeSelector />
         <div className="reply__actions">
           <div className="instructionsPopup__parent">
             {instructionsOpen && popupMode === PopupMode.Allow &&
               <InstructionsPopup
                 onClose={handleInstructionsOpen}
               />}
+
             <InstructionsButton
               onClick={handleInstructionsOpen}
             />
@@ -82,6 +84,11 @@ export default function App(props: AppProps) {
           />
         </div>
       </div>
+      {instructionsOpen && popupMode === PopupMode.Disallow &&
+        <Instructions
+          onClose={handleInstructionsOpen}
+        />
+      }
     </div>
   )
 }

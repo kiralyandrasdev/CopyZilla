@@ -1,4 +1,5 @@
-import { MailClient, PopupMode } from "../App";
+import { MailClient } from "../enum/mailClient";
+import { PopupMode } from "../enum/popupMode";
 
 export function getPopupMode(parent: Element) {
     if (getMailClient() === MailClient.Outlook) {
