@@ -40,9 +40,11 @@ export default function App(props: AppProps) {
       email = parseEmail();
     }
 
+    const objective = composeType === ComposeType.New ? null : options.objective.value;
+
     const optionsDto = {
       email: email,
-      objective: options.objective.value,
+      objective: objective,
       tone: options.tone.value,
       instructions: options.instructions,
     };
