@@ -50,7 +50,7 @@ function LandingPage() {
                             prefixIcon={ChromeSvg}
                         />
                     </div>
-                    <p className='description'>Available for Chrome and Firefox</p>
+                    <p className='description'>Available for Google Chrome</p>
                 </div>
             </div>
             <div className="landingSection landingSection__secondary landingSection__outlined landingSection__grid">
