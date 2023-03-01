@@ -31,21 +31,27 @@ namespace CopyZillaBackend.Infrastructure.Prompt
 
         public string Build(ProcessEmailPromptOptions options)
         {
-            string prompt = $"Write a long email by saying {options.Objective} to the following email: '{options.Email}'.";
+            if (string.IsNullOrEmpty(options.Email))
+            {
+                return $"Compose an email with the following instruction: {options.Instructions}." +
+                    $" I don't need the subject of the email. Make sure the tone of the email is {options.Tone}.";
+            }
+
+            string replyPrompt = $"Write a polite email by saying {options.Objective} to the following email: '{options.Email}'.";
 
             if (!string.IsNullOrEmpty(options.Tone))
             {
-                prompt += $" Make sure the tone of the email is {options.Tone}.";
+                replyPrompt += $" Make sure the tone of the email is {options.Tone}.";
             }
 
             if (!string.IsNullOrEmpty(options.Instructions))
             {
-                prompt += $" Make sure the email contains the following: {options.Instructions}";
+                replyPrompt += $" Make sure the email contains the following: {options.Instructions}";
             }
 
-            prompt += " Answer in the same language the email was written in.";
+            replyPrompt += " Answer in the same language the email was written in.";
 
-            return prompt;
+            return replyPrompt;
         }
 
         private string GetCopyStyle(string style)

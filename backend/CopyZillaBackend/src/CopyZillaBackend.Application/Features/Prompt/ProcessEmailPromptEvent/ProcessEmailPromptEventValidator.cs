@@ -18,13 +18,13 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
              " please purchase credits through your CopyZilla account.")
              .WithErrorCode("400");
             RuleFor(e => e)
-              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Objective))
-              .WithMessage("Objective must not be null!")
-              .WithErrorCode("400");
+             .Must(InstructionsIsNotNullIfEmailIsEmpty)
+             .WithMessage("Instructions must not be null!")
+             .WithErrorCode("400");
             RuleFor(e => e)
-               .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Email))
-               .WithMessage("Email must not be null!")
-               .WithErrorCode("400");
+              .Must(ObjectiveIsNullIfEmailIsEmpty)
+              .WithMessage("Objective must be null!")
+              .WithErrorCode("400");
             RuleFor(e => e)
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
              .WithMessage("Tone must not be null!")
@@ -36,6 +36,18 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             var user = await _repository.GetByFirebaseUidAsync(e.FirebaseUid);
 
             return user!.CreditCount > 0;
+        }
+
+        private bool InstructionsIsNotNullIfEmailIsEmpty(ProcessEmailPromptEvent e)
+        {
+            return string.IsNullOrEmpty(e.Options.Email) ? 
+                !string.IsNullOrEmpty(e.Options!.Instructions) : string.IsNullOrEmpty(e.Options!.Instructions);
+        }
+
+        private bool ObjectiveIsNullIfEmailIsEmpty(ProcessEmailPromptEvent e)
+        {
+            return string.IsNullOrEmpty(e.Options.Email) ?
+                string.IsNullOrEmpty(e.Options!.Objective) : !string.IsNullOrEmpty(e.Options!.Objective);
         }
     }
 }
