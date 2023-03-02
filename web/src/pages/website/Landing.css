@@ -1,15 +1,19 @@
 .page__landing {
-    height: 100%
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 40px;
+    width: 100%;
 }
 
 .landingSection {
     padding: 40px;
-    row-gap: 20px;
+    row-gap: 40px;
     column-gap: 40px;
 }
 
 .landingSection__hero {
-    row-gap: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,6 +27,42 @@
     align-items: center;
     justify-content: center;
     row-gap: 20px;
+}
+
+.landingSection__totalReviews__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+}
+
+.landingSection__totalReviews {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    justify-content: center;
+    row-gap: 40px;
+    text-align: center;
+}
+
+.landingSection__totalReviews__reviews {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+
+.landingSection__totalReviews__reviews__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 250px;
+    text-align: start;
+    row-gap: 10px;
 }
 
 .logoHeader {
@@ -52,7 +92,7 @@
     column-gap: 10px;
 }
 
-.downloadSection p {
+.availableForChrome {
     font-size: 12px;
 }
 
@@ -81,7 +121,6 @@
 }
 
 .landingSection__hero__demo {
-    height: 350px;
     width: 100%;
     padding: 20px;
     border-radius: 25px;
@@ -91,6 +130,7 @@
 
 .landingSection__hero__demo video {
     height: 100%;
+    max-height: 300px;
     width: 100%;
     border: none;
     outline: none;
@@ -109,7 +149,7 @@
 .landingSection__grid__item {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     width: 100%;
     row-gap: 20px;
@@ -135,18 +175,13 @@
     padding: 100px;
 }
 
-.landingSection__grid__item__text {
-    text-align: center;
+.totalUsers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 6px;
 }
-/* 
-.landingSection__grid__item__text__left {
-    text-align: left;
-} */
-
-/* .landingSection__outlined {
-    background-color: var(--grey1);
-    border-radius: 25px;
-} */
 
 .landingSection__download {
     display: flex;
@@ -160,6 +195,34 @@
     background: linear-gradient(to top, white 0%, var(--green) 100%);
 }
 
+.landingSection__faq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 40px;
+    column-gap: 10px;
+}
+
+.landingSection__faq__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    row-gap: 20px;
+    column-gap: 10px;
+    width: 100%;
+}
+
+.sectionReview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
 @media screen and (max-width: 1200px) {
     .supportSection {
         flex-direction: column;
@@ -170,5 +233,10 @@
     .landingSection__grid {
         grid-template-columns: 1fr;
         grid-template-areas: "grid1" "grid2";
+    }
+    .landingSection__totalReviews__reviews {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 }

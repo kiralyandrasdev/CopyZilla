@@ -10,6 +10,7 @@ import { deleteAccount, login, logout, signup } from "../actions/authActions";
 import { firebaseSignupErrorMessage } from "../utils/authUtils";
 import { websiteUrl } from '../../../config/envConfig';
 import "./AuthForm.css";
+import Checkbox from "../../../components/ui/Checkbox";
 
 export default function SignupForm() {
     const navigate = useNavigate();
@@ -19,11 +20,13 @@ export default function SignupForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setConfirmationPassword] = useState('');
+    const [agreeToTerms, setAgreeToTerms] = useState(false);
 
     const [error, setError] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [passwordConfirmationError, setPasswordConfirmationError] = useState(false);
+    const [termsError, setTermsError] = useState(false);
 
     function handleEmailChange(event) {
         setEmail(event.target.value);
@@ -79,6 +82,14 @@ export default function SignupForm() {
         } else {
             setPasswordError(false);
         }
+        if (!agreeToTerms) {
+            setError("You must agree to the terms of service");
+            setTermsError(true);
+            return false;
+        } else {
+            setTermsError(false);
+        }
+
         return true;
     }
 
@@ -102,7 +113,7 @@ export default function SignupForm() {
                 }
             });
             const loginUrl = `${websiteUrl}/auth/login`;
-            await sendEmailVerification(user, {url:loginUrl});
+            await sendEmailVerification(user, { url: loginUrl });
         } catch (e) {
             console.log(e);
             setError(e.code);
@@ -149,6 +160,14 @@ export default function SignupForm() {
                         password={true}
                     />
                 </div>
+            </div>
+            <div className="authForm__agreeToTerms">
+                <Checkbox
+                    checked={agreeToTerms}
+                    onChange={() => setAgreeToTerms(!agreeToTerms)}
+                    error={termsError}
+                />
+                <p>I agree to the <a href="/termsOfService" target="_blank">terms of service</a></p>
             </div>
             <div className="authForm__primaryActions">
                 <AsyncButton loading={loading} title="Create account" onClick={() => handleSignup()}></AsyncButton>
