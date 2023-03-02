@@ -42,6 +42,18 @@
     text-align: center;
 }
 
+.authForm__agreeToTerms {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 5px;
+    column-gap: 10px;
+}
+
+.authForm__agreeToTerms p, a {
+}
+
 /* @media (max-width: 768px) {
     .authForm__header {
         text-align: center;
