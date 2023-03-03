@@ -8,6 +8,7 @@ import { AuthContextProvider } from './features/authentication/authContext';
 import './index.css';
 import store from './redux/store/store';
 import reportWebVitals from './reportWebVitals';
+import RouteChangeTracker from './redirect/RouteChangeTracker';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <AuthContextProvider>
         <UserContextProvider>
-          <App></App>
+          <RouteChangeTracker>
+            <App></App>
+          </RouteChangeTracker>
         </UserContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
