@@ -27,9 +27,13 @@ import AuthRedirect from './redirect/AuthRedirect';
 import InitRedirect from './redirect/InitRedirect';
 import DeleteAccountPage from './pages/app/account/DeleteAccount';
 import HomePage from './pages/app/Home';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
+import { gaTrackingId } from './config/envConfig';
 
-ReactGA.initialize('G-3FQX6DLE0N');
+if(gaTrackingId != null) {
+  ReactGA.initialize(gaTrackingId);
+}
+
 initializeApp(firebaseConfig);
 
 function App() {
