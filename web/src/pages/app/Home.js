@@ -15,7 +15,7 @@ function HomePage() {
     return (
         <div className="page page__home page__centerContent">
             <div className="page__home__content">
-                <img className="promptResultView__result__placeholder__svg" src={PlaceHolderSvg} alt="Loading..."></img>
+                <img className="promptResultView__result__placeholder__svg illustration__200" src={PlaceHolderSvg} alt="Loading..."></img>
                 <h5>Welcome aboard!</h5>
                 <p className='description'>{prereqText}</p>
                 <AsyncButton
