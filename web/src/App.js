@@ -30,7 +30,7 @@ import HomePage from './pages/app/Home';
 import ReactGA from 'react-ga4';
 import { gaTrackingId } from './config/envConfig';
 
-if(gaTrackingId != null) {
+if(gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
 }
 

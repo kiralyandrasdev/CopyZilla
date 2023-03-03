@@ -7,7 +7,7 @@ const RouteChangeTracker = ({ children }) => {
     const location = useLocation();
 
     useEffect(() => {
-        if (gaTrackingId != null) {
+        if (gaTrackingId != "DISABLED") {
             ReactGA.send({ hitType: "pageview", page: location.pathname, title: location.pathname });
         }
     }, [location]);
