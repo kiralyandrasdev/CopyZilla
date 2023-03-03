@@ -7,10 +7,8 @@ import FullscreenLayout from './layout/FullscreenLayout';
 import PrivateLayout from './layout/PrivateLayout';
 import PublicLayout from './layout/PublicLayout';
 import Account from './pages/app/Account';
-import CreatePage from './pages/app/Create';
 import CreditRefill from './pages/app/CreditRefill';
 import PaymentOverduePage from './pages/app/PaymentOverdue';
-import SavedResultsPage from './pages/app/SavedResults';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
 import ChangeEmailPage from './pages/app/account/ChangeEmail';
 import ChangePasswordPage from './pages/app/account/ChangePassword';
@@ -21,7 +19,6 @@ import VerifyEmailPage from './pages/auth/VerifyEmail';
 import CheckoutCanceled from './pages/checkout/CheckoutCancelled';
 import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
 import AboutUsPage from './pages/website/AboutUs';
-import ContactPage from './pages/website/Contact';
 import LandingPage from './pages/website/Landing';
 import PricingPage from './pages/website/pricing/Pricing';
 import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
@@ -30,16 +27,17 @@ import AuthRedirect from './redirect/AuthRedirect';
 import InitRedirect from './redirect/InitRedirect';
 import DeleteAccountPage from './pages/app/account/DeleteAccount';
 import HomePage from './pages/app/Home';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('G-3FQX6DLE0N');
+initializeApp(firebaseConfig);
 
 function App() {
-  initializeApp(firebaseConfig);
   return (
     <Routes>
       <Route element={<AuthRedirect />}>
         <Route element={<InitRedirect />}>
           <Route element={<PrivateLayout />} path="/user">
-            {/* <Route path="/user/editor" element={<CreatePage />} /> */}
-            {/* <Route path="/user/savedResults" element={<SavedResultsPage />} /> */}
             <Route path="/user/account" element={<Account />} />
             <Route path="/user/home" element={<HomePage />} />
             <Route path="/user/account/changeEmail" element={<ChangeEmailPage />} />
@@ -66,7 +64,6 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/aboutUs" element={<AboutUsPage />} />
-        {/* <Route path="/contact" element={<ContactPage />} /> */}
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
       </Route>
