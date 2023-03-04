@@ -38,15 +38,21 @@ async function initializeFirebase() {
     initializeApp(firebaseConfig);
 
     const auth = getAuth();
-    
+
     onAuthStateChanged(auth, (user) => {
         if (user && user.emailVerified) {
-            chrome.storage.sync.set({ uid: user.uid, token: user.accessToken, email: user.email });
+            chrome.storage.sync.set({
+                uid: user.uid,
+                token: user.accessToken,
+                email: user.email,
+                lastTokenRefresh: Date.now() / 1000,
+                // lastTokenRefresh: new Date(Date.now() - 86400000).getTime() / 1000,
+            });
         } else {
             chrome.storage.sync.set({ uid: null, token: null, email: null });
         }
     });
-} 
+}
 
 initializeFirebase();
 
@@ -66,19 +72,21 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     return true;
                 }
 
-                if(request.composeType === "new" && !request.data.options.instructions) {
+                if (request.composeType === "new" && !request.data.options.instructions) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
                             reply: "Please enter instructions for a new email."
                         }
                     }, (response) => {
-                                    sendResponse(response);
+                        sendResponse(response);
                     });
 
                     return true;
-                } 
+                }
 
-                const replyRes = await writeReply(result.uid, result.token, request.data.options);
+                // Returns cached token if it is valid for at least another 5 minutes or refreshes it.
+                const token = await getValidToken();
+                const replyRes = await writeReply(result.uid, token, request.data.options);
 
                 chrome.tabs.sendMessage(tabs[0].id, {
                     type: "to_content_WRITE_EMAIL", data: {
@@ -107,6 +115,39 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     return true;
 });
+
+async function getValidToken() {
+    return new Promise((resolve) => {
+        chrome.storage.sync.get(["token", "lastTokenRefresh"], async (result) => {
+            const currentTime = Date.now() / 1000;
+
+            // Check if token is invalid or will expire in less than 5 minutes.
+            if (!result.lastTokenRefresh || result.lastTokenRefresh + 3300 < currentTime) {
+                console.log("Refreshing token...");
+
+                const auth = getAuth();
+                const user = auth.currentUser;
+
+                await user.getIdToken(true).then((idToken) => {
+                    console.log("New token: " + idToken);
+                    chrome.storage.sync.set({
+                        token: idToken,
+                        lastTokenRefresh: Date.now() / 1000,
+                    });
+
+                    resolve(idToken);
+                });
+
+                return;
+            }
+
+            console.log("Using cached token...");
+
+            // Token is valid for at least another 5 minutes.
+            resolve(result.token);
+        });
+    })
+}
 
 async function fetchUser({
     uid,
