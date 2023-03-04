@@ -12,7 +12,7 @@ function Layout() {
     return (
         <div className={styles.layout}>
             <header>
-                <h6>CopyZilla Dashboard</h6>
+                <h6>CopyZilla Admin</h6>
                 <div className={styles.headerNav}>
                     <a href="/dashboard/users">Users</a>
                     <a href="/dashboard/logs">Logs</a>
