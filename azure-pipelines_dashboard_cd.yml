@@ -39,7 +39,7 @@ stages:
               repository: 'dashboardcopyzilla'
               containerRegistry: $(dockerRegistryServiceConnection)
               command: 'build'
-              Dockerfile: '$(Build.SourcesDirectory)/web/internal/copyzilla_dashboard/Dockerfile'
+              Dockerfile: '$(Build.SourcesDirectory)/internal/copyzilla_dashboard/Dockerfile'
               tags: |
                 $(tag)
           - task: Docker@2
