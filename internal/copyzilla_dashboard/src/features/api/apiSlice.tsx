@@ -6,9 +6,9 @@ export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         prepareHeaders: (headers, { getState }) => {
-            const state = getState() as any;
-            if (state.auth && state.auth.token) {
-                headers.set('Authorization', `Bearer ${state.auth.token}`);
+            const token = (getState() as any).auth.token;
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         },
