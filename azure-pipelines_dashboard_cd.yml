@@ -1,0 +1,52 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+    exclude:
+      - feature/*
+      - bugfix/*
+  paths:
+    include:
+      - internal/copyzilla_dashboard
+    exclude:
+      - backend
+      - web
+      - web_extensions
+
+resources:
+  - repo: self
+
+variables:
+  dockerRegistryServiceConnection: "dc94c617-0446-4dc2-b472-7f76b1874658"
+  tag: "$(Build.BuildId)"
+
+  # Agent VM image name
+  vmImageName: "ubuntu-latest"
+
+stages:
+  - stage: BuildAndPush
+    displayName: Build and push docker image to ACR
+    jobs:
+      - job: Build
+        displayName: Build and push docker image to ACR
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build docker image
+            inputs:
+              repository: 'dashboardcopyzilla'
+              containerRegistry: $(dockerRegistryServiceConnection)
+              command: 'build'
+              Dockerfile: '$(Build.SourcesDirectory)/web/internal/copyzilla_dashboard/Dockerfile'
+              tags: |
+                $(tag)
+          - task: Docker@2
+            displayName: "Push docker image to ACR"
+            inputs:
+              repository: 'dashboardcopyzilla'
+              containerRegistry: $(dockerRegistryServiceConnection)
+              command: 'push'
+              tags: |
+                $(tag)
