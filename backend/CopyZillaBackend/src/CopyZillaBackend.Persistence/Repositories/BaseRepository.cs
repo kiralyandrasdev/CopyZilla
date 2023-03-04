@@ -30,7 +30,10 @@ namespace CopyZillaBackend.Persistence.Repositories
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            return await _context
+                .Set<T>()
+                .OrderByDescending(e => e.CreatedOn)
+                .ToListAsync();
         }
 
         public virtual async Task UpdateAsync(T entity)

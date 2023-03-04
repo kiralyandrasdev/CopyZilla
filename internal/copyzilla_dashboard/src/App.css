@@ -1,0 +1,19 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  row-gap: 20px;
+}
+
+.page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  row-gap: 20px;
+}

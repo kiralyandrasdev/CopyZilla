@@ -12,10 +12,12 @@ namespace CopyZillaBackend.API.Middlewares
     public class ExceptionHandlerMiddleware : IMiddleware
     {
         private readonly ICloudLogService _cloudLogService;
+        private readonly IConfiguration _configuration;
 
-        public ExceptionHandlerMiddleware(ICloudLogService cloudLogService)
+        public ExceptionHandlerMiddleware(ICloudLogService cloudLogService, IConfiguration configuration)
         {
             _cloudLogService = cloudLogService;
+            _configuration = configuration;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -39,7 +41,9 @@ namespace CopyZillaBackend.API.Middlewares
                 };
 
                 string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
-                await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
+                
+                if (_configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") != "Development")
+                    await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
             }
@@ -64,7 +68,8 @@ namespace CopyZillaBackend.API.Middlewares
                 context.Response.StatusCode = 500;
                 response.ErrorMessage = "An error occurred while processing your request. Contact support if the problem persists.";
 
-                await _cloudLogService.WriteLogAsync(log, LogLevel.Critical);
+                if (_configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") != "Development")
+                    await _cloudLogService.WriteLogAsync(log, LogLevel.Critical);
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
             }
