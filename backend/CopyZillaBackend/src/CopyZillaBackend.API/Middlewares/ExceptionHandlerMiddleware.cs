@@ -22,6 +22,11 @@ namespace CopyZillaBackend.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            // Check if request path contains /internal or is development request, and if so, do not log to cloud.
+            var isInternalRequest = context.Request.Path.Value?.Contains("/internal");
+            var isDevelopmentRequest = _configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development";
+            var logToCloud = !isInternalRequest.GetValueOrDefault() && !isDevelopmentRequest;
+
             try
             {
                 await next(context);
@@ -41,8 +46,8 @@ namespace CopyZillaBackend.API.Middlewares
                 };
 
                 string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
-                
-                if (_configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") != "Development")
+
+                if (logToCloud)
                     await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
@@ -57,7 +62,8 @@ namespace CopyZillaBackend.API.Middlewares
                     context.Response.StatusCode = 401;
                     response.ErrorMessage = ex.Message;
 
-                    await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
+                    if(logToCloud)
+                        await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
                     return;
@@ -68,7 +74,7 @@ namespace CopyZillaBackend.API.Middlewares
                 context.Response.StatusCode = 500;
                 response.ErrorMessage = "An error occurred while processing your request. Contact support if the problem persists.";
 
-                if (_configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") != "Development")
+                if (logToCloud)
                     await _cloudLogService.WriteLogAsync(log, LogLevel.Critical);
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
