@@ -34,6 +34,7 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddTransient<IResponseManager, ResponseManager>();
 
 builder.Services.AddTransient<AuthorizationMiddleware>();
+builder.Services.AddTransient<InternalAuthorizationMiddleware>();
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
 builder.Services.AddTransient<StripeWebhookMiddleware>();
 
@@ -65,7 +66,8 @@ app.UseCors("localhost");
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
-app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == false, app =>
+app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == false &&
+    context.Request.Path.Value?.Contains("/internal") == false, app =>
 {
     app.UseMiddleware<AuthorizationMiddleware>();
 });
@@ -73,6 +75,11 @@ app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") 
 app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == true, app =>
 {
     app.UseMiddleware<StripeWebhookMiddleware>();
+});
+
+app.UseWhen(context => context.Request.Path.Value?.Contains("/internal") == true, app =>
+{
+    app.UseMiddleware<InternalAuthorizationMiddleware>();
 });
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
@@ -85,6 +92,14 @@ if (FirebaseApp.GetInstance("default") is null)
     {
         Credential = GoogleCredential.FromFile(configFileName),
     }, "default");
+}
+
+if (FirebaseApp.GetInstance("internal") is null)
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromFile("firebaseConfig.Internal.json"),
+    }, "internal");
 }
 
 app.Run();
