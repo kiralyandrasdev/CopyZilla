@@ -1,10 +1,13 @@
 import { getAuth } from '@firebase/auth';
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../features/auth/authContext';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../features/auth/authSlice';
 
 function AuthRedirect({ children }: any) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const auth = getAuth();
@@ -13,13 +16,15 @@ function AuthRedirect({ children }: any) {
             const path = window.location.pathname;
 
             if (user && !path.includes('/dashboard')) {
-                console.log("redirecting to dashboard");
-                navigate('/dashboard/users');
+                user.getIdToken().then((token) => {
+                    dispatch(setToken(token));
+                    navigate('/dashboard/users');
+                });
                 return;
             }
 
             if (!user && path.includes('/dashboard')) {
-                console.log("redirecting to login");
+                dispatch(setToken(null));
                 navigate('/login');
                 return;
             }
