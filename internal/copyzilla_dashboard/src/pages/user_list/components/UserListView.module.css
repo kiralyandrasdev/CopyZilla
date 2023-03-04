@@ -1,0 +1,19 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-bottom: 1px solid var(--grey1);
+}
+
+.header {
+    background-color: var(--grey1);
+}
+
+.cell {
+    padding: 10px;
+    text-align: center;
+    min-width: 100px;
+}
+
+.cellAlignLeft {
+    text-align: left;
+}
