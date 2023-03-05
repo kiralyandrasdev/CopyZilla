@@ -59,7 +59,7 @@ initializeFirebase();
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type == "to_background_WRITE_EMAIL") {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.storage.sync.get(["uid", "token"], async (result) => {
+            chrome.storage.sync.get(["uid", "token", "email"], async (result) => {
                 if (!result.uid || !result.token) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
@@ -84,16 +84,32 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     return true;
                 }
 
-                // Returns cached token if it is valid for at least another 5 minutes or refreshes it.
-                const token = await getValidToken();
-                const replyRes = await writeReply(result.uid, token, request.data.options);
+                console.log("Writing email...");
 
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    type: "to_content_WRITE_EMAIL", data: {
-                        reply: replyRes.errorMessage ?? replyRes.value,
-                    }
-                }, (errMessageRes) => {
-                    sendResponse(errMessageRes);
+                // Returns cached token if it is valid for at least another 5 minutes or refreshes it.
+                getValidToken().then((token) => {
+                    console.log("Successfully acquired token.");
+
+                    writeReply(result.uid, result.email, token, request.data.options).then((response) => {
+                        console.log("Successfully wrote email.");
+
+                        chrome.tabs.sendMessage(tabs[0].id, {
+                            type: "to_content_WRITE_EMAIL", data: {
+                                reply: response.errorMessage ?? response.value,
+                            }
+                        }, (response) => {
+                            sendResponse(response);
+                        });
+                    });
+                }).catch((error) => {
+                    console.log("Error acquiring token: " + error);
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        type: "to_content_WRITE_EMAIL", data: {
+                            reply: response.errorMessage ?? response.value,
+                        }
+                    }, (response) => {
+                        sendResponse(response);
+                    });
                 });
 
                 return true;
@@ -106,10 +122,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     if (request.type == "GET_USER") {
-        fetchUser(request.data).then((user) => {
-            sendResponse({ data: user })
+        fetchUser().then((response) => {
+            sendResponse({ data: response })
         }).catch((error) => {
-            sendResponse({ error: error })
+            sendResponse({ error: error });
         });
     }
 
@@ -128,15 +144,19 @@ async function getValidToken() {
                 const auth = getAuth();
                 const user = auth.currentUser;
 
-                await user.getIdToken(true).then((idToken) => {
-                    console.log("New token: " + idToken);
+                try {
+                    const token = await user.getIdToken(true);
                     chrome.storage.sync.set({
-                        token: idToken,
+                        token: token,
                         lastTokenRefresh: Date.now() / 1000,
                     });
 
-                    resolve(idToken);
-                });
+                    console.log("Access token refreshed.");
+
+                    resolve(token);
+                } catch (error) {
+                    console.log("Error refreshing token: " + error);
+                }
 
                 return;
             }
@@ -149,29 +169,35 @@ async function getValidToken() {
     })
 }
 
-async function fetchUser({
-    uid,
-    token,
-}) {
-    const baseUrl = await getApiUrl();
-    const url = `${baseUrl}/user/${uid}`;
+async function fetchUser() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(["uid", "email"], async (result) => {
+            const token = await getValidToken();
 
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
+            const baseUrl = await getApiUrl();
+            const url = `${baseUrl}/user/${result.uid}`;
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                    "X-User-Email": result.email,
+                    "X-Client-Type": "extension"
+                },
+            });
+            if (!response.ok) {
+                reject(response);
+            }
+            const json = response.json();
+            resolve(json);
+        });
     });
-    if (!response.ok) {
-        throw new Error("Failed to fetch user.");
-    }
-    const user = response.json();
-    return user;
 }
 
 async function writeReply(
     uid,
+    email,
     token,
     options
 ) {
@@ -182,6 +208,8 @@ async function writeReply(
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
+            "X-User-Email": email,
+            "X-Client-Type": "extension"
         },
         body: JSON.stringify(options),
     });

@@ -23,15 +23,12 @@ function SignedInView() {
         setLoading(true);
 
         try {
-            const userRes = await getUser({
-                uid: user?.uid!,
-                token: user?.token!,
-            })
-
+            const userRes = await getUser();
             if (userRes) {
                 setApplicationUser(userRes);
             }
         } catch (e) {
+            console.log(e);
             setError(JSON.stringify(e));
         }
 
