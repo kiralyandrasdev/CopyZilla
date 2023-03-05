@@ -25,6 +25,7 @@ namespace CopyZillaBackend.Infrastructure
             services.AddSingleton<IPromptBuilder, PromptBuilder>();
             services.AddSingleton<IStripeService, StripeService>();
             services.AddSingleton<IWebhookEventHandlerProvider, WebhookEventHandlerProvider>();
+            services.AddTransient<ICloudLogBuilder, CloudLogBuilder>();
             services.AddSingleton<ICloudLogService, CloudLogService>();
             services.AddSingleton<IFirebaseService, FirebaseService>();
 

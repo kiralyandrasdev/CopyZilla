@@ -6,9 +6,17 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.accessToken;
+            const email = getState().auth.email;
+
+            headers.set("X-Client-Type", "web");
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
+            if(email) {
+                headers.set('X-User-Email', email);
+            }
+            
             return headers;
         },
         baseUrl: apiBaseUrl,

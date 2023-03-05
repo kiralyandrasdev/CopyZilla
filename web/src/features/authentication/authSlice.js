@@ -9,8 +9,11 @@ export const authSlice = createSlice({
     reducers: {
         setAccessToken: (state, action) => {
             state.accessToken = action.payload;
+        },
+        setEmail: (state, action) => {
+            state.email = action.payload;
         }
     }
 });
 
-export const { setAccessToken } = authSlice.actions;
+export const { setAccessToken, setEmail } = authSlice.actions;

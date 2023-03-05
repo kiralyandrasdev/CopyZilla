@@ -110,7 +110,7 @@ namespace CopyZillaBackend.Infrastructure.Logging
 
             await blobClient.CreateIfNotExistsAsync();
 
-            var formattedContent = $"[{DateTime.UtcNow}] {content}{Environment.NewLine}";
+            var formattedContent = $"[{DateTime.UtcNow}]{Environment.NewLine}{content}{Environment.NewLine}{Environment.NewLine}";
             var bytes = Encoding.UTF8.GetBytes(formattedContent);
 
             var stream = new MemoryStream(bytes);

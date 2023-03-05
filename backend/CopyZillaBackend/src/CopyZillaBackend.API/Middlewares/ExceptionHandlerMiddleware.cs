@@ -12,11 +12,13 @@ namespace CopyZillaBackend.API.Middlewares
     public class ExceptionHandlerMiddleware : IMiddleware
     {
         private readonly ICloudLogService _cloudLogService;
+        private readonly ICloudLogBuilder _cloudLogBuilder;
         private readonly IConfiguration _configuration;
 
-        public ExceptionHandlerMiddleware(ICloudLogService cloudLogService, IConfiguration configuration)
+        public ExceptionHandlerMiddleware(ICloudLogService cloudLogService, ICloudLogBuilder cloudLogBuilder, IConfiguration configuration)
         {
             _cloudLogService = cloudLogService;
+            _cloudLogBuilder = cloudLogBuilder;
             _configuration = configuration;
         }
 
@@ -26,6 +28,16 @@ namespace CopyZillaBackend.API.Middlewares
             var isInternalRequest = context.Request.Path.Value?.Contains("/internal");
             var isDevelopmentRequest = _configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development";
             var logToCloud = !isInternalRequest.GetValueOrDefault() && !isDevelopmentRequest;
+
+            // Get user email and client type from headers
+            string email = string.Empty;
+            string clientType = string.Empty;
+
+            if (context.Request.Headers.ContainsKey("X-User-Email"))
+                email = context.Request.Headers["X-User-Email"]!.ToString();
+
+            if (context.Request.Headers.ContainsKey("X-Client-Type"))
+                clientType = context.Request.Headers["X-Client-Type"]!.ToString();
 
             try
             {
@@ -45,7 +57,7 @@ namespace CopyZillaBackend.API.Middlewares
                     ErrorMessage = error?.ErrorMessage ?? ex.Message,
                 };
 
-                string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
+                string log = _cloudLogBuilder.BuildErrorLog(context, ex, clientType, email);
 
                 if (logToCloud)
                     await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
@@ -55,14 +67,14 @@ namespace CopyZillaBackend.API.Middlewares
             catch (Exception ex)
             {
                 var response = new BaseEventResult();
-                string log = $"Exception: {ex.Message} StackTrace: {ex.StackTrace} InnerException: {ex.InnerException?.Message} InnerException StackTrace: {ex.InnerException?.StackTrace}";
+                string log = _cloudLogBuilder.BuildErrorLog(context, ex, clientType, email);
 
                 if (ex is AuthException || ex is FirebaseAuthException)
                 {
                     context.Response.StatusCode = 401;
                     response.ErrorMessage = ex.Message;
 
-                    if(logToCloud)
+                    if (logToCloud)
                         await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));

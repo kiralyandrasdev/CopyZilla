@@ -12,6 +12,7 @@ export const createCheckoutSessionAsync = async (mode, data, accessToken) => {
             {
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
+                    "X-Client-Type": "web",
                 }
             });
         return response.data.value.checkoutRedirectUrl;
@@ -26,6 +27,7 @@ export const getGoodsList = async ({ accessToken }) => {
             {
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
+                    "X-Client-Type": "web",
                 }
             });
         return response.data.value;
@@ -40,6 +42,7 @@ export const getSubscriptionList = async ({ accessToken }) => {
             {
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
+                    "X-Client-Type": "web",
                 }
             });
         return response.data.value;
