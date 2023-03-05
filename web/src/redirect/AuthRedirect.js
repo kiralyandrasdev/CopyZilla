@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LoadingIndicator } from '../components';
 import { AuthContext } from '../features/authentication/authContext';
-import { setAccessToken } from '../features/authentication/authSlice';
+import { setAccessToken, setEmail as setEmail } from '../features/authentication/authSlice';
 import styles from './AuthRedirect.module.css';
 
 function AuthRedirect() {
@@ -24,6 +24,7 @@ function AuthRedirect() {
             if (firebaseUser) {
                 if (firebaseUser.accessToken) {
                     dispatch(setAccessToken(firebaseUser.accessToken));
+                    dispatch(setEmail(firebaseUser.email));
                 }
 
                 if (firebaseUser.emailVerified) {
