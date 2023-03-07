@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    align-items: center;
+    justify-content: flex-start;
+    height: 200px;
+}
+
+.currentVersionContainer {
+    height: 20px;
+}
+
+.currentVersion {
+    padding: 0px 10px;
+    background-color: var(--green);
+    border-radius: 4px;
+}
+
+.currentVersion p {
+    color: var(--grey4)
+}

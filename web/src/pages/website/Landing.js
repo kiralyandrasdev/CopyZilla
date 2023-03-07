@@ -9,6 +9,7 @@ import ChromeSvg from '../../assets/chrome.svg';
 import GmailSvg from '../../assets/gmail.svg';
 import OutlookSvg from '../../assets/outlook.svg';
 import { AiFillStar } from 'react-icons/ai';
+import VersionScroll from './landing/components/VersionScroll';
 
 function LandingPage() {
     const navigate = useNavigate();
@@ -159,9 +160,13 @@ function LandingPage() {
                     <p className="description">You can provide additional context to ensure that we can provide the perfect response to every email.</p>
                     {featureReview({ name: "Jared", review: "With just a few pieces of information such as location, availability, and preferred time slots, the software can generate a response that is perfectly tailored for my needs." })}
                 </div>
-                <div className="landingSection__grid__item landingSection__grid__item__image landingSection__grid__item__image__small">
+                <div className="landingSection__grid__item landingSection__grid__item__image">
                     <img src={Instructions}></img>
                 </div>
+            </div>
+            <div className="landingSection versionScroll">
+                <h4>Product roadmap ⤴</h4>
+                <VersionScroll />
             </div>
             <div className="landingSection landingSection__download">
                 <h6>Download the extension and start efficient emailing today!</h6>
@@ -197,7 +202,7 @@ function LandingPage() {
                 <div className="landingSection__faq__item">
                     <h5>How do I use CopyZilla Email Assistant?</h5>
                     <p>
-                        To use our service, you will need to create an account on our website <a href="/auth/signup">here</a> and select a subscription plan that suits your needs. Once you have signed up, you can download the CopyZilla Email Assistant chrome extension and install it on your browser. After installation, you can navigate to your Gmail or Outlook account and start using our service to automate your email writing tasks.
+                        To use our service, you will need to <a href="/auth/signup">create an account</a> on our website and select a subscription plan that suits your needs. Once you have signed up, you can download the CopyZilla Email Assistant chrome extension and install it on your browser. After installation, you can navigate to your Gmail or Outlook account and start using our service to automate your email writing tasks.
                     </p>
                 </div>
             </div>
