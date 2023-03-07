@@ -11,6 +11,7 @@
     padding: 40px;
     row-gap: 40px;
     column-gap: 40px;
+    width: 100%;
 }
 
 .landingSection__hero {
@@ -221,6 +222,13 @@
     justify-content: flex-start;
     row-gap: 10px;
     column-gap: 10px;
+}
+
+.versionScroll {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    row-gap: 40px;
 }
 
 @media screen and (max-width: 1200px) {

@@ -34,7 +34,7 @@ export default function PublicLayout() {
                     <div className="header__nav__row">
                         <a className="header__nav__row__item semi-bold" href="/auth/login">Sign in</a>
                         <a className="header__nav__row__item semi-bold" href="/pricing">Pricing</a>
-                        <a className="header__nav__row__item semi-bold" href="/aboutUs">About us</a>
+                        <a className="header__nav__row__item semi-bold" href="/aboutUs">About Us</a>
                     </div>
                 </div>
                 <div className="header__portrait header__public__content">
@@ -43,8 +43,8 @@ export default function PublicLayout() {
                     <ul ref={wrapperRef} className={menuClass}>
                         <li onClick={() => nandleNavigate("/auth/login")} className="header__nav__item semi-bold green">Sign in</li>
                         <li onClick={() => nandleNavigate("/pricing")} className="header__nav__item semi-bold">Pricing</li>
-                        <li onClick={() => nandleNavigate("/aboutUs")} className="header__nav__item semi-bold">About us</li>
-                    {/*     <li onClick={() => nandleNavigate("/contact")} className="header__nav__item semi-bold">Kapcsolat</li> */}
+                        <li onClick={() => nandleNavigate("/aboutUs")} className="header__nav__item semi-bold">About Us</li>
+                        {/*     <li onClick={() => nandleNavigate("/contact")} className="header__nav__item semi-bold">Kapcsolat</li> */}
                     </ul>
                 </div>
             </header>
@@ -52,11 +52,10 @@ export default function PublicLayout() {
                 <Outlet></Outlet>
             </main>
             <footer className="footer footer__public">
-                <p>© 2023 CopyZilla</p>
-                <p>info@copyzilla.hu</p>
-                <a href="/termsOfService">Terms of service</a>
-                <a href="/privacyPolicy">Privacy policy</a>
-                {/* <a href="/contact">Kapcsolat</a> */}
+                    <p>© 2023 CopyZilla</p>
+                    <p>info@copyzilla.hu</p>
+                    <a href="/termsOfService">Terms of service</a>
+                    <a href="/privacyPolicy">Privacy policy</a>
             </footer>
         </div>
     );

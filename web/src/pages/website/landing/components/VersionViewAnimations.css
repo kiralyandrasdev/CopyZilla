@@ -1,0 +1,22 @@
+.item--0 {
+    animation: fadeInUp 0.5s ease-in-out 0.1s both;
+}
+
+.item--1 {
+    animation: fadeInUp 0.5s ease-in-out 0.2s both;
+}
+
+.item--2 {
+    animation: fadeInUp 0.5s ease-in-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
