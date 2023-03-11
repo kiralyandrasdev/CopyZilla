@@ -23,7 +23,31 @@ function LoginForm() {
         setPassword(e);
     }
 
+    window.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    });
+
+    const canSubmit = () => {
+        if(email.length < 1) {
+            setError("Email address is required");
+            return false;
+        } else {
+            setError("");
+        }
+        if(password.length < 1) {
+            setError("Password is required");
+            return false;
+        } else {
+            setError("");
+        }
+        return true;
+    }
+
     const handleLogin = async () => {
+        if(!canSubmit()) return;
+
         setIsLoading(true);
 
         try {

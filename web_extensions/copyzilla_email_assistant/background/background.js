@@ -41,6 +41,8 @@ async function initializeFirebase() {
 
     onAuthStateChanged(auth, async (user) => {
         if (user && user.emailVerified) {
+            console.log("User is signed in");
+
             chrome.storage.sync.set({
                 uid: user.uid,
                 token: user.accessToken,
@@ -55,7 +57,12 @@ async function initializeFirebase() {
                 userId: response.value.id,
             })
         } else {
-            chrome.storage.sync.set({ uid: null, token: null, email: null, userId: null });
+            chrome.storage.sync.set({
+                uid: null,
+                token: null,
+                email: null,
+                userId: null
+            });
         }
     });
 }
@@ -69,7 +76,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (!result.uid || !result.token) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
-                            reply: "Please sign in to your account through the extension popup.",
+                            reply: "Please sign in to your account through the extension popup",
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -81,7 +88,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (request.composeType === "new" && !request.data.options.instructions) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
-                            reply: "Please enter instructions for a new email."
+                            reply: "Please enter instructions for a new email"
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -94,10 +101,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
                 // Returns cached token if it is valid for at least another 5 minutes or refreshes it.
                 getValidToken().then((token) => {
-                    console.log("Successfully acquired token.");
+                    console.log("Successfully acquired token");
 
                     writeReply(result.uid, result.email, token, request.data.options).then((response) => {
-                        console.log("Successfully wrote email.");
+                        console.log("Successfully wrote email");
 
                         chrome.tabs.sendMessage(tabs[0].id, {
                             type: "to_content_WRITE_EMAIL", data: {
@@ -196,8 +203,18 @@ async function getValidToken() {
 }
 
 async function fetchUser() {
+    console.log("Fetching user...");
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 1500);
+    });
+
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(["uid", "email"], async (result) => {
+            console.log("Fetching user, uid: " + result.uid + ", email: " + result.email);
+
             const token = await getValidToken();
 
             const baseUrl = await getApiUrl();
@@ -212,9 +229,15 @@ async function fetchUser() {
                     "X-Client-Type": "extension"
                 },
             });
+
+            console.log("Fetched user: " + response.ok);
+
             if (!response.ok) {
+                console.log("Error fetching user: " + response.status);
+
                 reject(response);
             }
+
             const json = response.json();
             resolve(json);
         });
