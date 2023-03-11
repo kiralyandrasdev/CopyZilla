@@ -23,6 +23,16 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
               .MustAsync(TemplateExistsAsync)
               .WithErrorCode("404")
               .WithMessage("Template does not exist.");
+
+            RuleFor(e => e)
+               .MustAsync(TitleIsBelowCharacterLimit)
+               .WithMessage("Title must not be more than 200 characters.")
+               .WithErrorCode("400");
+
+            RuleFor(e => e)
+               .Must(e => e.Options.Content.Length < 10000)
+               .WithMessage("Content must not be more than 10.000 characters.")
+               .WithErrorCode("400");
         }
 
         private async Task<bool> UserExistsAsync(UpdateTemplateCommand e, CancellationToken _)
@@ -33,6 +43,14 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
         private async Task<bool> TemplateExistsAsync(UpdateTemplateCommand e, CancellationToken _)
         {
             return await _mongoRepository.GetEntityAsync(e.UserId, e.TemplateId) is not null;
+        }
+
+        private async Task<bool> TitleIsBelowCharacterLimit(UpdateTemplateCommand e, CancellationToken _)
+        {
+            if (!string.IsNullOrEmpty(e.Options.Title))
+                return e.Options.Title.Length < 200;
+
+            return true;
         }
     }
 }

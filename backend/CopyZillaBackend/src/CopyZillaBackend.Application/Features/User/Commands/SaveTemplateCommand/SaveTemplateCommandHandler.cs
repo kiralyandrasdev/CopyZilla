@@ -20,7 +20,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SaveTemplateComman
         {
             var result = new SaveTemplateCommandResult();
 
-            var validator = new SaveTemplateCommandValidator(_userRepository);
+            var validator = new SaveTemplateCommandValidator(_userRepository, _mongoRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             validationResult.Resolve(result);
@@ -28,7 +28,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SaveTemplateComman
             if (!result.Success)
                 return result;
 
-             var emailTemplate = new EmailTemplate()
+            var emailTemplate = new EmailTemplate()
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
