@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
+using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Domain.Entities;
 using CopyZillaBackend.Persistence;
+using CopyZillaBackend.Persistence.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +65,17 @@ namespace API.Tests.Engine
                     options.LogTo(message => Debug.WriteLine(message));
                     options.EnableSensitiveDataLogging();
                 });
+
+                var mongoConnectionString = configuration.GetConnectionString("MongoConnection");
+                var mongoDatabaseName = configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
+                var promptResultCollectionName = configuration.GetSection("MongoDB").GetValue<string>("PromptResultCollectionName");
+
+                services.AddScoped<IMongoRepository<PromptResult>>(provider => new MongoRepository<PromptResult>
+                (
+                    mongoConnectionString,
+                    mongoDatabaseName,
+                    promptResultCollectionName
+                ));
 
                 Configuration = configuration!;
 

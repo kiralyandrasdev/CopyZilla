@@ -1,11 +1,11 @@
-﻿using CopyZillaBackend.Domain.Entities;
+﻿using CopyZillaBackend.Domain.Contracts;
 
 namespace CopyZillaBackend.Application.Contracts.Persistence
 {
-    public interface IMongoRepository
+    public interface IMongoRepository<T> where T : IMongoEntity
     {
-        Task AddPromptResultAsync(PromptResult promptResult);
-        Task<List<PromptResult>> GetPromptResultListAsync(Guid userId);
-        Task DeletePromptResultAsync(Guid userId, Guid promptResultId);
+        Task AddEntityAsync(T entity);
+        Task<List<T>> GetEntitiesAsync(Guid userId);
+        Task DeleteEntityAsync(Guid userId, Guid entityId);
     }
 }

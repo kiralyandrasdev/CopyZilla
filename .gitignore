@@ -6,4 +6,6 @@
 /backend/CopyZillaBackend/tests/API.Tests/test_appsettings.Development.json
 /backend/CopyZillaBackend/tests/API.Tests/test_appsettings.json
 /backend/CopyZillaBackend/.editorconfig
+/backend/.vscode/launch.json
+/backend/.vscode/tasks.json
 /.vs/CopyZilla/v17

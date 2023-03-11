@@ -7,39 +7,35 @@ namespace API.Tests.Database
 {
     public class MongoDBManager //TODO: try with cloud atlas mongodb connection string
     {
-        private readonly WebApplicationFactoryEngine<Program> _factory;
+        private readonly string? _connectionString;
+        private readonly string? _databaseName;
+        private readonly string? _promptResultCollectionName;
 
         public MongoDBManager(WebApplicationFactoryEngine<Program> factory)
         {
-            _factory = factory;
+            _connectionString = factory.Configuration.GetConnectionString("MongoConnection");
+            _databaseName = factory.Configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
+            _promptResultCollectionName = factory.Configuration.GetSection("MongoDB").GetValue<string>("PromptResultCollectionName");
         }
 
         public void ClearSchema()
         {
-            var connectionString = _factory.Configuration.GetConnectionString("MongoConnection");
-            var databaseName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
-            var collectionName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
-
-            var client = new MongoClient(connectionString);
+            var client = new MongoClient(_connectionString);
 
             // drop db 
-            client.DropDatabase(databaseName);
+            client.DropDatabase(_databaseName);
 
             // create
-            var newDb = client.GetDatabase(databaseName);
-            newDb.GetCollection<PromptResult>(collectionName);
+            var newDb = client.GetDatabase(_databaseName);
+            newDb.GetCollection<PromptResult>(_promptResultCollectionName);
         }
 
         public async Task<PromptResult> AddPromptResultAsync(PromptResult promptResult)
         {
-            var connectionString = _factory.Configuration.GetConnectionString("MongoConnection");
-            var databaseName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
-            var collectionName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
+            var client = new MongoClient(_connectionString);
+            var db = client.GetDatabase(_databaseName);
 
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase(databaseName);
-
-            var collection = db.GetCollection<PromptResult>(collectionName);
+            var collection = db.GetCollection<PromptResult>(_promptResultCollectionName);
             await collection.InsertOneAsync(promptResult);
 
             return promptResult;
@@ -47,14 +43,10 @@ namespace API.Tests.Database
 
         public async Task<List<PromptResult>> GetPromptResultListAsync(Guid userId)
         {
-            var connectionString = _factory.Configuration.GetConnectionString("MongoConnection");
-            var databaseName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
-            var collectionName = _factory.Configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
+            var client = new MongoClient(_connectionString);
+            var db = client.GetDatabase(_databaseName);
 
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase(databaseName);
-
-            var collection = db.GetCollection<PromptResult>(collectionName);
+            var collection = db.GetCollection<PromptResult>(_promptResultCollectionName);
             var result = await collection.FindAsync(e => e.UserId == userId);
 
             return (await result.ToListAsync()).OrderByDescending(e => e.CreatedOn).ToList();

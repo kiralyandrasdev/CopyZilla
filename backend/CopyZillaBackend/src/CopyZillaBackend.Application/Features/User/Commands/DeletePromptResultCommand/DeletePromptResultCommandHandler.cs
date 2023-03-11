@@ -1,14 +1,15 @@
 ﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
+using CopyZillaBackend.Domain.Entities;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand
 {
     public class DeletePromptResultCommandHandler : IRequestHandler<DeletePromptResultCommand, DeletePromptResultCommandResult>
 	{
-        private readonly IMongoRepository _repository;
+        private readonly IMongoRepository<PromptResult> _repository;
 
-        public DeletePromptResultCommandHandler(IMongoRepository repository)
+        public DeletePromptResultCommandHandler(IMongoRepository<PromptResult> repository)
         {
             _repository = repository;
         }
@@ -22,7 +23,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeletePromptResult
 
             validationResult.Resolve(result);
 
-            await _repository.DeletePromptResultAsync(request.UserId, request.PromptResultId);
+            await _repository.DeleteEntityAsync(request.UserId, request.PromptResultId);
 
             return result;
         }

@@ -7,10 +7,10 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCo
 {
     public class SavePromptResultCommandHandler : IRequestHandler<SavePromptResultCommand, SavePromptResultCommandResult>
     {
-        private readonly IMongoRepository _mongoRepository;
+        private readonly IMongoRepository<PromptResult> _mongoRepository;
         private readonly IUserRepository _userRepository;
 
-        public SavePromptResultCommandHandler(IMongoRepository mongoRepository, IUserRepository userRepository)
+        public SavePromptResultCommandHandler(IMongoRepository<PromptResult> mongoRepository, IUserRepository userRepository)
         {
             _mongoRepository = mongoRepository;
             _userRepository = userRepository;
@@ -36,7 +36,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCo
                 Content = request.Options.Content
             };
 
-            await _mongoRepository.AddPromptResultAsync(promptResult);
+            await _mongoRepository.AddEntityAsync(promptResult);
 
             return result;
         }

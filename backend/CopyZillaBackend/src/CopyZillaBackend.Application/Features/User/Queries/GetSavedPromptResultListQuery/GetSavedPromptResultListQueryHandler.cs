@@ -1,15 +1,16 @@
 ﻿using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
+using CopyZillaBackend.Domain.Entities;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery
 {
     public class GetSavedPromptResultListQueryHandler : IRequestHandler<GetSavedPromptResultListQuery, GetSavedPromptResultListQueryResult>
 	{
-        private readonly IMongoRepository _mongoRepository;
+        private readonly IMongoRepository<PromptResult> _mongoRepository;
         private readonly IUserRepository _userRepository;
 
-        public GetSavedPromptResultListQueryHandler(IMongoRepository mongoRepository, IUserRepository userRepository)
+        public GetSavedPromptResultListQueryHandler(IMongoRepository<PromptResult> mongoRepository, IUserRepository userRepository)
         {
             _mongoRepository = mongoRepository;
             _userRepository = userRepository;
@@ -27,7 +28,7 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResul
             if (!result.Success)
                 return result;
 
-            result.Value = await _mongoRepository.GetPromptResultListAsync(request.UserId);
+            result.Value = await _mongoRepository.GetEntitiesAsync(request.UserId);
 
             return result;
         }

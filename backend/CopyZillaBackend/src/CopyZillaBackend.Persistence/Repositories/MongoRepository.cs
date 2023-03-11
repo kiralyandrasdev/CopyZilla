@@ -1,61 +1,52 @@
 ﻿using CopyZillaBackend.Application.Contracts.Persistence;
-using CopyZillaBackend.Domain.Entities;
-using Microsoft.Extensions.Configuration;
+using CopyZillaBackend.Domain.Contracts;
 using MongoDB.Driver;
 
 namespace CopyZillaBackend.Persistence.Repositories
 {
-    public class MongoRepository : IMongoRepository
+    public class MongoRepository<T> : IMongoRepository<T> where T : IMongoEntity
     {
-        private readonly IConfiguration _configuration;
+        private string _connectionString;
+        private string _databaseName;
+        private string _collectionName;
 
-        public MongoRepository(IConfiguration configuration)
+        public MongoRepository(string connectionString, string databaseName, string collectionName)
         {
-            _configuration = configuration;
+            _connectionString = connectionString;
+            _databaseName = databaseName;
+            _collectionName = collectionName;
         }
 
-        public async Task AddPromptResultAsync(PromptResult promptResult)
+        public async Task AddEntityAsync(T entity)
         {
-            if (string.IsNullOrEmpty(promptResult.Title))
-                promptResult.Title = DateTime.UtcNow.ToString("s");
+            if (string.IsNullOrEmpty(entity.Title))
+                entity.Title = DateTime.UtcNow.ToString("s");
 
-            var connectionString = _configuration.GetConnectionString("MongoConnection");
-            var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
-
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase(databaseName);
-
-            var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
-            var collection = db.GetCollection<PromptResult>(collectionName);
-            await collection.InsertOneAsync(promptResult);
+            var client = new MongoClient(_connectionString);
+            var db = client.GetDatabase(_databaseName);
+            var collection = db.GetCollection<T>(_collectionName);
+            
+            await collection.InsertOneAsync(entity);
         }
 
-        public async Task<List<PromptResult>> GetPromptResultListAsync(Guid userId)
+        public async Task<List<T>> GetEntitiesAsync(Guid userId) 
         {
-            var connectionString = _configuration.GetConnectionString("MongoConnection");
-            var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
+            var client = new MongoClient(_connectionString);
+            var db = client.GetDatabase(_databaseName);
+            var collection = db.GetCollection<T>(_collectionName);
 
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase(databaseName);
-
-            var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
-            var collection = db.GetCollection<PromptResult>(collectionName);
             var result = await collection.FindAsync(e => e.UserId == userId);
 
             return (await result.ToListAsync()).OrderByDescending(e => e.CreatedOn).ToList();
         }
 
-        public async Task DeletePromptResultAsync(Guid userId, Guid promptResultId)
+        public async Task DeleteEntityAsync(Guid userId, Guid entityId)
         {
-            var connectionString = _configuration.GetConnectionString("MongoConnection");
-            var databaseName = _configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
+            var client = new MongoClient(_connectionString);
+            var db = client.GetDatabase(_databaseName);
+            var collection = db.GetCollection<T>(_collectionName);
 
-            var client = new MongoClient(connectionString);
-            var db = client.GetDatabase(databaseName);
-
-            var collectionName = _configuration.GetSection("MongoDB").GetValue<string>("CollectionName");
-            var collection = db.GetCollection<PromptResult>(collectionName);
-            await collection.FindOneAndDeleteAsync(e => e.Id == promptResultId && e.UserId == userId);
+            await collection.FindOneAndDeleteAsync(e => e.Id == entityId && e.UserId == userId);
         }
     }
 }

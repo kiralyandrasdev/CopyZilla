@@ -12,6 +12,11 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResul
             _repository = repository;
 
             RuleFor(e => e)
+                .Must(e => e.UserId != Guid.Empty)
+                .WithMessage("UserId must not be empty.")
+                .WithErrorCode("400");
+
+            RuleFor(e => e)
                 .MustAsync(ExistsAsync)
                 .WithMessage("The specified user does not exist.")
                 .WithErrorCode("404");
@@ -23,4 +28,3 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResul
         }
     }
 }
-
