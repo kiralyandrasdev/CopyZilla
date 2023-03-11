@@ -137,14 +137,14 @@ function TemplateEditor() {
             />
             <div className={styles.actions}>
                 <TextButton
-                    title={deleteTemplateLoading ? "Deleting..." : "Delete"}
+                    title={deleteTemplateLoading ? "Deleting" : "Delete"}
                     onClick={() => handleDeleteTemplate()}
-                    color={deleteActive() ? "white" : "var(--grey3)"}
+                    color={!deleteActive() || actionLoading ? "var(--grey3)" : "white"}
                 />
                 <TextButton
-                    title={actionLoading ? "Saving..." : "Save"}
+                    title={actionLoading ? "Saving" : "Save"}
                     onClick={() => handleSaveOrUpdateTemplate()}
-                    color={saveOrUpdateActive() ? "var(--green)" : "var(--grey3)"}
+                    color={!saveOrUpdateActive() || actionLoading ? "var(--grey3)" : "var(--green)"}
                 />
             </div>
             {actionError && <p className="red">An error occured</p>}
