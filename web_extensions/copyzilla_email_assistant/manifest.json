@@ -2,13 +2,15 @@
   "manifest_version": 3,
   "name": "CopyZilla Email Assistant",
   "description": "AI powered email assistant that helps you write better emails",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "action": {
     "default_title": "CopyZilla Email Assistant",
     "default_popup": "index.html",
     "default_icon": "logo128.png"
   },
-  "icons": {},
+  "icons": {
+    "128": "logo128.png"
+  },
   "content_scripts": [
     {
       "matches": [
