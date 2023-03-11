@@ -82,7 +82,12 @@ export default function PrivateHeader() {
                     <p className="creditCount semi-bold">{creditCount()}</p>
                     <AsyncButton onClick={() => navigate("/user/creditRefill")} shrinked={true} title="Buy credits"></AsyncButton>
                 </div>
-                <a className="header__nav__item semi-bold" href="/user/account">Account</a>
+                <div className="header__main">
+                    <a className="header__nav__item semi-bold green" href="/user/home">
+                        Download extension
+                    </a>
+                    <a className="header__nav__item semi-bold" href="/user/account">Account</a>
+                </div>
             </header>
             <header className="header header__private header__portrait animation__fadeInDown">
                 <FiPlus onClick={() => nandleNavigate("/user/home")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
@@ -98,8 +103,8 @@ export default function PrivateHeader() {
                         </div>
                     </li>
                     <span className="header__nav__item__divider" />
-                    <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Email Assistant</li>
-                    {/* <li onClick={() => nandleNavigate("/user/savedResults")} className="header__nav__item semi-bold">Mentések</li> */}
+                    <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Download extension</li>
+                    <li onClick={() => nandleNavigate("/user/emailTemplates")} className="header__nav__item semi-bold">Email Templates</li>
                     <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Buy credits</li>
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Account</li>
                     <li onClick={() => logout()} className="header__nav__item semi-bold">Sign out</li>

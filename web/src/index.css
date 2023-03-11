@@ -2,6 +2,27 @@
 
 /* Colors */
 
+/* Customize the scrollbar track */
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+  /* Set a background color */
+}
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* Set a background color */
+}
+
+/* Customize the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: var(--grey2);
+  /* Set a background color */
+  border-radius: 5px;
+  /* Rounded corners */
+}
+
 :root {
   --grey0: #FEFDFE;
   --grey1: #F0F1F8;

@@ -9,6 +9,7 @@ import './index.css';
 import store from './redux/store/store';
 import reportWebVitals from './reportWebVitals';
 import RouteChangeTracker from './redirect/RouteChangeTracker';
+import TemplateContextProvider from './features/templates/templateContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -17,9 +18,11 @@ root.render(
     <BrowserRouter>
       <AuthContextProvider>
         <UserContextProvider>
-          <RouteChangeTracker>
-            <App></App>
-          </RouteChangeTracker>
+          <TemplateContextProvider>
+            <RouteChangeTracker>
+              <App></App>
+            </RouteChangeTracker>
+          </TemplateContextProvider>
         </UserContextProvider>
       </AuthContextProvider>
     </BrowserRouter>

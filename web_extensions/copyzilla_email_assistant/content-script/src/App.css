@@ -32,6 +32,10 @@
   position: relative;
 }
 
+.templatesPopup__parent {
+  position: relative;
+}
+
 .textButton {
   cursor: pointer;
 }

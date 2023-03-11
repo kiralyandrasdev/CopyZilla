@@ -39,7 +39,7 @@ async function initializeFirebase() {
 
     const auth = getAuth();
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user && user.emailVerified) {
             chrome.storage.sync.set({
                 uid: user.uid,
@@ -48,8 +48,14 @@ async function initializeFirebase() {
                 lastTokenRefresh: Date.now() / 1000,
                 // lastTokenRefresh: new Date(Date.now() - 86400000).getTime() / 1000,
             });
+
+            const response = await fetchUser();
+
+            chrome.storage.sync.set({
+                userId: response.value.id,
+            })
         } else {
-            chrome.storage.sync.set({ uid: null, token: null, email: null });
+            chrome.storage.sync.set({ uid: null, token: null, email: null, userId: null });
         }
     });
 }
@@ -105,7 +111,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     console.log("Error acquiring token: " + error);
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
-                            reply: response.errorMessage ?? response.value,
+                            reply: error.errorMessage ?? "An unexpected error occured",
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -126,6 +132,26 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             sendResponse({ data: response })
         }).catch((error) => {
             sendResponse({ error: error });
+        });
+    }
+
+    if (request.type == "to_background_GET_TEMPLATES") {
+        fetchTemplates().then((response) => {
+            sendResponse({ data: response.value })
+        }).catch((error) => {
+            sendResponse({ error: error.errorMessage ?? "An unexpected error occured" });
+        });
+    }
+
+    if (request.type == "to_background_SELECT_TEMPLATE") {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                type: "to_content_WRITE_EMAIL", data: {
+                    reply: request.data,
+                }
+            }, (response) => {
+                sendResponse(response);
+            });
         });
     }
 
@@ -215,6 +241,32 @@ async function writeReply(
     });
     const data = await response.json();
     return data;
+}
+
+async function fetchTemplates() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(["userId", "email"], async (result) => {
+            const token = await getValidToken();
+
+            const baseUrl = await getApiUrl();
+            const url = `${baseUrl}/user/${result.userId}/templates`;
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                    "X-User-Email": result.email,
+                    "X-Client-Type": "extension"
+                },
+            });
+            if (!response.ok) {
+                reject(response);
+            }
+            const json = response.json();
+            resolve(json);
+        });
+    });
 }
 
 async function getApiUrl() {

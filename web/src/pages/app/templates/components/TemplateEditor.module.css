@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    row-gap: 20px;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    border: none;
+    resize: none;
+    outline: none;
+    padding: 15px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--grey3);
+    border-radius: 8px;
+    color: white;
+    height: 500px;
+}
+
+textarea::placeholder {
+    color: var(--grey2);
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    column-gap: 20px;
+}

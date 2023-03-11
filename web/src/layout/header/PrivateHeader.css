@@ -18,3 +18,9 @@
 .header__nav__menu__private {
     background-color: var(--grey3);
 }
+
+.header__main {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}

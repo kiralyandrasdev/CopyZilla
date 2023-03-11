@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { logout } from "../../features/authentication/actions/authActions";
 import './Sidebar.css';
 import SidebarNavItem from "./nav/SidebarNavItem";
@@ -19,7 +19,7 @@ export default function Sidebar() {
                     <h5 onClick={() => handleHeaderClick()}>copyzilla</h5>
                 </div>
                 <div className="sidebar__main__nav">
-                    <SidebarNavItem textColor="var(--grey4)" color="var(--green)" path="/user/home" active={true} text="Email Assistant"></SidebarNavItem>
+                    <SidebarNavItem path="/user/emailTemplates" text="📒 Email Templates"></SidebarNavItem>
                 </div>
             </div>
             <div className="sidebar__bottom_nav">
