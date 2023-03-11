@@ -31,26 +31,33 @@ function VersionScroll() {
         {
             version: '1.0.3',
             date: new Date(2023, 2, 5),
-            currentVersion: true,
             updates: [
                 "Extension auth post-fix",
             ],
         },
         {
-            version: '1.0.4',
-            date: new Date(2023, 2, 8),
+            version: '2.0.0',
+            date: new Date(2023, 2, 12),
+            currentVersion: true,
             updates: [
-                "Edge Add-on support",
-                "Token refresh modifications",
-                "Other minor modifications",
+                "Feature: Email Templates 🔥",
+                "Minor improvements",
             ],
         },
         {
-            version: '2.0.0 🔥',
+            version: '2.0.1',
             date: new Date(2023, 2, 14),
             updates: [
-                "Feature: Email Templates",
+                "Edge Add-on support",
                 "Content script fixes",
+            ],
+        },
+        {
+            version: '2.1.0',
+            date: new Date(2023, 3, 1),
+            updates: [
+                "Feature: Rephrasing 🔥",
+                "Migrating to GPT-3.5",
             ],
         },
     ];
