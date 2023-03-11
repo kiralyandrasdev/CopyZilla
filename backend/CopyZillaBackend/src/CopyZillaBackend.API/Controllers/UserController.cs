@@ -11,6 +11,7 @@ using CopyZillaBackend.Application.Features.User.Commands.DeleteTemplateCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.SavePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.SaveTemplateCommand;
+using CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
 using CopyZillaBackend.Application.Features.User.Queries.GetSavedPromptResultListQuery;
 using CopyZillaBackend.Application.Features.User.Queries.GetSavedTemplateListQuery;
@@ -148,6 +149,15 @@ namespace CopyZillaBackend.API.Controllers
         public async Task<ActionResult<GetSavedTemplateListQueryResult>> GetSavedTemplateListAsync(Guid userId)
         {
             var result = await _mediator.Send(new GetSavedTemplateListQuery(userId));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpPatch]
+        [Route("{userId}/templates/{templateId}")]
+        public async Task<ActionResult<UpdateTemplateCommandResult>> UpdateTemplateAsync(Guid userId, Guid templateId, [FromBody] UpdateTemplateCommandOptions options)
+        {
+            var result = await _mediator.Send(new UpdateTemplateCommand(userId, templateId, options));
 
             return _responseManager.MapActionResult(result);
         }
