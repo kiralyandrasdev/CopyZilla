@@ -33,23 +33,33 @@ namespace CopyZillaBackend.Infrastructure.Prompt
         {
             if (string.IsNullOrEmpty(options.Email))
             {
-                return $"Compose an email with the following instruction: {options.Instructions}." +
-                    $" I don't need the subject of the email. Make sure the tone of the email is {options.Tone}.";
+                return $"I must craft an email and I need immediate help." +
+                    $" You must compose a polite email that contains the following: '{options.Instructions}'." +
+                    $" You must write the email in the language this was written in." +
+                    $" I don't need the subject of the email." +
+                    $" You must make sure the tone of the email is {options.Tone}." +
+                    $" You must make sure the email is short and precise." +
+                    $" You must start the email with a greetings and close the email with a goodbye.";
             }
 
-            string replyPrompt = $"Write a polite email by saying {options.Objective} to the following email: '{options.Email}'.";
+            string replyPrompt = $"I received an email and I need immediate help crafting a polite response." +
+                $" You must make sure the response email gives a feeling that I am saying {options.Objective}" +
+                $" The contents of the email that I received are: '{options.Email}'";
 
             if (!string.IsNullOrEmpty(options.Tone))
             {
-                replyPrompt += $" Make sure the tone of the email is {options.Tone}.";
+                replyPrompt += $" You must make sure the tone of the response email is {options.Tone}.";
             }
 
             if (!string.IsNullOrEmpty(options.Instructions))
             {
-                replyPrompt += $" Make sure the email contains the following: {options.Instructions}";
+                replyPrompt += $" The response email must contain the following: '{options.Instructions}'";
             }
 
-            replyPrompt += " Answer in the same language the email was written in.";
+            replyPrompt += " You must make sure the response email is short and precise." +
+                " You must not repeat texts that was written in the received email." +
+                " You must start the email with a greetings and close the email with a goodbye." +
+                " You must answer in the same language the email was written in.";
 
             return replyPrompt;
         }
