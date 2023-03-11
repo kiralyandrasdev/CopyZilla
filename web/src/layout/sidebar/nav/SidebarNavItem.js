@@ -6,7 +6,10 @@ export default function SidebarNavItem(props) {
     const navigate = useNavigate();
 
     let className = "sidebar__main__nav__item";
-    if (props.active) {
+
+    console.log(props.path, window.location.pathname);
+    
+    if (props.path === window.location.pathname) {
         className += " sidebar__main__nav__item--active";
     }
 

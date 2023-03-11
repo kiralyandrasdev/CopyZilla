@@ -3,6 +3,11 @@ import './TextField.css';
 
 export default function TextField(props) {
     let containerClass = "textField__container";
+    let textFieldClass = "textField";
+
+    if(props.noMargin) {
+        textFieldClass += " textField--noMargin";
+    }
 
     if (props.error) {
         containerClass += " textField__container--error";
@@ -12,8 +17,8 @@ export default function TextField(props) {
     }
 
     return (
-        <div className="textField">
-            <label>{props.title}</label>
+        <div className={textFieldClass}>
+            {props.label && <label>{props.label}</label>}
             {props.description && <p>{props.description}</p>}
             <div className={containerClass}>
                 {

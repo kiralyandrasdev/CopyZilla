@@ -24,7 +24,7 @@ export const apiSlice = createApi({
             'Content-Type': 'application/json',
         }
     }),
-    tagTypes: ['User', "PromptResults"],
+    tagTypes: ['User', "PromptResults", "EmailTemplates"],
     endpoints: (builder) => ({
         getUser: builder.query({
             query: ({ firebaseUid }) => ({
@@ -111,6 +111,43 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['PromptResults'],
         }),
+        getEmailTemplates: builder.query({
+            query: ({ userId }) => ({
+                url: `/user/${userId}/templates`,
+                method: 'GET',
+            }),
+            providesTags: ['EmailTemplates'],
+            transformResponse: (response) => {
+                return response.value;
+            },
+            transformErrorResponse: (response) => {
+                console.log(response);
+                return response.errorMessage;
+            }
+        }),
+        saveEmailTemplate: builder.mutation({
+            query: ({ userId, template }) => ({
+                url: `/user/${userId}/templates`,
+                method: 'POST',
+                body: template,
+            }),
+            invalidatesTags: ['EmailTemplates'],
+        }),
+        updateEmailTemplate: builder.mutation({
+            query: ({ userId, template }) => ({
+                url: `/user/${userId}/templates/${template.id}`,
+                method: 'PATCH',
+                body: template,
+            }),
+            invalidatesTags: ['EmailTemplates'],
+        }),
+        deleteEmailTemplate: builder.mutation({
+            query: ({ userId, templateId }) => ({
+                url: `/user/${userId}/templates/${templateId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['EmailTemplates'],
+        }),
     }),
 })
 
@@ -123,7 +160,11 @@ export const {
     useProcessAdvancedPromptMutation,
     useGetPromptResultsQuery,
     useSavePromptResultMutation,
-    useDeletePromptResultMutation
+    useDeletePromptResultMutation,
+    useGetEmailTemplatesQuery,
+    useSaveEmailTemplateMutation,
+    useUpdateEmailTemplateMutation,
+    useDeleteEmailTemplateMutation,
 } = apiSlice;
 
 export default apiSlice;

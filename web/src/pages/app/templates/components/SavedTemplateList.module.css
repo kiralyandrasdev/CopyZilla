@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 200px;
+    row-gap: 10px;
+    max-width: 250px;
+}
+
+.addBtn {
+    margin-bottom: 10px;
+}
+
+.shimmerItem {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    height: 45px;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    row-gap: 10px;
+    text-align: center;
+    overflow-y: scroll;
+    height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        height: 100%;
+    }
+
+    .items {
+        max-height: 200px;
+    }
+}

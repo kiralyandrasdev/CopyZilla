@@ -1,0 +1,70 @@
+.container {
+    position: absolute;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--grey1);
+    background-color: white;
+    z-index: 100;
+    bottom: 30px;
+    left: -50%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 200px;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.container__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 10px;
+    width: 100%;
+    text-align: center;
+    height: 220px;
+}
+
+.templateList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 5px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: auto;
+}
+
+.template {
+    min-height: 35px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.template:hover {
+    background-color: var(--grey1);
+}
+
+.container__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    column-gap: 10px;
+}

@@ -39,8 +39,10 @@ async function initializeFirebase() {
 
     const auth = getAuth();
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user && user.emailVerified) {
+            console.log("User is signed in");
+
             chrome.storage.sync.set({
                 uid: user.uid,
                 token: user.accessToken,
@@ -48,8 +50,19 @@ async function initializeFirebase() {
                 lastTokenRefresh: Date.now() / 1000,
                 // lastTokenRefresh: new Date(Date.now() - 86400000).getTime() / 1000,
             });
+
+            const response = await fetchUser();
+
+            chrome.storage.sync.set({
+                userId: response.value.id,
+            })
         } else {
-            chrome.storage.sync.set({ uid: null, token: null, email: null });
+            chrome.storage.sync.set({
+                uid: null,
+                token: null,
+                email: null,
+                userId: null
+            });
         }
     });
 }
@@ -63,7 +76,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (!result.uid || !result.token) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
-                            reply: "Please sign in to your account through the extension popup.",
+                            reply: "Please sign in to your account through the extension popup",
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -75,7 +88,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (request.composeType === "new" && !request.data.options.instructions) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
-                            reply: "Please enter instructions for a new email."
+                            reply: "Please enter instructions for a new email"
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -88,10 +101,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
                 // Returns cached token if it is valid for at least another 5 minutes or refreshes it.
                 getValidToken().then((token) => {
-                    console.log("Successfully acquired token.");
+                    console.log("Successfully acquired token");
 
                     writeReply(result.uid, result.email, token, request.data.options).then((response) => {
-                        console.log("Successfully wrote email.");
+                        console.log("Successfully wrote email");
 
                         chrome.tabs.sendMessage(tabs[0].id, {
                             type: "to_content_WRITE_EMAIL", data: {
@@ -105,7 +118,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     console.log("Error acquiring token: " + error);
                     chrome.tabs.sendMessage(tabs[0].id, {
                         type: "to_content_WRITE_EMAIL", data: {
-                            reply: response.errorMessage ?? response.value,
+                            reply: error.errorMessage ?? "An unexpected error occured",
                         }
                     }, (response) => {
                         sendResponse(response);
@@ -126,6 +139,26 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             sendResponse({ data: response })
         }).catch((error) => {
             sendResponse({ error: error });
+        });
+    }
+
+    if (request.type == "to_background_GET_TEMPLATES") {
+        fetchTemplates().then((response) => {
+            sendResponse({ data: response.value })
+        }).catch((error) => {
+            sendResponse({ error: error.errorMessage ?? "An unexpected error occured" });
+        });
+    }
+
+    if (request.type == "to_background_SELECT_TEMPLATE") {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                type: "to_content_WRITE_EMAIL", data: {
+                    reply: request.data,
+                }
+            }, (response) => {
+                sendResponse(response);
+            });
         });
     }
 
@@ -170,8 +203,18 @@ async function getValidToken() {
 }
 
 async function fetchUser() {
+    console.log("Fetching user...");
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 1500);
+    });
+
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(["uid", "email"], async (result) => {
+            console.log("Fetching user, uid: " + result.uid + ", email: " + result.email);
+
             const token = await getValidToken();
 
             const baseUrl = await getApiUrl();
@@ -186,9 +229,15 @@ async function fetchUser() {
                     "X-Client-Type": "extension"
                 },
             });
+
+            console.log("Fetched user: " + response.ok);
+
             if (!response.ok) {
+                console.log("Error fetching user: " + response.status);
+
                 reject(response);
             }
+
             const json = response.json();
             resolve(json);
         });
@@ -215,6 +264,32 @@ async function writeReply(
     });
     const data = await response.json();
     return data;
+}
+
+async function fetchTemplates() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(["userId", "email"], async (result) => {
+            const token = await getValidToken();
+
+            const baseUrl = await getApiUrl();
+            const url = `${baseUrl}/user/${result.userId}/templates`;
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                    "X-User-Email": result.email,
+                    "X-Client-Type": "extension"
+                },
+            });
+            if (!response.ok) {
+                reject(response);
+            }
+            const json = response.json();
+            resolve(json);
+        });
+    });
 }
 
 async function getApiUrl() {

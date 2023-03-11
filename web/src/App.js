@@ -29,6 +29,7 @@ import DeleteAccountPage from './pages/app/account/DeleteAccount';
 import HomePage from './pages/app/Home';
 import ReactGA from 'react-ga4';
 import { gaTrackingId } from './config/envConfig';
+import EmailTemplatesPage from './pages/app/templates/EmailTemplates';
 
 if(gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
@@ -51,6 +52,7 @@ function App() {
             <Route path="/user/checkout/completed" element={<CheckoutCompleted />} />
             <Route path="/user/checkout/canceled" element={<CheckoutCanceled />} />
             <Route path="/user/subscriptionExpired" element={<SelectSubscriptionPage />} />
+            <Route path="/user/emailTemplates" element={<EmailTemplatesPage />} />
           </Route>
           <Route element={<FullscreenLayout />}>
             <Route path="/user/selectSubscription" element={<SelectSubscriptionPage />} />

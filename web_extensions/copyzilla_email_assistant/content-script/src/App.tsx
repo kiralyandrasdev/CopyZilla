@@ -13,6 +13,9 @@ import { MailClient } from './enum/mailClient';
 import Instructions from './features/reply/components/instructions/Instructions';
 import { ComposeType } from './enum/composeType';
 import parseEmail from './utils/emailUtils';
+import TemplatesPopup from './features/reply/components/popups/TemplatesPopup';
+import TemplatesButton from './features/reply/components/buttons/TemplatesButton';
+import Templates from './features/reply/components/templates/Templates';
 
 type AppProps = {
   popupMode: PopupMode;
@@ -23,6 +26,7 @@ type AppProps = {
 export default function App(props: AppProps) {
   const [isWriting, setIsWriting] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
   const { options, popupMode, setPopupMode, setMailClient, composeType, setComposeType } = useContext(OptionsContext);
 
   useEffect(() => {
@@ -69,7 +73,7 @@ export default function App(props: AppProps) {
       <div className="options">
         <ReplyMoodSelector />
         {
-           composeType == ComposeType.Reply && <ReplyTypeSelector />
+          composeType == ComposeType.Reply && <ReplyTypeSelector />
         }
         <div className="reply__actions">
           <div className="instructionsPopup__parent">
@@ -81,12 +85,27 @@ export default function App(props: AppProps) {
               onClick={handleInstructionsOpen}
             />
           </div>
+          <div className="templatesPopup__parent">
+            {templatesOpen && popupMode === PopupMode.Allow &&
+              <TemplatesPopup
+                onClose={() => setTemplatesOpen(!templatesOpen)}
+              />
+            }
+            <TemplatesButton
+              onClick={() => setTemplatesOpen(!templatesOpen)}
+            />
+          </div>
           <ReplyButton
             isWriting={isWriting}
             onWrite={handleWrite}
           />
         </div>
       </div>
+      {templatesOpen && popupMode === PopupMode.Disallow &&
+        <Templates
+          onClose={() => setTemplatesOpen(!templatesOpen)}
+        />
+      }
       {instructionsOpen && popupMode === PopupMode.Disallow &&
         <Instructions
           onClose={handleInstructionsOpen}
