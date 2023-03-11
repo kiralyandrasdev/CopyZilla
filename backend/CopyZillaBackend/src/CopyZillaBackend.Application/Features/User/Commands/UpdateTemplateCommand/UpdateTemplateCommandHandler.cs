@@ -31,8 +31,8 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
 
             var template = await _mongoRepository.GetEntityAsync(request.UserId, request.TemplateId);
 
-            template.Title = request.Options.Title;
-            template.Content = request.Options.Content;
+            template.Title = request.Options.Title?.Trim();
+            template.Content = request.Options.Content.Trim();
 
             await _mongoRepository.UpdateEntityAsync(template);
 

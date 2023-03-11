@@ -32,8 +32,8 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SaveTemplateComman
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
-                Title = request!.Options!.Title!,
-                Content = request.Options.Content
+                Title = request.Options.Title?.Trim(),
+                Content = request.Options.Content.Trim()
             };
 
             await _mongoRepository.AddEntityAsync(emailTemplate);

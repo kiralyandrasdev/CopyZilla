@@ -2,7 +2,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
 {
     public class UpdateTemplateCommandOptions
     {
-        public string Title {get; set; }
+        public string? Title {get; set; }
         public string Content {get; set; }
     }
 }
