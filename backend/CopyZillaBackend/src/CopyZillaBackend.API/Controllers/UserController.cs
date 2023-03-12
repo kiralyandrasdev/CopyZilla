@@ -5,6 +5,7 @@ using CopyZillaBackend.Application.Events.ProcessQuickPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEvent;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeletePromptResultCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteTemplateCommand;
@@ -81,6 +82,42 @@ namespace CopyZillaBackend.API.Controllers
             return _responseManager.MapActionResult(result);
         }
 
+        [HttpPost]
+        [Route("{userId}/templates")]
+        public async Task<ActionResult<SaveTemplateCommandResult>> SaveTemplateAsync(Guid userId, [FromBody] SaveTemplateCommandOptions options)
+        {
+            var result = await _mediator.Send(new SaveTemplateCommand(userId, options));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpGet]
+        [Route("{userId}/templates")]
+        public async Task<ActionResult<GetSavedTemplateListQueryResult>> GetSavedTemplateListAsync(Guid userId)
+        {
+            var result = await _mediator.Send(new GetSavedTemplateListQuery(userId));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpPatch]
+        [Route("{userId}/templates/{templateId}")]
+        public async Task<ActionResult<UpdateTemplateCommandResult>> UpdateTemplateAsync(Guid userId, Guid templateId, [FromBody] UpdateTemplateCommandOptions options)
+        {
+            var result = await _mediator.Send(new UpdateTemplateCommand(userId, templateId, options));
+
+            return _responseManager.MapActionResult(result);
+        }
+
+        [HttpDelete]
+        [Route("{userId}/templates/{templateId}")]
+        public async Task<ActionResult<DeleteTemplateCommandResult>> DeleteTemplateAsync(Guid userId, Guid templateId)
+        {
+            var result = await _mediator.Send(new DeleteTemplateCommand(userId, templateId));
+
+            return _responseManager.MapActionResult(result);
+        }
+
         [HttpGet]
         [Route("{userId}/promptResults")]
         public async Task<ActionResult<GetSavedPromptResultListQueryResult>> GetSavedPromptResultListAsync(Guid userId)
@@ -136,39 +173,12 @@ namespace CopyZillaBackend.API.Controllers
         }
 
         [HttpPost]
-        [Route("{userId}/templates")]
-        public async Task<ActionResult<SaveTemplateCommandResult>> SaveTemplateAsync(Guid userId, [FromBody] SaveTemplateCommandOptions options)
+        [Route("{userId}/rephrasePrompt")]
+        public async Task<ActionResult<ProcessRephrasePromptEventResult>> SendRephrasePrompt(Guid userId, [FromBody] ProcessRephrasePromptEventOptions options)
         {
-            var result = await _mediator.Send(new SaveTemplateCommand(userId, options));
+            _log.LogInformation($"{nameof(UserController)}::{nameof(SendRephrasePrompt)}::{DateTime.Now}] Invoked");
 
-            return _responseManager.MapActionResult(result);
-        }
-
-        [HttpGet]
-        [Route("{userId}/templates")]
-        public async Task<ActionResult<GetSavedTemplateListQueryResult>> GetSavedTemplateListAsync(Guid userId)
-        {
-            var result = await _mediator.Send(new GetSavedTemplateListQuery(userId));
-
-            return _responseManager.MapActionResult(result);
-        }
-
-        [HttpPatch]
-        [Route("{userId}/templates/{templateId}")]
-        public async Task<ActionResult<UpdateTemplateCommandResult>> UpdateTemplateAsync(Guid userId, Guid templateId, [FromBody] UpdateTemplateCommandOptions options)
-        {
-            var result = await _mediator.Send(new UpdateTemplateCommand(userId, templateId, options));
-
-            return _responseManager.MapActionResult(result);
-        }
-
-        [HttpDelete]
-        [Route("{userId}/templates/{templateId}")]
-        public async Task<ActionResult<DeleteTemplateCommandResult>> DeleteTemplateAsync(Guid userId, Guid templateId)
-        {
-            var result = await _mediator.Send(new DeleteTemplateCommand(userId, templateId));
-
-            return _responseManager.MapActionResult(result);
+            return await _mediator.Send(new ProcessRephrasePromptEvent(userId, options));
         }
     }
 }

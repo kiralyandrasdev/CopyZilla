@@ -2,6 +2,7 @@
 using CopyZillaBackend.Application.Features.Prompt.ProcessAdvancedPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessQuickPromptEvent;
+using CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEvent;
 
 namespace CopyZillaBackend.Infrastructure.Prompt
 {
@@ -43,8 +44,8 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             }
 
             string replyPrompt = $"I received an email and I need immediate help crafting a polite response." +
-                $" You must make sure the response email gives a feeling that I am saying {options.Objective}" +
-                $" The contents of the email that I received are: '{options.Email}'";
+                $" You must make sure the response email gives a feeling that I am saying {options.Objective}." +
+                $" The contents of the email that I received are: '{options.Email}'.";
 
             if (!string.IsNullOrEmpty(options.Tone))
             {
@@ -53,7 +54,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
 
             if (!string.IsNullOrEmpty(options.Instructions))
             {
-                replyPrompt += $" The response email must contain the following: '{options.Instructions}'";
+                replyPrompt += $" The response email must contain the following: '{options.Instructions}'.";
             }
 
             replyPrompt += " You must make sure the response email is short and precise." +
@@ -62,6 +63,16 @@ namespace CopyZillaBackend.Infrastructure.Prompt
                 " You must answer in the same language the email was written in.";
 
             return replyPrompt;
+        }
+
+        public string Build(ProcessRephrasePromptEventOptions options)
+        {
+            if (options.Objective == "reword")
+            {
+                return $"Rephrase the following text: '{options.Text}'.";
+            }
+
+            return $"Rephrase the following text: '{options.Text}' so it is {options.Objective}.";
         }
 
         private string GetCopyStyle(string style)
