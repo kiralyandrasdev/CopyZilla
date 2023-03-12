@@ -38,25 +38,37 @@ function VersionScroll() {
         {
             version: '2.0.0',
             date: new Date(2023, 2, 12),
-            currentVersion: true,
             updates: [
                 "Feature: Email Templates 🔥",
                 "Minor improvements",
             ],
         },
         {
-            version: '2.0.1',
-            date: new Date(2023, 2, 14),
+            version: '2.1.0',
+            date: new Date(2023, 2, 13),
+            currentVersion: true,
             updates: [
-                "Edge Add-on support",
-                "Content script fixes",
+                "Feature: Rephrasing 🔥",
             ],
         },
         {
-            version: '2.1.0',
-            date: new Date(2023, 3, 1),
+            version: '2.1.1',
+            date: new Date(2023, 2, 17),
             updates: [
-                "Feature: Rephrasing 🔥",
+                "Minor improvements",
+            ],
+        },
+        {
+            version: '2.1.2',
+            date: new Date(2023, 2, 23),
+            updates: [
+                "Edge Add-on support",
+            ],
+        },
+        {
+            version: '2.1.3',
+            date: new Date(2023, 2, 25),
+            updates: [
                 "Migrating to GPT-3.5",
             ],
         },
