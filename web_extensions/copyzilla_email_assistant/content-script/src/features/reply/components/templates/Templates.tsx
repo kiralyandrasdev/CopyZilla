@@ -13,6 +13,7 @@ function Templates(props: TemplatesProps) {
 
     const [isLoading, setIsLoading] = useState(false);
     const [templates, setTemplates] = useState<Template[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     const handleClickOutside = (e: MouseEvent) => {
         if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
@@ -30,6 +31,7 @@ function Templates(props: TemplatesProps) {
         }, (response: any) => {
             setTemplates(response.data);
             setIsLoading(false);
+            setError(response.error);
         });
 
         return () => {
@@ -55,6 +57,16 @@ function Templates(props: TemplatesProps) {
                 <div className={styles.center}>
                     <p className="description">
                         Loading your templates 📚
+                    </p>
+                </div>
+            );
+        }
+
+        if (error) {
+            return (
+                <div className={styles.center}>
+                    <p className="description">
+                        {error} 🔍
                     </p>
                 </div>
             );
