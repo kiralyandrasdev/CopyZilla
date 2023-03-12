@@ -143,10 +143,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     if (request.type == "to_background_GET_TEMPLATES") {
-        fetchTemplates().then((response) => {
-            sendResponse({ data: response.value })
-        }).catch((error) => {
-            sendResponse({ error: error.errorMessage ?? "An unexpected error occured" });
+        isSignedIn().then((signedIn) => {
+            if (!signedIn) {
+                sendResponse({ data: [], error: "Please sign in to your account through the extension popup" })
+                return true;
+            }
+
+            fetchTemplates().then((response) => {
+                sendResponse({ data: response.value })
+            }).catch((error) => {
+                sendResponse({ error: error.errorMessage ?? "An unexpected error occured" });
+            });
         });
     }
 
@@ -163,31 +170,47 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     if (request.type == "to_background_REPHRASE") {
-        rephrase({
-            selection: request.data.selection,
-            objective: request.data.objective,
-        }).then((rephraseResponse) => {
-            const updatedEmail = request.data.currentContent.replace(request.data.selection, rephraseResponse.value);
-
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    type: "to_content_WRITE_EMAIL", data: {
-                        reply: updatedEmail,
-                    }
-                }, (response) => {
-                    sendResponse(response);
+        isSignedIn().then((signedIn) => {
+            if (!signedIn) {
+                chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        type: "to_content_WRITE_EMAIL", data: {
+                            reply: "Please sign in to your account through the extension popup",
+                        }
+                    }, (response) => {
+                        sendResponse(response);
+                    });
                 });
-            });
-        }).catch((error) => {
-            console.log("Error rephrasing text: " + error);
 
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    type: "to_content_WRITE_EMAIL", data: {
-                        reply: "Error rephrasing text, please try again or contact support",
-                    }
-                }, (response) => {
-                    sendResponse(response);
+                return true;
+            }
+
+            rephrase({
+                selection: request.data.selection,
+                objective: request.data.objective,
+            }).then((rephraseResponse) => {
+                const updatedEmail = request.data.currentContent.replace(request.data.selection, rephraseResponse.value);
+
+                chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        type: "to_content_WRITE_EMAIL", data: {
+                            reply: updatedEmail,
+                        }
+                    }, (response) => {
+                        sendResponse(response);
+                    });
+                });
+            }).catch((error) => {
+                console.log("Error rephrasing text: " + error);
+
+                chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        type: "to_content_WRITE_EMAIL", data: {
+                            reply: "Error rephrasing text, please try again or contact support",
+                        }
+                    }, (response) => {
+                        sendResponse(response);
+                    });
                 });
             });
         });
@@ -364,6 +387,18 @@ async function getApiUrl() {
             }
 
             resolve("https://api.copyzilla.hu/api");
+        });
+    });
+}
+
+async function isSignedIn() {
+    return new Promise((resolve) => {
+        chrome.storage.sync.get(["token"], (result) => {
+            if (result.token) {
+                resolve(true);
+            }
+
+            resolve(false);
         });
     });
 }
