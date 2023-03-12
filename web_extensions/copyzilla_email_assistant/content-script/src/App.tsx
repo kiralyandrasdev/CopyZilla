@@ -16,6 +16,7 @@ import parseEmail from './utils/emailUtils';
 import TemplatesPopup from './features/reply/components/popups/TemplatesPopup';
 import TemplatesButton from './features/reply/components/buttons/TemplatesButton';
 import Templates from './features/reply/components/templates/Templates';
+import Rephrase from './features/reply/components/rephrase/Rephrase';
 
 type AppProps = {
   popupMode: PopupMode;
@@ -27,12 +28,36 @@ export default function App(props: AppProps) {
   const [isWriting, setIsWriting] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
+
+  const [rephraseOpen, setRephraseOpen] = useState(false);
+  const [selection, setSelection] = useState('');
+
   const { options, popupMode, setPopupMode, setMailClient, composeType, setComposeType } = useContext(OptionsContext);
 
   useEffect(() => {
     setPopupMode(props.popupMode);
     setMailClient(props.mailClient);
     setComposeType(props.composeType);
+
+    // Listen for text selection on page with window.getSelection()
+    window.addEventListener('mouseup', async () => {
+      const selection = window.getSelection();
+      console.log("Selection: ", selection?.toString());
+
+      // If text is selected, open popup
+      if (selection && selection.toString().trim().length > 0) {
+        // Close popup if it's already open
+        if (rephraseOpen) {
+          setRephraseOpen(false);
+
+          // Wait for popup to close before opening it again
+          await new Promise(r => setTimeout(r, 100));
+        }
+
+        setRephraseOpen(true);
+        setSelection(selection.toString());
+      }
+    });
   }, []);
 
   const handleWrite = () => {
@@ -85,19 +110,19 @@ export default function App(props: AppProps) {
               onClick={handleInstructionsOpen}
             />
           </div>
-          <div className="templatesPopup__parent">
-            {templatesOpen && popupMode === PopupMode.Allow &&
-              <TemplatesPopup
-                onClose={() => setTemplatesOpen(!templatesOpen)}
-              />
-            }
-            <TemplatesButton
-              onClick={() => setTemplatesOpen(!templatesOpen)}
-            />
-          </div>
           <ReplyButton
             isWriting={isWriting}
             onWrite={handleWrite}
+          />
+        </div>
+        <div className="templatesPopup__parent">
+          {templatesOpen && popupMode === PopupMode.Allow &&
+            <TemplatesPopup
+              onClose={() => setTemplatesOpen(!templatesOpen)}
+            />
+          }
+          <TemplatesButton
+            onClick={() => setTemplatesOpen(!templatesOpen)}
           />
         </div>
       </div>
@@ -111,6 +136,15 @@ export default function App(props: AppProps) {
           onClose={handleInstructionsOpen}
         />
       }
+      <div className="rephrasePopup__parent">
+        {
+          rephraseOpen &&
+          <Rephrase
+            selection={selection}
+            onClose={() => setRephraseOpen(!rephraseOpen)}
+          />
+        }
+      </div>
     </div>
   )
 }

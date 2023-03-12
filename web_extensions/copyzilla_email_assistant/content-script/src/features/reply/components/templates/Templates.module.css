@@ -5,7 +5,8 @@
     border: 1px solid var(--grey1);
     background-color: white;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-    width: 100%
+    width: 100%;
+    animation: slideDown 0.2s ease-in-out both;
 }
 
 .center {
@@ -63,4 +64,17 @@
     justify-content: flex-end;
     width: 100%;
     column-gap: 10px;
+}
+
+/* Slide down and fade animation */
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -8,7 +8,7 @@ import { MailClient } from './enum/mailClient';
 import App from './App';
 import { ComposeType } from './enum/composeType';
 import { PopupMode } from './enum/popupMode';
-import { ClientConfig, ClientConfigList } from './config/clientConfig';
+import { ClientConfigList } from './config/clientConfig';
 
 async function initializeFirebase() {
   const firebaseConfig = await getFirebaseConfig();
@@ -19,6 +19,8 @@ initializeFirebase();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'to_content_WRITE_EMAIL') {
+    chrome.storage.sync.set({ latestGeneratedEmail: request.data.reply });
+
     const client = getMailClient();
 
     const messageEntryClass = ClientConfigList.get(client)!.messageEntryClass;
@@ -55,7 +57,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       chars.forEach((char, charIndex) => {
         setTimeout(() => {
           lineElementReQuery.textContent += char;
-        }, 25 * charIndex);
+        }, 15 * charIndex);
       });
     });
 
