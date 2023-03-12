@@ -36,6 +36,10 @@
   position: relative;
 }
 
+.rephrasePopup__parent {
+  position: relative;
+}
+
 .textButton {
   cursor: pointer;
 }

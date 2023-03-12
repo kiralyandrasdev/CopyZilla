@@ -8,7 +8,7 @@ import { MailClient } from './enum/mailClient';
 import App from './App';
 import { ComposeType } from './enum/composeType';
 import { PopupMode } from './enum/popupMode';
-import { ClientConfig, ClientConfigList } from './config/clientConfig';
+import { ClientConfigList } from './config/clientConfig';
 
 async function initializeFirebase() {
   const firebaseConfig = await getFirebaseConfig();
@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       chars.forEach((char, charIndex) => {
         setTimeout(() => {
           lineElementReQuery.textContent += char;
-        }, 25 * charIndex);
+        }, 15 * charIndex);
       });
     });
 
