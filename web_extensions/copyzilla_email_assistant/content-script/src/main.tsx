@@ -19,8 +19,6 @@ initializeFirebase();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'to_content_WRITE_EMAIL') {
-    chrome.storage.sync.set({ latestGeneratedEmail: request.data.reply });
-
     const client = getMailClient();
 
     const messageEntryClass = ClientConfigList.get(client)!.messageEntryClass;

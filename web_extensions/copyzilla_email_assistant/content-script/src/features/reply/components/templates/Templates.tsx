@@ -7,7 +7,7 @@ type TemplatesProps = {
 }
 
 function Templates(props: TemplatesProps) {
-    const templateUsageText = "Click on a template to paste it into the reply box";
+    const templateUsageText = "Click on a template to paste it into the text box";
 
     const popupRef = useRef<HTMLDivElement>(null);
 

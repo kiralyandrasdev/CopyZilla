@@ -42,7 +42,6 @@ export default function App(props: AppProps) {
     // Listen for text selection on page with window.getSelection()
     window.addEventListener('mouseup', async () => {
       const selection = window.getSelection();
-      console.log("Selection: ", selection?.toString());
 
       // If text is selected, open popup
       if (selection && selection.toString().trim().length > 0) {

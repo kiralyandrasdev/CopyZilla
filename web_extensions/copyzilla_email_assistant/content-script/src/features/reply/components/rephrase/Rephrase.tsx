@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './Rephrase.module.css'
+import { parseTextBox } from '../../../../utils/emailUtils';
 
 type RephraseProps = {
     selection: string;
@@ -33,7 +34,7 @@ function Rephrase(props: RephraseProps) {
         }
     }, []);
 
-    const handleRephrase = () => {
+    const handleRephrase = (objective: string) => {
         if(isRephrasing) return;
 
         setIsRephrasing(true);
@@ -41,7 +42,9 @@ function Rephrase(props: RephraseProps) {
         chrome.runtime.sendMessage({
             type: 'to_background_REPHRASE',
             data: {
-                selection: props.selection
+                selection: props.selection,
+                objective: objective,
+                currentContent: parseTextBox()
             }
         }, (_) => {
             setIsRephrasing(false);
@@ -67,7 +70,7 @@ function Rephrase(props: RephraseProps) {
 
     const button = (name: string) => {
         return (
-            <p className={buttonClass()} onClick={() => handleRephrase()}>{name}</p>
+            <p className={buttonClass()} onClick={() => handleRephrase(name)}>{name}</p>
         );
     }
 

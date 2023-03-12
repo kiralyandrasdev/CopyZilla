@@ -165,26 +165,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type == "to_background_REPHRASE") {
         rephrase({
             selection: request.data.selection,
+            objective: request.data.objective,
         }).then((rephraseResponse) => {
-            chrome.storage.sync.get(["latestGeneratedEmail"], (result) => {
-                if (!result.latestGeneratedEmail) {
-                    console.log("No latest generated email found");
-                    return;
-                }
+            const updatedEmail = request.data.currentContent.replace(request.data.selection, rephraseResponse.value);
 
-                const updatedEmail = result.latestGeneratedEmail.replace(request.data.selection, rephraseResponse.value);
-
-                chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                    chrome.tabs.sendMessage(tabs[0].id, {
-                        type: "to_content_WRITE_EMAIL", data: {
-                            reply: updatedEmail,
-                        }
-                    }, (response) => {
-                        sendResponse(response);
-                    });
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    type: "to_content_WRITE_EMAIL", data: {
+                        reply: updatedEmail,
+                    }
+                }, (response) => {
+                    sendResponse(response);
                 });
             });
         }).catch((error) => {
+            console.log("Error rephrasing text: " + error);
+
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
                 chrome.tabs.sendMessage(tabs[0].id, {
                     type: "to_content_WRITE_EMAIL", data: {
@@ -195,8 +191,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 });
             });
         });
-
-
     }
 
     return true;
@@ -330,14 +324,15 @@ async function fetchTemplates() {
 }
 
 async function rephrase({
-    selection
+    selection,
+    objective
 }) {
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(["userId", "email"], async (result) => {
-            /* const token = await getValidToken();
+            const token = await getValidToken();
 
             const baseUrl = await getApiUrl();
-            const url = `${baseUrl}/user/${result.userId}/rephrase`;
+            const url = `${baseUrl}/user/${result.userId}/rephrasePrompt`;
 
             const response = await fetch(url, {
                 method: "POST",
@@ -348,19 +343,15 @@ async function rephrase({
                     "X-Client-Type": "extension"
                 },
                 body: JSON.stringify({
-                    selection
+                    text: selection,
+                    objective,
                 }),
             });
             if (!response.ok) {
                 reject(response);
             }
             const json = response.json();
-            resolve(json); */
-            setTimeout(() => {
-                resolve({
-                    value: "This is a test"
-                });
-            }, 2000);
+            resolve(json);
         });
     });
 }
