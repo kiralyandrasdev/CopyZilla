@@ -1,0 +1,77 @@
+.container {
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    animation: slideDown 0.2s ease-in-out both;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.container__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 10px;
+    width: 100%;
+    text-align: start;
+    height: 200px;
+}
+
+.templateList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 5px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: auto;
+}
+
+.template {
+    min-height: 45px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.template:hover {
+    background-color: var(--grey1);
+}
+
+.container__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    column-gap: 10px;
+}
+
+/* Slide down and fade animation */
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

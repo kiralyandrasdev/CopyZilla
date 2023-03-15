@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    padding: 20px 20px;
+    background-color: var(--grey5);
+    color: white;
+    font-size: 14px;
+    animation: fadeUp 0.2s ease-in-out;
+}
+
+.containerError {
+    background-color: var(--red);
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

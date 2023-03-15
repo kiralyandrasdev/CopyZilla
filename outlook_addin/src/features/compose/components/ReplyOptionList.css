@@ -1,0 +1,10 @@
+.reply__option__list {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    row-gap: 5px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}

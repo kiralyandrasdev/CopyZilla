@@ -1,0 +1,102 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800);
+
+/* Colors */
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+  /* Set a background color */
+}
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* Set a background color */
+}
+
+/* Customize the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: var(--grey2);
+  /* Set a background color */
+  border-radius: 5px;
+  /* Rounded corners */
+}
+
+:root {
+  --grey1: #F0F1F8;
+  --grey2: #87889E;
+  --grey3: #40414F;
+  --grey4: #343541;
+  --grey5: #202123;
+  --grey6: #f0f0f0;
+  --white: #ffffff;
+  --black: #000000;
+  --red: #FF3737;
+  --green: #38FFC3;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.description {
+  color: var(--grey2);
+  font-size: 12px;
+}
+
+body {
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  color: var(--grey3);
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 16px;
+  font-weight: 500;
+}

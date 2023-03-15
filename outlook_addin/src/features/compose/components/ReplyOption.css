@@ -1,0 +1,13 @@
+.reply__option__container {
+    padding: 0px 12px;
+    box-sizing: border-box;
+    border: 1px solid var(--grey1);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reply__option__container__title {
+    font-size: 12px;
+    text-align: center;
+    color: #000;
+}

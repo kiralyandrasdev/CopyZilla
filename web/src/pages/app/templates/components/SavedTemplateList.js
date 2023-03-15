@@ -63,7 +63,6 @@ function SavedTemplateList(props) {
         ));
     }
 
-
     return (
         <div className={styles.container}>
             <div className={styles.addBtn}>
