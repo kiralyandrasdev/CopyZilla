@@ -8,7 +8,7 @@ import { UserContext } from '../../../../context/userContext';
 import { AuthContext } from '../../../../context/authContext';
 
 function ComposeArea() {
-    const { user } = useContext(UserContext);
+    const { user, decreaseCredits } = useContext(UserContext);
     const { user: firebaseUser } = useContext(AuthContext);
 
     const { setError, composedEmail, setComposedEmail } = useContext(AppContext);
@@ -34,6 +34,7 @@ function ComposeArea() {
 
         if (rephraseSuccess) {
             setRephraseOpen(false);
+            decreaseCredits();
             setComposedEmail(composedEmail.replace(selection, rephrasedSelection));
         }
     }, [rephraseError, rephraseSuccess, isRephrasing]);

@@ -24,6 +24,7 @@ function InitRedirect(props: InitRedirectProps) {
             setUser({
                 id: data?.id,
                 subscriptionPlanName: data?.subscriptionPlanName,
+                creditCount: data?.creditCount,
             });
         }
     }, [data, isSuccess]);

@@ -4,6 +4,7 @@ import { ApplicationUser } from '../models/model_application_user';
 interface UserContextValue {
     user: ApplicationUser | null;
     setUser: (user: ApplicationUser | null) => void;
+    decreaseCredits: () => void;
 }
 
 interface UserContextProviderProps {
@@ -13,6 +14,7 @@ interface UserContextProviderProps {
 export const UserContext = createContext<UserContextValue>({
     user: null,
     setUser: () => { },
+    decreaseCredits: () => { },
 });
 
 const UserContextProvider: React.FC<UserContextProviderProps> = ({ children }: UserContextProviderProps) => {
@@ -21,6 +23,14 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({ children }: U
     const contextValue: UserContextValue = {
         user,
         setUser,
+        decreaseCredits: () => {
+            if (user) {
+                setUser({
+                    ...user,
+                    creditCount: user.creditCount - 1,
+                });
+            }
+        }
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

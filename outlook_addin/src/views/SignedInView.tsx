@@ -37,6 +37,7 @@ function SignedInView() {
     const [validationError, setValidationError] = useState('');
 
     const { user: firebaseUser } = useContext(AuthContext);
+    const { user, decreaseCredits } = useContext(UserContext);
 
     const { setError, setComposedEmail } = useContext(AppContext);
 
@@ -102,6 +103,7 @@ function SignedInView() {
         }
 
         if (isGenerateEmailSuccess) {
+            decreaseCredits();
             setComposedEmail(generatedEmail || '');
         }
 
@@ -154,12 +156,20 @@ function SignedInView() {
         return firebaseUser.email;
     }
 
+    const creditText = () => {
+        if (!user) {
+            return '';
+        }
+
+        return `${user.creditCount} credits remaining for today`;
+    }
+
     const header = () => {
         return (
             <div className={styles.header}>
                 <div className={styles.header__left}>
                     <p className={`description ${styles.email}`}>{userEmail()}</p>
-                    <p className={`description ${styles.credit}`}>52 credits remaining for today</p>
+                    <p className={`description ${styles.credit}`}>{creditText()}</p>
                 </div>
                 <div className={styles.header__right}>
                     <TextButton
