@@ -1,0 +1,61 @@
+.placeholder {
+    padding: 20px 15px;
+    height: 100%;
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 10px;
+    background-color: var(--grey5);
+}
+
+.email {
+    color: white;
+}
+
+.credit {
+    color: var(--green)
+}
+
+.viewContent {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    row-gap: 20px;
+    padding: 20px 15px;
+}
+
+.optionSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: 10px;
+}
+
+.collapsedHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.centerText {
+    text-align: center;
+}
