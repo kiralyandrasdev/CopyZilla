@@ -37,7 +37,7 @@ function SignedInView() {
     const [validationError, setValidationError] = useState('');
 
     const { user: firebaseUser } = useContext(AuthContext);
-    const { user, decreaseCredits } = useContext(UserContext);
+    const { user, incrementConsumedCredits: decreaseCredits } = useContext(UserContext);
 
     const { setError, setComposedEmail } = useContext(AppContext);
 
@@ -84,7 +84,7 @@ function SignedInView() {
         const objective = composeType === ComposeType.Reply ? options.objective.value : '';
 
         generateEmail({
-            uid: firebaseUser?.uid || '',
+            userId: user?.id || '',
             token: firebaseUser?.token || '',
             options: {
                 email: options.email,
@@ -161,7 +161,7 @@ function SignedInView() {
             return '';
         }
 
-        return `${user.creditCount} credits remaining for today`;
+        return `${user.consumedCredits} credits consumed out of ${user.product.dailyCreditLimit}`;
     }
 
     const header = () => {

@@ -23,8 +23,8 @@ function InitRedirect(props: InitRedirectProps) {
         if (isSuccess) {
             setUser({
                 id: data?.id,
-                subscriptionPlanName: data?.subscriptionPlanName,
-                creditCount: data?.creditCount,
+                product: data?.product,
+                consumedCredits: data?.consumedCredits,
             });
         }
     }, [data, isSuccess]);

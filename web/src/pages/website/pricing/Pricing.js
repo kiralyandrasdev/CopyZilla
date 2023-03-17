@@ -18,10 +18,12 @@ function PricingPage() {
                 <PricingCard
                     order="1"
                     title="Personal"
-                    description="Write 10 email messages per month with the help of CopyZilla Email Assistant"
+                    description="Up to 10 AI assisted email message operations per day"
                     price="Free"
                     features={[
-                        "10 credits per month",
+                        "10 emails / day / user",
+                        "Email templates",
+                        "Rephrase text",
                         "Automatic language detection",
                     ]}
                     onClick={() => navigate("/auth/login")}
@@ -30,13 +32,14 @@ function PricingPage() {
                 <PricingCard
                     order="2"
                     title="Pro"
-                    description="Write 100 email messages per month with the help of CopyZilla Email Assistant"
-                    price="9$"
+                    description="Up to 100 AI assisted email message operations per day"
+                    price="26$"
                     pricingInterval="per month"
                     features={[
-                        "100 credits per month",
+                        "100 emails / day / user",
+                        "Email templates",
+                        "Rephrase text",
                         "Automatic language detection",
-                        "Instant access to new features",
                     ]}
                     onClick={() => navigate("/auth/login")}
                     selectColor="var(--green)"
@@ -44,20 +47,19 @@ function PricingPage() {
                 <PricingCard
                     order="3"
                     title="Business"
-                    description="Write 300 email messages per month with the help of CopyZilla Email Assistant"
-                    price="18$"
+                    description="Up to 300 AI assisted email message operations per day"
+                    price="52$"
                     pricingInterval="per month"
                     features={[
-                        "300 credits per month",
+                        "300 emails / day / user",
+                        "Email templates",
+                        "Rephrase text",
                         "Automatic language detection",
-                        "Instant access to new features",
+                        "Priority support",
                     ]}
                     onClick={() => navigate("/auth/login")}
                     selectColor="var(-green)"
                 />
-            </div>
-            <div className="page__pricing__subtext animation__fadeInUp">
-                <p>{subText}</p>
             </div>
         </div>
     );
