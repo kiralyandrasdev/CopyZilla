@@ -15,18 +15,16 @@ namespace CopyZillaBackend.Persistence.Cache
 
         public async Task<Product> GetProductAsync(string productId)
         {
-          /*   if (TempCache.ProductCache.ContainsKey(productId))
-                return TempCache.ProductCache[productId]; */
+            if (TempCache.ProductCache.ContainsKey(productId))
+                return TempCache.ProductCache[productId];
 
             var products = await GetProductListAsync();
 
-            return products.FirstOrDefault(e => e.Id == productId);
-
-/*             foreach (var product in products)
+            foreach (var product in products)
                 if(!TempCache.ProductCache.ContainsKey(product.Id))
                     TempCache.ProductCache.Add(product.Id, product);
 
-            return TempCache.ProductCache[productId]; */
+            return TempCache.ProductCache[productId];
         }
 
         public async Task<List<Product>> GetProductListAsync()

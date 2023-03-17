@@ -79,6 +79,46 @@ namespace API.Tests.IntegrationTests
             creditUsage.Should().Be(1);
         }
 
+        [Fact]
+        public async Task Should_Not_Generate_Email_Prompt_Usage_Limit_Reached()
+        {
+            // arrange
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+            var product = await _stripeManager.ListProductsAsync();
+
+            var user = new User()
+            {
+                FirebaseUid = userHint,
+                Email = userEmail,
+                StripeCustomerId = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                ProductId = product.First().Id,
+            };
+
+            await _postgresDbManager.AddUserAsync(user);
+
+            await _postgresDbManager.AddUserCreditUsageAsync(user.Id, 10);
+
+            var options = new ProcessEmailPromptEventOptions()
+            {
+                Email = "Hi Daniel, how are you? Andras",
+                Objective = "yes",
+                Tone = "excited"
+            };
+
+            // act
+            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync($"/api/user/{user.Id}/emailPrompt", httpContent);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ProcessEmailPromptEventResult>(responseBody);
+
+            // assert
+            result.Should().NotBeNull();
+            result!.Value.Should().BeNullOrEmpty();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
         public void Dispose()
         {
             // clear stripe and firebase after tests

@@ -46,9 +46,9 @@ namespace API.Tests.Stripe
         public async Task<List<Product>> ListProductsAsync()
         {
             var service = new ProductService();
-            var products = await service.ListAsync(new ProductListOptions() { Limit = 100 });
+            var products = await service.ListAsync(new ProductListOptions() { Active = true });
 
-            return products.Where(e => e.Metadata.ContainsKey("type")).ToList();
+            return products.ToList().OrderBy(x => int.Parse(x.Metadata["credit_limit"])).ToList();
         }
     }
 }
