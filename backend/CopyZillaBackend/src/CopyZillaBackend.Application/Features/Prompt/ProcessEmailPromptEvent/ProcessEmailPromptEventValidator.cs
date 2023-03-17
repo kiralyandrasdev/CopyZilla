@@ -1,6 +1,7 @@
 ﻿using CopyZillaBackend.Application.Contracts.Cache;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.ServiceUsage;
+using CopyZillaBackend.Application.Error;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
@@ -18,21 +19,19 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
 
             RuleFor(e => e)
              .MustAsync(HasEnoughCreditsAsync)
-             .WithMessage("Unfortunately, you have run out of credits." +
-             " If you would like to continue using this feature," +
-             " wait for your credits to replenish or upgrade your CopyZilla plan.")
+             .WithMessage(ErrorMessages.UsageLimitReached)
              .WithErrorCode("400");
             RuleFor(e => e)
              .Must(InstructionsIsNotNullIfEmailIsEmpty)
-             .WithMessage("Instructions must not be null if previous email is not provided.")
+             .WithMessage(ErrorMessages.InstructionsMustNotBeNull)
              .WithErrorCode("400");
             RuleFor(e => e)
               .Must(ObjectiveIsNullIfEmailIsEmpty)
-              .WithMessage("Objective must be null if previous email is not provided.")
+              .WithMessage(ErrorMessages.ObjectiveMustBeNull)
               .WithErrorCode("400");
             RuleFor(e => e)
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
-             .WithMessage("Tone must not be null!")
+             .WithMessage(ErrorMessages.ToneMustNotBeNull)
              .WithErrorCode("400");
             _productService = productService;
         }

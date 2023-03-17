@@ -1,4 +1,5 @@
 ﻿using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Error;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
@@ -13,12 +14,12 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
 
             RuleFor(e => e)
               .Must(e => e.UserId != Guid.Empty)
-              .WithMessage("UserId must not be empty.")
+              .WithMessage(ErrorMessages.UserIdMustNotBeNull)
               .WithErrorCode("400");
 
             RuleFor(e => e)
                .MustAsync(ExistsInDbAsync)
-               .WithMessage($"User with specified UserId does not exist in the database.")
+               .WithMessage(ErrorMessages.UserNotFound)
                .WithErrorCode("404");
         }
 

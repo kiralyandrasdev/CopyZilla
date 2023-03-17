@@ -2,6 +2,7 @@
 using API.Tests.Engine;
 using API.Tests.Firebase;
 using API.Tests.Stripe;
+using CopyZillaBackend.Application.Error;
 using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
@@ -114,9 +115,10 @@ namespace API.Tests.IntegrationTests
             var result = JsonConvert.DeserializeObject<ProcessEmailPromptEventResult>(responseBody);
 
             // assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             result.Should().NotBeNull();
             result!.Value.Should().BeNullOrEmpty();
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result.ErrorMessage.Should().Be(ErrorMessages.UsageLimitReached);
         }
 
         public void Dispose()

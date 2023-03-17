@@ -1,3 +1,4 @@
+using CopyZillaBackend.Application.Error;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.DeleteTemplateCommand
@@ -8,12 +9,12 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteTemplateComm
         {
            RuleFor(e => e)
             .Must(e => e.UserId != Guid.Empty)
-            .WithMessage($"UserId must not be empty.")
+            .WithMessage(ErrorMessages.UserIdMustNotBeNull)
             .WithErrorCode("400");
 
             RuleFor(e => e)
              .Must(e => e.TemplateId != Guid.Empty)
-             .WithMessage("TemplateId must not be empty.")
+             .WithMessage(ErrorMessages.TemplateIdMustNotBeNull)
              .WithErrorCode("400");
         }
     }
