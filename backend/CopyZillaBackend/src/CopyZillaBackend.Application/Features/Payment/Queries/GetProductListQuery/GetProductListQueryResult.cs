@@ -1,12 +1,10 @@
-﻿using System;
 using CopyZillaBackend.Application.Events;
-using Stripe;
+using CopyZillaBackend.Domain.Entities;
 
-namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery
+namespace CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery
 {
-	public class GetProductListQueryResult : BaseEventResult
-	{
-		public List<GetProductListQueryDTO>? Value { get; set; }
-	}
+    public class GetProductListQueryResult : BaseEventResult
+    {
+        public List<Product> Value { get; set; }
+    }
 }
-

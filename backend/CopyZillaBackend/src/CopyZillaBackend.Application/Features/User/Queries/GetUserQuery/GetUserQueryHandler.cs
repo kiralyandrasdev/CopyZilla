@@ -1,5 +1,8 @@
-﻿using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Contracts.Cache;
+using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Contracts.ServiceUsage;
 using CopyZillaBackend.Application.Events;
+using CopyZillaBackend.Domain.Entities;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
@@ -7,10 +10,14 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserQueryResult>
     {
         private readonly IUserRepository _repository;
+        private readonly IProductService _productService;
+        private readonly IServiceUsageHistoryRepository _serviceUsageHistoryRepository;
 
-        public GetUserQueryHandler(IUserRepository repository)
+        public GetUserQueryHandler(IUserRepository repository, IProductService productCache, IServiceUsageHistoryRepository serviceUsageHistoryRepository)
         {
             _repository = repository;
+            _productService = productCache;
+            _serviceUsageHistoryRepository = serviceUsageHistoryRepository;
         }
 
         public async Task<GetUserQueryResult> Handle(GetUserQuery request, CancellationToken cancellationToken)
@@ -25,7 +32,24 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
             if (!result.Success)
                 return result;
 
-            result.Value = await _repository.GetByFirebaseUidAsync(request.FirebaseUid);
+            var user = await _repository.GetByFirebaseUidAsync(request.FirebaseUid);
+
+            Product? product = null;
+
+            if(!string.IsNullOrEmpty(user!.ProductId))
+                product = await _productService.GetProductAsync(user!.ProductId);
+
+            var consumedCredits = await _serviceUsageHistoryRepository.GetUserCreditUsageAsync(user.Id);
+
+            result.Value = new GetUserQueryDto
+            {
+                Id = user.Id,
+                FirebaseUid = user.FirebaseUid,
+                Email = user.Email,
+                Product = product,
+                SubscriptionValidUntil = user.SubscriptionValidUntil,
+                ConsumedCredits = consumedCredits
+            };
 
             return result;
         }

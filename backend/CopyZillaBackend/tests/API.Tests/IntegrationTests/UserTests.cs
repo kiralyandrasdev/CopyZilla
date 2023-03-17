@@ -79,12 +79,8 @@ namespace API.Tests.IntegrationTests
             {
                 FirebaseUid = userHint,
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = userHint,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -190,13 +186,9 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = userHint,
                 FirebaseUid = userHint,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -212,7 +204,6 @@ namespace API.Tests.IntegrationTests
             result!.Value.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Value!.Email.Should().Be(user.Email);
-            result.Value!.StripeCustomerId.Should().Be(user.StripeCustomerId);
             result.Value!.FirebaseUid.Should().Be(user.FirebaseUid);
         }
 
@@ -225,13 +216,9 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = userHint,
                 FirebaseUid = userHint,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -259,12 +246,8 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = customer.Id,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);
@@ -316,12 +299,8 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = customer.Id,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);

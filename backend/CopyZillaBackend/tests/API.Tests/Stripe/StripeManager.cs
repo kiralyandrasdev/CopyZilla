@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.JsonPatch.Internal;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Stripe;
@@ -42,6 +41,14 @@ namespace API.Tests.Stripe
             var customers = await service.ListAsync(new CustomerListOptions() { Limit = 100 });
 
             return customers;
+        }
+
+        public async Task<List<Product>> ListProductsAsync()
+        {
+            var service = new ProductService();
+            var products = await service.ListAsync(new ProductListOptions() { Limit = 100 });
+
+            return products.Where(e => e.Metadata.ContainsKey("type")).ToList();
         }
     }
 }

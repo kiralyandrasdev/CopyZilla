@@ -1,5 +1,4 @@
 using API.Tests.Engine;
-using CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery;
 using CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -42,7 +41,7 @@ namespace API.Tests.IntegrationTests
         {
             var response = await _client.GetAsync($"/api/product/subscriptions");
             var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<GetSubscriptionListQueryResult>(responseBody);
+            var result = JsonConvert.DeserializeObject<GetProductListQueryResult>(responseBody);
 
             // assert
             result.Should().NotBeNull();

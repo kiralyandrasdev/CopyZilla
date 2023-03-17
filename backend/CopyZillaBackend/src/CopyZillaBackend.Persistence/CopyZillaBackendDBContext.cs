@@ -7,10 +7,11 @@ namespace CopyZillaBackend.Persistence
     {
         public CopyZillaBackendDBContext(DbContextOptions<CopyZillaBackendDBContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<ServiceUsageHistory> ServiceUsageHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +24,14 @@ namespace CopyZillaBackend.Persistence
             modelBuilder.Entity<User>()
                 .Property(e => e.AccountDeleted)
                 .HasDefaultValue(false);
+
+            modelBuilder.Entity<ServiceUsageHistory>()
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<ServiceUsageHistory>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.ServiceUsageHistory)
+                .HasForeignKey(s => s.UserId);
 
             /// To add new migration run this command from /src folder:
             /// dotnet-ef migrations add {migration name} --project CopyZillaBackend.Persistence/CopyZillaBackend.Persistence.csproj --startup-project CopyZillaBackend.API/CopyZillaBackend.API.csproj

@@ -23,7 +23,7 @@ namespace CopyZillaBackend.Infrastructure.Webhook.Events
 
         public async Task ExecuteAsync()
         {
-            var sessionService = new SessionService();
+          /*   var sessionService = new SessionService();
 
             var sessionData = _event.Data.Object == null ? null : _event.Data.Object as Session;
 
@@ -47,7 +47,7 @@ namespace CopyZillaBackend.Infrastructure.Webhook.Events
             if (user == null)
                 return;
 
-            await _userRepository.IncreaseCreditCount(user.FirebaseUid, int.Parse(product.Metadata["credit_count"]));
+            await _userRepository.IncreaseCreditCount(user.FirebaseUid, int.Parse(product.Metadata["credit_count"])); */
         }
     }
 }

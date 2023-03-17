@@ -6,6 +6,6 @@ namespace CopyZillaBackend.Domain.Contracts
         Guid UserId { get; set; }
 		string Title { get; set; }
 	    string Content { get; set; }
-        DateTime? CreatedOn { get; set; }
+        DateTime CreatedOn { get; set; }
     }
 }

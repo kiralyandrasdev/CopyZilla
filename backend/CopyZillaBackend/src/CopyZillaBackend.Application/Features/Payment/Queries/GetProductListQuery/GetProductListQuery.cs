@@ -1,16 +1,9 @@
-﻿using System;
 using MediatR;
 
-namespace CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery
+namespace CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery
 {
-	public class GetProductListQuery : IRequest<GetProductListQueryResult>
-	{
-		public string ProductType { get; }
+    public class GetProductListQuery : IRequest<GetProductListQueryResult>
+    {
 
-        public GetProductListQuery(string productType)
-        {
-            ProductType = productType;
-        }
     }
 }
-

@@ -28,10 +28,10 @@ builder.Services.AddSwaggerGen();
 
 // Service registration
 builder.Services.AddSingleton<IResponseManager, ResponseManager>();
+
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
-builder.Services.AddTransient<IResponseManager, ResponseManager>();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddTransient<AuthorizationMiddleware>();
 builder.Services.AddTransient<InternalAuthorizationMiddleware>();

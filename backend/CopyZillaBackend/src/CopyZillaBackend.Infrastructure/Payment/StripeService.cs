@@ -112,17 +112,15 @@ namespace CopyZillaBackend.Infrastructure.Payment
             var products = await productService.ListAsync(
               productListOptions);
 
-            var filteredProducts = products.Data.Where(e => e.Metadata?["type"] == type.ToLower()).ToList();
-
             var priceService = new PriceService();
             var priceGetOptions = new PriceGetOptions() { Expand = new List<string>() { "currency_options" } };
 
-            foreach (var product in filteredProducts)
+            foreach (var product in products)
             {
                 product.DefaultPrice = await priceService.GetAsync(product.DefaultPriceId, priceGetOptions);
             }
 
-            return filteredProducts;
+            return products.ToList();
         }
 
         public async Task<Customer> GetCustomerByEmailAsync(string email)

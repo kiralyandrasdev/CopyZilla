@@ -23,7 +23,7 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
 
         public async Task ExecuteAsync()
         {
-            if (_event.Data.Object is not Invoice invoice)
+ /*            if (_event.Data.Object is not Invoice invoice)
                 throw new Exception("Invoice is null");
 
             var user = await _userRepository.GetByCustomerIdAsync(invoice.CustomerId);
@@ -56,7 +56,7 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
             user.PlanType = planType;
             user.SubscriptionValidUntil = periodEnd;
 
-            await _userRepository.UpdateAsync(user);
+            await _userRepository.UpdateAsync(user); */
         }
     }
 }

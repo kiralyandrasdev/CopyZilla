@@ -31,29 +31,10 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
             if (user == null)
                 throw new Exception("User is null");
 
-            var productId = subscription.Items.Data.FirstOrDefault()?.Price.ProductId;
-
-            if (productId == null)
-                throw new Exception("ProductId is null");
-
-            var product = await _stripeService.GetProductAsync(productId);
-
-            if (product == null)
-                throw new Exception("Product is null");
-
-            if (!product.Metadata.ContainsKey("plan_type"))
-                throw new Exception("PlanType key is missing from Product metadata");
-
-            var planType = product.Metadata["plan_type"];
-
-            user.SubscriptionPlanName = product.Name;
-            user.PlanType = planType;
-
             if (subscription.Status != "active")
                 user.SubscriptionValidUntil = DateTime.UtcNow.AddDays(-1);
             else
                 user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
-                user.CreditCount += int.Parse(product.Metadata["credit_count"]);
 
             await _repository.UpdateAsync(user);
         }

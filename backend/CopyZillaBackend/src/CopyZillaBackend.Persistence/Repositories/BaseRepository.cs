@@ -22,7 +22,7 @@ namespace CopyZillaBackend.Persistence.Repositories
             return entity;
         }
 
-        public async Task<T?> GetByIdAsync(Guid id)
+        public virtual async Task<T?> GetByIdAsync(Guid id)
         {
             return await _context.Set<T>()
                 .FirstOrDefaultAsync(e => e.Id == id);

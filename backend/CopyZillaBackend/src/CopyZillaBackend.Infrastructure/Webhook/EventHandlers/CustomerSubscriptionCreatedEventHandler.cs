@@ -36,20 +36,8 @@ namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
             if (productId == null)
                 throw new Exception("ProductId is null");
 
-            var product = await _stripeService.GetProductAsync(productId);
-
-            if (product == null)
-                throw new Exception("Product is null");
-
-            if (!product.Metadata.ContainsKey("plan_type"))
-                throw new Exception("PlanType key is missing from Product metadata");
-
-            var planType = product.Metadata["plan_type"];
-
-            user.SubscriptionPlanName = product.Name;
-            user.PlanType = planType;
+            user.ProductId = productId;
             user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
-            user.CreditCount += int.Parse(product.Metadata["credit_count"]);
 
             await _userRepository.UpdateAsync(user);
 
