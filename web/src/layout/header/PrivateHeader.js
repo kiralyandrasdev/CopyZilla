@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FiMenu, FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { AsyncButton } from "../../components";
 import useOutsideAlerter from "../../components/utils/useOutsideAlerter";
 import { useGetUserQuery } from "../../features/api/apiSlice";
 import { AuthContext } from "../../features/authentication/authContext";
@@ -53,7 +52,13 @@ export default function PrivateHeader() {
             return "Unknown error"
         }
 
-        return user.creditCount + " credits"
+        if (!userFetchResult.product || userFetchResult.product.dailyCreditLimit == null || user.consumedCredits == null) {
+            return "Unknown credits";
+        }
+
+        const remainigCredits = userFetchResult.product.dailyCreditLimit - user.consumedCredits;
+
+        return remainigCredits + " credits"
     }
 
     const planName = () => {
@@ -65,7 +70,9 @@ export default function PrivateHeader() {
             return "Unknown error"
         }
 
-        return userFetchResult.subscriptionPlanName;
+        console.log(userFetchResult);
+
+        return userFetchResult.product.name;
     }
 
     let menuClass = "header__nav__menu header__nav__menu__private dropshadow transition__parent";
@@ -80,11 +87,13 @@ export default function PrivateHeader() {
                 <div className="header__private__control">
                     <p className="semi-bold">{planName()}</p>
                     <p className="creditCount semi-bold">{creditCount()}</p>
-                    <AsyncButton onClick={() => navigate("/user/creditRefill")} shrinked={true} title="Buy credits"></AsyncButton>
                 </div>
                 <div className="header__main">
+                  {/*   <a className="header__nav__item semi-bold green" href="/user/home">
+                        Outlook Add-in
+                    </a> */}
                     <a className="header__nav__item semi-bold green" href="/user/home">
-                        Download extension
+                        Chrome extension
                     </a>
                     <a className="header__nav__item semi-bold" href="/user/account">Account</a>
                 </div>

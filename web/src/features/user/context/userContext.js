@@ -11,19 +11,9 @@ export function UserContextProvider({ children }) {
         setUser(value);
     }
 
-    const increaseCreditCount = () => {
-        setUser({ ...user, creditCount: user.creditCount + 1 });
-    }
-
-    const decreaseCreditCount = () => {
-        setUser({ ...user, creditCount: user.creditCount - 1 });
-    }
-
     const value = {
         user,
         updateUser,
-        increaseCreditCount,
-        decreaseCreditCount,
     }
 
     return (

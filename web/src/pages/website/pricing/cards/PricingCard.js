@@ -58,7 +58,7 @@ function PricingCard(props) {
                 />
             </div>
             <div className={styles.pricingCard__content}>
-                <p className="description">Contains:</p>
+                <p className="description">What's included?</p>
                 <ul>
                     {
                         props.features.map((feature, index) => {
