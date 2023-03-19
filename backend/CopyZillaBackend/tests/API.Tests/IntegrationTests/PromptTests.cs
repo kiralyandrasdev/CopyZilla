@@ -8,6 +8,7 @@ using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
 using Newtonsoft.Json;
+using Stripe;
 using System.Net;
 using System.Text;
 using Xunit.Priority;
@@ -45,7 +46,7 @@ namespace API.Tests.IntegrationTests
             // arrange
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
-            var product = await _stripeManager.ListProductsAsync();
+            var products = await _stripeManager.ListProductsAsync();
 
             var user = new User()
             {
@@ -53,7 +54,7 @@ namespace API.Tests.IntegrationTests
                 Email = userEmail,
                 StripeCustomerId = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                ProductId = product.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
+                ProductId = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -87,7 +88,7 @@ namespace API.Tests.IntegrationTests
             // arrange
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
-            var product = await _stripeManager.ListProductsAsync();
+            var products = await _stripeManager.ListProductsAsync();
 
             var user = new User()
             {
@@ -95,7 +96,7 @@ namespace API.Tests.IntegrationTests
                 Email = userEmail,
                 StripeCustomerId = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                ProductId = product.First().Id,
+                ProductId = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
             };
 
             await _postgresDbManager.AddUserAsync(user);

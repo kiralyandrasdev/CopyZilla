@@ -1,3 +1,4 @@
+using CopyZillaBackend.Application.Common;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Stripe;
@@ -48,7 +49,10 @@ namespace API.Tests.Stripe
             var service = new ProductService();
             var products = await service.ListAsync(new ProductListOptions() { Active = true });
 
-            var filteredProducts = products.Where(p => p.Active).ToList();
+            var filteredProducts = products
+                .Where(p => p.Active)
+                .OrderBy(p => p.Metadata[nameof(StripeProductMetadata.credit_limit)])
+                .ToList();
 
             return filteredProducts;
         }

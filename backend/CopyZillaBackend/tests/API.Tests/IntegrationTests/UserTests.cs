@@ -4,6 +4,7 @@ using API.Tests.Database;
 using API.Tests.Engine;
 using API.Tests.Firebase;
 using API.Tests.Stripe;
+using CopyZillaBackend.Application.Common;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
@@ -183,12 +184,15 @@ namespace API.Tests.IntegrationTests
             // arrange 
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
+            var products = await _stripeManager.ListProductsAsync();
+
             var user = new User()
             {
                 Email = userEmail,
                 StripeCustomerId = userHint,
                 FirebaseUid = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
+                ProductId = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
             };
 
             await _postgresDbManager.AddUserAsync(user);

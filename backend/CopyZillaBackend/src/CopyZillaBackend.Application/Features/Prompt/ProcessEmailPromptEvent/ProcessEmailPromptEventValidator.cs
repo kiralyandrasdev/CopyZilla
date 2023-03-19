@@ -17,7 +17,6 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             _repository = repository;
             _serviceUsageHistoryRepository = serviceUsageHistoryRepository;
 
-
             RuleFor(e => e)
              .MustAsync(UserExistsAsync)
              .WithErrorCode("404")
