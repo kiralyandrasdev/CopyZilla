@@ -48,7 +48,8 @@ namespace CopyZillaBackend.Infrastructure.Prompt
                 return $"Rephrase the following text: '{options.Text}'.";
             }
 
-            return $"Rephrase the following text: '{options.Text}' so it is {options.Objective}.";
+            return $"Rephrase the following text: '{options.Text}' so it is {options.Objective}." +
+                $" You must answer in the same language the text was written in.";
         }
     }
 }
