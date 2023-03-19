@@ -10,11 +10,11 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeleteUserCommandResult>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMongoRepository<PromptResult> _mongoRepository;
+        private readonly IMongoRepository<EmailTemplate> _mongoRepository;
         private readonly IStripeService _stripeService;
         private readonly IFirebaseService _firebaseService;
 
-        public DeleteUserCommandHandler(IUserRepository repository, IMongoRepository<PromptResult> mongoRepository, IStripeService stripeService, IFirebaseService firebaseService)
+        public DeleteUserCommandHandler(IUserRepository repository, IMongoRepository<EmailTemplate> mongoRepository, IStripeService stripeService, IFirebaseService firebaseService)
         {
             _userRepository = repository;
             _mongoRepository = mongoRepository; 
@@ -54,9 +54,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand
 
             await _firebaseService.DeleteFirebaseUserAsync(userFromDatabase.FirebaseUid);
 
-            //delete user prompt results from mongodb
-            var promptResults = await _mongoRepository.GetEntitiesAsync(request.UserId);
-            foreach (var p in promptResults)
+            // delete users email templates from mongodb
+            var emailTemplates = await _mongoRepository.GetEntitiesAsync(request.UserId);
+            foreach (var p in emailTemplates)
             {
                 await _mongoRepository.DeleteEntityAsync(request.UserId, p.Id);
             }
