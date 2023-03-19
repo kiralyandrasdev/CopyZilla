@@ -47,6 +47,7 @@ namespace API.Tests.IntegrationTests
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
             var products = await _stripeManager.ListProductsAsync();
+            var defaultProduct = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default");
 
             var user = new User()
             {
@@ -54,7 +55,7 @@ namespace API.Tests.IntegrationTests
                 Email = userEmail,
                 StripeCustomerId = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                ProductId = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
+                ProductId = defaultProduct!.Id,
             };
 
             await _postgresDbManager.AddUserAsync(user);
