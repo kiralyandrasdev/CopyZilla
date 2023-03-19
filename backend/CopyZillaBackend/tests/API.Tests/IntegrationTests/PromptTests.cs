@@ -2,6 +2,7 @@
 using API.Tests.Engine;
 using API.Tests.Firebase;
 using API.Tests.Stripe;
+using CopyZillaBackend.Application.Common;
 using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
@@ -51,7 +52,7 @@ namespace API.Tests.IntegrationTests
                 Email = userEmail,
                 StripeCustomerId = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                ProductId = product.First().Id,
+                ProductId = product.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
             };
 
             await _postgresDbManager.AddUserAsync(user);

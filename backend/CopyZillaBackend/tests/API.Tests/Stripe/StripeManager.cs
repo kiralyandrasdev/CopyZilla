@@ -48,7 +48,9 @@ namespace API.Tests.Stripe
             var service = new ProductService();
             var products = await service.ListAsync(new ProductListOptions() { Limit = 100 });
 
-            return products.Where(e => e.Metadata.ContainsKey("type")).ToList();
+            var filteredProducts = products.Where(p => p.Active).ToList();
+
+            return filteredProducts;
         }
     }
 }

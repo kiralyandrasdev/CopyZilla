@@ -30,7 +30,7 @@ namespace API.Tests.IntegrationTests
         public UserTests(WebApplicationFactoryEngine<Program> factory)
         {
             _factory = factory;
-            _client = factory.CreateDefaultClient(new Uri("https://localhost:7107/api/"));
+            _client = _factory.CreateDefaultClient(new Uri("https://localhost:7107/api/"));
             _postgresDbManager = new PostgresDBManager(factory);
             _mongodbDbManager = new MongoDBManager(factory);
             _stripeManager = new StripeManager(factory);
