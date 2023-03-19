@@ -29,17 +29,14 @@ export default function PublicLayout() {
     return (
         <div className="layout layout__public">
             <header className="header header__public animation__fadeInDown">
-                <div className="header__fullwidth header__public__content">
-                    <h5 className="white" onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>
-                    <div className="header__nav__row">
-                        <a className="header__nav__row__item semi-bold" href="/auth/login">Sign in</a>
-                        <a className="header__nav__row__item semi-bold" href="/pricing">Pricing</a>
-                        <a className="header__nav__row__item semi-bold" href="/aboutUs">About Us</a>
-                    </div>
+                <h5 className="white" onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>
+                <div className="header__nav__row">
+                    <a className="header__nav__row__item semi-bold" href="/auth/login">Sign in</a>
+                    <a className="header__nav__row__item semi-bold" href="/pricing">Pricing</a>
+                    <a className="header__nav__row__item semi-bold" href="/aboutUs">About Us</a>
                 </div>
-                <div className="header__portrait header__public__content">
-                    <h5 onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>
-                    <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon header__nav__icon--dark"></FiMenu>
+                <div className="header__portrait">
+                    <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon"></FiMenu>
                     <ul ref={wrapperRef} className={menuClass}>
                         <li onClick={() => nandleNavigate("/auth/login")} className="header__nav__item semi-bold green">Sign in</li>
                         <li onClick={() => nandleNavigate("/pricing")} className="header__nav__item semi-bold">Pricing</li>
@@ -48,14 +45,14 @@ export default function PublicLayout() {
                     </ul>
                 </div>
             </header>
-            <main className="main main__public">
+            <main className="main__public">
                 <Outlet></Outlet>
             </main>
             <footer className="footer footer__public">
-                    <p>© 2023 CopyZilla</p>
-                    <p>info@copyzilla.hu</p>
-                    <a href="/termsOfService">Terms of service</a>
-                    <a href="/privacyPolicy">Privacy policy</a>
+                <p>© 2023 CopyZilla</p>
+                <p>info@copyzilla.hu</p>
+                <a href="/termsOfService">Terms of service</a>
+                <a href="/privacyPolicy">Privacy policy</a>
             </footer>
         </div>
     );

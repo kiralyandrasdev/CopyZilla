@@ -29,6 +29,7 @@ import HomePage from './pages/app/Home';
 import ReactGA from 'react-ga4';
 import { gaTrackingId } from './config/envConfig';
 import EmailTemplatesPage from './pages/app/templates/EmailTemplates';
+import Landing2 from './pages/website/landing/Landing2';
 
 if(gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
@@ -65,7 +66,7 @@ function App() {
         </Route>
       </Route>
       <Route element={<PublicLayout />}>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Landing2 />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/aboutUs" element={<AboutUsPage />} />
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
