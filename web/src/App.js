@@ -7,7 +7,6 @@ import FullscreenLayout from './layout/FullscreenLayout';
 import PrivateLayout from './layout/PrivateLayout';
 import PublicLayout from './layout/PublicLayout';
 import Account from './pages/app/Account';
-import CreditRefill from './pages/app/CreditRefill';
 import PaymentOverduePage from './pages/app/PaymentOverdue';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
 import ChangeEmailPage from './pages/app/account/ChangeEmail';
@@ -48,7 +47,6 @@ function App() {
             <Route path="/user/account/changeEmail" element={<ChangeEmailPage />} />
             <Route path="/user/account/deleteAccount" element={<DeleteAccountPage />} />
             <Route path="/user/account/changePassword" element={<ChangePasswordPage />} />
-            <Route path="/user/creditRefill" element={<CreditRefill />} />
             <Route path="/user/checkout/completed" element={<CheckoutCompleted />} />
             <Route path="/user/checkout/canceled" element={<CheckoutCanceled />} />
             <Route path="/user/subscriptionExpired" element={<SelectSubscriptionPage />} />

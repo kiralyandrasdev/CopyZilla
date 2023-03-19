@@ -8,7 +8,7 @@ import { UserContext } from '../../../../context/userContext';
 import { AuthContext } from '../../../../context/authContext';
 
 function ComposeArea() {
-    const { user, decreaseCredits } = useContext(UserContext);
+    const { user, incrementConsumedCredits: decreaseCredits } = useContext(UserContext);
     const { user: firebaseUser } = useContext(AuthContext);
 
     const { setError, composedEmail, setComposedEmail } = useContext(AppContext);

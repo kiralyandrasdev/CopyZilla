@@ -3,6 +3,7 @@ using API.Tests.Engine;
 using API.Tests.Firebase;
 using API.Tests.Stripe;
 using CopyZillaBackend.Application.Common;
+using CopyZillaBackend.Application.Error;
 using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
@@ -78,6 +79,47 @@ namespace API.Tests.IntegrationTests
             result!.Value.Should().NotBeNullOrEmpty();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             creditUsage.Should().Be(1);
+        }
+
+        [Fact]
+        public async Task Should_Not_Generate_Email_Prompt_Usage_Limit_Reached()
+        {
+            // arrange
+            var userHint = Guid.NewGuid().ToString();
+            var userEmail = $"{userHint}@test.com";
+            var product = await _stripeManager.ListProductsAsync();
+
+            var user = new User()
+            {
+                FirebaseUid = userHint,
+                Email = userEmail,
+                StripeCustomerId = userHint,
+                SubscriptionValidUntil = DateTime.UtcNow,
+                ProductId = product.First().Id,
+            };
+
+            await _postgresDbManager.AddUserAsync(user);
+
+            await _postgresDbManager.AddUserCreditUsageAsync(user.Id, 10);
+
+            var options = new ProcessEmailPromptEventOptions()
+            {
+                Email = "Hi Daniel, how are you? Andras",
+                Objective = "yes",
+                Tone = "excited"
+            };
+
+            // act
+            var httpContent = new StringContent(JsonConvert.SerializeObject(options), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync($"/api/user/{user.Id}/emailPrompt", httpContent);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ProcessEmailPromptEventResult>(responseBody);
+
+            // assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result.Should().NotBeNull();
+            result!.Value.Should().BeNullOrEmpty();
+            result.ErrorMessage.Should().Be(ErrorMessages.UsageLimitReached);
         }
 
         public void Dispose()

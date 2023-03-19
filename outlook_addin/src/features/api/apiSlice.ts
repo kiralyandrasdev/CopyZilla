@@ -94,8 +94,8 @@ export const apiSlice = createApi({
         }),
         // Generate email
         generateEmail: builder.mutation({
-            query: ({ uid, token, options }: { uid: string, token: string, options: GenerateEmailOptions }) => ({
-                url: `/user/${uid}/emailPrompt`,
+            query: ({ userId, token, options }: { userId: string, token: string, options: GenerateEmailOptions }) => ({
+                url: `/user/${userId}/emailPrompt`,
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -107,7 +107,7 @@ export const apiSlice = createApi({
                 return response.value;
             },
             transformErrorResponse: (response: any) => {
-                return response.data.errorMessage ?? "Something went wrong while generating your email 😕";
+                return response.errorMessage ?? "Something went wrong while generating your email 😕";
             }
         }),
     }),

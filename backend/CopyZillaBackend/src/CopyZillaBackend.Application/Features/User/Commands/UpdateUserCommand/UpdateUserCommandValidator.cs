@@ -1,4 +1,5 @@
 using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Error;
 using EmailValidation;
 using FluentValidation;
 
@@ -15,7 +16,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
             RuleFor(e => e)
                 .MustAsync(ExistsAsync)
                 .WithErrorCode("404")
-                .WithMessage("User does not exist.");
+                .WithMessage(ErrorMessages.UserNotFound);
 
             RuleFor(e => e)
                 .Must(e =>
@@ -26,7 +27,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
                     return true;
                 })
                 .WithErrorCode("400")
-                .WithMessage("Provided email address is not in a valid format.");
+                .WithMessage(ErrorMessages.EmailAddressIsNotValid);
         }
 
         private async Task<bool> ExistsAsync(UpdateUserCommand e, CancellationToken _)

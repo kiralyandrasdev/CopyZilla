@@ -1,4 +1,5 @@
 using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Error;
 using CopyZillaBackend.Domain.Entities;
 using FluentValidation;
 
@@ -20,18 +21,23 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
               .WithMessage("User does not exist.");
 
             RuleFor(e => e)
+            .Must(e => !string.IsNullOrEmpty(e.Options.Content))
+            .WithMessage(ErrorMessages.TemplateContentMustNotBeEmpty)
+            .WithErrorCode("400");
+
+            RuleFor(e => e)
               .MustAsync(TemplateExistsAsync)
               .WithErrorCode("404")
-              .WithMessage("Template does not exist.");
+              .WithMessage(ErrorMessages.TemplateNotFound);
 
             RuleFor(e => e)
                .MustAsync(TitleIsBelowCharacterLimit)
-               .WithMessage("Title must not be more than 200 characters.")
+               .WithMessage(ErrorMessages.TemplateTitleTooLong)
                .WithErrorCode("400");
 
             RuleFor(e => e)
                .Must(e => e.Options.Content.Length < 10000)
-               .WithMessage("Content must not be more than 10.000 characters.")
+               .WithMessage(ErrorMessages.TemplateContentTooLong)
                .WithErrorCode("400");
         }
 
@@ -48,7 +54,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
         private async Task<bool> TitleIsBelowCharacterLimit(UpdateTemplateCommand e, CancellationToken _)
         {
             if (!string.IsNullOrEmpty(e.Options.Title))
-                return e.Options.Title.Length < 200;
+                return e.Options.Title.Length <= 200;
 
             return true;
         }

@@ -28,11 +28,17 @@ namespace CopyZillaBackend.Application.Features.User.Commands.SaveTemplateComman
             if (!result.Success)
                 return result;
 
+            string title = request.Options.Title == null ? "" : request.Options.Title.Trim();
+
+            // If title is empty set the date as title
+            if (string.IsNullOrEmpty(request.Options.Title))
+                title = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+
             var emailTemplate = new EmailTemplate()
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
-                Title = request.Options.Title?.Trim(),
+                Title = title,
                 Content = request.Options.Content.Trim()
             };
 

@@ -58,7 +58,7 @@ export default function Profile() {
                 <div className="page__account__section page__account__section__2 animation__fadeInUp">
                     <h5>Subscription</h5>
                     <div className="spacer"></div>
-                    <p>{user.subscriptionPlanName}</p>
+                    <p>{user.product.name}</p>
                     <p className="description">Renews on: {getDate(user.subscriptionValidUntil)}</p>
                     <TextButton
                         color="var(--green)"

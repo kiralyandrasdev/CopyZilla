@@ -46,7 +46,7 @@ namespace API.Tests.Stripe
         public async Task<List<Product>> ListProductsAsync()
         {
             var service = new ProductService();
-            var products = await service.ListAsync(new ProductListOptions() { Limit = 100 });
+            var products = await service.ListAsync(new ProductListOptions() { Active = true });
 
             var filteredProducts = products.Where(p => p.Active).ToList();
 

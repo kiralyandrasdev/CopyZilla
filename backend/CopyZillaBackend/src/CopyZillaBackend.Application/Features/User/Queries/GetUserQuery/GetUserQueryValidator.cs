@@ -1,5 +1,6 @@
 ﻿using System;
 using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Error;
 using FluentValidation;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
@@ -14,7 +15,7 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
 
             RuleFor(e => e)
                 .MustAsync(ExistsAsync)
-                .WithMessage(e => $"User with FirebaseUid '{e.FirebaseUid}' does not exist.")
+                .WithMessage(ErrorMessages.UserNotFound)
                 .WithErrorCode("404");
         }
 

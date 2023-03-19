@@ -1,5 +1,5 @@
-﻿using System;
-using CopyZillaBackend.Application.Contracts.Persistence;
+﻿using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Error;
 using EmailValidation;
 using FluentValidation;
 
@@ -15,22 +15,22 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 
             RuleFor(e => e)
                 .Must(e => e.Options.FirebaseUid != null)
-                .WithMessage("FirebaseUid must not be null.")
+                .WithMessage(ErrorMessages.FirebaseUidMustNotBeNull)
                 .WithErrorCode("400");
 
             RuleFor(e => e)
                 .MustAsync(UniqueFirebaseUid)
-                .WithMessage("FirebaseUid is already present in the database.")
+                .WithMessage(ErrorMessages.FirebaseUidAlreadyExists)
                 .WithErrorCode("400");
 
             RuleFor(e => e)
                 .Must(e => e.Options.Email != null)
-                .WithMessage("Email must not be null.")
+                .WithMessage(ErrorMessages.EmailMustNotBeNull)
                 .WithErrorCode("400");
 
             RuleFor(e => e)
                 .Must(e => EmailValidator.Validate(e.Options.Email))
-                .WithMessage("Email address is not valid.")
+                .WithMessage(ErrorMessages.EmailAddressIsNotValid)
                 .WithErrorCode("400");
         }
 

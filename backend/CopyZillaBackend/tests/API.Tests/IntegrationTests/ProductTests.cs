@@ -21,7 +21,7 @@ namespace API.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task Should_Get_Available_Subscriptions()
+        public async Task Should_Get_Available_Products()
         {
             var response = await _client.GetAsync($"/api/product/subscriptions");
             var responseBody = await response.Content.ReadAsStringAsync();
