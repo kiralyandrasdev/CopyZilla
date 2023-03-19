@@ -1,4 +1,5 @@
-﻿using CopyZillaBackend.Application.Contracts.Payment;
+﻿using CopyZillaBackend.Application.Contracts.Cache;
+using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Events;
 using MediatR;
@@ -9,13 +10,13 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
     {
         private readonly IUserRepository _repository;
         private readonly IStripeService _stripeService;
-        private readonly ICacheService _cacheService;
+        private readonly IProductService _productService;
 
-        public CreateUserCommandHandler(IUserRepository repository, IStripeService stripeService, ICacheService cacheService)
+        public CreateUserCommandHandler(IUserRepository repository, IStripeService stripeService, IProductService productService)
         {
             _repository = repository;
             _stripeService = stripeService;
-            _cacheService = cacheService;
+            _productService = productService;
         }
 
         public async Task<CreateUserCommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -32,7 +33,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 
             var customer = await _stripeService.CreateCustomerAsync(request.Options);
 
-            var products = await _cacheService.GetAllValuesOfTypeAsync<Domain.Entities.Product>();
+            var products = await _productService.GetProductListAsync();
             var defaultProduct = products.FirstOrDefault(e => e.PlanType == "default");
 
             if (defaultProduct == null)

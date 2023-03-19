@@ -32,7 +32,7 @@ namespace CopyZillaBackend.Infrastructure
             services.AddTransient<ICloudLogBuilder, CloudLogBuilder>();
             services.AddSingleton<ICloudLogService, CloudLogService>();
             services.AddSingleton<IFirebaseService, FirebaseService>();
-            services.AddScoped<IProductService, ProductService>();
+            services.AddSingleton<IProductService, ProductService>();
             services.AddTransient<IScheduledTasks, ScheduledTasks>();
 
             return services;

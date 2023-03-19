@@ -1,41 +1,40 @@
 using CopyZillaBackend.Application.Common;
 using CopyZillaBackend.Application.Contracts.Cache;
 using CopyZillaBackend.Application.Contracts.Payment;
-using CopyZillaBackend.Application.Contracts.Persistence;
+using System.Collections.Concurrent;
 
 namespace CopyZillaBackend.Infrastructure.StripeServices.Product
 {
     public class ProductService : IProductService
     {
-        private readonly ICacheService _cacheService;
         private readonly IStripeService _stripeService;
+        private readonly ConcurrentDictionary<string, Domain.Entities.Product> _cache = new();
         private readonly List<string> _requiredMetaDataList;
 
-        public ProductService(ICacheService cacheService, IStripeService stripeService)
+        public ProductService(IStripeService stripeService)
         {
-            _cacheService = cacheService;
             _stripeService = stripeService;
             _requiredMetaDataList = Enum.GetValues(typeof(StripeProductMetadata)).Cast<StripeProductMetadata>().Select(c => c.ToString()).ToList();
         }
 
         public async Task LoadProductsToCacheAsync()
         {
-            var cachedProducts = await _cacheService.GetAllValuesOfTypeAsync<Domain.Entities.Product>();
+            var cachedProducts = _cache.Values.ToList();
 
             foreach (var p in cachedProducts)
-                await _cacheService.RemoveAsync(p.Id);
+                _cache.Remove(p.Id, out _);
 
             var products = await GetProductListFromStripe();
 
             foreach (var product in products)
-                await _cacheService.SetAsync(product.Id, product);
+                _cache.TryAdd(product.Id, product);
         }
 
         public async Task<Domain.Entities.Product> GetProductAsync(string productId)
         {
-            var cachedProduct = await _cacheService.GetAsync<Domain.Entities.Product>(productId);
+            var exists = _cache.TryGetValue(productId, out var cachedProduct);
 
-            if (cachedProduct != null)
+            if (exists)
                 return cachedProduct;
 
             var products = await GetProductListFromStripe();
@@ -45,14 +44,14 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Product
             if (product == null)
                 throw new InvalidOperationException("Product does not exist in Stripe.");
 
-            await _cacheService.SetAsync(product.Id, product);
+            _cache.TryAdd(product.Id, product);
 
             return product;
         }
 
         public async Task<List<Domain.Entities.Product>> GetProductListAsync()
         {
-            var cachedProductList = await _cacheService.GetAllValuesOfTypeAsync<Domain.Entities.Product>();
+            var cachedProductList = _cache.Values.ToList();
 
             if (cachedProductList.Count > 0)
                 return cachedProductList;
@@ -60,7 +59,7 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Product
             var products = await GetProductListFromStripe();
 
             foreach (var product in products)
-                await _cacheService.SetAsync(product.Id, product);
+                _cache.TryAdd(product.Id, product);
 
             return products;
         }
