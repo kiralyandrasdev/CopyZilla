@@ -34,10 +34,10 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
 
             var user = await _repository.GetByFirebaseUidAsync(request.FirebaseUid);
 
-            Product? product = null;
+            if (string.IsNullOrEmpty(user.ProductId))
+                throw new InvalidOperationException("The user has no subscriptions assigned");
 
-            if(!string.IsNullOrEmpty(user!.ProductId))
-                product = await _productService.GetProductAsync(user!.ProductId);
+            var product = await _productService.GetProductAsync(user.ProductId);
 
             var consumedCredits = await _serviceUsageHistoryRepository.GetUserCreditUsageAsync(user.Id);
 

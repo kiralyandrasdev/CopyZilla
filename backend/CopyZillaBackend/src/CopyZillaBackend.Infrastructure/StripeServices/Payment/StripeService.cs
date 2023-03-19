@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Stripe;
 using Stripe.Checkout;
 
-namespace CopyZillaBackend.Infrastructure.Payment
+namespace CopyZillaBackend.Infrastructure.StripeServices.Payment
 {
     public class StripeService : IStripeService
     {
@@ -100,7 +100,7 @@ namespace CopyZillaBackend.Infrastructure.Payment
             return await subscriptionService.CreateAsync(options);
         }
 
-        public async Task<List<Product>> GetAvailableProductsAsync(string type)
+        public async Task<List<Stripe.Product>> GetAvailableProductsAsync()
         {
             var productService = new ProductService();
 
@@ -138,7 +138,7 @@ namespace CopyZillaBackend.Infrastructure.Payment
             return await service.GetAsync(customerId, options);
         }
 
-        public async Task<Product> GetProductAsync(string productId)
+        public async Task<Stripe.Product> GetProductAsync(string productId)
         {
             var service = new ProductService();
             return await service.GetAsync(productId);

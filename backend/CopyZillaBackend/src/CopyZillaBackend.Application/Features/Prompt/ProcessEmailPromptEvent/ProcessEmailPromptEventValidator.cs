@@ -16,20 +16,29 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             _repository = repository;
             _serviceUsageHistoryRepository = serviceUsageHistoryRepository;
 
+
+            RuleFor(e => e)
+             .MustAsync(UserExistsAsync)
+             .WithErrorCode("404")
+             .WithMessage("User does not exist.");
+
             RuleFor(e => e)
              .MustAsync(HasEnoughCreditsAsync)
              .WithMessage("Unfortunately, you have run out of credits." +
              " If you would like to continue using this feature," +
              " wait for your credits to replenish or upgrade your CopyZilla plan.")
              .WithErrorCode("400");
+
             RuleFor(e => e)
              .Must(InstructionsIsNotNullIfEmailIsEmpty)
              .WithMessage("Instructions must not be null if previous email is not provided.")
              .WithErrorCode("400");
+
             RuleFor(e => e)
               .Must(ObjectiveIsNullIfEmailIsEmpty)
               .WithMessage("Objective must be null if previous email is not provided.")
               .WithErrorCode("400");
+
             RuleFor(e => e)
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
              .WithMessage("Tone must not be null!")
@@ -37,12 +46,17 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             _productService = productService;
         }
 
+        private async Task<bool> UserExistsAsync(ProcessEmailPromptEvent e, CancellationToken _)
+        {
+            return await _repository.ExistsAsync(e.UserId);
+        }
+
         private async Task<bool> HasEnoughCreditsAsync(ProcessEmailPromptEvent e, CancellationToken _)
         {
             var user = await _repository.GetByIdAsync(e.UserId);
 
-            if (user == null)
-                return false;
+            if (string.IsNullOrEmpty(user.ProductId))
+                throw new ValidationException("The user has no subscriptions assigned");
 
             var product = await _productService.GetProductAsync(user.ProductId);
 

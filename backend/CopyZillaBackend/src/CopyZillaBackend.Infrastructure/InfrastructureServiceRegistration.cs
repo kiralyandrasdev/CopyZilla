@@ -1,17 +1,21 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
+using CopyZillaBackend.Application.Contracts.Cache;
 using CopyZillaBackend.Application.Contracts.Firebase;
 using CopyZillaBackend.Application.Contracts.Logging;
 using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Prompt;
+using CopyZillaBackend.Application.Contracts.Scheduler;
 using CopyZillaBackend.Application.Contracts.Webhook;
 using CopyZillaBackend.Infrastructure.Authorization;
 using CopyZillaBackend.Infrastructure.Firebase;
 using CopyZillaBackend.Infrastructure.Logging;
 using CopyZillaBackend.Infrastructure.OpenAI;
-using CopyZillaBackend.Infrastructure.Payment;
 using CopyZillaBackend.Infrastructure.Prompt;
-using CopyZillaBackend.Infrastructure.Webhook;
+using CopyZillaBackend.Infrastructure.Scheduler;
+using CopyZillaBackend.Infrastructure.StripeServices.Payment;
+using CopyZillaBackend.Infrastructure.StripeServices.Product;
+using CopyZillaBackend.Infrastructure.StripeServices.Webhook;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CopyZillaBackend.Infrastructure
@@ -28,6 +32,8 @@ namespace CopyZillaBackend.Infrastructure
             services.AddTransient<ICloudLogBuilder, CloudLogBuilder>();
             services.AddSingleton<ICloudLogService, CloudLogService>();
             services.AddSingleton<IFirebaseService, FirebaseService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddTransient<IScheduledTasks, ScheduledTasks>();
 
             return services;
         }

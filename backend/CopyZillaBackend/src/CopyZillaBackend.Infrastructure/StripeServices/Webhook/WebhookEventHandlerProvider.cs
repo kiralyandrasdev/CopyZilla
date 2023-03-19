@@ -6,7 +6,7 @@ using CopyZillaBackend.Application.Webhook.Enum;
 using Microsoft.Extensions.DependencyInjection;
 using Stripe;
 
-namespace CopyZillaBackend.Infrastructure.Webhook
+namespace CopyZillaBackend.Infrastructure.StripeServices.Webhook
 {
     public class WebhookEventHandlerProvider : IWebhookEventHandlerProvider
     {

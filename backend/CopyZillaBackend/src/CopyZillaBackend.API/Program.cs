@@ -5,6 +5,7 @@ using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
 using FirebaseAdmin;
+using FluentScheduler;
 using Google.Apis.Auth.OAuth2;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -48,6 +49,9 @@ builder.Services.AddCors(options => options
                 .AllowAnyMethod();
         })
     );
+
+var scheduler = new CopyZillaBackend.Infrastructure.Scheduler.TaskScheduler(builder.Services);
+JobManager.Initialize(scheduler);
 
 var app = builder.Build();
 

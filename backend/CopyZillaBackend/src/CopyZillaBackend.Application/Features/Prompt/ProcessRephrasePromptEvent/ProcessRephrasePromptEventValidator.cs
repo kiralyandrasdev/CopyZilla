@@ -18,16 +18,16 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEven
             _serviceUsageHistoryRepository = serviceUsageHistoryRepository;
 
             RuleFor(e => e)
-           .MustAsync(HasEnoughCreditsAsync)
-           .WithMessage("Unfortunately, you have run out of credits." +
-           " If you would like to continue using this feature," +
-           " wait for your credits to replenish or upgrade your CopyZilla plan.")
-           .WithErrorCode("400");
+             .MustAsync(UserExistsAsync)
+             .WithErrorCode("404")
+             .WithMessage("User does not exist.");
 
             RuleFor(e => e)
-              .MustAsync(UserExistsAsync)
-              .WithErrorCode("404")
-              .WithMessage("User does not exist.");
+              .MustAsync(HasEnoughCreditsAsync)
+              .WithMessage("Unfortunately, you have run out of credits." +
+                            " If you would like to continue using this feature," +
+                            " wait for your credits to replenish or upgrade your CopyZilla plan.")
+              .WithErrorCode("400");
 
             RuleFor(e => e)
              .Must(e => !string.IsNullOrEmpty(e.Options.Objective))
@@ -49,8 +49,8 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEven
         {
             var user = await _repository.GetByIdAsync(e.UserId);
 
-            if (user == null)
-                return false;
+            if (string.IsNullOrEmpty(user.ProductId))
+                throw new ValidationException("The user has no subscriptions assigned");
 
             var product = await _productService.GetProductAsync(user.ProductId);
 

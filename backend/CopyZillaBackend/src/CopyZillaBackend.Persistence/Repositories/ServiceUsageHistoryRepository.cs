@@ -1,5 +1,6 @@
 using CopyZillaBackend.Application.Contracts.ServiceUsage;
 using CopyZillaBackend.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CopyZillaBackend.Persistence.Repositories
 {
@@ -31,6 +32,18 @@ namespace CopyZillaBackend.Persistence.Repositories
                 .Count();
 
             return Task.FromResult(totalCreditsUsed);
+        }
+
+        public Task<List<ServiceUsageHistory>> ListAllServiceUsageHistoryAsync()
+        {
+             return _context.ServiceUsageHistory.ToListAsync();
+        }
+
+        public Task DeleteServiceUsageHistoryAsync(Guid userId)
+        {
+            var serviceUsageHistory = _context.ServiceUsageHistory.Where(x => x.UserId == userId);
+            _context.ServiceUsageHistory.RemoveRange(serviceUsageHistory);
+            return _context.SaveChangesAsync();
         }
     }
 }

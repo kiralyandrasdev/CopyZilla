@@ -1,24 +1,21 @@
-using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.Webhook;
 using CopyZillaBackend.Application.Features.Webhook.Attributes;
 using CopyZillaBackend.Application.Webhook.Enum;
 using Stripe;
 
-namespace CopyZillaBackend.Infrastructure.Webhook.EventHandlers
+namespace CopyZillaBackend.Infrastructure.StripeServices.Webhook.EventHandlers
 {
     [WebhookEventHandler(WebhookEventType.CustomerSubscriptionUpdated)]
     public class CustomerSubscriptionUpdatedEventHandler : IWebhookEventHandler
     {
         private readonly Event _event;
         private readonly IUserRepository _repository;
-        private readonly IStripeService _stripeService;
 
-        public CustomerSubscriptionUpdatedEventHandler(Event @event, IUserRepository repository, IStripeService stripeService)
+        public CustomerSubscriptionUpdatedEventHandler(Event @event, IUserRepository repository)
         {
             _event = @event;
             _repository = repository;
-            _stripeService = stripeService;
         }
 
         public async Task ExecuteAsync()

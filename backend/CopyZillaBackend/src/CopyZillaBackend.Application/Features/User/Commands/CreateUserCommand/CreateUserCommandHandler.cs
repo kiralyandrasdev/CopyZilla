@@ -9,11 +9,13 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
     {
         private readonly IUserRepository _repository;
         private readonly IStripeService _stripeService;
+        private readonly ICacheService _cacheService;
 
-        public CreateUserCommandHandler(IUserRepository repository, IStripeService stripeService)
+        public CreateUserCommandHandler(IUserRepository repository, IStripeService stripeService, ICacheService cacheService)
         {
             _repository = repository;
             _stripeService = stripeService;
+            _cacheService = cacheService;
         }
 
         public async Task<CreateUserCommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -30,13 +32,13 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
 
             var customer = await _stripeService.CreateCustomerAsync(request.Options);
 
-            var products = await _stripeService.GetAvailableProductsAsync("subscription");
-            var defaultProduct = products.FirstOrDefault(e => e.Metadata["plan_type"] == "default");
+            var products = await _cacheService.GetAllValuesOfTypeAsync<Domain.Entities.Product>();
+            var defaultProduct = products.FirstOrDefault(e => e.PlanType == "default");
 
             if (defaultProduct == null)
                 throw new Exception("Default product not found. Please contact support. (Error code: 1001)");
 
-            await _stripeService.CreateSubscriptionAsync(customer.Id, defaultProduct.DefaultPriceId);
+            await _stripeService.CreateSubscriptionAsync(customer.Id, defaultProduct.PriceId);
 
             var user = new Domain.Entities.User()
             {
