@@ -10,7 +10,8 @@ function PricingCard2({
     buttonTitle,
     buttonLink,
     isPopular,
-    isFree
+    isFree,
+    isCustom,
 }) {
     let cardStyle = styles.container;
     if (isPopular) {
@@ -31,10 +32,19 @@ function PricingCard2({
             )}
             <div className={styles.plan}>
                 <h5>{plan}</h5>
-                <div className={styles.price}>
-                    <h1>{price}</h1>
-                    <p> /month</p>
-                </div>
+                {
+                    isCustom ? (
+                        <div className={styles.price}>
+                            <h3>Contact us</h3>
+                        </div>
+                    ) :
+                        (
+                            <div className={styles.price}>
+                                <h1>{price}</h1>
+                                <p> /month</p>
+                            </div>
+                        )
+                }
                 <p>{description}</p>
             </div>
             <div className={buttonStyle}>

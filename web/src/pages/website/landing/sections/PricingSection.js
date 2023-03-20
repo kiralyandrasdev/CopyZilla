@@ -5,7 +5,7 @@ import PricingCard2 from '../components/PricingCard2';
 
 function PricingSection() {
     const pricingCards = [
-        {
+        /* {
             plan: "Personal",
             price: "$0",
             description: "Write 10 email messages per day with the help of CopyZilla Email Assistant",
@@ -19,34 +19,35 @@ function PricingSection() {
             buttonLink: "/",
             isPopular: false,
             isFree: true,
-        },
+        }, */
         {
-            plan: "Pro",
+            plan: "Individual",
             price: "$19",
             description: "Write 100 email messages per day with the help of CopyZilla Email Assistant",
             features: [
-                "100 email operations / day",
+                "200 email operations / day",
                 "Email templates",
                 "Rephrase text",
                 "Automatic language detection"
             ],
-            buttonTitle: "Get Started",
+            buttonTitle: "Try free for 14 days",
             buttonLink: "/",
-            isPopular: true,
+            //isPopular: true,
         },
         {
-            plan: "Business",
+            plan: "Enterprise",
             price: "$36",
-            description: "Write 300 email messages per day with the help of CopyZilla Email Assistant",
+            description: "For large teams and businesses that have a lot of email writing tasks",
             features: [
-                "300 email operations / day",
+                "Unlimited usage",
                 "Email templates",
                 "Rephrase text",
                 "Automatic language detection"
             ],
-            buttonTitle: "Get Started",
+            buttonTitle: "Get in touch",
             buttonLink: "/",
             isPopular: false,
+            isCustom: true,
         },
     ];
 
@@ -73,6 +74,7 @@ function PricingSection() {
                         isPopular={pricingCard.isPopular}
                         key={index}
                         isFree={pricingCard.isFree}
+                        isCustom={pricingCard.isCustom}
                     />
                 ))}
             </div>
