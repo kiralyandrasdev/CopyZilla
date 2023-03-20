@@ -6,6 +6,7 @@ import DemoSection from './sections/DemoSection';
 import FeaturesSection from './sections/FeaturesSection';
 import PricingSection from './sections/PricingSection';
 import FaqSection from './sections/FaqSection';
+import CtaSection from './sections/CtaSection';
 
 function Landing2() {
     const pricingRef = useRef(null);
@@ -24,6 +25,7 @@ function Landing2() {
                 <PricingSection ref={pricingRef} />
                 <FaqSection />
             </div>
+            <CtaSection />
         </div>
     );
 }
