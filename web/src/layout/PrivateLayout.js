@@ -13,9 +13,6 @@ export default function PrivateLayout() {
         <main>
           <Outlet></Outlet>
         </main>
-        {/*  <footer>
-          2023 © CopyZilla
-        </footer> */}
       </div>
     </div>
   );

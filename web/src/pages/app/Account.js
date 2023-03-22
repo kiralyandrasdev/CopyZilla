@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { FiKey, FiMail } from "react-icons/fi";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingIndicator, TextButton } from "../../components";
 import { useGetUserQuery } from "../../features/api/apiSlice";
@@ -72,7 +71,6 @@ export default function Profile() {
                     <p className="description">Renews on: {getDate(user.subscriptionValidUntil)}</p>
                     {
                         user.product.scope === "individual" ?
-
                             <TextButton
                                 color="var(--green)"
                                 underline={true}

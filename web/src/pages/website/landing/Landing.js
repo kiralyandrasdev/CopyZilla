@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import styles from './Landing2.module.css'
+import styles from './Landing.module.css'
 import HeroSection from './sections/HeroSection';
 import DownloadSection from './sections/DownloadSection';
 import DemoSection from './sections/DemoSection';
@@ -8,7 +8,7 @@ import PricingSection from './sections/PricingSection';
 import FaqSection from './sections/FaqSection';
 import CtaSection from './sections/CtaSection';
 
-function Landing2() {
+function LandingPage() {
     return (
         <div className={styles.container}>
             <HeroSection />
@@ -24,4 +24,4 @@ function Landing2() {
     );
 }
 
-export default Landing2;
+export default LandingPage;

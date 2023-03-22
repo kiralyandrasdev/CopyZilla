@@ -18,8 +18,6 @@ import VerifyEmailPage from './pages/auth/VerifyEmail';
 import CheckoutCanceled from './pages/checkout/CheckoutCancelled';
 import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
 import AboutUsPage from './pages/website/AboutUs';
-import LandingPage from './pages/website/Landing';
-import PricingPage from './pages/website/pricing/Pricing';
 import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
 import TermsOfServicePage from './pages/website/TermsOfService';
 import AuthRedirect from './redirect/AuthRedirect';
@@ -29,7 +27,7 @@ import HomePage from './pages/app/Home';
 import ReactGA from 'react-ga4';
 import { gaTrackingId } from './config/envConfig';
 import EmailTemplatesPage from './pages/app/templates/EmailTemplates';
-import Landing2 from './pages/website/landing/Landing2';
+import LandingPage from './pages/website/landing/Landing';
 
 if(gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
@@ -66,7 +64,7 @@ function App() {
         </Route>
       </Route>
       <Route element={<PublicLayout />}>
-        <Route path="/" element={<Landing2 />} />
+        <Route path="/" element={<LandingPage />} />
         {/* <Route path="/pricing" element={<PricingPage />} /> */}
         <Route path="/aboutUs" element={<AboutUsPage />} />
         <Route path="/termsOfService" element={<TermsOfServicePage />} />

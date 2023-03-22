@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import styles from './PricingSection.module.css'
 import SectionTag from '../components/SectionTag';
-import PricingCard2 from '../components/PricingCard2';
+import PricingCard from '../components/PricingCard';
 
 function PricingSection() {
     const pricingCards = [
@@ -15,9 +15,8 @@ function PricingSection() {
                 "Rephrase text",
                 "Automatic language detection"
             ],
-            buttonTitle: "Try free for 14 days",
-            buttonLink: "/",
-            //isPopular: true,
+            buttonTitle: "Try free for 30 days",
+            buttonLink: "/auth/signup",
         },
         {
             plan: "Enterprise",
@@ -30,7 +29,7 @@ function PricingSection() {
                 "Automatic language detection"
             ],
             buttonTitle: "Get in touch",
-            buttonLink: "/",
+            buttonLink: "/auth/signup",
             isPopular: false,
             isCustom: true,
         },
@@ -49,7 +48,7 @@ function PricingSection() {
             </h6>
             <div className={styles.pricingCards}>
                 {pricingCards.map((pricingCard, index) => (
-                    <PricingCard2
+                    <PricingCard
                         plan={pricingCard.plan}
                         price={pricingCard.price}
                         description={pricingCard.description}

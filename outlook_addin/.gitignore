@@ -23,6 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # Certificates
-/.cert
-localhost-key.pem
-localhost.pem
+.cert
+*.pem
+*.pem

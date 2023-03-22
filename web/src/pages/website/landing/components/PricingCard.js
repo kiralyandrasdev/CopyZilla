@@ -1,8 +1,9 @@
 import React from 'react'
-import styles from './PricingCard2.module.css'
+import styles from './PricingCard.module.css'
 import { FiCheck } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
-function PricingCard2({
+function PricingCard({
     plan,
     price,
     description,
@@ -21,6 +22,14 @@ function PricingCard2({
     let buttonStyle = styles.button;
     if (isFree) {
         buttonStyle = `${styles.button} ${styles.free}`;
+    }
+
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        if(buttonLink !== "/") {
+            navigate(buttonLink);
+        }
     }
 
     return (
@@ -47,7 +56,7 @@ function PricingCard2({
                 }
                 <p>{description}</p>
             </div>
-            <div className={buttonStyle}>
+            <div className={buttonStyle} onClick={() => handleButtonClick()}>
                 <h6>{buttonTitle}</h6>
             </div>
             <h6>
@@ -70,4 +79,4 @@ function PricingCard2({
     );
 }
 
-export default PricingCard2;
+export default PricingCard;
