@@ -35,6 +35,17 @@
     width: 100%;
 }
 
+.header__nav__row__item {
+    cursor: pointer;
+}
+
+.header__nav__row__item__rounded {
+    background-color: var(--green);
+    color: var(--grey5);
+    border-radius: 8px;
+    padding: 10px;
+}
+
 .main__public {
     grid-area: main;
 }

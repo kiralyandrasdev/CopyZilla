@@ -69,8 +69,7 @@ export default function LoginForm() {
     return (
         <div className="authForm loginForm">
             <div className="authForm__header">
-                <h4>Hey there!</h4>
-                <p className="description">Sign in to your account</p>
+                <h4>Sign in to your account</h4>
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
@@ -87,7 +86,7 @@ export default function LoginForm() {
             {error && <p style={{ "color": "var(--red)", "textAlign": "center" }}>{error}</p>}
             <div className="authForm__secondaryActions">
                 <p className="description loginForm__noAccountQuestion">Don't have an account? </p>
-                <TextButton color="var(--grey3)" title="Create new account" onClick={() => routeChange("/auth/signup")} />
+                <TextButton color="white" title="Create new account" onClick={() => routeChange("/auth/signup")} />
             </div>
         </div>
     );

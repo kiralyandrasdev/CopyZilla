@@ -9,12 +9,6 @@ import FaqSection from './sections/FaqSection';
 import CtaSection from './sections/CtaSection';
 
 function Landing2() {
-    const pricingRef = useRef(null);
-
-    const scrollToPricing = () => {
-        pricingRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-
     return (
         <div className={styles.container}>
             <HeroSection />
@@ -22,7 +16,7 @@ function Landing2() {
             <DemoSection />
             <FeaturesSection />
             <div className={styles.whiteSection}>
-                <PricingSection ref={pricingRef} />
+                <PricingSection />
                 <FaqSection />
             </div>
             <CtaSection />

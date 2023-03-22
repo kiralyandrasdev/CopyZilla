@@ -67,7 +67,7 @@ function App() {
       </Route>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Landing2 />} />
-        <Route path="/pricing" element={<PricingPage />} />
+        {/* <Route path="/pricing" element={<PricingPage />} /> */}
         <Route path="/aboutUs" element={<AboutUsPage />} />
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />

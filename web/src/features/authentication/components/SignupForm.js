@@ -20,7 +20,7 @@ export default function SignupForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setConfirmationPassword] = useState('');
-    const [agreeToTerms, setAgreeToTerms] = useState(false);
+    const [agreeToTerms, setAgreeToTerms] = useState(true);
 
     const [error, setError] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -125,13 +125,11 @@ export default function SignupForm() {
     return (
         <div className="authForm signUpForm">
             <div className="authForm__header">
-                <h4>New account</h4>
-                <p className="description-text">Create a new account</p>
+                <h4>Create a new account</h4>
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
                     <TextField
-                        light={true}
                         error={emailError}
                         hint="Email address"
                         value={email} onChange={handleEmailChange}
@@ -140,7 +138,6 @@ export default function SignupForm() {
                 </div>
                 <div className="authForm__field__email">
                     <TextField
-                        light={true}
                         error={passwordError}
                         hint="Password"
                         value={password}
@@ -151,7 +148,6 @@ export default function SignupForm() {
                 </div>
                 <div className="authForm__field__password">
                     <TextField
-                        light={true}
                         error={passwordConfirmationError}
                         hint="Confirm password"
                         value={passwordConfirmation}
@@ -161,22 +157,25 @@ export default function SignupForm() {
                     />
                 </div>
             </div>
-            <div className="authForm__agreeToTerms">
+            {/* <div className="authForm__agreeToTerms">
                 <Checkbox
                     checked={agreeToTerms}
                     onChange={() => setAgreeToTerms(!agreeToTerms)}
                     error={termsError}
                 />
                 <p>I agree to the <a href="/termsOfService" target="_blank">terms of service</a></p>
-            </div>
+            </div> */}
             <div className="authForm__primaryActions">
                 <AsyncButton loading={loading} title="Create account" onClick={() => handleSignup()}></AsyncButton>
             </div>
             {error && <p style={{ "color": "var(--red)", "textAlign": "center" }}>{error}</p>}
-            <div className="authForm__secondaryActions">
-                <p>Already have an account?</p>
-                <TextButton color="var(--grey3)" title="Sign in" onClick={() => navigate("/auth/login")} />
+            <div className="authForm__secondaryActions description">
+                <p className="description">Already have an account?</p>
+                <TextButton color="white" title="Sign in" onClick={() => navigate("/auth/login")} />
             </div>
+            <p className="description authCaption">
+                By creating an account, you agree to our <a className="authCaption" href="/termsOfService" target="_blank">Terms of Service</a> and <a className="authCaption" href="/privacyPolicy" target="_blank">Privacy Policy</a>.
+            </p>
         </div>
     );
 }

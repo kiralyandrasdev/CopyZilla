@@ -1,25 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import styles from './PricingSection.module.css'
 import SectionTag from '../components/SectionTag';
 import PricingCard2 from '../components/PricingCard2';
+import { WebsiteContext } from '../../context/websiteContext';
 
 function PricingSection() {
     const pricingCards = [
-        /* {
-            plan: "Personal",
-            price: "$0",
-            description: "Write 10 email messages per day with the help of CopyZilla Email Assistant",
-            features: [
-                "10 email operations / day",
-                "Email templates",
-                "Rephrase text",
-                "Automatic language detection"
-            ],
-            buttonTitle: "Start Writing for Free",
-            buttonLink: "/",
-            isPopular: false,
-            isFree: true,
-        }, */
         {
             plan: "Individual",
             price: "$19",
@@ -52,7 +38,7 @@ function PricingSection() {
     ];
 
     return (
-        <div className={`${styles.container} section`}>
+        <div id="pricing" className={`${styles.container} section`}>
             <SectionTag
                 name="PRICING"
             />

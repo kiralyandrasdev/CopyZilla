@@ -10,21 +10,22 @@ import store from './redux/store/store';
 import reportWebVitals from './reportWebVitals';
 import RouteChangeTracker from './redirect/RouteChangeTracker';
 import TemplateContextProvider from './features/templates/templateContext';
+import { WebsiteContextProvider } from './pages/website/context/websiteContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <AuthContextProvider>
-        <UserContextProvider>
-          <TemplateContextProvider>
-            <RouteChangeTracker>
-              <App></App>
-            </RouteChangeTracker>
-          </TemplateContextProvider>
-        </UserContextProvider>
-      </AuthContextProvider>
+        <AuthContextProvider>
+          <UserContextProvider>
+            <TemplateContextProvider>
+              <RouteChangeTracker>
+                <App></App>
+              </RouteChangeTracker>
+            </TemplateContextProvider>
+          </UserContextProvider>
+        </AuthContextProvider>
     </BrowserRouter>
   </Provider>
 );

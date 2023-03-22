@@ -33,7 +33,7 @@
 
 .authForm__field__container a {
     text-align: end;
-    color: var(--grey3);
+    color: var(--grey2);
     font-size: 14px;
     text-decoration: underline;
 }
@@ -51,11 +51,6 @@
     column-gap: 10px;
 }
 
-.authForm__agreeToTerms p, a {
+.authCaption {
+    font-size: 12px;
 }
-
-/* @media (max-width: 768px) {
-    .authForm__header {
-        text-align: center;
-    }
-} */
