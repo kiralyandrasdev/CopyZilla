@@ -10,7 +10,6 @@ import store from './redux/store/store';
 import reportWebVitals from './reportWebVitals';
 import RouteChangeTracker from './redirect/RouteChangeTracker';
 import TemplateContextProvider from './features/templates/templateContext';
-import { WebsiteContextProvider } from './pages/website/context/websiteContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

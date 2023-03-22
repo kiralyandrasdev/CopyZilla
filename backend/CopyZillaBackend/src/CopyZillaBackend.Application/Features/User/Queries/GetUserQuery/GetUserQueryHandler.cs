@@ -47,6 +47,7 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
                 FirebaseUid = user.FirebaseUid,
                 Email = user.Email,
                 Product = product,
+                SubscriptionStatus = user.SubscriptionStatus,
                 SubscriptionValidUntil = user.SubscriptionValidUntil,
                 ConsumedCredits = consumedCredits
             };

@@ -28,41 +28,20 @@ export default function InitRedirect() {
         updateUser(apiUser);
 
         const path = window.location.pathname;
-        const initialized = localStorage.getItem(`initialized_${firebaseUid}`)
+        const subscriptionStatus = apiUser.subscriptionStatus;
 
-        if (apiUser.planType !== "paid" && !initialized) {
-            if (path !== "/user/selectSubscription") {
-                navigate("/user/selectSubscription");
+        console.log("subscriptionStatus: " + subscriptionStatus);
+
+        if (subscriptionStatus !== "active" && subscriptionStatus !== "trialing") {
+            if (path !== "/user/paymentOverdue") {
+                navigate("/user/paymentOverdue");
                 return;
-            }
-
-            if (!path.includes("/user")) {
-                navigate("/user/home");
-            }
-            else if (path.includes("/user/paymentOverdue")) {
-                navigate("/user/home");
-            }
-
-            return;
-        }
-
-        if (apiUser.subscriptionValidUntil) {
-            const subscriptionValidUntil = new Date(apiUser.subscriptionValidUntil);
-            const now = new Date();
-
-            if (subscriptionValidUntil <= now) {
-                if (path !== "/user/paymentOverdue") {
-                    navigate("/user/paymentOverdue");
-                }
-                return;
-            }
-
-            if (!path.includes("/user")) {
+            } else {
                 navigate("/user/home");
             }
         }
 
-        if(path === "/user/selectSubscription" && initialized) {
+        if (!path.includes("/user")) {
             navigate("/user/home");
         }
     });

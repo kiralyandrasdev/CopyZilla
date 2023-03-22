@@ -35,6 +35,7 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Webhook.EventHandlers
 
             user.ProductId = productId;
             user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
+            user.SubscriptionStatus = subscription.Status;
 
             await _userRepository.UpdateAsync(user);
 

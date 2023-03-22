@@ -9,6 +9,7 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
         public string? Email { get; set; }
         public Product Product { get; set; }
         public DateTime? SubscriptionValidUntil { get; set; }
+        public string? SubscriptionStatus { get; set; }
         public int ConsumedCredits { get; set; }
     }
 }

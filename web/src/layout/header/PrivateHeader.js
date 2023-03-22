@@ -75,6 +75,19 @@ export default function PrivateHeader() {
         return userFetchResult.product.name;
     }
 
+    const trialIndicator = () => {
+        if (userFetchResult.subscriptionStatus === "trialing") {
+            const daysLeft = Math.round((new Date(userFetchResult.subscriptionValidUntil) - new Date()) / (1000 * 60 * 60 * 24));
+            return (
+                <div className="header__nav__item__trial">
+                    <p>{daysLeft} days left</p>
+                </div>
+            )
+        }
+
+        return <></>;
+    }
+
     let menuClass = "header__nav__menu header__nav__menu__private dropshadow transition__parent";
 
     if (menuActive) {
@@ -86,10 +99,11 @@ export default function PrivateHeader() {
             <header className="header header__private header__fullwidth animation__fadeInDown">
                 <div className="header__private__control">
                     <p className="semi-bold">{planName()}</p>
+                    {trialIndicator()}
                     <p className="creditCount semi-bold">{creditCount()}</p>
                 </div>
                 <div className="header__main">
-                  {/*   <a className="header__nav__item semi-bold green" href="/user/home">
+                    {/*   <a className="header__nav__item semi-bold green" href="/user/home">
                         Outlook Add-in
                     </a> */}
                     <a className="header__nav__item semi-bold green" href="/user/home">

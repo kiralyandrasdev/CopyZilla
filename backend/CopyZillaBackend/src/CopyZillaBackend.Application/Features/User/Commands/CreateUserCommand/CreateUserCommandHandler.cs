@@ -39,7 +39,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
             if (defaultProduct == null)
                 throw new Exception("Default product not found. Please contact support. (Error code: 1001)");
 
-            await _stripeService.CreateSubscriptionAsync(customer.Id, defaultProduct.PriceId);
+            await _stripeService.CreateTrialSubscriptionAsync(customer.Id, defaultProduct.PriceId);
 
             var user = new Domain.Entities.User()
             {

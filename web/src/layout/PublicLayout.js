@@ -1,9 +1,8 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { Outlet, useNavigate } from "react-router-dom";
 import useOutsideAlerter from "../components/utils/useOutsideAlerter";
 import "./PublicLayout.css";
-import { WebsiteContext } from "../pages/website/context/websiteContext";
 
 export default function PublicLayout() {
     const navigate = useNavigate();

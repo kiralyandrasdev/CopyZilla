@@ -78,6 +78,9 @@ namespace CopyZillaBackend.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("SubscriptionStatus")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("SubscriptionValidUntil")
                         .HasColumnType("timestamp with time zone");
 

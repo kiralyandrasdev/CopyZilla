@@ -83,7 +83,7 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Payment
             await service.DeleteAsync(customerId);
         }
 
-        public async Task<Subscription> CreateSubscriptionAsync(string customerId, string priceId)
+        public async Task<Subscription> CreateTrialSubscriptionAsync(string customerId, string priceId)
         {
             var options = new SubscriptionCreateOptions
             {
@@ -94,7 +94,8 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Payment
                     {
                         Price = priceId,
                     }
-                }
+                },
+                TrialPeriodDays = 30,
             };
             var subscriptionService = new SubscriptionService();
             return await subscriptionService.CreateAsync(options);

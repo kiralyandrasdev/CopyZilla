@@ -12,18 +12,11 @@ export default function PaymentOverduePage() {
     return (
         <div className="page page__paymentOverdue">
             <img src={PurchaseSvg} className="illustration__150" alt="Loading..."></img>
-            <p>Payment overdue</p>
-            <p className='description'>Your last payment failed. Please update your payment information to continue using CopyZilla Email Assistant, or switch to a free plan.</p>
+            <h3>Payment overdue</h3>
+            <p className='description'>Your last payment failed. Please update your payment information to continue using CopyZilla.</p>
             <AsyncButton
-                color="green"
+                color="var(--green)"
                 title="Manage payment information"
-                onClick={() => openCustomerPortal(user.email)}
-            />
-            <TextButton
-                className="animation__fadeInUp"
-                color="var(--grey2)"
-                underline={true}
-                title="Switch to free plan"
                 onClick={() => openCustomerPortal(user.email)}
             />
         </div>

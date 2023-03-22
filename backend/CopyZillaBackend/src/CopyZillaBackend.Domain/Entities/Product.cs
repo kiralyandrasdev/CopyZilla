@@ -11,6 +11,7 @@ namespace CopyZillaBackend.Domain.Entities
         public string PlanType { get; set; }
         public string Description { get; set; }
         public string PricingInterval { get; set; }
+        public string Scope { get; set; }
         public List<string> Features { get; set; }
     }
 }

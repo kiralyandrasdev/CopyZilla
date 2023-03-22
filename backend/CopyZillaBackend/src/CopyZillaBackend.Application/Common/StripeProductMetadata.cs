@@ -7,6 +7,7 @@
         features,
         plan_type,
         price_formatted,
-        pricing_interval
+        pricing_interval,
+        scope
     }
 }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyZillaBackend.Persistence.Migrations
 {
     [DbContext(typeof(CopyZillaBackendDBContext))]
-    [Migration("20230317115534_initial")]
+    [Migration("20230322163045_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -79,6 +79,9 @@ namespace CopyZillaBackend.Persistence.Migrations
 
                     b.Property<string>("StripeCustomerId")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SubscriptionStatus")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("SubscriptionValidUntil")

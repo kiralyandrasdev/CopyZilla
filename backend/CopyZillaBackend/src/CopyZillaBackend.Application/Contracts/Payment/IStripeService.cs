@@ -48,7 +48,7 @@ namespace CopyZillaBackend.Application.Contracts.Payment
         /// <param name="customerId"></param>
         /// <param name="priceId"></param>
         /// <returns></returns>
-        Task<Subscription> CreateSubscriptionAsync(string customerId, string priceId);
+        Task<Subscription> CreateTrialSubscriptionAsync(string customerId, string priceId);
 
         /// <summary>
         /// Returns available products.

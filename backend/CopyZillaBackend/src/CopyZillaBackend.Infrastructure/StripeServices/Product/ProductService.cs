@@ -90,7 +90,8 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Product
                     CreditFormatted = e.Metadata[nameof(StripeProductMetadata.credit_limit_formatted)],
                     PlanType = e.Metadata[nameof(StripeProductMetadata.plan_type)],
                     PricingInterval = e.Metadata[nameof(StripeProductMetadata.pricing_interval)],
-                    Features = e.Metadata[nameof(StripeProductMetadata.features)].Split(',').ToList()
+                    Features = e.Metadata[nameof(StripeProductMetadata.features)].Split(',').ToList(),
+                    Scope = e.Metadata[nameof(StripeProductMetadata.scope)]
                 };
             })
             .ToList();

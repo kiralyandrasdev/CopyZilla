@@ -24,3 +24,15 @@
     flex-direction: row;
     column-gap: 20px;
 }
+
+.header__nav__item__trial {
+    background-color: var(--green);
+    border-radius: 4px;
+    padding: 0px 5px;
+}
+
+.header__nav__item__trial p {
+    color: var(--grey5);
+    font-size: 12px;
+    font-weight: 600;
+}

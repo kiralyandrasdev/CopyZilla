@@ -23,6 +23,7 @@ namespace CopyZillaBackend.Persistence.Migrations
                     AccountDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     ProductId = table.Column<string>(type: "text", nullable: true),
                     SubscriptionValidUntil = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SubscriptionStatus = table.Column<string>(type: "text", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

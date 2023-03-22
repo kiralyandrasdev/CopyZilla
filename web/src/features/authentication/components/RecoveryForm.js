@@ -57,7 +57,7 @@ export default function RecoveryForm() {
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
-                    <TextField error={emailError} light={true} hint="Email address" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
+                    <TextField error={emailError} hint="Email address" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
                 </div>
             </div>
             <div className="authForm__primaryActions">
@@ -66,7 +66,7 @@ export default function RecoveryForm() {
             {message && <p className="authForm__message">{message}</p>}
             {errorMessage && <p style={{ "color": "var(--red)" }} className="red">{errorMessage}</p>}
             <div className="authForm__secondaryActions">
-                <TextButton color="var(--grey3)" title="Sign in" onClick={() => routeChange("/auth/login")} />
+                <TextButton color="var(--grey2)" title="Sign in" onClick={() => routeChange("/auth/login")} />
             </div>
         </div>
     );

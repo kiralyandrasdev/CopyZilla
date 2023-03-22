@@ -33,6 +33,8 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Webhook.EventHandlers
             else
                 user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
 
+            user.SubscriptionStatus = subscription.Status;
+
             await _repository.UpdateAsync(user);
         }
     }

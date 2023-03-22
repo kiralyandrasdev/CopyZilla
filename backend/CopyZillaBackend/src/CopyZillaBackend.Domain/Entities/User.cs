@@ -9,6 +9,7 @@
         public bool AccountDeleted { get; set; }
         public string? ProductId { get; set; }
         public DateTime? SubscriptionValidUntil { get; set; }
+        public string? SubscriptionStatus { get; set; }
         public List<ServiceUsageHistory> ServiceUsageHistory { get; set; }
     }
 }

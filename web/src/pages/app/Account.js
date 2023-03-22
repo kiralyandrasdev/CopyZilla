@@ -25,6 +25,16 @@ export default function Profile() {
         isFetching,
     } = useGetUserQuery({ firebaseUid });
 
+    const productName = () => {
+        let name = user.product.name;
+
+        if (user.subscriptionStatus === "trialing") {
+            name += " (Trial)"
+        }
+
+        return name;
+    }
+
     const content = () => {
         if (isFetching) {
             return <LoadingIndicator color="white"></LoadingIndicator>;
@@ -58,14 +68,20 @@ export default function Profile() {
                 <div className="page__account__section page__account__section__2 animation__fadeInUp">
                     <h5>Subscription</h5>
                     <div className="spacer"></div>
-                    <p>{user.product.name}</p>
+                    <p>{productName()}</p>
                     <p className="description">Renews on: {getDate(user.subscriptionValidUntil)}</p>
-                    <TextButton
-                        color="var(--green)"
-                        underline={true}
-                        title="Manage subscription and payment details"
-                        onClick={() => openCustomerPortal(user.email)}
-                    />
+                    {
+                        user.product.scope === "individual" ?
+
+                            <TextButton
+                                color="var(--green)"
+                                underline={true}
+                                title="Manage subscription and payment details"
+                                onClick={() => openCustomerPortal(user.email)}
+                            /> : <p>
+                                Your subscription is managed by your IT administrator
+                            </p>
+                    }
                 </div>
                 <div className="page__account__section__3 animation__fadeInUp">
                     <TextButton

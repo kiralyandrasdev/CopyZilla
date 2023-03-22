@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef } from 'react'
 import styles from './PricingSection.module.css'
 import SectionTag from '../components/SectionTag';
 import PricingCard2 from '../components/PricingCard2';
-import { WebsiteContext } from '../../context/websiteContext';
 
 function PricingSection() {
     const pricingCards = [
