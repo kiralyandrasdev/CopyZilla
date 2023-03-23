@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Exceptions;
 using CopyZillaBackend.Application.Models;
@@ -22,6 +23,10 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
             var client = new HttpClient();
             var apiKey = _configuration.GetSection("OpenAI").GetValue<string>("ApiKey");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            // remove safelinks.protection.outlook.com links from prompt
+            string pattern = @"<https?:\/\/[^\s]*safelinks\.protection\.outlook\.com\/\?url=([^&]+)&[^>]+>";
+            prompt = Regex.Replace(prompt, pattern, "");
 
             var payload = new
             {
