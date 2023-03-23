@@ -56,6 +56,7 @@ namespace API.Tests.IntegrationTests
                 StripeCustomerId = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
                 ProductId = defaultProduct!.Id,
+                SubscriptionStatus = "active"
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -90,6 +91,8 @@ namespace API.Tests.IntegrationTests
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
             var products = await _stripeManager.ListProductsAsync();
+            var product = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default");
+            var creditLimit = int.Parse(product!.Metadata[nameof(StripeProductMetadata.credit_limit)]);
 
             var user = new User()
             {
@@ -97,12 +100,13 @@ namespace API.Tests.IntegrationTests
                 Email = userEmail,
                 StripeCustomerId = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                ProductId = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
+                ProductId = product.Id,
+                SubscriptionStatus = "active"
             };
 
             await _postgresDbManager.AddUserAsync(user);
 
-            await _postgresDbManager.AddUserCreditUsageAsync(user.Id, 10);
+            await _postgresDbManager.AddUserCreditUsageAsync(user.Id, creditLimit);
 
             var options = new ProcessEmailPromptEventOptions()
             {

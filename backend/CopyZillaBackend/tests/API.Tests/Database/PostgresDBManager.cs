@@ -76,7 +76,7 @@ namespace API.Tests.Database
             return creditUsage;
         }
 
-        public async Task AddUserCreditUsageAsync(Guid userI, int count = 1)
+        public async Task AddUserCreditUsageAsync(Guid userId, int count = 1)
         {
             var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
             using (var scope = scopeFactory!.CreateScope())
@@ -87,7 +87,7 @@ namespace API.Tests.Database
                 {
                     await context!.ServiceUsageHistory.AddAsync(new ServiceUsageHistory()
                     {
-                        UserId = userI,
+                        UserId = userId,
                         ServiceName = "Test",
                     });
                 }
