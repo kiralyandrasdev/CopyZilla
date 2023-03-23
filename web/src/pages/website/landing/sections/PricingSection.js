@@ -8,7 +8,7 @@ function PricingSection() {
         {
             plan: "Individual",
             price: "$19",
-            description: "Write 100 email messages per day with the help of CopyZilla Email Assistant",
+            description: "Write 100 email messages per day with the help of CopyZilla",
             features: [
                 "200 email operations / day",
                 "Email templates",

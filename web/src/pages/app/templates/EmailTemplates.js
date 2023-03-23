@@ -8,7 +8,7 @@ function EmailTemplatesPage() {
         <div className={styles.container}>
             <h4>📒 Email Templates</h4>
             <p className="description">
-                Create and save email templates to use them later in CopyZilla Email Assistant
+                Create and save email templates to use them later in CopyZilla
             </p>
             <div className={styles.row}>
                 <SavedTemplateList />

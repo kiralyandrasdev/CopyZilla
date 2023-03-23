@@ -55,6 +55,8 @@
 }
 
 .main__public {
+    max-width: 2000px;
+    margin: auto;
     grid-area: main;
 }
 

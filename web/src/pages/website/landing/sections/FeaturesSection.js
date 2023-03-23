@@ -14,7 +14,7 @@ function FeaturesSection() {
                 Powered by state-of-the-art AI technology
             </h2>
             <h6>
-                CopyZilla Email Assistant is powered by GPT-3, a state-of-the-art language model developed by OpenAI. Our service leverages the power of machine learning and natural language processing to extract context from the email thread and create intelligent responses
+                CopyZilla is powered by GPT-3, a state-of-the-art language model developed by OpenAI. Our service leverages the power of machine learning and natural language processing to extract context from the email thread and create intelligent responses
             </h6>
             <div className={styles.cardGrid}>
                 <FeatureCard
