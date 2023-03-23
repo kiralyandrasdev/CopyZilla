@@ -14,7 +14,7 @@ function SignedOutView() {
 
     return (
         <div className={styles.view}>
-            <h6>CopyZilla Email Assistant</h6>
+            <h6>copyzilla</h6>
             <div className={styles.form}>
                 <img src={AuthSvg} alt="" className='illustration' />
                 <h5>Sign in to your account</h5>

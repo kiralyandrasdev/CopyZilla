@@ -1,6 +1,6 @@
 {
-  "short_name": "CopyZilla Email Assistant",
-  "name": "AI powered email assistant that helps you write better emails",
+  "short_name": "CopyZilla",
+  "name": "CopyZilla Outlook Add-in",
   "icons": [
     {
       "src": "logo256.png",

@@ -8,10 +8,10 @@
   <Version>1.0.0.0</Version>
   <ProviderName>CopyZilla</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="CopyZilla Email Assistant (local)" />
-  <Description DefaultValue="CopyZilla Email Assistant for Outlook" />
-  <IconUrl DefaultValue="https://localhost:3100/logo192.png" />
-  <HighResolutionIconUrl DefaultValue="https://localhost:3100/logo192.png" />
+  <DisplayName DefaultValue="CopyZilla (local)" />
+  <Description DefaultValue="CopyZilla for Outlook" />
+  <IconUrl DefaultValue="https://addin.copyzilla.hu/logo192.png" />
+  <HighResolutionIconUrl DefaultValue="https://addin.copyzilla.hu/logo192.png" />
   <SupportUrl DefaultValue="https://copyzilla.hu" />
   <Hosts>
     <Host Name="Mailbox" />
@@ -24,7 +24,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:3100" />
+        <SourceLocation DefaultValue="https://addin.copyzilla.hu" />
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -72,16 +72,16 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3100/logo192.png" />
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3100/logo192.png" />
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3100/logo192.png" />
+        <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo192.png" />
+        <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo192.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo192.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="App.Url" DefaultValue="https://localhost:3100" />
+        <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.hu" />
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="CopyZilla Email Assistant" />
-        <bt:String id="TaskpaneButton.Label" DefaultValue="CopyZilla Email Assistant" />
+        <bt:String id="GroupLabel" DefaultValue="CopyZilla" />
+        <bt:String id="TaskpaneButton.Label" DefaultValue="CopyZilla" />
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="TaskpaneButton.Tooltip"
@@ -146,16 +146,16 @@
       </Hosts>
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3100/logo192.png" />
-          <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3100/logo192.png" />
-          <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3100/logo192.png" />
+          <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo192.png" />
+          <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo192.png" />
+          <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo192.png" />
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="App.Url" DefaultValue="https://localhost:3100" />
+          <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.hu" />
         </bt:Urls>
         <bt:ShortStrings>
-          <bt:String id="GroupLabel" DefaultValue="CopyZilla Email Assistant" />
-          <bt:String id="TaskpaneButton.Label" DefaultValue="CopyZilla Email Assistant (local)" />
+          <bt:String id="GroupLabel" DefaultValue="CopyZilla" />
+          <bt:String id="TaskpaneButton.Label" DefaultValue="CopyZilla (local)" />
         </bt:ShortStrings>
         <bt:LongStrings>
           <bt:String id="TaskpaneButton.Tooltip"
