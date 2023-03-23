@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FiMenu, FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { AsyncButton } from "../../components";
 import useOutsideAlerter from "../../components/utils/useOutsideAlerter";
 import { useGetUserQuery } from "../../features/api/apiSlice";
 import { AuthContext } from "../../features/authentication/authContext";
@@ -53,7 +52,17 @@ export default function PrivateHeader() {
             return "Unknown error"
         }
 
-        return user.creditCount + " credits"
+        if (!userFetchResult.product || userFetchResult.product.dailyCreditLimit == null || user.consumedCredits == null) {
+            return "Unknown credits";
+        }
+        
+        if (userFetchResult.product.scope === "enterprise") {
+            return "Unlimited usage";
+        }
+
+        const remainigCredits = userFetchResult.product.dailyCreditLimit - user.consumedCredits;
+
+        return remainigCredits + " credits"
     }
 
     const planName = () => {
@@ -65,7 +74,22 @@ export default function PrivateHeader() {
             return "Unknown error"
         }
 
-        return userFetchResult.subscriptionPlanName;
+        console.log(userFetchResult);
+
+        return userFetchResult.product.name;
+    }
+
+    const trialIndicator = () => {
+        if (userFetchResult.subscriptionStatus === "trialing") {
+            const daysLeft = Math.round((new Date(userFetchResult.subscriptionValidUntil) - new Date()) / (1000 * 60 * 60 * 24));
+            return (
+                <div className="header__nav__item__trial">
+                    <p>{daysLeft} days left</p>
+                </div>
+            )
+        }
+
+        return <></>;
     }
 
     let menuClass = "header__nav__menu header__nav__menu__private dropshadow transition__parent";
@@ -79,12 +103,15 @@ export default function PrivateHeader() {
             <header className="header header__private header__fullwidth animation__fadeInDown">
                 <div className="header__private__control">
                     <p className="semi-bold">{planName()}</p>
+                    {trialIndicator()}
                     <p className="creditCount semi-bold">{creditCount()}</p>
-                    <AsyncButton onClick={() => navigate("/user/creditRefill")} shrinked={true} title="Buy credits"></AsyncButton>
                 </div>
                 <div className="header__main">
+                    {/*   <a className="header__nav__item semi-bold green" href="/user/home">
+                        Outlook Add-in
+                    </a> */}
                     <a className="header__nav__item semi-bold green" href="/user/home">
-                        Download extension
+                        Download
                     </a>
                     <a className="header__nav__item semi-bold" href="/user/account">Account</a>
                 </div>

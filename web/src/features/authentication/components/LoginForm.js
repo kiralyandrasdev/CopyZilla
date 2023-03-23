@@ -47,7 +47,7 @@ export default function LoginForm() {
         }
         return true;
     }
-    
+
     window.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             handleLogin();
@@ -69,15 +69,14 @@ export default function LoginForm() {
     return (
         <div className="authForm loginForm">
             <div className="authForm__header">
-                <h4>Hey there!</h4>
-                <p className="description">Sign in to your account</p>
+                <h4>Sign in to your account</h4>
             </div>
             <div className="authForm__field__container">
                 <div className="authForm__field__email">
-                    <TextField light={true} error={emailError} hint="Email address" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
+                    <TextField error={emailError} hint="Email address" value={email} suffixIcon={<HiOutlineMail />} onChange={handleEmailChange}></TextField>
                 </div>
                 <div className="authForm__field__password">
-                    <TextField light={true} error={passwordError} hint="Password" value={password} suffixIcon={<RiLockPasswordLine />} onChange={handlePasswordChange} password={true}></TextField>
+                    <TextField error={passwordError} hint="Password" value={password} suffixIcon={<RiLockPasswordLine />} onChange={handlePasswordChange} password={true}></TextField>
                 </div>
                 <a className="description loginForm__passwordRecovery" href="/auth/accountRecovery">Forgot your password?</a>
             </div>
@@ -87,7 +86,7 @@ export default function LoginForm() {
             {error && <p style={{ "color": "var(--red)", "textAlign": "center" }}>{error}</p>}
             <div className="authForm__secondaryActions">
                 <p className="description loginForm__noAccountQuestion">Don't have an account? </p>
-                <TextButton color="var(--grey3)" title="Create new account" onClick={() => routeChange("/auth/signup")} />
+                <TextButton color="white" title="Create new account" onClick={() => routeChange("/auth/signup")} />
             </div>
         </div>
     );

@@ -1,5 +1,12 @@
 export interface ApplicationUser {
     id: string;
-    subscriptionPlanName: string;
-    creditCount: number;
+    product: Product;
+    consumedCredits: number;
+    subscriptionStatus: string;
+}
+
+export interface Product {
+    name: string;
+    dailyCreditLimit: number;
+    scope: string;
 }

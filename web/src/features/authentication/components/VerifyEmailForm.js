@@ -52,7 +52,7 @@ function VerifyEmailForm() {
             {message && <p className="authForm__message">{message}</p>}
             {errorMessage && <p className="red">{errorMessage}</p>}
             <div className="authForm__secondaryActions">
-                <TextButton color="var(--grey3)" title="Sign in with a different account" onClick={() => handleSignOut()} />
+                <TextButton color="var(--grey2)" title="Sign in with a different account" onClick={() => handleSignOut()} />
             </div>
         </div>
     );

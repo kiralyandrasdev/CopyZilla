@@ -1,5 +1,4 @@
 ﻿using CopyZillaBackend.Application.Contracts.Helpers;
-using CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery;
 using CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -22,19 +21,10 @@ namespace CopyZillaBackend.API.Controllers
         }
 
         [HttpGet]
-        [Route("goods")]
-        public async Task<ActionResult<GetProductListQueryResult>> GetGoodsListAsync()
-        {
-            var result = await _mediator.Send(new GetProductListQuery("goods"));
-
-            return _responseManager.MapActionResult(result);
-        }
-
-        [HttpGet]
         [Route("subscriptions")]
-        public async Task<ActionResult<GetSubscriptionListQueryResult>> GetSubscriptionListAsync()
+        public async Task<ActionResult<GetProductListQueryResult>> GetSubscriptionListAsync()
         {
-            var result = await _mediator.Send(new GetSubscriptionListQuery());
+            var result = await _mediator.Send(new GetProductListQuery());
 
             return _responseManager.MapActionResult(result);
         }

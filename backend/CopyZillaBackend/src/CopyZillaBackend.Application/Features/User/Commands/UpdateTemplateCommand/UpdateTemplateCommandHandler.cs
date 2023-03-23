@@ -8,8 +8,8 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
 {
     public class UpdateTemplateCommandHandler : IRequestHandler<UpdateTemplateCommand, UpdateTemplateCommandResult>
     {
-         private readonly IUserRepository _repository;
-         private readonly IMongoRepository<EmailTemplate> _mongoRepository;
+        private readonly IUserRepository _repository;
+        private readonly IMongoRepository<EmailTemplate> _mongoRepository;
 
         public UpdateTemplateCommandHandler(IUserRepository repository, IMongoRepository<EmailTemplate> mongoRepository)
         {
@@ -31,7 +31,13 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateTemplateComm
 
             var template = await _mongoRepository.GetEntityAsync(request.UserId, request.TemplateId);
 
-            template.Title = request.Options.Title?.Trim();
+            string title = request.Options.Title == null ? "" : request.Options.Title.Trim();
+
+            // If title is empty set the date as title
+            if (string.IsNullOrEmpty(request.Options.Title))
+                title = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+
+            template.Title = title;
             template.Content = request.Options.Content.Trim();
 
             await _mongoRepository.UpdateEntityAsync(template);

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import './App.css';
-import { AuthContext } from './context/authContext';
 import SignedInView from './views/SignedInView';
 import SignedOutView from './views/SignedOutView';
 import { initializeApp } from "firebase/app";
@@ -9,11 +8,11 @@ import { AppContext, AppState } from './context/appContext';
 import SnackBar from './views/SnackBar';
 import SplashView from './views/SplashView';
 import VerifyEmailView from './views/VerifyEmailView';
+import PaymentOverdueView from './views/PaymentOverdueView';
 
 initializeApp(firebaseConfig);
 
 function App() {
-  const { user } = useContext(AuthContext);
   const { appState, snackBarMessage, clearSnackBarMessage } = useContext(AppContext);
 
   useEffect(() => {
@@ -35,6 +34,10 @@ function App() {
 
     if (appState === AppState.SignedIn) {
       return <SignedInView />
+    }
+
+    if (appState === AppState.PaymentOverdue) {
+      return <PaymentOverdueView />
     }
 
     return <SignedOutView />

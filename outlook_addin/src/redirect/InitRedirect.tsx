@@ -3,6 +3,7 @@ import { useGetUserQuery } from '../features/api/apiSlice';
 import { AuthContext } from '../context/authContext';
 import { UserContext } from '../context/userContext';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { AppContext, AppState } from '../context/appContext';
 
 type InitRedirectProps = {
     children: React.ReactNode;
@@ -11,6 +12,7 @@ type InitRedirectProps = {
 function InitRedirect(props: InitRedirectProps) {
     const { user } = useContext(AuthContext);
     const { setUser } = useContext(UserContext);
+    const { appState, setAppState } = useContext(AppContext);
 
     const {
         data,
@@ -23,9 +25,16 @@ function InitRedirect(props: InitRedirectProps) {
         if (isSuccess) {
             setUser({
                 id: data?.id,
-                subscriptionPlanName: data?.subscriptionPlanName,
-                creditCount: data?.creditCount,
+                product: data?.product,
+                consumedCredits: data?.consumedCredits,
+                subscriptionStatus: data?.subscriptionStatus,
             });
+        }
+
+        if (isSuccess && data?.subscriptionStatus !== 'active' && data?.subscriptionStatus !== 'trialing') {
+            if (appState !== AppState.PaymentOverdue) {
+                setAppState(AppState.PaymentOverdue);
+            }
         }
     }, [data, isSuccess]);
 

@@ -4,7 +4,7 @@ import './Home.css';
 import { AsyncButton } from '../../components';
 
 function HomePage() {
-    const prereqText = "To get started, download CopyZilla Email Assistant from the Chrome Web Store"
+    const prereqText = "To get started, download CopyZilla from the Chrome Web Store"
     const clientSupportText = "Currently supported on Gmail and Outlook web clients"
     
     const chromeDownloadUrl = "https://chrome.google.com/webstore/detail/copyzilla-email-assistant/gakgnepokfbooliogomceelndhjgahkf";

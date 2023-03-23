@@ -1,4 +1,5 @@
 ﻿using CopyZillaBackend.Application.Contracts.Persistence;
+using CopyZillaBackend.Application.Contracts.ServiceUsage;
 using CopyZillaBackend.Domain.Entities;
 using CopyZillaBackend.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,18 +17,12 @@ namespace CopyZillaBackend.Persistence
 
             var mongoConnectionString = configuration.GetConnectionString("MongoConnection");
             var mongoDatabaseName = configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
-            var promptResultCollectionName = configuration.GetSection("MongoDB").GetValue<string>("PromptResultCollectionName");
             var templateCollectionName = configuration.GetSection("MongoDB").GetValue<string>("TemplateCollectionName");
-            
+
             services.AddDbContext<CopyZillaBackendDBContext>(options => options.UseNpgsql(configuration.GetConnectionString("SqlConnection")));
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IServiceUsageHistoryRepository, ServiceUsageHistoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IMongoRepository<PromptResult>>(provider => new MongoRepository<PromptResult>
-            (
-                mongoConnectionString,
-                mongoDatabaseName,
-                promptResultCollectionName
-            ));
             services.AddScoped<IMongoRepository<EmailTemplate>>(provider => new MongoRepository<EmailTemplate>
             (
                 mongoConnectionString,

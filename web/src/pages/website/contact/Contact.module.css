@@ -1,0 +1,44 @@
+.container {
+    max-width: 1145px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    row-gap: 30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: 30px;
+}
+
+.roundedContainer {
+    padding: 20px 40px;
+    background-color: var(--grey4);
+    border-radius: 16px;
+}
+
+@media screen and (max-width: 1000px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .text {
+        align-items: center;
+    }
+
+    .lottie {
+        height: 300px;
+    }
+}

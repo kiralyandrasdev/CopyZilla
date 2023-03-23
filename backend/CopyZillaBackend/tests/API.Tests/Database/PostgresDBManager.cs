@@ -22,7 +22,6 @@ namespace API.Tests.Database
             var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
 
             context!.Database.EnsureDeleted();
-            context.Database.Migrate();
         }
 
         public async Task<User?> AddUserAsync(User user)
@@ -58,6 +57,42 @@ namespace API.Tests.Database
             {
                 var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
                 context!.Users.Remove(user);
+            }
+        }
+
+        public async Task<int> GetUserCreditUsageAsync(Guid userId)
+        {
+            int creditUsage;
+
+            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+            using (var scope = scopeFactory!.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
+                creditUsage = await context!.ServiceUsageHistory
+                    .Where(e => e.UserId == userId && e.CreatedOn >= DateTime.Today)
+                    .CountAsync();
+            }
+
+            return creditUsage;
+        }
+
+        public async Task AddUserCreditUsageAsync(Guid userId, int count = 1)
+        {
+            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+            using (var scope = scopeFactory!.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<CopyZillaBackendDBContext>();
+
+                for (int i = 0; i < count; i++)
+                {
+                    await context!.ServiceUsageHistory.AddAsync(new ServiceUsageHistory()
+                    {
+                        UserId = userId,
+                        ServiceName = "Test",
+                    });
+                }
+
+                await context!.SaveChangesAsync();
             }
         }
     }

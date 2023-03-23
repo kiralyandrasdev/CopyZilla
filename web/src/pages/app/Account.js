@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { FiKey, FiMail } from "react-icons/fi";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingIndicator, TextButton } from "../../components";
 import { useGetUserQuery } from "../../features/api/apiSlice";
@@ -24,6 +23,16 @@ export default function Profile() {
         error,
         isFetching,
     } = useGetUserQuery({ firebaseUid });
+
+    const productName = () => {
+        let name = user.product.name;
+
+        if (user.subscriptionStatus === "trialing") {
+            name += " (Trial)"
+        }
+
+        return name;
+    }
 
     const content = () => {
         if (isFetching) {
@@ -58,7 +67,7 @@ export default function Profile() {
                 <div className="page__account__section page__account__section__2 animation__fadeInUp">
                     <h5>Subscription</h5>
                     <div className="spacer"></div>
-                    <p>{user.subscriptionPlanName}</p>
+                    <p>{productName()}</p>
                     <p className="description">Renews on: {getDate(user.subscriptionValidUntil)}</p>
                     <TextButton
                         color="var(--green)"

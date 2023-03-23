@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FirebaseAdmin" Version="2.3.0" />
+    <PackageReference Include="FluentScheduler" Version="5.5.1" />
     <PackageReference Include="JWT" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
@@ -14,16 +15,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CopyZillaBackend.Application\CopyZillaBackend.Application.csproj" />
+    <ProjectReference Include="..\CopyZillaBackend.Domain\CopyZillaBackend.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Payment\" />
     <None Remove="Stripe.net" />
     <None Remove="Webhook\" />
-    <None Remove="Webhook\Events\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Payment\" />
-    <Folder Include="Webhook\" />
-    <Folder Include="Webhook\EventHandlers\" />
+    <None Remove="StripeServices\Webhook\Events\" />
   </ItemGroup>
 </Project>

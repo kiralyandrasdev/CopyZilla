@@ -4,12 +4,12 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
 {
     public class ProcessEmailPromptEvent : IRequest<ProcessEmailPromptEventResult>
     {
-        public string FirebaseUid { get; }
-        public ProcessEmailPromptOptions Options { get; }
+        public Guid UserId { get; }
+        public ProcessEmailPromptEventOptions Options { get; }
 
-        public ProcessEmailPromptEvent(string firebaseUid, ProcessEmailPromptOptions dto)
+        public ProcessEmailPromptEvent(Guid userId, ProcessEmailPromptEventOptions dto)
         {
-            FirebaseUid = firebaseUid;
+            UserId = userId;
             Options = dto;
         }
     }

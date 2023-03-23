@@ -68,13 +68,13 @@ namespace API.Tests.Engine
 
                 var mongoConnectionString = configuration.GetConnectionString("MongoConnection");
                 var mongoDatabaseName = configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
-                var promptResultCollectionName = configuration.GetSection("MongoDB").GetValue<string>("PromptResultCollectionName");
+                var emailTemplateCollectionName = configuration.GetSection("MongoDB").GetValue<string>("TemplateCollectionName");
 
-                services.AddScoped<IMongoRepository<PromptResult>>(provider => new MongoRepository<PromptResult>
+                services.AddScoped<IMongoRepository<EmailTemplate>>(provider => new MongoRepository<EmailTemplate>
                 (
                     mongoConnectionString,
                     mongoDatabaseName,
-                    promptResultCollectionName
+                    emailTemplateCollectionName
                 ));
 
                 Configuration = configuration!;

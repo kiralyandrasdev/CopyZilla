@@ -7,7 +7,5 @@ namespace CopyZillaBackend.Application.Contracts.Persistence
         Task<User?> GetByFirebaseUidAsync(string firebaseUid);
         Task<User?> GetByCustomerIdAsync(string customerId);
         Task<bool> ExistsAsync(string firebaseuId);
-        Task DecreaseCreditCount(string firebaseUid, int amount);
-        Task IncreaseCreditCount(string firebaseUid, int amount);
     }
 }

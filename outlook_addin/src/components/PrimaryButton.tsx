@@ -11,7 +11,7 @@ type PrimaryButtonProps = {
 
 function PrimaryButton(props: PrimaryButtonProps) {
     const handleClick = () => {
-        if (!props.enabled || props.isLoading === true) {
+        if (props.enabled === false || props.isLoading === true) {
             return;
         }
 

@@ -7,7 +7,6 @@ import FullscreenLayout from './layout/FullscreenLayout';
 import PrivateLayout from './layout/PrivateLayout';
 import PublicLayout from './layout/PublicLayout';
 import Account from './pages/app/Account';
-import CreditRefill from './pages/app/CreditRefill';
 import PaymentOverduePage from './pages/app/PaymentOverdue';
 import SelectSubscriptionPage from './pages/app/SelectSubscription';
 import ChangeEmailPage from './pages/app/account/ChangeEmail';
@@ -18,9 +17,6 @@ import SignUp from './pages/auth/SignUp';
 import VerifyEmailPage from './pages/auth/VerifyEmail';
 import CheckoutCanceled from './pages/checkout/CheckoutCancelled';
 import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
-import AboutUsPage from './pages/website/AboutUs';
-import LandingPage from './pages/website/Landing';
-import PricingPage from './pages/website/pricing/Pricing';
 import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
 import TermsOfServicePage from './pages/website/TermsOfService';
 import AuthRedirect from './redirect/AuthRedirect';
@@ -30,8 +26,11 @@ import HomePage from './pages/app/Home';
 import ReactGA from 'react-ga4';
 import { gaTrackingId } from './config/envConfig';
 import EmailTemplatesPage from './pages/app/templates/EmailTemplates';
+import LandingPage from './pages/website/landing/Landing';
+import ContactPage from './pages/website/contact/Contact';
+import AboutPage from './pages/website/about/About';
 
-if(gaTrackingId != "DISABLED") {
+if (gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
 }
 
@@ -48,7 +47,6 @@ function App() {
             <Route path="/user/account/changeEmail" element={<ChangeEmailPage />} />
             <Route path="/user/account/deleteAccount" element={<DeleteAccountPage />} />
             <Route path="/user/account/changePassword" element={<ChangePasswordPage />} />
-            <Route path="/user/creditRefill" element={<CreditRefill />} />
             <Route path="/user/checkout/completed" element={<CheckoutCompleted />} />
             <Route path="/user/checkout/canceled" element={<CheckoutCanceled />} />
             <Route path="/user/subscriptionExpired" element={<SelectSubscriptionPage />} />
@@ -68,8 +66,8 @@ function App() {
       </Route>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/aboutUs" element={<AboutUsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
       </Route>

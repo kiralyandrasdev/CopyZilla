@@ -4,6 +4,7 @@ using API.Tests.Database;
 using API.Tests.Engine;
 using API.Tests.Firebase;
 using API.Tests.Stripe;
+using CopyZillaBackend.Application.Common;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.DeleteUserCommand;
 using CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand;
@@ -30,7 +31,7 @@ namespace API.Tests.IntegrationTests
         public UserTests(WebApplicationFactoryEngine<Program> factory)
         {
             _factory = factory;
-            _client = factory.CreateDefaultClient(new Uri("https://localhost:7107/api/"));
+            _client = _factory.CreateDefaultClient(new Uri("https://localhost:7107/api/"));
             _postgresDbManager = new PostgresDBManager(factory);
             _mongodbDbManager = new MongoDBManager(factory);
             _stripeManager = new StripeManager(factory);
@@ -79,12 +80,8 @@ namespace API.Tests.IntegrationTests
             {
                 FirebaseUid = userHint,
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = userHint,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -187,16 +184,15 @@ namespace API.Tests.IntegrationTests
             // arrange 
             var userHint = Guid.NewGuid().ToString();
             var userEmail = $"{userHint}@test.com";
+            var products = await _stripeManager.ListProductsAsync();
+
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = userHint,
                 FirebaseUid = userHint,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
+                ProductId = products.FirstOrDefault(p => p.Metadata[nameof(StripeProductMetadata.plan_type)] == "default").Id,
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -212,7 +208,6 @@ namespace API.Tests.IntegrationTests
             result!.Value.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Value!.Email.Should().Be(user.Email);
-            result.Value!.StripeCustomerId.Should().Be(user.StripeCustomerId);
             result.Value!.FirebaseUid.Should().Be(user.FirebaseUid);
         }
 
@@ -225,13 +220,9 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = userHint,
                 FirebaseUid = userHint,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             await _postgresDbManager.AddUserAsync(user);
@@ -259,12 +250,8 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = customer.Id,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);
@@ -316,12 +303,8 @@ namespace API.Tests.IntegrationTests
             var user = new User()
             {
                 Email = userEmail,
-                FirstName = userHint,
-                LastName = userHint,
                 StripeCustomerId = customer.Id,
-                SubscriptionPlanName = userHint,
                 SubscriptionValidUntil = DateTime.UtcNow,
-                PlanType = "default",
             };
 
             var firebaseUser = await _firebaseManager.CreateFirebaseUserAsync(user);

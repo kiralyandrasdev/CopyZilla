@@ -5,6 +5,14 @@
     justify-content: center;
     row-gap: 20px;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     text-align: center;
+}
+
+.page__paymentOverdue__signOut {
+    cursor: pointer;
+}
+
+.page__paymentOverdue__signOut:hover {
+    text-decoration: underline;
 }

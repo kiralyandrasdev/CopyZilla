@@ -1,12 +1,14 @@
 .authForm {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    max-width: 250px;
+    align-items: center;
     justify-content: center;
-    height: 100%;
     width: 100%;
     row-gap: 20px;
+    background-color: var(--grey4);
+    border-radius: 16px;
+    max-width: 400px;
+    padding: 40px 20px;
 }
 
 .authForm__header {
@@ -22,6 +24,11 @@
     align-items: stretch;
     justify-content: center;
     width: 100%;
+    max-width: 250px;
+}
+
+.authForm__primaryActions {
+    width: 250px;
 }
 
 .authForm__secondaryActions {
@@ -33,7 +40,7 @@
 
 .authForm__field__container a {
     text-align: end;
-    color: var(--grey3);
+    color: var(--grey2);
     font-size: 14px;
     text-decoration: underline;
 }
@@ -51,11 +58,6 @@
     column-gap: 10px;
 }
 
-.authForm__agreeToTerms p, a {
+.authCaption {
+    font-size: 12px;
 }
-
-/* @media (max-width: 768px) {
-    .authForm__header {
-        text-align: center;
-    }
-} */

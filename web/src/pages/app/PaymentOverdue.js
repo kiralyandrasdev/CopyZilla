@@ -1,31 +1,39 @@
 import React, { useContext } from 'react';
 import PurchaseSvg from '../../assets/purchase.svg';
-import { AsyncButton, TextButton } from '../../components';
-import { UserContext } from '../../features';
+import { AsyncButton } from '../../components';
 import { openCustomerPortal } from '../../features/payment/actions/paymentActions';
 import './PaymentOverdue.css';
 import './AppPage.css';
+import { AuthContext } from '../../features/authentication/authContext';
+import { useGetUserQuery } from '../../features/api/apiSlice';
+import { getAuth } from 'firebase/auth';
 
 export default function PaymentOverduePage() {
-    const { user } = useContext(UserContext);
+    const { firebaseUid } = useContext(AuthContext);
+
+    const {
+        data: user,
+        error,
+        isError,
+        isFetching,
+    } = useGetUserQuery({ firebaseUid });
+
+    const handleSignOut = () => {
+        const auth = getAuth();
+        auth.signOut();
+    }
 
     return (
         <div className="page page__paymentOverdue">
             <img src={PurchaseSvg} className="illustration__150" alt="Loading..."></img>
-            <p>Payment overdue</p>
-            <p className='description'>Your last payment failed. Please update your payment information to continue using CopyZilla Email Assistant, or switch to a free plan.</p>
+            <h3>Payment overdue</h3>
+            <p className='description'>Your last payment failed. Please update your payment information to continue using CopyZilla.</p>
             <AsyncButton
-                color="green"
+                color="var(--green)"
                 title="Manage payment information"
                 onClick={() => openCustomerPortal(user.email)}
             />
-            <TextButton
-                className="animation__fadeInUp"
-                color="var(--grey2)"
-                underline={true}
-                title="Switch to free plan"
-                onClick={() => openCustomerPortal(user.email)}
-            />
+            <p className='page__paymentOverdue__signOut' onClick={() => handleSignOut()}>Sign out</p>
         </div>
     );
 }

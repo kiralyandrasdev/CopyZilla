@@ -11,7 +11,7 @@ namespace CopyZillaBackend.Infrastructure.Logging
             {
                 $"User: {userEmail}",
                 $"Client: {clientType}",
-                $"Request: {httpContext.Request.Method} {httpContext.Request.Path}",
+                $"Request: {httpContext?.Request?.Method} {httpContext?.Request?.Path}",
                 $"Exception: {ex.Message}",
                 $"Stack Trace: {ex.StackTrace}"
             };

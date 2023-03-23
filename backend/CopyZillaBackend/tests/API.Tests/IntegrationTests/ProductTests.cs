@@ -1,5 +1,4 @@
 using API.Tests.Engine;
-using CopyZillaBackend.Application.Features.Payment.Queries.GetProductListQuery;
 using CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -22,27 +21,11 @@ namespace API.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task Should_Get_Available_Goods()
-        {
-            var response = await _client.GetAsync($"/api/product/goods");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<GetProductListQueryResult>(responseBody);
-
-            // assert
-            result.Should().NotBeNull();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Value.Select(e => e.PriceId).Should().NotBeNullOrEmpty();
-            result.Value.Select(e => e.Name).Should().NotBeNullOrEmpty();
-            result.Value.Select(e => e.CreditFormatted).Should().NotBeNullOrEmpty();
-            result.Value.Select(e => e.PriceFormatted).Should().NotBeNullOrEmpty();
-        }
-
-        [Fact]
-        public async Task Should_Get_Available_Subscriptions()
+        public async Task Should_Get_Available_Products()
         {
             var response = await _client.GetAsync($"/api/product/subscriptions");
             var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<GetSubscriptionListQueryResult>(responseBody);
+            var result = JsonConvert.DeserializeObject<GetProductListQueryResult>(responseBody);
 
             // assert
             result.Should().NotBeNull();

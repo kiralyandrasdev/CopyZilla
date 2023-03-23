@@ -38,8 +38,6 @@ namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand
             var user = _mapper.Map<Domain.Entities.User>(userFromDatabase);
 
             user.Email = request.Options.Email;
-            user.FirstName = request.Options.FirstName ?? user.FirstName;
-            user.LastName = request.Options.LastName ?? user.LastName;
 
             await _repository.UpdateAsync(user);
 
