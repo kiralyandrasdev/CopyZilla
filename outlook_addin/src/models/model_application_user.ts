@@ -8,4 +8,5 @@ export interface ApplicationUser {
 export interface Product {
     name: string;
     dailyCreditLimit: number;
+    scope: string;
 }

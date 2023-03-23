@@ -12,7 +12,7 @@ type InitRedirectProps = {
 function InitRedirect(props: InitRedirectProps) {
     const { user } = useContext(AuthContext);
     const { setUser } = useContext(UserContext);
-    const { setAppState } = useContext(AppContext);
+    const { appState, setAppState } = useContext(AppContext);
 
     const {
         data,
@@ -32,7 +32,9 @@ function InitRedirect(props: InitRedirectProps) {
         }
 
         if (isSuccess && data?.subscriptionStatus !== 'active' && data?.subscriptionStatus !== 'trialing') {
-            setAppState(AppState.PaymentOverdue);
+            if (appState !== AppState.PaymentOverdue) {
+                setAppState(AppState.PaymentOverdue);
+            }
         }
     }, [data, isSuccess]);
 
