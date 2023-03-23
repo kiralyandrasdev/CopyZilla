@@ -72,6 +72,8 @@ namespace CopyZillaBackend.Application.Contracts.Payment
         /// <param name="mode"></param>
         /// <returns></returns>
         Task<StripeCheckoutSession> CreateCheckoutSessionAsync(string customerId, string priceId, string mode);
+
+        Task<string> CreateSubscriptionCheckoutSessionAsync(string customerId, string priceId);
     }
 }
 

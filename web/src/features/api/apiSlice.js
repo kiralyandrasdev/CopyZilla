@@ -148,6 +148,19 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['EmailTemplates'],
         }),
+        createSubscriptionCheckoutSession: builder.mutation({
+            query: ({ userId }) => ({
+                url: `/user/${userId}/subscription`,
+                method: 'POST',
+            }),
+            transformResponse: (response) => {
+                return response.value;
+            },
+            transformErrorResponse: (response) => {
+                console.log(response);
+                return response.errorMessage;
+            }
+        }),
     }),
 })
 
@@ -165,6 +178,7 @@ export const {
     useSaveEmailTemplateMutation,
     useUpdateEmailTemplateMutation,
     useDeleteEmailTemplateMutation,
+    useCreateSubscriptionCheckoutSessionMutation
 } = apiSlice;
 
 export default apiSlice;

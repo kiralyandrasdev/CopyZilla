@@ -1,5 +1,6 @@
 ﻿using CopyZillaBackend.Application.Contracts.Authorization;
 using CopyZillaBackend.Application.Contracts.Helpers;
+using CopyZillaBackend.Application.Features.Payment.Commands;
 using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEvent;
 using CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand;
@@ -127,6 +128,14 @@ namespace CopyZillaBackend.API.Controllers
             _log.LogInformation($"{nameof(UserController)}::{nameof(SendRephrasePrompt)}::{DateTime.Now}] Invoked");
 
             return await _mediator.Send(new ProcessRephrasePromptEvent(userId, options));
+        }
+
+        [HttpPost("{userId}/subscription")]
+        public async Task<ActionResult<CreateSubscriptionCommandResult>> CreateSubscriptionCheckoutSessionAsync(Guid userId)
+        {
+            var result = await _mediator.Send(new CreateSubscriptionCommand(userId));
+
+            return _responseManager.MapActionResult(result);
         }
     }
 }

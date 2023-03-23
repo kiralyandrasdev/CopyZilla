@@ -46,6 +46,34 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Payment
             return new StripeCheckoutSession(session.Url);
         }
 
+        public async Task<string> CreateSubscriptionCheckoutSessionAsync(string customerId, string priceId)
+        {
+            var service = new SessionService();
+
+            var domain = _configuration.GetSection("Client").GetValue<string>("Url");
+            var successRedirectRoute = _configuration.GetSection("Client").GetValue<string>("CheckoutSuccessRedirectRoute");
+            var cancelRedirectRoute = _configuration.GetSection("Client").GetValue<string>("CheckoutCancelRedirectRoute");
+
+            var options = new SessionCreateOptions
+            {
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                        Price = priceId,
+                        Quantity = 1,
+                    },
+                },
+                Customer = customerId,
+                Mode = "subscription",
+                SuccessUrl = domain + successRedirectRoute,
+                CancelUrl = domain + cancelRedirectRoute,
+            };
+
+            Session session = await service.CreateAsync(options);
+            return session.Url;
+        }
+
         public async Task<Customer> CreateCustomerAsync(CreateUserCommandOptions options)
         {
             var service = new CustomerService();
