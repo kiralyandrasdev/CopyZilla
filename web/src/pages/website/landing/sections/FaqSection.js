@@ -6,7 +6,7 @@ function FaqSection() {
     const faqs = [
         {
             question: 'How does CopyZilla work?',
-            answer: 'CopyZilla Email Assistant is powered by GPT-3, a state-of-the-art language model developed by OpenAI. Our service leverages the power of machine learning and natural language processing to extract context from the email thread and create intelligent responses.'
+            answer: 'CopyZilla is powered by GPT-3, a state-of-the-art language model developed by OpenAI. Our service leverages the power of machine learning and natural language processing to extract context from the email thread and create intelligent responses.'
         },
         {
             question: 'Can you see my emails?',
@@ -14,7 +14,7 @@ function FaqSection() {
         },
         {
             question: 'How do I start?',
-            answer: "To use our service, you will need to create an account on our website and select a subscription plan that suits your needs. Once you have signed up, you can download the CopyZilla Email Assistant chrome extension and install it on your browser. After installation, you can navigate to your Gmail or Outlook account and start using our service to automate your email writing tasks."
+            answer: "To use our service, you will need to create an account on our website and select a subscription plan that suits your needs. Once you have signed up, you can download the CopyZilla Add-in and install it on your Outlook client. After installation, you can navigate to your Gmail or Outlook account and start using our service to automate your email writing tasks."
         }
     ];
 

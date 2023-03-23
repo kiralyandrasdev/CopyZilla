@@ -5,6 +5,7 @@ export enum AppState {
     EmailNotVerified = 'EmailNotVerified',
     SignedIn = 'SignedIn',
     SignedOut = 'SignedOut',
+    PaymentOverdue = 'PaymentOverdue',
 }
 
 interface AppContextValue {

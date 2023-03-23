@@ -111,7 +111,7 @@ export default function PrivateHeader() {
                         Outlook Add-in
                     </a> */}
                     <a className="header__nav__item semi-bold green" href="/user/home">
-                        Chrome extension
+                        Download
                     </a>
                     <a className="header__nav__item semi-bold" href="/user/account">Account</a>
                 </div>

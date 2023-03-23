@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PurchaseSvg from '../../assets/purchase.svg';
-import { AsyncButton, TextButton } from '../../components';
+import { AsyncButton } from '../../components';
 import { openCustomerPortal } from '../../features/payment/actions/paymentActions';
 import './PaymentOverdue.css';
 import './AppPage.css';
