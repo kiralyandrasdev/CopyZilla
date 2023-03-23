@@ -1,0 +1,52 @@
+trigger:
+  branches:
+    include:
+      - main
+    exclude:
+      - feature/*
+      - bugfix/*
+  paths:
+    include:
+      - outlook_addin
+    exclude:
+      - web
+      - backend
+      - internal
+      - web_extensions
+
+resources:
+  - repo: self
+
+variables:
+  dockerRegistryServiceConnection: "dc94c617-0446-4dc2-b472-7f76b1874658"
+  tag: "$(Build.BuildId)"
+
+  # Agent VM image name
+  vmImageName: "ubuntu-latest"
+
+stages:
+  - stage: BuildAndPush
+    displayName: Build and push docker image to ACR
+    jobs:
+      - job: Build
+        displayName: Build and push docker image to ACR
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build docker image
+            inputs:
+              repository: 'addincopyzilla'
+              containerRegistry: $(dockerRegistryServiceConnection)
+              command: 'build'
+              Dockerfile: '$(Build.SourcesDirectory)/outlook_addin/Dockerfile'
+              tags: |
+                $(tag)
+          - task: Docker@2
+            displayName: "Push docker image to ACR"
+            inputs:
+              repository: 'addincopyzilla'
+              containerRegistry: $(dockerRegistryServiceConnection)
+              command: 'push'
+              tags: |
+                $(tag)
