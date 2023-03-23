@@ -22,15 +22,11 @@ export default function PaymentOverduePage() {
             <img src={PurchaseSvg} className="illustration__150" alt="Loading..."></img>
             <h3>Payment overdue</h3>
             <p className='description'>Your last payment failed. Please update your payment information to continue using CopyZilla.</p>
-            {
-                user.product.scope === "individual" ?
-                <AsyncButton
-                    color="var(--green)"
-                    title="Manage payment information"
-                    onClick={() => openCustomerPortal(user.email)}
-                />
-                : "Please contact your administrator to update your payment information."
-            }
+            <AsyncButton
+                color="var(--green)"
+                title="Manage payment information"
+                onClick={() => openCustomerPortal(user.email)}
+            />
         </div>
     );
 }

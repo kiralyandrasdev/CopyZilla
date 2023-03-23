@@ -69,17 +69,12 @@ export default function Profile() {
                     <div className="spacer"></div>
                     <p>{productName()}</p>
                     <p className="description">Renews on: {getDate(user.subscriptionValidUntil)}</p>
-                    {
-                        user.product.scope === "individual" ?
-                            <TextButton
-                                color="var(--green)"
-                                underline={true}
-                                title="Manage subscription and payment details"
-                                onClick={() => openCustomerPortal(user.email)}
-                            /> : <p>
-                                Your subscription is managed by your IT administrator
-                            </p>
-                    }
+                    <TextButton
+                        color="var(--green)"
+                        underline={true}
+                        title="Manage subscription and payment details"
+                        onClick={() => openCustomerPortal(user.email)}
+                    />
                 </div>
                 <div className="page__account__section__3 animation__fadeInUp">
                     <TextButton

@@ -28,7 +28,14 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Webhook.EventHandlers
             if (user == null)
                 throw new Exception("User is null");
 
+            var productId = subscription.Items.Data.FirstOrDefault()?.Price.ProductId;
+
+            if (productId == null)
+                throw new Exception("ProductId is null");
+
             user.SubscriptionStatus = subscription.Status;
+            user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
+            user.ProductId = productId;
 
             await _repository.UpdateAsync(user);
         }

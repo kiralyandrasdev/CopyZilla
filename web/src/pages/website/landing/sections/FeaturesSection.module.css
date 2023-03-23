@@ -4,6 +4,8 @@
     align-items: center;
     justify-content: flex-start;
     row-gap: 60px;
+    max-width: 1500px;
+    margin: auto;
 }
 
 .container h2 {

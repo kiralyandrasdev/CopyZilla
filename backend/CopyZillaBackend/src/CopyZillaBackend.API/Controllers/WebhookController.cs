@@ -18,7 +18,7 @@ namespace CopyZillaBackend.API.Controllers
                 { "checkout.session.completed", WebhookEventType.CheckoutSessionCompleted },
                 // { "invoice.payment_succeeded", WebhookEventType.InvoicePaymentSucceeded },
                 { "customer.subscription.created", WebhookEventType.CustomerSubscriptionCreated },
-                // { "customer.subscription.deleted", WebhookEventType.CustomerSubscriptionDeleted },
+                { "customer.subscription.deleted", WebhookEventType.CustomerSubscriptionDeleted },
                 // { "customer.subscription.trial_will_end", WebhookEventType.CustomerSubscriptionTrialWillEnd },
                 // { "invoice.payment_failed", WebhookEventType.InvoicePaymentFailed },
                 // { "invoice.payment_action_required", WebhookEventType.InvoicePaymentActionRequired },

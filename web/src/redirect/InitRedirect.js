@@ -32,19 +32,14 @@ export default function InitRedirect() {
 
         console.log("subscriptionStatus: " + subscriptionStatus);
 
-        if (!path.includes("/user")) {
+        if (subscriptionStatus !== "active" && subscriptionStatus !== "trialing" && path !== "/user/paymentOverdue") {
             navigate("/user/paymentOverdue");
+            return;
         }
-        
-        return;
 
-        if (subscriptionStatus !== "active" && subscriptionStatus !== "trialing") {
-            if (path !== "/user/paymentOverdue") {
-                navigate("/user/paymentOverdue");
-                return;
-            } else {
-                navigate("/user/home");
-            }
+        if (path === "/user/paymentOverdue") {
+            navigate("/user/home")
+            return;
         }
 
         if (!path.includes("/user")) {
