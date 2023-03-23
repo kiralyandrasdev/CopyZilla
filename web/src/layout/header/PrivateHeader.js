@@ -43,28 +43,6 @@ export default function PrivateHeader() {
         return <header></header>
     }
 
-    const creditCount = () => {
-        if (isFetching || isLoading) {
-            return "Loading..."
-        }
-
-        if (error) {
-            return "Unknown error"
-        }
-
-        if (!userFetchResult.product || userFetchResult.product.dailyCreditLimit == null || user.consumedCredits == null) {
-            return "Unknown credits";
-        }
-        
-        if (userFetchResult.product.scope === "enterprise") {
-            return "Unlimited usage";
-        }
-
-        const remainigCredits = userFetchResult.product.dailyCreditLimit - user.consumedCredits;
-
-        return remainigCredits + " credits"
-    }
-
     const planName = () => {
         if (isFetching || isLoading) {
             return "Loading..."
@@ -104,14 +82,10 @@ export default function PrivateHeader() {
                 <div className="header__private__control">
                     <p className="semi-bold">{planName()}</p>
                     {trialIndicator()}
-                    <p className="creditCount semi-bold">{creditCount()}</p>
                 </div>
                 <div className="header__main">
-                    {/*   <a className="header__nav__item semi-bold green" href="/user/home">
-                        Outlook Add-in
-                    </a> */}
                     <a className="header__nav__item semi-bold green" href="/user/home">
-                        Download
+                        Get Outlook Add-in
                     </a>
                     <a className="header__nav__item semi-bold" href="/user/account">Account</a>
                 </div>
@@ -123,16 +97,9 @@ export default function PrivateHeader() {
                 </div>
                 <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon header__nav__icon--light"></FiMenu>
                 <ul ref={wrapperRef} className={menuClass}>
-                    <li onClick={() => nandleNavigate("/user/account")} className="semi-bold">
-                        <div>
-                            <h6>{creditCount()}</h6>
-                            <p className="description">{user.email}</p>
-                        </div>
-                    </li>
-                    <span className="header__nav__item__divider" />
-                    <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Download extension</li>
+                    <p className="description">{user.email}</p>
+                    <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Get Outlook Add-in</li>
                     <li onClick={() => nandleNavigate("/user/emailTemplates")} className="header__nav__item semi-bold">Email Templates</li>
-                    <li onClick={() => nandleNavigate("/user/creditRefill")} className="header__nav__item semi-bold">Buy credits</li>
                     <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Account</li>
                     <li onClick={() => logout()} className="header__nav__item semi-bold">Sign out</li>
                 </ul>
