@@ -3,20 +3,24 @@ import { FiMenu } from "react-icons/fi";
 import { Outlet, useNavigate } from "react-router-dom";
 import useOutsideAlerter from "../components/utils/useOutsideAlerter";
 import "./PublicLayout.css";
+import Logo128TrFl from "../assets/logo/LOGO_TRANS_FULL_tr_fl_128.png";
 
 export default function PublicLayout() {
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const [showTextLogo, setShowTextLogo] = useState(false);
 
+    useEffect(() => {
         const listenerFunction = () => {
             const header = document.querySelector('.header__public');
 
             if (!header) return;
 
             if (window.pageYOffset > 0) {
+                setShowTextLogo(false);
                 header.classList.add('scrolled', 'dropshadow');
             } else {
+                setShowTextLogo(true);
                 header.classList.remove('scrolled', 'dropshadow');
             }
         }
@@ -74,7 +78,11 @@ export default function PublicLayout() {
     return (
         <div className="layout layout__public">
             <header className="header header__public animation__fadeInDown">
-                <h5 className="white header__nav__row__item" onClick={() => navigate("/")}>copy<span className="green">zilla</span></h5>
+                <div className="header__public__logo" onClick={() => navigate("/")}>
+                    {/* <img src={Logo128} alt="" className="logo" /> */}
+                    <img src={Logo128TrFl} alt="" className="logo_tr" />
+                    <h5 className="white header__nav__row__item">copy<span className="green">zilla</span></h5>
+                </div>
                 <div className="header__nav__row">
                     <a className="header__nav__row__item semi-bold" href="/auth/login">Sign in</a>
                     <a className="header__nav__row__item header__nav__row__item__rounded semi-bold" href="/auth/signup">Sign up</a>

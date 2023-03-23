@@ -11,6 +11,30 @@
     background-color: var(--grey5);
 }
 
+.header__public__logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    cursor: pointer;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+}
+
+.logo_tr {
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s ease-in-out;
+}
+
+.logo_tr:hover {
+    transform: scale(1.1);
+    rotate: 20deg;
+}
+
 .header__public {
     right: 0;
     top: 0;
