@@ -6,6 +6,7 @@ import './PaymentOverdue.css';
 import './AppPage.css';
 import { AuthContext } from '../../features/authentication/authContext';
 import { useGetUserQuery } from '../../features/api/apiSlice';
+import { getAuth } from 'firebase/auth';
 
 export default function PaymentOverduePage() {
     const { firebaseUid } = useContext(AuthContext);
@@ -17,6 +18,11 @@ export default function PaymentOverduePage() {
         isFetching,
     } = useGetUserQuery({ firebaseUid });
 
+    const handleSignOut = () => {
+        const auth = getAuth();
+        auth.signOut();
+    }
+
     return (
         <div className="page page__paymentOverdue">
             <img src={PurchaseSvg} className="illustration__150" alt="Loading..."></img>
@@ -27,6 +33,7 @@ export default function PaymentOverduePage() {
                 title="Manage payment information"
                 onClick={() => openCustomerPortal(user.email)}
             />
+            <p className='page__paymentOverdue__signOut' onClick={() => handleSignOut()}>Sign out</p>
         </div>
     );
 }

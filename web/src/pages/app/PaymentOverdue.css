@@ -8,3 +8,11 @@
     height: 100%;
     text-align: center;
 }
+
+.page__paymentOverdue__signOut {
+    cursor: pointer;
+}
+
+.page__paymentOverdue__signOut:hover {
+    text-decoration: underline;
+}

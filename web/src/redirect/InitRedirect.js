@@ -37,7 +37,7 @@ export default function InitRedirect() {
             return;
         }
 
-        if (path === "/user/paymentOverdue") {
+        if (path === "/user/paymentOverdue" && (subscriptionStatus === "active" || subscriptionStatus === "trialing")) {
             navigate("/user/home")
             return;
         }
