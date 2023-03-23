@@ -1,17 +1,9 @@
 import React from 'react'
 import LoginForm from '../features/authentication/LoginForm';
-import { websiteUrl } from '../config/envConfig';
-import TextButton from '../components/TextButton';
 import styles from './SignedOutView.module.css';
 import AuthSvg from '../assets/auth.svg';
 
 function SignedOutView() {
-
-    const handleNewAccountClick = async () => {
-        const url = `${websiteUrl}/auth/signup`;
-        window.open(url, "_blank");
-    }
-
     return (
         <div className={styles.view}>
             <h6>copyzilla</h6>

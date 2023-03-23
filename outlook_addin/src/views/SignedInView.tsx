@@ -161,6 +161,10 @@ function SignedInView() {
             return '';
         }
 
+        if(user.product.scope === "enterprise") {
+            return "Unlimited usage";
+        }
+
         return `${user.consumedCredits} credits consumed out of ${user.product.dailyCreditLimit}`;
     }
 

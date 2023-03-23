@@ -11,7 +11,8 @@ function PaymentOverdueView() {
     const { user } = useContext(AuthContext);
 
     const handleManagePaymentInformation = () => {
-        window.open(`${stripeCustomerPortalUrl}?prefilled_email=${user?.email}`, '_blank', 'noopener,noreferrer');
+        const url = `${stripeCustomerPortalUrl}?prefilled_email=${user?.email}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     return (
