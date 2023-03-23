@@ -24,6 +24,14 @@
     flex-direction: row;
     justify-content: space-between;
     background-color: var(--grey5);
+    box-shadow: none;
+    /* set initial box-shadow to none */
+    transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    /* add transition for smooth effect */
+}
+
+.header__public.scrolled {
+    background-color: var(--grey4);
 }
 
 .header__nav__row {
