@@ -15,12 +15,18 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
         public ProcessEmailPromptEventValidator(IUserRepository repository, IProductService productService, IServiceUsageHistoryRepository serviceUsageHistoryRepository)
         {
             _repository = repository;
+            _productService = productService;
             _serviceUsageHistoryRepository = serviceUsageHistoryRepository;
 
             RuleFor(e => e)
              .MustAsync(UserExistsAsync)
              .WithErrorCode("404")
              .WithMessage("User does not exist.");
+
+            RuleFor(e => e)
+             .MustAsync(SubscriptionIsTrialingOrActive)
+             .WithMessage(ErrorMessages.PlanNeedsActivation)
+             .WithErrorCode("400");
 
             RuleFor(e => e)
              .MustAsync(HasEnoughCreditsAsync)
@@ -41,7 +47,6 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
              .Must(e => e.Options != null && !string.IsNullOrEmpty(e.Options.Tone))
              .WithMessage(ErrorMessages.ToneMustNotBeNull)
              .WithErrorCode("400");
-            _productService = productService;
         }
 
         private async Task<bool> UserExistsAsync(ProcessEmailPromptEvent e, CancellationToken _)
@@ -54,7 +59,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             var user = await _repository.GetByIdAsync(e.UserId);
 
             if (string.IsNullOrEmpty(user.ProductId))
-                throw new ValidationException("The user has no subscriptions assigned");
+                throw new ValidationException(ErrorMessages.UserHasNoPlanAssigned);
 
             var product = await _productService.GetProductAsync(user.ProductId);
 
@@ -64,6 +69,16 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
                 return false;
 
             return true;
+        }
+
+        private async Task<bool> SubscriptionIsTrialingOrActive(ProcessEmailPromptEvent e, CancellationToken _)
+        {
+            var user = await _repository.GetByIdAsync(e.UserId);
+
+            if (user!.SubscriptionStatus == "trialing" || user.SubscriptionStatus == "active")
+                return true;
+
+            return false;
         }
 
         private bool InstructionsIsNotNullIfEmailIsEmpty(ProcessEmailPromptEvent e)

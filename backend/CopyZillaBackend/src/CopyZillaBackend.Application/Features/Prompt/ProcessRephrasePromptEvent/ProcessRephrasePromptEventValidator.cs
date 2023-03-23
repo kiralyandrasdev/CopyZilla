@@ -24,6 +24,11 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEven
             .WithMessage(ErrorMessages.UserNotFound);
 
             RuleFor(e => e)
+              .MustAsync(SubscriptionIsTrialingOrActive)
+              .WithMessage(ErrorMessages.PlanNeedsActivation)
+              .WithErrorCode("400");
+
+            RuleFor(e => e)
               .MustAsync(HasEnoughCreditsAsync)
               .WithMessage(ErrorMessages.UsageLimitReached)
               .WithErrorCode("400");
@@ -49,7 +54,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEven
             var user = await _repository.GetByIdAsync(e.UserId);
 
             if (string.IsNullOrEmpty(user.ProductId))
-                throw new ValidationException("The user has no subscriptions assigned");
+                throw new ValidationException(ErrorMessages.UserHasNoPlanAssigned);
 
             var product = await _productService.GetProductAsync(user.ProductId);
 
@@ -59,6 +64,16 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEven
                 return false;
 
             return true;
+        }
+
+        private async Task<bool> SubscriptionIsTrialingOrActive(ProcessRephrasePromptEvent e, CancellationToken _)
+        {
+            var user = await _repository.GetByIdAsync(e.UserId);
+
+            if (user!.SubscriptionStatus == "trialing" || user.SubscriptionStatus == "active")
+                return true;
+
+            return false;
         }
     }
 }

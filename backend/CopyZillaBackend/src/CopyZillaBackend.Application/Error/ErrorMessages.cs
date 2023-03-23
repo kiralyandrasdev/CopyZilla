@@ -4,7 +4,7 @@ namespace CopyZillaBackend.Application.Error
     {
         public const string UsageLimitReached = "Unfortunately, you have run out of credits." +
              " If you would like to continue using this feature," +
-             " wait for your credits to replenish or upgrade your CopyZilla plan";
+             " wait for your credits to replenish or upgrade your CopyZilla plan.";
         public const string InstructionsMustNotBeNull = "Instructions must not be null if previous email is not provided";
         public const string ObjectiveMustNotBeNull = "Objective must not be null";
         public const string ObjectiveMustBeNull = "Objective must be null if previous email is not provided";
@@ -24,5 +24,7 @@ namespace CopyZillaBackend.Application.Error
         public const string TemplateContentTooLong = "Template content must not be longer than 10000 characters";
         public const string TemplateLimitReached = "You have reached the limit of maximum 500 templates. " +
             "Please delete some of them to add new ones.";
+        public const string UserHasNoPlanAssigned = "The user has no CopyZilla plan assigned.";
+        public const string PlanNeedsActivation = "Please reactivate your CopyZilla plan.";
     }
 }
