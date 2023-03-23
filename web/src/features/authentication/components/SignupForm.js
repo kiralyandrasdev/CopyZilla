@@ -157,14 +157,6 @@ export default function SignupForm() {
                     />
                 </div>
             </div>
-            {/* <div className="authForm__agreeToTerms">
-                <Checkbox
-                    checked={agreeToTerms}
-                    onChange={() => setAgreeToTerms(!agreeToTerms)}
-                    error={termsError}
-                />
-                <p>I agree to the <a href="/termsOfService" target="_blank">terms of service</a></p>
-            </div> */}
             <div className="authForm__primaryActions">
                 <AsyncButton loading={loading} title="Create account" onClick={() => handleSignup()}></AsyncButton>
             </div>
@@ -173,9 +165,6 @@ export default function SignupForm() {
                 <p className="description">Already have an account?</p>
                 <TextButton color="white" title="Sign in" onClick={() => navigate("/auth/login")} />
             </div>
-            <p className="description authCaption">
-                By creating an account, you agree to our <a className="authCaption" href="/termsOfService" target="_blank">Terms of Service</a> and <a className="authCaption" href="/privacyPolicy" target="_blank">Privacy Policy</a>.
-            </p>
         </div>
     );
 }

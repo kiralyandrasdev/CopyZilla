@@ -10,7 +10,7 @@ function DownloadButton({color}) {
     return (
         <div className={styles.container} style={style}>
             <img src={OutlookPng} alt="Outlook" />
-            <h6>Download for Outlook Desktop</h6>
+            <h6>Download for Outlook</h6>
         </div>
     );
 }

@@ -29,7 +29,7 @@ function PricingSection() {
                 "Automatic language detection"
             ],
             buttonTitle: "Get in touch",
-            buttonLink: "/auth/signup",
+            buttonLink: "/contact",
             isPopular: false,
             isCustom: true,
         },

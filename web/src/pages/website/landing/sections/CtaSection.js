@@ -2,8 +2,15 @@ import React from 'react'
 import styles from './CtaSection.module.css'
 import SquareScreenshot from '../../../../assets/square-screenshot.png';
 import { BsCheckCircleFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 function CtaSection() {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate("/auth/signup");
+    }
+
     return (
         <div className={styles.sectionContainer}>
             <div className={styles.container}>
@@ -27,7 +34,7 @@ function CtaSection() {
                             <h6>Cancel anytime</h6>
                         </div>
                     </div>
-                    <div className={styles.button}>
+                    <div className={styles.button} onClick={() => handleClick()}>
                         <h6>Get started for free</h6>
                     </div>
                 </div>

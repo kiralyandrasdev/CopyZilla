@@ -58,15 +58,15 @@ export default function PublicLayout() {
                     <a className="header__nav__row__item semi-bold" href="/auth/login">Sign in</a>
                     <a className="header__nav__row__item header__nav__row__item__rounded semi-bold" href="/auth/signup">Sign up</a>
                     <a className="header__nav__row__item semi-bold" onClick={() => handleClickPricing()}>Pricing</a>
-                    <a className="header__nav__row__item semi-bold" href="/aboutUs">About Us</a>
+                    <a className="header__nav__row__item semi-bold" href="/contact">Contact Us</a>
                 </div>
                 <div className="header__portrait">
                     <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon"></FiMenu>
                     <ul ref={wrapperRef} className={menuClass}>
+                        <li onClick={() => nandleNavigate("/auth/login")} className="header__nav__item semi-bold">Sign in</li>
                         <li onClick={() => nandleNavigate("/auth/signup")} className="header__nav__item semi-bold green">Sign up</li>
-                        <li onClick={() => nandleNavigate("/auth/login")} className="header__nav__item semi-bold green">Sign in</li>
-                        <li onClick={() => nandleNavigate("/pricing")} className="header__nav__item semi-bold">Pricing</li>
-                        <li onClick={() => nandleNavigate("/aboutUs")} className="header__nav__item semi-bold">About Us</li>
+                        <li onClick={() => handleClickPricing()} className="header__nav__item semi-bold">Pricing</li>
+                        <li onClick={() => nandleNavigate("/contact")} className="header__nav__item semi-bold">Contact Us</li>
                     </ul>
                 </div>
             </header>
@@ -74,10 +74,17 @@ export default function PublicLayout() {
                 <Outlet></Outlet>
             </main>
             <footer className="footer footer__public">
-                <p>© 2023 CopyZilla</p>
-                <p>info@copyzilla.hu</p>
-                <a href="/termsOfService">Terms of service</a>
-                <a href="/privacyPolicy">Privacy policy</a>
+                <div className="footer__content">
+                    <div className="footer__info">
+                        <p>© 2023 CopyZilla</p>
+                        <p>info@copyzilla.hu</p>
+                    </div>
+                    <div className="footer__nav">
+                        <a href="/termsOfService">Terms of service</a>
+                        <a href="/privacyPolicy">Privacy policy</a>
+                        <a href="/about">About Us</a>
+                    </div>
+                </div>
             </footer>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './HeroSection.module.css'
 import MailLottie from '../../../../assets/lotties/mail_lottie.json';
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 function HeroSection() {
     return (

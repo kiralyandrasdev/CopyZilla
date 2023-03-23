@@ -17,7 +17,6 @@ import SignUp from './pages/auth/SignUp';
 import VerifyEmailPage from './pages/auth/VerifyEmail';
 import CheckoutCanceled from './pages/checkout/CheckoutCancelled';
 import CheckoutCompleted from './pages/checkout/CheckoutCompleted';
-import AboutUsPage from './pages/website/AboutUs';
 import PrivacyPolicyPage from './pages/website/PrivacyPolicy';
 import TermsOfServicePage from './pages/website/TermsOfService';
 import AuthRedirect from './redirect/AuthRedirect';
@@ -28,8 +27,10 @@ import ReactGA from 'react-ga4';
 import { gaTrackingId } from './config/envConfig';
 import EmailTemplatesPage from './pages/app/templates/EmailTemplates';
 import LandingPage from './pages/website/landing/Landing';
+import ContactPage from './pages/website/contact/Contact';
+import AboutPage from './pages/website/about/About';
 
-if(gaTrackingId != "DISABLED") {
+if (gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
 }
 
@@ -65,8 +66,8 @@ function App() {
       </Route>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/pricing" element={<PricingPage />} /> */}
-        <Route path="/aboutUs" element={<AboutUsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
       </Route>
