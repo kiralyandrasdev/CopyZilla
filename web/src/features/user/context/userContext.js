@@ -1,7 +1,6 @@
 import React, { createContext, useState } from "react";
 
 export const UserContext = createContext({
-    creditCount: 0,
 });
 
 export function UserContextProvider({ children }) {

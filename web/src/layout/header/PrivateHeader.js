@@ -55,6 +55,10 @@ export default function PrivateHeader() {
         if (!userFetchResult.product || userFetchResult.product.dailyCreditLimit == null || user.consumedCredits == null) {
             return "Unknown credits";
         }
+        
+        if (userFetchResult.product.scope === "enterprise") {
+            return "Unlimited usage";
+        }
 
         const remainigCredits = userFetchResult.product.dailyCreditLimit - user.consumedCredits;
 

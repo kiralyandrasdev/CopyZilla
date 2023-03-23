@@ -28,11 +28,6 @@ namespace CopyZillaBackend.Infrastructure.StripeServices.Webhook.EventHandlers
             if (user == null)
                 throw new Exception("User is null");
 
-            if (subscription.Status != "active")
-                user.SubscriptionValidUntil = DateTime.UtcNow.AddDays(-1);
-            else
-                user.SubscriptionValidUntil = subscription.CurrentPeriodEnd;
-
             user.SubscriptionStatus = subscription.Status;
 
             await _repository.UpdateAsync(user);

@@ -32,6 +32,12 @@ export default function InitRedirect() {
 
         console.log("subscriptionStatus: " + subscriptionStatus);
 
+        if (!path.includes("/user")) {
+            navigate("/user/paymentOverdue");
+        }
+        
+        return;
+
         if (subscriptionStatus !== "active" && subscriptionStatus !== "trialing") {
             if (path !== "/user/paymentOverdue") {
                 navigate("/user/paymentOverdue");
