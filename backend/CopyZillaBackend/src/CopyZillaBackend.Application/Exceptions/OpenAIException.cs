@@ -4,7 +4,7 @@ namespace CopyZillaBackend.Application.Exceptions
 {
     public class OpenAIException : Exception
     {
-        public OpenAIException(string message) : base("Text generation error occured.")
+        public OpenAIException(string message) : base(message) 
         {
             Trace.TraceError(message);
         }

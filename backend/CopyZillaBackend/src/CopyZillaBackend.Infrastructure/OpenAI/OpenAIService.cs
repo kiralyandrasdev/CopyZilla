@@ -39,7 +39,9 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new OpenAIException(responseData);
+                var error = JsonConvert.DeserializeObject<OpenAIError>(responseData);
+
+                throw new OpenAIException(error.Error.Message);
             }
 
             var responseMap = JsonConvert.DeserializeObject<OpenAITextCompletionResponse>(responseData);
