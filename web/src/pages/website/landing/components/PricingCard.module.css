@@ -112,3 +112,7 @@
     column-gap: 10px;
     width: 100%;
 }
+
+.featureItem p {
+    text-align: left;
+}
