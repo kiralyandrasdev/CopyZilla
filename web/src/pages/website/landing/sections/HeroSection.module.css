@@ -45,7 +45,7 @@
 
 @media screen and (max-width: 768px) {
     .container {
-        padding: 60px 30px;
+        padding: 30px;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
         row-gap: 60px;
