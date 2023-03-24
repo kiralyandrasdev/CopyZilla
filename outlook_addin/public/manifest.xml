@@ -10,8 +10,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="CopyZilla (local)" />
   <Description DefaultValue="CopyZilla for Outlook" />
-  <IconUrl DefaultValue="https://addin.copyzilla.hu/logo256.png" />
-  <HighResolutionIconUrl DefaultValue="https://addin.copyzilla.hu/logo256.png" />
+  <IconUrl DefaultValue="https://addin.copyzilla.hu/logo64.png" />
+  <HighResolutionIconUrl DefaultValue="https://addin.copyzilla.hu/logo128.png" />
   <SupportUrl DefaultValue="https://copyzilla.hu" />
   <Hosts>
     <Host Name="Mailbox" />
@@ -72,9 +72,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo256.png" />
-        <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo256.png" />
-        <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo256.png" />
+        <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
+        <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.hu" />
@@ -146,9 +146,9 @@
       </Hosts>
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo256.png" />
-          <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo256.png" />
-          <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo256.png" />
+          <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
+          <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
+          <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
         </bt:Images>
         <bt:Urls>
           <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.hu" />
