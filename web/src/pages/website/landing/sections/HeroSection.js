@@ -14,7 +14,7 @@ function HeroSection() {
                     Let us write your emails for you, so you can focus on what you do best - work that matters
                 </h5>
             </div>
-            <div className={`${styles.side}`}>
+            <div className={`${styles.side} ${styles.sideRight}`}>
                 <Player
                     className={styles.lottie}
                     autoplay
