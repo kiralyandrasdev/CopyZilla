@@ -29,6 +29,7 @@ import EmailTemplatesPage from './pages/app/templates/EmailTemplates';
 import LandingPage from './pages/website/landing/Landing';
 import ContactPage from './pages/website/contact/Contact';
 import AboutPage from './pages/website/about/About';
+import InstallGuidePage from './pages/website/install_guide/InstallGuide';
 
 if (gaTrackingId != "DISABLED") {
   ReactGA.initialize(gaTrackingId);
@@ -70,6 +71,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/termsOfService" element={<TermsOfServicePage />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
+        <Route path="/install" element={<InstallGuidePage />} />
       </Route>
     </Routes>
   );

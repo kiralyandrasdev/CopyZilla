@@ -38,7 +38,7 @@ function AboutPage() {
             <div className={styles.aboutUs}>
                 <h5>About Us</h5>
                 <p>
-                    CopyZilla is an innovative Outlook add-in that utilizes cutting-edge OpenAI GPT-3 technology to help users with email writing. We recognized the fact that writing emails is a time-consuming task that can be particularly challenging for individuals who need to communicate in a language other than their native language. In addition, composing emails can be difficult for people who struggle with language, grammar, or spelling, which can lead to poorly written or confusing messages.
+                    CopyZilla is an innovative Outlook add-in that utilizes cutting-edge OpenAI GPT-3.5 technology to help users with email writing. We recognized the fact that writing emails is a time-consuming task that can be particularly challenging for individuals who need to communicate in a language other than their native language. In addition, composing emails can be difficult for people who struggle with language, grammar, or spelling, which can lead to poorly written or confusing messages.
                 </p>
                 <p>
                     To address these issues, we created CopyZilla to provide users with a more efficient and effective way to write emails. By leveraging the power of GPT-3, CopyZilla can craft new emails or reply to existing ones in a way that sounds natural and conversational. This feature saves users time and allows them to focus on more pressing tasks.
@@ -51,7 +51,7 @@ function AboutPage() {
                 </p>
             </div>
             <p className='description'>
-                Regarding any questions or inquiries please contact us at <span style={{ textDecoration: "underline" }}>info@copyzilla.hu</span>
+                Regarding any questions or inquiries please contact us at <span style={{ textDecoration: "underline" }}>info@copyzilla.hu</span>.
             </p>
         </div>
     );

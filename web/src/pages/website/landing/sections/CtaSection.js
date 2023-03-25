@@ -22,7 +22,7 @@ function CtaSection() {
                         End writer's block today
                     </h2>
                     <p>
-                        It’s like having access to a team of email experts writing powerful emails for you in 1-click.
+                        It’s like having access to a team of email experts writing customized emails for you in 1-click.
                     </p>
                     <div className={styles.benefitRow}>
                         <div className={styles.benefit}>

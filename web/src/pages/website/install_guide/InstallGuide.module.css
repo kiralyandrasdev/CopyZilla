@@ -1,0 +1,30 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 60px;
+}
+
+.heading {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 10px;
+}
+
+.heading h6 {
+    color: var(--grey2)
+}
+
+.steps {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    row-gap: 30px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
