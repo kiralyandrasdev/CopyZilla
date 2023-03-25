@@ -2,16 +2,13 @@ import React from 'react'
 import PlaceHolderSvg from "../../assets/empty_editor.svg";
 import './Home.css';
 import { AsyncButton } from '../../components';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
-    const prereqText = "To get started, download CopyZilla from the Chrome Web Store"
-    const clientSupportText = "Currently supported on Gmail and Outlook web clients"
-    
-    const chromeDownloadUrl = "https://chrome.google.com/webstore/detail/copyzilla-email-assistant/gakgnepokfbooliogomceelndhjgahkf";
+    const prereqText = "To get started, install the CopyZilla Outlook add-in by following the installation guide."
 
-    const handleDownload = (url) => {
-        window.open(url, "_blank");
-    }
+    const navigate = useNavigate();
+    
     return (
         <div className="page page__home page__centerContent">
             <div className="page__home__content">
@@ -19,10 +16,9 @@ function HomePage() {
                 <h5>Welcome aboard!</h5>
                 <p className='description'>{prereqText}</p>
                 <AsyncButton
-                    title="Download for Chrome"
-                    onClick={() => handleDownload(chromeDownloadUrl)}
+                    title="Add-in installation guide"
+                    onClick={() => navigate("/install")}
                 />
-                <p className='description'>{clientSupportText}</p>
             </div>
         </div >
     );
