@@ -25,6 +25,10 @@
     column-gap: 20px;
 }
 
+.header__main h5 {
+    cursor: pointer;
+}
+
 .header__nav__item__trial {
     background-color: var(--green);
     border-radius: 4px;

@@ -7,6 +7,7 @@ import { AuthContext } from "../../features/authentication/authContext";
 import { UserContext } from "../../features/user/context/userContext";
 import './PrivateHeader.css';
 import { logout } from "../../features/authentication/actions/authActions";
+import Logo128TrFl from "../../assets/logo/LOGO_TRANS_FULL_tr_fl_128.png";
 
 export default function PrivateHeader() {
     const { firebaseUid } = useContext(AuthContext);
@@ -21,7 +22,7 @@ export default function PrivateHeader() {
     useOutsideAlerter(wrapperRef, (() => handleMenuActive(false)));
 
     const navigate = useNavigate();
-    const nandleNavigate = (path) => {
+    const handleNavigate = (path) => {
         navigate(path);
         setMenuActive(false);
     }
@@ -84,23 +85,24 @@ export default function PrivateHeader() {
                     {trialIndicator()}
                 </div>
                 <div className="header__main">
-                    <a className="header__nav__item semi-bold green" href="/user/home">
+                    <a className="header__nav__item semi-bold green" href="/install">
                         Get Outlook Add-in
                     </a>
                     <a className="header__nav__item semi-bold" href="/user/account">Account</a>
                 </div>
             </header>
             <header className="header header__private header__portrait animation__fadeInDown">
-                <FiPlus onClick={() => nandleNavigate("/user/home")} className="header__nav__icon nav__icon header__nav__icon--light"></FiPlus>
-                <div className="header__main">
-                    <h5 onClick={() => nandleNavigate("/")}>copyzilla</h5>
+            <div className="header__public__logo" onClick={() => navigate("/")}>
+                    {/* <img src={Logo128} alt="" className="logo" /> */}
+                    <img src={Logo128TrFl} alt="" className="logo_tr" />
+                    <h5 className="white header__nav__row__item">copy<span className="green">zilla</span></h5>
                 </div>
                 <FiMenu onClick={() => handleMenuActive(!menuActive)} className="header__nav__icon nav__icon header__nav__icon--light"></FiMenu>
                 <ul ref={wrapperRef} className={menuClass}>
                     <p className="description">{user.email}</p>
-                    <li onClick={() => nandleNavigate("/user/home")} className="header__nav__item semi-bold green">Get Outlook Add-in</li>
-                    <li onClick={() => nandleNavigate("/user/emailTemplates")} className="header__nav__item semi-bold">Email Templates</li>
-                    <li onClick={() => nandleNavigate("/user/account")} className="header__nav__item semi-bold">Account</li>
+                    <li onClick={() => handleNavigate("/install")} className="header__nav__item semi-bold green">Get Outlook Add-in</li>
+                    <li onClick={() => handleNavigate("/user/emailTemplates")} className="header__nav__item semi-bold">Email Templates</li>
+                    <li onClick={() => handleNavigate("/user/account")} className="header__nav__item semi-bold">Account</li>
                     <li onClick={() => logout()} className="header__nav__item semi-bold">Sign out</li>
                 </ul>
             </header>
