@@ -44,7 +44,7 @@ function PricingSection() {
                 Plans that start free and fit to your needs
             </h2>
             <h6>
-                With our simple plans, supercharge your content writing to helps your business. Let’s make great content together
+                With our simple plans, supercharge your email writing to boost your productivity.
             </h6>
             <div className={styles.pricingCards}>
                 {pricingCards.map((pricingCard, index) => (
