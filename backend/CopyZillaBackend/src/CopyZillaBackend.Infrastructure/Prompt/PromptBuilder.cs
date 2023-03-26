@@ -6,7 +6,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
 {
     public class PromptBuilder : IPromptBuilder
     {
-        public string Build(ProcessEmailPromptEventOptions options)
+        public string BuildEmailPrompt(string language, ProcessEmailPromptEventOptions options)
         {
             if (string.IsNullOrEmpty(options.Email))
             {
@@ -36,12 +36,12 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             replyPrompt += " You must make sure the response email is short and precise." +
                 " You must not repeat texts that was written in the received email." +
                 " You must start the email with a greetings and close the email with a goodbye." +
-                " You must answer in the same language the email was written in.";
+               $" You must answer in {language}.";
 
             return replyPrompt;
         }
 
-        public string Build(ProcessRephrasePromptEventOptions options)
+        public string BuildRephrasePrompt(ProcessRephrasePromptEventOptions options)
         {
             if (options.Objective == "reword")
             {
@@ -50,6 +50,13 @@ namespace CopyZillaBackend.Infrastructure.Prompt
 
             return $"Rephrase the following text: '{options.Text}' so it is {options.Objective}." +
                 $" You must answer in the same language the text was written in.";
+        }
+
+        public string BuildGetLanguagePrompt(string email)
+        {
+            return $"What language was the following text written in: '{email}'?" +
+                   " Ignore the From, Sent, To, CC and Subject parts. " +
+                   " Answer with one word by naming the language.";
         }
     }
 }

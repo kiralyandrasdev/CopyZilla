@@ -37,7 +37,7 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEven
             if (!result.Success)
                 return result;
 
-            string prompt = _promptBuilder.Build(request.Options);
+            string prompt = _promptBuilder.BuildRephrasePrompt(request.Options);
             result.Value = await _openAIService.ProcessPrompt(prompt);
 
             await _serviceUsageHistoryRepository.AddServiceUsageHistoryAsync(new Domain.Entities.ServiceUsageHistory()

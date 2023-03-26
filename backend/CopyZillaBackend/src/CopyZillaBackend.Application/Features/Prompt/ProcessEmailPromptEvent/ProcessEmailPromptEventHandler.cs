@@ -38,7 +38,10 @@ namespace CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent
             // If validation error occurs stop event and return response
             if (!result.Success) return result;
 
-            string prompt = _promptBuilder.Build(request.Options);
+            string languagePrompt = _promptBuilder.BuildGetLanguagePrompt(request.Options.Email);
+            string language = await _openAIService.ProcessPrompt(languagePrompt);
+
+            string prompt = _promptBuilder.BuildEmailPrompt(language, request.Options);
             result.Value = await _openAIService.ProcessPrompt(prompt);
 
             await _serviceUsageHistoryRepository.AddServiceUsageHistoryAsync(new Domain.Entities.ServiceUsageHistory()

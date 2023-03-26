@@ -12,18 +12,19 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
     public class OpenAIService : IOpenAIService
     {
         private readonly IConfiguration _configuration;
+        private readonly HttpClient _client;
 
         public OpenAIService(IConfiguration configuration)
         {
             _configuration = configuration;
+
+            _client = new HttpClient();
+            var apiKey = _configuration.GetSection("OpenAI").GetValue<string>("ApiKey");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
         }
 
         public async Task<string> ProcessPrompt(string prompt)
         {
-            var client = new HttpClient();
-            var apiKey = _configuration.GetSection("OpenAI").GetValue<string>("ApiKey");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-
             // remove safelinks.protection.outlook.com links from prompt
             string pattern = @"<https?:\/\/[^\s]*safelinks\.protection\.outlook\.com\/\?url=([^&]+)&[^>]+>";
             prompt = Regex.Replace(prompt, pattern, "");
@@ -39,7 +40,7 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
             var stringPayload = JsonConvert.SerializeObject(payload);
             var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("https://api.openai.com/v1/completions", httpContent);
+            var response = await _client.PostAsync("https://api.openai.com/v1/completions", httpContent);
             var responseData = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
