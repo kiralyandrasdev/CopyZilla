@@ -113,19 +113,30 @@ function SignedInView() {
         try {
             const item = Office.context.mailbox?.item;
 
-            item?.body?.getAsync('text', (result) => {
-                if (result.status === Office.AsyncResultStatus.Succeeded) {
-                    if (result.value && result.value !== '\r') {
-                        setComposeType(ComposeType.Reply);
-                        setEmail(result.value);
-                    } else {
-                        setComposeType(ComposeType.New);
-                    }
+            if (!item) {
+                setError('Failed to get email body');
+                setInitializing(false);
+                return;
+            }
+
+            item.getComposeTypeAsync(function (result) {
+                if(result.value.composeType === "newMail") {
+                    setComposeType(ComposeType.New);
                 } else {
-                    setError('Failed to get email body');
+                    setComposeType(ComposeType.Reply);
                 }
 
-                setInitializing(false);
+                item?.body?.getAsync('text', (result) => {
+                    if (result.status === Office.AsyncResultStatus.Succeeded) {
+                        if (result.value && result.value !== '\r') {
+                            setEmail(result.value);
+                        }
+                    } else {
+                        setError('Failed to get email body');
+                    }
+
+                    setInitializing(false);
+                });
             });
         } catch (error) {
             setError(JSON.stringify(error));
@@ -161,11 +172,13 @@ function SignedInView() {
             return '';
         }
 
-        if(user.product.scope === "enterprise") {
+        if (user.product.scope === "enterprise") {
             return "Unlimited usage";
         }
 
-        return `${user.consumedCredits} credits consumed out of ${user.product.dailyCreditLimit}`;
+        let creditsLeft = user.product.dailyCreditLimit - user.consumedCredits;
+
+        return `${creditsLeft} credits left for today`;
     }
 
     const header = () => {
