@@ -8,8 +8,8 @@
   <Version>1.0.0.0</Version>
   <ProviderName>CopyZilla</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="CopyZilla (local)" />
-  <Description DefaultValue="CopyZilla for Outlook" />
+  <DisplayName DefaultValue="CopyZilla (development)" />
+  <Description DefaultValue="CopyZilla for Outlook"/>
   <IconUrl DefaultValue="https://localhost:3000/logo256.png" />
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/logo256.png" />
   <SupportUrl DefaultValue="https://copyzilla.hu" />
@@ -155,7 +155,7 @@
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="GroupLabel" DefaultValue="CopyZilla" />
-          <bt:String id="TaskpaneButton.Label" DefaultValue="CopyZilla (local)" />
+          <bt:String id="TaskpaneButton.Label" DefaultValue="CopyZilla (development)" />
         </bt:ShortStrings>
         <bt:LongStrings>
           <bt:String id="TaskpaneButton.Tooltip"
