@@ -10,16 +10,17 @@ namespace CopyZillaBackend.Infrastructure.Prompt
         {
             if (string.IsNullOrEmpty(options.Email))
             {
-                return $"I must craft an email and I need immediate help." +
+                return "I must craft an email and I need immediate help." +
                     $" You must compose a polite email that contains the following: '{options.Instructions}'." +
-                    $" You must write the email in the language this was written in." +
-                    $" I don't need the subject of the email." +
+                    " You must write the email in the language this was written in." +
+                    " I don't need the subject of the email." +
                     $" You must make sure the tone of the email is {options.Tone}." +
-                    $" You must make sure the email is short and precise." +
-                    $" You must start the email with a greetings and close the email with a goodbye.";
+                    " You must make sure the email is short and precise." +
+                    " You must start the email with a greetings and close the email with a goodbye." + 
+                    " You must make sure the email is well formatted.";
             }
 
-            string replyPrompt = $"I received an email and I need immediate help crafting a polite response." +
+            string replyPrompt = "I received an email and I need immediate help crafting a polite response." +
                 $" You must make sure the response email gives a feeling that I am saying {options.Objective}." +
                 $" The contents of the email that I received are: '{options.Email}'.";
 
@@ -36,7 +37,8 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             replyPrompt += " You must make sure the response email is short and precise." +
                 " You must not repeat texts that was written in the received email." +
                 " You must start the email with a greetings and close the email with a goodbye." +
-               $" You must answer in {language}.";
+                " You must make sure the email is well formatted." +
+                $" You must answer in {language}";
 
             return replyPrompt;
         }

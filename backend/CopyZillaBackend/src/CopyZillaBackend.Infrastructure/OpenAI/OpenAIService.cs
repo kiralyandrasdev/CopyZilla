@@ -29,18 +29,30 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
             string pattern = @"<https?:\/\/[^\s]*safelinks\.protection\.outlook\.com\/\?url=([^&]+)&[^>]+>";
             prompt = Regex.Replace(prompt, pattern, "");
 
-            var payload = new
+            var request = new OpenAIRequest
             {
-                model = "text-davinci-003",
-                prompt = prompt,
-                temperature = 0.4,
-                max_tokens = 1000,
+                Model = "gpt-3.5-turbo",
+                Temperature = 0.4,
+                MaxTokens = 1000,
+                Messages = new[]
+                {
+                    new OpenAIRequestMessage
+                    { 
+                        Role = "system",
+                        Content = "You are an email assistant.",
+                    },
+                    new OpenAIRequestMessage
+                    {
+                        Role = "user",
+                        Content = prompt,
+                    }
+                }
             };
 
-            var stringPayload = JsonConvert.SerializeObject(payload);
+            var stringPayload = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync("https://api.openai.com/v1/completions", httpContent);
+            var response = await _client.PostAsync("https://api.openai.com/v1/chat/completions", httpContent);
             var responseData = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
@@ -50,11 +62,11 @@ namespace CopyZillaBackend.Infrastructure.OpenAI
                 throw new OpenAIException(error.Error.Message);
             }
 
-            var responseMap = JsonConvert.DeserializeObject<OpenAITextCompletionResponse>(responseData);
+            var responseMap = JsonConvert.DeserializeObject<OpenAIResponse>(responseData);
 
-            var text = responseMap.choices.First().text;
+            var text = responseMap.Choices.First().Message.Content;
 
-            return text.Substring(2, text.Length - 2);
+            return text;
         }
     }
 }
