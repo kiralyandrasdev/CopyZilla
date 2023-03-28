@@ -70,6 +70,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             if (options.Objective == "reword")
             {
                return $"Rephrase the following text: '{options.Text}'." +
+                      " I am not in need of an email template, so you must not start your answer with a greetings and must not end it with a goodbye." +
                       " You must not use apostrophes in the response." +
                       $" The response must start with {letterCase} character." +
                       $" {punctuationMarkPrompt}" +
@@ -78,6 +79,7 @@ namespace CopyZillaBackend.Infrastructure.Prompt
             }
 
             return $"Rephrase the following text: '{options.Text}' so it is {options.Objective}." +
+                " I am not in need of an email template, so you must not start your answer with a greetings and must not end it with a goodbye." +
                 " You must not use apostrophes in the response." +
                 $" The response must start with {letterCase} character." +
                 $" {punctuationMarkPrompt}" +
