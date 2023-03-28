@@ -45,14 +45,44 @@ namespace CopyZillaBackend.Infrastructure.Prompt
 
         public string BuildRephrasePrompt(ProcessRephrasePromptEventOptions options)
         {
+            string letterCase = options.Text.FirstOrDefault() == options.Text.FirstOrDefault().ToString().ToLower().FirstOrDefault()
+                                       ? "lowercase" : "uppercase";
+
+            string endingCharacter = options.Text.LastOrDefault().ToString();
+
+            string punctuationMarkPrompt;
+            switch (endingCharacter)
+            {
+                case ".":
+                    punctuationMarkPrompt = " You must end the response with a period.";
+                    break;
+                case "?":
+                    punctuationMarkPrompt = " You must end the response with a question mark.";
+                    break;
+                case "!":
+                    punctuationMarkPrompt = " You must end the response with an exclamation mark.";
+                    break;
+                default:
+                    punctuationMarkPrompt = " You must not end the response with a punctuation mark.";
+                    break;
+            }
+
             if (options.Objective == "reword")
             {
-                return $"Rephrase the following text: '{options.Text}'.";
+               return $"Rephrase the following text: '{options.Text}'." +
+                      " You must not use apostrophes in the response." +
+                      $" The response must start with {letterCase} character." +
+                      $" {punctuationMarkPrompt}" +
+                      $" You must answer in the same language the text was written in." +
+                      " Return the reworded text only.";
             }
 
             return $"Rephrase the following text: '{options.Text}' so it is {options.Objective}." +
                 " You must not use apostrophes in the response." +
-                $" You must answer in the same language the text was written in.";
+                $" The response must start with {letterCase} character." +
+                $" {punctuationMarkPrompt}" +
+                $" You must answer in the same language the text was written in." +
+                " Return the reworded text only.";
         }
 
         public string BuildGetLanguagePrompt(string email)
