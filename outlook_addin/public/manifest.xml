@@ -9,7 +9,7 @@
   <ProviderName>CopyZilla</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="CopyZilla" />
-  <Description DefaultValue="CopyZilla for Outlook" />
+  <Description DefaultValue="Compose or format your email with CopyZilla that uses the powerful GPT-3.5 AI model to deliver polished and convincing messages." />
   <IconUrl DefaultValue="https://addin.copyzilla.hu/logo64.png" />
   <HighResolutionIconUrl DefaultValue="https://addin.copyzilla.hu/logo128.png" />
   <SupportUrl DefaultValue="https://copyzilla.hu" />
