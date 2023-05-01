@@ -32,7 +32,6 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 
 builder.Services.AddTransient<AuthorizationMiddleware>();
-builder.Services.AddTransient<InternalAuthorizationMiddleware>();
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
 builder.Services.AddTransient<StripeWebhookMiddleware>();
 
@@ -62,8 +61,8 @@ app.UseCors("localhost");
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
-app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == false &&
-    context.Request.Path.Value?.Contains("/internal") == false, app =>
+app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == false,
+    app =>
 {
     app.UseMiddleware<AuthorizationMiddleware>();
 });
@@ -71,11 +70,6 @@ app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") 
 app.UseWhen(context => context.Request.Path.Value?.Contains("/webhook/payment") == true, app =>
 {
     app.UseMiddleware<StripeWebhookMiddleware>();
-});
-
-app.UseWhen(context => context.Request.Path.Value?.Contains("/internal") == true, app =>
-{
-    app.UseMiddleware<InternalAuthorizationMiddleware>();
 });
 
 app.MapApiEndpoints();

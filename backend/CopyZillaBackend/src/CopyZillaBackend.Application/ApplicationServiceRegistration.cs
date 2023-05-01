@@ -10,7 +10,7 @@ namespace CopyZillaBackend.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Transient);
             services.AddMediatR(c =>
                 c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
                     .AddOpenBehavior(typeof(LoggingBehavior<,>))

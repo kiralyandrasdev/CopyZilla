@@ -33,8 +33,15 @@ namespace CopyZillaBackend.API.Middlewares
                 throw new AuthException("Authorization header is missing.");
 
             // Check if the token is valid.
+            if (context.Request.Path.Value?.Contains("/internal") == true)
+            {
+                await FirebaseAuth.GetAuth(FirebaseApp.GetInstance("internal"))
+                    .VerifyIdTokenAsync(authorizationHeader.Replace("Bearer ", ""));
+                
+                await next(context);
+            }
             await FirebaseAuth.GetAuth(FirebaseApp.GetInstance("default")).VerifyIdTokenAsync(authorizationHeader.Replace("Bearer ", ""));
-
+            
             await next(context);
         }
     }
