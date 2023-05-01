@@ -1,4 +1,3 @@
-using CopyZillaBackend.Application.Events;
 using CopyZillaBackend.Domain.Entities;
 
 namespace CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery

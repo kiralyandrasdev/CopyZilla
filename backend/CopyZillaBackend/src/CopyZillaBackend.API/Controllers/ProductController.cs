@@ -1,4 +1,4 @@
-﻿using CopyZillaBackend.Application.Contracts.Helpers;
+﻿using CopyZillaBackend.API.Endpoints;
 using CopyZillaBackend.Application.Features.Payment.Queries.GetSubscriptionListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -6,27 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CopyZillaBackend.API.Controllers
 {
-    [EnableCors("localhost")]
+    [EnableCors(ApiEndpoints.Localhost)]
     [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController
+    public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IResponseManager _responseManager;
-
-        public ProductController(IMediator mediator, IResponseManager responseManager)
+        private readonly ILogger<ProductController> _logger;
+        
+        public ProductController(IMediator mediator, ILogger<ProductController> logger)
         {
             _mediator = mediator;
-            _responseManager = responseManager;
+            _logger = logger;
         }
 
         [HttpGet]
-        [Route("subscriptions")]
+        [Route(ApiEndpoints.Products.GetSubscriptionList)]
         public async Task<ActionResult<GetProductListQueryResult>> GetSubscriptionListAsync()
         {
+            _logger.LogInformation("{ProductControllerName}::{GetSubscriptionListAsync}::{Now}] Invoked", nameof(ProductController), nameof(GetSubscriptionListAsync), DateTime.Now);
+
             var result = await _mediator.Send(new GetProductListQuery());
 
-            return _responseManager.MapActionResult(result);
+            return result.MapActionResult();
         }
     }
 }

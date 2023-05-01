@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CopyZillaBackend.API.Helpers;
-using CopyZillaBackend.Application.Contracts.Helpers;
+using CopyZillaBackend.API.Endpoints;
 using CopyZillaBackend.Application.Features.Internal.Queries;
 using CopyZillaBackend.Application.Features.Internal.Queries.GetLogListQuery;
 using CopyZillaBackend.Application.Features.Internal.Queries.GetLogQuery;
@@ -13,48 +8,50 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CopyZillaBackend.API.Controllers
 {
-    [EnableCors("localhost")]
-    [Route("api/[controller]")]
+    [EnableCors(ApiEndpoints.Localhost)]
     [ApiController]
     public class InternalController : ControllerBase
     {
-        private readonly IResponseManager _responseManager;
         private readonly IMediator _mediator;
-        private readonly IConfiguration _configuration;
-
-        public InternalController(IResponseManager responseManager, IMediator mediator,
-           IConfiguration configuration)
+        private readonly ILogger<InternalController> _logger;
+        
+        public InternalController(IMediator mediator, ILogger<InternalController> logger)
         {
-            _responseManager = responseManager;
             _mediator = mediator;
-            _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpGet]
-        [Route("users")]
+        [Route(ApiEndpoints.Internal.GetUsers)]
         public async Task<ActionResult<GetUserListQueryResult>> GetUsersAsync()
         {
+            _logger.LogInformation("{InternalControllerName}::{GetUsersAsync}::{Now}] Invoked", nameof(InternalController), nameof(GetUsersAsync), DateTime.Now);
+
             var result = await _mediator.Send(new GetUserListQuery());
 
-            return _responseManager.MapActionResult(result);
+            return result.MapActionResult();
         }
 
         [HttpGet]
-        [Route("logs/{type}")]
-        public async Task<ActionResult<GetLogListQueryResult>> GetUserAsync(string type)
+        [Route(ApiEndpoints.Internal.GetLogList)]
+        public async Task<ActionResult<GetLogListQueryResult>> GetLogListAsync(string type)
         {
+            _logger.LogInformation("{InternalControllerName}::{GetLogListAsync}::{Now}] Invoked", nameof(InternalController), nameof(GetLogListAsync), DateTime.Now);
+
             var result = await _mediator.Send(new GetLogListQuery(type ?? "error"));
 
-            return _responseManager.MapActionResult(result);
+            return result.MapActionResult();
         }
 
         [HttpGet]
-        [Route("logs/{type}/{fileName}")]
-        public async Task<ActionResult<GetLogQueryResult>> GetUserAsync(string type, string fileName)
+        [Route(ApiEndpoints.Internal.GetLog)] 
+        public async Task<ActionResult<GetLogQueryResult>> GetLogAsync(string type, string fileName)
         {
+            _logger.LogInformation("{InternalControllerName}::{GetLogAsync}::{Now}] Invoked", nameof(InternalController), nameof(GetLogAsync), DateTime.Now);
+
             var result = await _mediator.Send(new GetLogQuery(type, fileName));
 
-            return _responseManager.MapActionResult(result);
+            return result.MapActionResult();
         }
     }
 }

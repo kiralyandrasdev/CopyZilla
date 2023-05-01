@@ -2,7 +2,6 @@ using AutoMapper;
 using CopyZillaBackend.Application.Contracts.Firebase;
 using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
-using CopyZillaBackend.Application.Events;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.UpdateUserCommand

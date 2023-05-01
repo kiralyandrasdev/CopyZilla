@@ -3,7 +3,6 @@ using CopyZillaBackend.Application.Contracts.OpenAI;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.Prompt;
 using CopyZillaBackend.Application.Contracts.ServiceUsage;
-using CopyZillaBackend.Application.Events;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.Prompt.ProcessRephrasePromptEvent

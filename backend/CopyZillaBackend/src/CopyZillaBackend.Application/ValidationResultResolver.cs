@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace CopyZillaBackend.Application.Events
+namespace CopyZillaBackend.Application
 {
     public static class ValidationResultResolver
     {

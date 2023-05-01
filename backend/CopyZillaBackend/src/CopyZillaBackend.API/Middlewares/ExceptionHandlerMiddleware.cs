@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using CopyZillaBackend.API.Exceptions;
 using CopyZillaBackend.API.Json;
+using CopyZillaBackend.Application;
 using CopyZillaBackend.Application.Contracts.Logging;
-using CopyZillaBackend.Application.Events;
 using FirebaseAdmin.Auth;
 using FluentValidation;
 using Newtonsoft.Json;

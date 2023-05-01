@@ -1,6 +1,5 @@
 using System;
 using CopyZillaBackend.Application.Contracts.Persistence;
-using CopyZillaBackend.Application.Events;
 using CopyZillaBackend.Domain.Entities;
 using MediatR;
 

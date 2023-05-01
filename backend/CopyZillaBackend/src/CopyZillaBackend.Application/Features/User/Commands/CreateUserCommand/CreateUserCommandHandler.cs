@@ -1,7 +1,6 @@
 ﻿using CopyZillaBackend.Application.Contracts.Cache;
 using CopyZillaBackend.Application.Contracts.Payment;
 using CopyZillaBackend.Application.Contracts.Persistence;
-using CopyZillaBackend.Application.Events;
 using MediatR;
 
 namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
@@ -22,15 +21,7 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
         public async Task<CreateUserCommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var result = new CreateUserCommandResult();
-
-            var validator = new CreateUserCommandValidator(_repository);
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            validationResult.Resolve(result);
-
-            if (!result.Success)
-                return result;
-
+            
             var customer = await _stripeService.CreateCustomerAsync(request.Options);
 
             var products = await _productService.GetProductListAsync();

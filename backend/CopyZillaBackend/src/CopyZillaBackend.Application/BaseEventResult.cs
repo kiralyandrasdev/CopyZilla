@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CopyZillaBackend.Application.Events
+namespace CopyZillaBackend.Application
 {
     public class BaseEventResult 
     {

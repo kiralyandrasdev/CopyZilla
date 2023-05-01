@@ -1,7 +1,6 @@
 ﻿using CopyZillaBackend.Application.Contracts.Cache;
 using CopyZillaBackend.Application.Contracts.Persistence;
 using CopyZillaBackend.Application.Contracts.ServiceUsage;
-using CopyZillaBackend.Application.Events;
 using CopyZillaBackend.Domain.Entities;
 using MediatR;
 
@@ -24,13 +23,13 @@ namespace CopyZillaBackend.Application.Features.User.Queries.GetUserQuery
         {
             var result = new GetUserQueryResult();
 
-            var validator = new GetUserQueryValidator(_repository);
-            var validationResult = await validator.ValidateAsync(request);
-
-            validationResult.Resolve(result);
-
-            if (!result.Success)
-                return result;
+            // var validator = new GetUserQueryValidator(_repository);
+            // var validationResult = await validator.ValidateAsync(request);
+            //
+            // validationResult.Resolve(result);
+            //
+            // if (!result.Success)
+            //     return result;
 
             var user = await _repository.GetByFirebaseUidAsync(request.FirebaseUid);
 

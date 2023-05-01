@@ -1,7 +1,8 @@
 ﻿using CopyZillaBackend.Application.Profiles;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using CopyZillaBackend.Application.Mediator;
+using FluentValidation;
 
 namespace CopyZillaBackend.Application
 {
@@ -9,7 +10,11 @@ namespace CopyZillaBackend.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(/*(configuration) => { configuration.AsSingleton(); }, */Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMediatR(c =>
+                c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
+                    .AddOpenBehavior(typeof(LoggingBehavior<,>))
+            );
             services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
             return services;
         }

@@ -1,5 +1,4 @@
-﻿using CopyZillaBackend.Application.Events;
-using CopyZillaBackend.Domain.Entities;
+﻿using CopyZillaBackend.Domain.Entities;
 
 namespace CopyZillaBackend.Application.Features.User.Queries.GetSavedTemplateListQuery
 {

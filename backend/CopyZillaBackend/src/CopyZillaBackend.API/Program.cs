@@ -1,7 +1,6 @@
-using CopyZillaBackend.API.Helpers;
+using CopyZillaBackend.API.Endpoints;
 using CopyZillaBackend.API.Middlewares;
 using CopyZillaBackend.Application;
-using CopyZillaBackend.Application.Contracts.Helpers;
 using CopyZillaBackend.Infrastructure;
 using CopyZillaBackend.Persistence;
 using FirebaseAdmin;
@@ -13,13 +12,13 @@ using Newtonsoft.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers()
-    .AddNewtonsoftJson(options =>
-        {
-            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-        }
-    );
+// builder.Services.AddControllers()
+//     .AddNewtonsoftJson(options =>
+//         {
+//             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+//             options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+//         }
+//     );
 
 builder.Services.AddLogging();
 
@@ -28,8 +27,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Service registration
-builder.Services.AddSingleton<IResponseManager, ResponseManager>();
-
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
@@ -81,7 +78,7 @@ app.UseWhen(context => context.Request.Path.Value?.Contains("/internal") == true
     app.UseMiddleware<InternalAuthorizationMiddleware>();
 });
 
-app.UseEndpoints(endpoints => endpoints.MapControllers());
+app.MapApiEndpoints();
 
 string configFileName = app.Environment.IsDevelopment() ? "firebaseConfig.Development.json" : "firebaseConfig.json";
 

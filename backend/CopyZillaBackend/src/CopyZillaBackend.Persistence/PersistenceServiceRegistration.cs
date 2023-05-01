@@ -19,8 +19,9 @@ namespace CopyZillaBackend.Persistence
             var mongoDatabaseName = configuration.GetSection("MongoDB").GetValue<string>("DatabaseName");
             var templateCollectionName = configuration.GetSection("MongoDB").GetValue<string>("TemplateCollectionName");
 
-            services.AddDbContext<CopyZillaBackendDBContext>(options => options.UseNpgsql(configuration.GetConnectionString("SqlConnection")));
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            services.AddDbContext<CopyZillaBackendDBContext>(options => 
+                options.UseNpgsql(configuration.GetConnectionString("SqlConnection")));
+            //services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IServiceUsageHistoryRepository, ServiceUsageHistoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMongoRepository<EmailTemplate>>(provider => new MongoRepository<EmailTemplate>
