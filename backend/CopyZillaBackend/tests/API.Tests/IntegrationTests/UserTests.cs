@@ -19,7 +19,7 @@ namespace API.Tests.IntegrationTests
 {
     [Collection("Serial")]
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
-    public class UserTests : IClassFixture<WebApplicationFactoryEngine<Program>>, IDisposable
+    public class UserTests : IClassFixture<WebApplicationFactoryEngine<Program>>, IAsyncLifetime
     {
         private readonly WebApplicationFactoryEngine<Program> _factory;
         private readonly HttpClient _client;
@@ -40,6 +40,11 @@ namespace API.Tests.IntegrationTests
             // clear on-prem db before tests
             _postgresDbManager.ClearSchema();
             _mongodbDbManager.ClearSchema();
+        }
+        
+        public Task InitializeAsync()
+        {
+            return Task.CompletedTask;
         }
 
         [Fact]
@@ -329,24 +334,24 @@ namespace API.Tests.IntegrationTests
             deletedUser.Should().BeNull();
             await deleteFirebaseUser.Should().ThrowAsync<FirebaseAuthException>();
         }
-
-        public void Dispose()
+        
+        public async Task DisposeAsync()
         {
             // clear stripe and firebase after tests
-            var customers = _stripeManager.ListCustomersAsync().GetAwaiter().GetResult();
-            var users = _firebaseManager.ListUsersAsync().GetAwaiter().GetResult();
+            var customers = await _stripeManager.ListCustomersAsync();
+            var users = await _firebaseManager.ListUsersAsync();
 
             var testCustomers = customers.Where(c => Guid.TryParse(c.Email.Split('@')[0], out _));
             var testUsers = users.Where(u => Guid.TryParse(u.Email.Split('@')[0], out _));
 
             foreach (var customer in testCustomers)
             {
-                _stripeManager.DeleteCustomerAsync(customer.Id).GetAwaiter().GetResult();
+                await _stripeManager.DeleteCustomerAsync(customer.Id);
             }
 
             foreach (var user in testUsers)
             {
-                _firebaseManager.DeleteUserAsync(user.Uid).GetAwaiter().GetResult();
+                await _firebaseManager.DeleteUserAsync(user.Uid);
             }
         }
     }
