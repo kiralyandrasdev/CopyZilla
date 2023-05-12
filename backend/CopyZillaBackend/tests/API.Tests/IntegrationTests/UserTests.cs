@@ -42,10 +42,7 @@ namespace API.Tests.IntegrationTests
             _mongodbDbManager.ClearSchema();
         }
         
-        public Task InitializeAsync()
-        {
-            return Task.CompletedTask;
-        }
+        public Task InitializeAsync() => Task.CompletedTask; 
 
         [Fact]
         public async Task Should_Create_User()
