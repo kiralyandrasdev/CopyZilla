@@ -62,25 +62,27 @@ namespace CopyZillaBackend.API.Middlewares
                 if (logToCloud)
                     await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
 
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(response,
+                    new ApplicationJsonSerializerSettings()));
+            }
+            catch (Exception ex) when (ex is AuthException or FirebaseAuthException)
+            {
+                var response = new BaseEventResult();
+                string log = _cloudLogBuilder.BuildErrorLog(context, ex, clientType, email);
+                
+                context.Response.StatusCode = 401;
+                response.ErrorMessage = ex.Message;
+
+                if (logToCloud)
+                    await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
+
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
             }
             catch (Exception ex)
             {
                 var response = new BaseEventResult();
                 string log = _cloudLogBuilder.BuildErrorLog(context, ex, clientType, email);
-
-                if (ex is AuthException || ex is FirebaseAuthException)
-                {
-                    context.Response.StatusCode = 401;
-                    response.ErrorMessage = ex.Message;
-
-                    if (logToCloud)
-                        await _cloudLogService.WriteLogAsync(log, LogLevel.Error);
-
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new ApplicationJsonSerializerSettings()));
-                    return;
-                }
-
+                
                 Debug.WriteLine(ex);
 
                 context.Response.StatusCode = 500;
