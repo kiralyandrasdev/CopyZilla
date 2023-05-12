@@ -56,7 +56,7 @@ namespace CopyZillaBackend.Infrastructure.Logging
             var connectionString = _configuration.GetConnectionString("AzureLogStorageConnection");
 
             if (string.IsNullOrEmpty(connectionString))
-                return null;
+                return new List<GetLogListQueryDto>();
 
             var client = new BlobServiceClient(connectionString);
 
@@ -117,7 +117,5 @@ namespace CopyZillaBackend.Infrastructure.Logging
 
             await blobClient.AppendBlockAsync(stream);
         }
-
-
     }
 }
