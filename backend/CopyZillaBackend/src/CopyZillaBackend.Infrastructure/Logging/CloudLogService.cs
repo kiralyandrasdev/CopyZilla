@@ -25,7 +25,7 @@ namespace CopyZillaBackend.Infrastructure.Logging
 
             if (string.IsNullOrEmpty(connectionString))
                 return null;
-
+            
             var client = new BlobServiceClient(connectionString);
 
             var container = client.GetBlobContainerClient(type);
@@ -113,7 +113,7 @@ namespace CopyZillaBackend.Infrastructure.Logging
             var formattedContent = $"[{DateTime.UtcNow}]{Environment.NewLine}{content}{Environment.NewLine}{Environment.NewLine}";
             var bytes = Encoding.UTF8.GetBytes(formattedContent);
 
-            var stream = new MemoryStream(bytes);
+            using var stream = new MemoryStream(bytes);
 
             await blobClient.AppendBlockAsync(stream);
         }
