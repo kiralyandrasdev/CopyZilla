@@ -13,10 +13,10 @@ function SignedOutView() {
                 <LoginForm />
                 <div className={`${styles.form__signUp} description`}>
                     <p>Don't have an account?</p>
-                    <a href="https://copyzilla.hu/auth/signup">Create an account</a>
+                    <a href="https://copyzilla.eu/auth/signup">Create an account</a>
                 </div>
             </div>
-            <p className="description">Need help? <a href="https://copyzilla.hu/auth/signup">Contact Us</a></p>
+            <p className="description">Need help? <a href="https://copyzilla.eu/auth/signup">Contact Us</a></p>
         </div>
     );
 }

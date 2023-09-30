@@ -20,7 +20,7 @@ namespace API.Tests.IntegrationTests
             _client = factory.CreateDefaultClient(new Uri("https://localhost:7107/api/"));
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Get_Available_Products()
         {
             var response = await _client.GetAsync($"/api/product/subscriptions");

@@ -33,7 +33,7 @@ function PrivacyPolicyPage() {
             </h6>
             <p>If we make any changes to this privacy policy, we will notify you and implement the new policy from the date of publication.</p>
             <p>We enforce this privacy policy together with our terms of use.</p>
-            <p>If you have any questions or concerns about our privacy policy, please contact us at info@copyzilla.hu</p>
+            <p>If you have any questions or concerns about our privacy policy, please contact us at info@copyzilla.eu</p>
         </div >
     );
 }

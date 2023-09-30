@@ -106,7 +106,7 @@ export default function PublicLayout() {
                 <div className="footer__content">
                     <div className="footer__info">
                         <p>© 2023 CopyZilla</p>
-                        <p>info@copyzilla.hu</p>
+                        <p>info@copyzilla.eu</p>
                     </div>
                     <div className="footer__nav">
                         <a href="/termsOfService">Terms of service</a>

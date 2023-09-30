@@ -20,7 +20,7 @@ function PaymentOverdueView() {
             <img src={ChoiceSvg} alt="" className='illustration' />
             <h5>Looks like your last payment didn't go through</h5>
             <p className="">
-                Please make sure you have a valid payment method on file. If you have any questions, please contact us at info@copyzilla.hu
+                Please make sure you have a valid payment method on file. If you have any questions, please contact us at info@copyzilla.eu
             </p>
             <PrimaryButton
                 title="Manage payment information"

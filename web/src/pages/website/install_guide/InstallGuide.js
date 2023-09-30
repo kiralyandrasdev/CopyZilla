@@ -21,7 +21,7 @@ function InstallGuidePage() {
         {
             title: 'Paste the manifest URL',
             imageSource: Step3,
-            description: 'Copy and paste the following URL: https://addin.copyzilla.hu/manifest.xml'
+            description: 'Copy and paste the following URL: https://addin.copyzilla.eu/manifest.xml'
         },
         {
             title: 'Open compose mode',

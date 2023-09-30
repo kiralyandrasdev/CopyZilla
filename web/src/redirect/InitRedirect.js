@@ -61,7 +61,7 @@ export default function InitRedirect() {
                             {error.statusCode && <p className="description">Code: {error.statusCode}</p>}
                         </div>
                     }
-                    <p>Please contact us at info@copyzilla.hu.</p>
+                    <p>Please contact us at info@copyzilla.eu.</p>
                     <TextButton
                         title="Logout"
                         onClick={() => logout()}

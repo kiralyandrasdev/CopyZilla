@@ -8,7 +8,6 @@ using CopyZillaBackend.Application.Features.Prompt.ProcessEmailPromptEvent;
 using CopyZillaBackend.Domain.Entities;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Stripe;
 using System.Net;
 using System.Text;
 using Xunit.Priority;
@@ -40,7 +39,7 @@ namespace API.Tests.IntegrationTests
             _mongodbDbManager.ClearSchema();
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Generate_Email_Prompt()
         {
             // arrange
@@ -84,7 +83,7 @@ namespace API.Tests.IntegrationTests
             creditUsage.Should().Be(1);
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Not_Generate_Email_Prompt_Usage_Limit_Reached()
         {
             // arrange

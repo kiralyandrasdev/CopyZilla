@@ -52,7 +52,7 @@ function TermsOfServicePage() {
                 Unauthorized use of the services we provide in any form is prohibited and may result in legal consequences.
             </p>
             <p>
-                If you have any questions about the terms of use, please contact us at info@copyzilla.hu. Thank you for using CopyZilla, and we hope you are satisfied with our service!
+                If you have any questions about the terms of use, please contact us at info@copyzilla.eu. Thank you for using CopyZilla, and we hope you are satisfied with our service!
             </p>
         </div >
     );

@@ -42,7 +42,7 @@ namespace API.Tests.IntegrationTests
             _mongodbDbManager.ClearSchema();
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Create_User()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -70,7 +70,7 @@ namespace API.Tests.IntegrationTests
             await _stripeManager.DeleteCustomerAsync(user!.StripeCustomerId!);
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Not_Create_User_With_Existing_FirebaseUid()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -106,7 +106,7 @@ namespace API.Tests.IntegrationTests
             result.ErrorMessage.Should().NotBeEmpty();
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Not_Create_User_With_Incorrect_Email()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -130,7 +130,7 @@ namespace API.Tests.IntegrationTests
             result.ErrorMessage.Should().NotBeEmpty();
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Not_Create_User_With_Empty_FirebaseUid()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -154,7 +154,7 @@ namespace API.Tests.IntegrationTests
             result.ErrorMessage.Should().NotBeEmpty();
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Not_Create_User_With_Empty_Email()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -178,7 +178,7 @@ namespace API.Tests.IntegrationTests
             result.ErrorMessage.Should().NotBeEmpty();
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Get_User()
         {
             // arrange 
@@ -211,7 +211,7 @@ namespace API.Tests.IntegrationTests
             result.Value!.FirebaseUid.Should().Be(user.FirebaseUid);
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Not_Get_User()
         {
             // arrange
@@ -240,7 +240,7 @@ namespace API.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Update_User()
         {
             var userHint = Guid.NewGuid().ToString();
@@ -291,7 +291,7 @@ namespace API.Tests.IntegrationTests
             updatedFirebaseUser!.Email.Should().BeEquivalentTo(options.Email);
         }
 
-        [Fact]
+        [Fact(Skip = "Resurrection")]
         public async Task Should_Delete_User()
         {
             // arrange

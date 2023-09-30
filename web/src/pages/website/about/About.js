@@ -51,7 +51,7 @@ function AboutPage() {
                 </p>
             </div>
             <p className='description'>
-                Regarding any questions or inquiries please contact us at <span style={{ textDecoration: "underline" }}>info@copyzilla.hu</span>.
+                Regarding any questions or inquiries please contact us at <span style={{ textDecoration: "underline" }}>info@copyzilla.eu</span>.
             </p>
         </div>
     );

@@ -386,7 +386,7 @@ async function getApiUrl() {
                 resolve("https://localhost:7107/api");
             }
 
-            resolve("https://api.copyzilla.hu/api");
+            resolve("https://api.copyzilla.eu/api");
         });
     });
 }

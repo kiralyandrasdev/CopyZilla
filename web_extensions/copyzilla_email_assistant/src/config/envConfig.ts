@@ -5,7 +5,7 @@ export async function getWebsiteUrl() {
                 resolve("http://localhost:3000");
             }
     
-            resolve("https://copyzilla.hu");
+            resolve("https://copyzilla.eu");
         });
     });
 }

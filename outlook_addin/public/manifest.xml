@@ -10,9 +10,9 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="CopyZilla" />
   <Description DefaultValue="Compose or format your email with CopyZilla that uses the powerful GPT-3.5 AI model to deliver polished and convincing messages." />
-  <IconUrl DefaultValue="https://addin.copyzilla.hu/logo64.png" />
-  <HighResolutionIconUrl DefaultValue="https://addin.copyzilla.hu/logo128.png" />
-  <SupportUrl DefaultValue="https://copyzilla.hu" />
+  <IconUrl DefaultValue="https://addin.copyzilla.eu/logo64.png" />
+  <HighResolutionIconUrl DefaultValue="https://addin.copyzilla.eu/logo128.png" />
+  <SupportUrl DefaultValue="https://copyzilla.eu" />
   <Hosts>
     <Host Name="Mailbox" />
   </Hosts>
@@ -24,7 +24,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://addin.copyzilla.hu" />
+        <SourceLocation DefaultValue="https://addin.copyzilla.eu" />
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -72,12 +72,12 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
-        <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
-        <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
+        <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.eu/logo128.png" />
+        <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.eu/logo128.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.eu/logo128.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.hu" />
+        <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.eu" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="CopyZilla" />
@@ -146,12 +146,12 @@
       </Hosts>
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
-          <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
-          <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.hu/logo128.png" />
+          <bt:Image id="Icon.16x16" DefaultValue="https://addin.copyzilla.eu/logo128.png" />
+          <bt:Image id="Icon.32x32" DefaultValue="https://addin.copyzilla.eu/logo128.png" />
+          <bt:Image id="Icon.80x80" DefaultValue="https://addin.copyzilla.eu/logo128.png" />
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.hu" />
+          <bt:Url id="App.Url" DefaultValue="https://addin.copyzilla.eu" />
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="GroupLabel" DefaultValue="CopyZilla" />

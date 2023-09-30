@@ -20,7 +20,7 @@ function ContactPage() {
                     <h4>Contact Us</h4>
                     <div className={styles.roundedContainer}>
                         <h6>
-                            Regarding any questions or inquiries please contact us at <span style={{ textDecoration: "underline" }}>info@copyzilla.hu</span>.
+                            Regarding any questions or inquiries please contact us at <span style={{ textDecoration: "underline" }}>info@copyzilla.eu</span>.
                         </h6>
                     </div>
                 </div>

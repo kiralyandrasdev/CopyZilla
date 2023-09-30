@@ -22,7 +22,7 @@ function FaqSection() {
         <div className={`${styles.container} section`}>
             <h2>Frequently Asked Questions</h2>
             <h6>
-                If you have any questions not answered in the FAQ, please do not hesitate to contact us at info@copyzilla.hu.
+                If you have any questions not answered in the FAQ, please do not hesitate to contact us at info@copyzilla.eu.
             </h6>
             <div className={styles.cards}>
                 {
