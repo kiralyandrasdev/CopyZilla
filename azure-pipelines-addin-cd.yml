@@ -18,7 +18,7 @@ resources:
   - repo: self
 
 variables:
-  dockerRegistryServiceConnection: "dc94c617-0446-4dc2-b472-7f76b1874658"
+  dockerRegistryServiceConnection: "f15b7092-d3ed-4681-afb3-de6f4cceeb68"
   tag: "$(Build.BuildId)"
 
   # Agent VM image name
