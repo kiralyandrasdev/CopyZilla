@@ -46,6 +46,9 @@ namespace CopyZillaBackend.Application.Features.User.Commands.CreateUserCommand
                 FirebaseUid = request.Options.FirebaseUid,
                 StripeCustomerId = customer.Id,
                 Email = request.Options.Email,
+                ProductId = defaultProduct.Id,
+                SubscriptionValidUntil = DateTime.MaxValue,
+                SubscriptionStatus = "active"
             };
 
             await _repository.AddAsync(user);
